@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Modal }           from '@/components/ui/Modal'
 import { FilterTabs }      from '@/components/ui/FilterTabs'
 import { useScrollReveal } from '@/hooks/useScrollAnimation'
+import type { PortfolioItem } from '@/lib/edge-store'
 
 const PROJECTS = [
   {
@@ -74,14 +75,44 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+function mapAdminItem(item: PortfolioItem) {
+  return {
+    id: item.id, slug: item.id, title: item.title,
+    description: `${item.client ? item.client + ' · ' : ''}${item.description}`,
+    coverImage: item.imageUrl,
+    techUsed: item.tags,
+    metrics: {} as Record<string, string>,
+    category: item.category.charAt(0).toUpperCase() + item.category.slice(1),
+    clientType: 'BRAND' as const,
+    featured: item.featured,
+    isActive: true,
+    _year: item.year,
+  }
+}
+
 export function PortfolioGrid() {
   const [catFilter,    setCatFilter]    = useState('ALL')
   const [clientFilter, setClientFilter] = useState('ALL')
   const [selected,     setSelected]     = useState<typeof PROJECTS[0] | null>(null)
+  const [adminItems,   setAdminItems]   = useState<ReturnType<typeof mapAdminItem>[]>([])
   const sectionRef = useScrollReveal({ stagger: 0.06 })
-  const shuffled   = useMemo(() => shuffleArray(PROJECTS), [])
 
-  const filtered = shuffled.filter(p =>
+  useEffect(() => {
+    fetch('/api/admin/portfolio')
+      .then(r => r.json())
+      .then((data: PortfolioItem[]) => {
+        if (Array.isArray(data) && data.length > 0)
+          setAdminItems(data.map(mapAdminItem))
+      })
+      .catch(() => {})
+  }, [])
+
+  const allProjects = useMemo(() => {
+    const base = (adminItems.length > 0 ? adminItems : PROJECTS) as unknown as typeof PROJECTS
+    return shuffleArray(base)
+  }, [adminItems])
+
+  const filtered = allProjects.filter(p =>
     (catFilter    === 'ALL' || p.category   === catFilter) &&
     (clientFilter === 'ALL' || p.clientType === clientFilter) &&
     p.isActive
