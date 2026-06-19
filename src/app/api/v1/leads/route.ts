@@ -34,6 +34,19 @@ export async function POST(req: NextRequest) {
 
 async function processLeadAsync(leadId: string, data: any) {
   try {
+    // Guardar en Edge Config (siempre disponible)
+    try {
+      const { ecGet, ecSet } = await import('@/lib/edge-store')
+      const existing = await ecGet<any[]>('leads', [])
+      await ecSet('leads', [{
+        id: leadId, name: data.name, email: data.email,
+        whatsapp: data.phone, clientType: data.clientType,
+        services: (data.services || []).map((s: any) => s.name),
+        totalEstimate: data.totalEstimate || 0, currency: data.currency || 'COP',
+        status: 'NEW', notes: '', createdAt: new Date().toISOString(),
+      }, ...existing.slice(0, 99)])
+    } catch (e) { console.warn('Edge Config lead save failed:', e) }
+
     if (process.env.DATABASE_URL) {
       const { prisma } = await import('@/lib/prisma')
       await (prisma as any).lead.create({
