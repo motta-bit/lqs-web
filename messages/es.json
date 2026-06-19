@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "portfolio": "Portafolio",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "quote": "Cotizar"
+  },
+  "hero": {
+    "tagline": "Agencia creativa colombiana",
+    "headline": "Hacemos lo que sea",
+    "subheadline": "Creative · Digital · Technology · Production",
+    "cta_primary": "Cotizar proyecto",
+    "cta_secondary": "Ver portafolio"
+  },
+  "services": {
+    "title": "Servicios",
+    "subtitle": "Todo lo que tu marca necesita",
+    "categories": {
+      "MEDIA":     "Media & Contenido",
+      "GROWTH":    "Crecimiento Digital",
+      "IDEATION":  "Ideación & Branding"
+    }
+  },
+  "quoter": {
+    "title": "Cotizador inteligente",
+    "subtitle": "Obtén tu cotización en minutos",
+    "steps": {
+      "client_type":  "¿Qué tipo de cliente eres?",
+      "is_event":     "¿Es para un evento?",
+      "services":     "¿Qué servicios necesitas?",
+      "urgency":      "¿Para cuándo lo necesitas?",
+      "currency":     "¿En qué moneda?",
+      "contact":      "¿Cómo te contactamos?"
+    },
+    "client_types": {
+      "brand":   "Marca / Empresa",
+      "creator": "Creador de contenido",
+      "event":   "Evento"
+    },
+    "urgency": {
+      "rush":    "Urgente (–7 días)",
+      "fast":    "Rápido (8–14 días)",
+      "normal":  "Normal (15–30 días)",
+      "relaxed": "Sin prisa (+30 días)"
+    },
+    "currency": {
+      "COP": "Pesos colombianos (COP)",
+      "USD": "Dólares (USD)"
+    },
+    "cta_calculate": "Calcular cotización",
+    "cta_send":      "Enviar cotización",
+    "cta_download":  "Descargar PDF"
+  },
+  "portfolio": {
+    "title": "Portafolio",
+    "subtitle": "Proyectos que nos definen",
+    "cta_view": "Ver proyecto",
+    "filter_all": "Todos"
+  },
+  "contact": {
+    "title": "Hablemos",
+    "subtitle": "Cuéntanos tu proyecto",
+    "whatsapp": "Escríbenos por WhatsApp",
+    "email_label": "Correo electrónico",
+    "phone_label": "Teléfono / WhatsApp",
+    "form": {
+      "name":        "Nombre completo",
+      "email":       "Correo electrónico",
+      "phone":       "Teléfono (opcional)",
+      "company":     "Empresa (opcional)",
+      "message":     "Cuéntanos tu proyecto",
+      "submit":      "Enviar mensaje",
+      "success":     "¡Mensaje enviado! Te contactamos pronto.",
+      "error":       "Hubo un error. Inténtalo de nuevo."
+    }
+  },
+  "footer": {
+    "tagline":     "Hacemos lo que sea.",
+    "rights":      "Todos los derechos reservados.",
+    "privacy":     "Política de privacidad",
+    "terms":       "Términos de uso"
+  },
+  "common": {
+    "loading":     "Cargando...",
+    "error":       "Algo salió mal",
+    "retry":       "Reintentar",
+    "close":       "Cerrar",
+    "next":        "Siguiente",
+    "prev":        "Anterior",
+    "yes":         "Sí",
+    "no":          "No"
+  }
+}

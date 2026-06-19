@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* Fonts are loaded via next/font/google in layout.tsx */
+
+/* ─── Tailwind v4 Design Tokens ─────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-imi-bgAbsolute:     #000000;
+  --color-imi-accentOrange:   #FF4600;
+  --color-imi-securityTeal:   #008080;
+  --color-imi-innovationBlue: #0055FF;
+  --color-imi-gridBorder:     #262626;
+  --color-imi-cardBg:         #0A0A0A;
+  --color-imi-textPrimary:    #FFFFFF;
+  --color-imi-textMuted:      #A0A0A0;
+
+  /* Fonts */
+  --font-authority:   var(--font-bebas), sans-serif;
+  --font-readability: var(--font-inter), sans-serif;
+  --font-data-mono:   var(--font-jetbrains), monospace;
+
+  /* Shadows */
+  --shadow-borderGlowTeal: 0 0 12px rgba(0, 128, 128, 0.2);
+  --shadow-ctaGlowOrange:  0 0 20px rgba(255, 70, 0, 0.35);
+  --shadow-cardHover:      0 0 30px rgba(0, 128, 128, 0.15);
+
+  /* Breakpoints adicionales */
+  --breakpoint-xs: 375px;
+  --breakpoint-3xl: 1920px;
+
+  /* Animations */
+  --animate-float:       float 6s ease-in-out infinite;
+  --animate-pulse-glow:  pulse-glow 2s ease-in-out infinite;
+  --animate-slide-up:    slide-in-up 0.6s ease-out forwards;
+  --animate-fade-in:     fade-in 0.4s ease-out forwards;
+  --animate-grid-move:   grid-move 20s linear infinite;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 70, 0, 0.35); }
+  50%       { box-shadow: 0 0 40px rgba(255, 70, 0, 0.6); }
+}
+
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes grid-move {
+  0%   { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes slide-in-bottom {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.animate-slide-in-right  { animation: slide-in-right  0.35s cubic-bezier(0.32, 0.72, 0, 1) both; }
+.animate-slide-in-bottom { animation: slide-in-bottom 0.35s cubic-bezier(0.32, 0.72, 0, 1) both; }
+
+/* ─── CSS Variable Aliases --imi-* (document compatibility) ─────────── */
+:root {
+  --imi-bgAbsolute:     #000000;
+  --imi-accentOrange:   #FF4600;
+  --imi-securityTeal:   #008080;
+  --imi-innovationBlue: #0055FF;
+  --imi-gridBorder:     #262626;
+  --imi-cardBg:         #0A0A0A;
+  --imi-textPrimary:    #FFFFFF;
+  --imi-textMuted:      #A0A0A0;
+}
+
+/* ─── Seasonal Theme Variables ──────────────────────────────────────── */
+:root,
+[data-theme="default"] {
+  --theme-bg:        #000000;
+  --theme-accent:    #FF4600;
+  --theme-secondary: #008080;
+}
+
+[data-theme="halloween"] {
+  --theme-bg:        #0B0500;
+  --theme-accent:    #FF5A00;
+  --theme-secondary: #8A2BE2;
+}
+
+[data-theme="winter"] {
+  --theme-bg:        #050B14;
+  --theme-accent:    #00E5FF;
+  --theme-secondary: #00FF88;
+}
+
+/* ─── Base Reset ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--theme-bg);
+  color: #ffffff;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Secciones como pantallas individuales ─────────────────────────── */
+main > section {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────── */
+.font-authority   { font-family: var(--font-bebas), sans-serif; }
+.font-readability { font-family: var(--font-inter), sans-serif; }
+.font-data-mono   { font-family: var(--font-jetbrains), monospace; }
+.font-mono-data   { font-family: var(--font-jetbrains), monospace; }
+
+.animate-glow-pulse      { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-terminal-blink  { animation: terminal-blink 1s step-end infinite; }
+
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(#262626 1px, transparent 1px),
+    linear-gradient(90deg, #262626 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-pattern-animated {
+  background-image:
+    linear-gradient(#262626 1px, transparent 1px),
+    linear-gradient(90deg, #262626 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: var(--animate-grid-move);
+}
+
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select   { font: inherit; }

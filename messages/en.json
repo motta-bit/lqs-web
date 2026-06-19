@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "contact": "Contact",
+    "quote": "Get a Quote"
+  },
+  "hero": {
+    "tagline": "Colombian creative agency",
+    "headline": "We do whatever it takes",
+    "subheadline": "Creative · Digital · Technology · Production",
+    "cta_primary": "Get a quote",
+    "cta_secondary": "View portfolio"
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Everything your brand needs",
+    "categories": {
+      "MEDIA":     "Media & Content",
+      "GROWTH":    "Digital Growth",
+      "IDEATION":  "Ideation & Branding"
+    }
+  },
+  "quoter": {
+    "title": "Smart quoter",
+    "subtitle": "Get your quote in minutes",
+    "steps": {
+      "client_type":  "What type of client are you?",
+      "is_event":     "Is this for an event?",
+      "services":     "What services do you need?",
+      "urgency":      "When do you need it?",
+      "currency":     "What currency?",
+      "contact":      "How can we reach you?"
+    },
+    "client_types": {
+      "brand":   "Brand / Company",
+      "creator": "Content creator",
+      "event":   "Event"
+    },
+    "urgency": {
+      "rush":    "Rush (under 7 days)",
+      "fast":    "Fast (8–14 days)",
+      "normal":  "Normal (15–30 days)",
+      "relaxed": "No rush (+30 days)"
+    },
+    "currency": {
+      "COP": "Colombian pesos (COP)",
+      "USD": "US Dollars (USD)"
+    },
+    "cta_calculate": "Calculate quote",
+    "cta_send":      "Send quote",
+    "cta_download":  "Download PDF"
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Projects that define us",
+    "cta_view": "View project",
+    "filter_all": "All"
+  },
+  "contact": {
+    "title": "Let's talk",
+    "subtitle": "Tell us about your project",
+    "whatsapp": "Message us on WhatsApp",
+    "email_label": "Email address",
+    "phone_label": "Phone / WhatsApp",
+    "form": {
+      "name":        "Full name",
+      "email":       "Email address",
+      "phone":       "Phone (optional)",
+      "company":     "Company (optional)",
+      "message":     "Tell us about your project",
+      "submit":      "Send message",
+      "success":     "Message sent! We'll be in touch soon.",
+      "error":       "Something went wrong. Please try again."
+    }
+  },
+  "footer": {
+    "tagline":     "We do whatever it takes.",
+    "rights":      "All rights reserved.",
+    "privacy":     "Privacy policy",
+    "terms":       "Terms of use"
+  },
+  "common": {
+    "loading":     "Loading...",
+    "error":       "Something went wrong",
+    "retry":       "Retry",
+    "close":       "Close",
+    "next":        "Next",
+    "prev":        "Previous",
+    "yes":         "Yes",
+    "no":          "No"
+  }
+}

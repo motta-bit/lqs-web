@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ─────────────────────────────────────────────────────────────
+
+enum Category {
+  MEDIA
+  GROWTH
+  IDEATION
+}
+
+enum ClientType {
+  brand
+  creator
+  event
+}
+
+enum LeadStatus {
+  new
+  contacted
+  qualified
+  closed
+}
+
+enum PackageType {
+  starter
+  pro
+  enterprise
+}
+
+enum Currency {
+  COP
+  USD
+}
+
+// ─── Models ────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Service {
+  id            String           @id @default(cuid())
+  slug          String           @unique
+  nameEs        String
+  nameEn        String
+  descriptionEs String
+  descriptionEn String
+  category      Category
+  basePrice     Float
+  deliveryDays  Int
+  tags          String[]
+  isActive      Boolean          @default(true)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  packages      PackageService[]
+  quoteItems    QuoteItem[]
+
+  @@map("services")
+}
+
+model Package {
+  id            String           @id @default(cuid())
+  slug          String           @unique
+  nameEs        String
+  nameEn        String
+  descriptionEs String
+  descriptionEn String
+  type          PackageType
+  totalPrice    Float
+  discountPct   Float            @default(0)
+  clientTypes   ClientType[]
+  isHighlighted Boolean          @default(false)
+  isActive      Boolean          @default(true)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  services      PackageService[]
+
+  @@map("packages")
+}
+
+model PackageService {
+  packageId String
+  serviceId String
+  package   Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([packageId, serviceId])
+  @@map("package_services")
+}
+
+model PortfolioProject {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  client      String
+  category    Category
+  thumbnail   String
+  images      String[]
+  year        Int
+  tags        String[]
+  isFeatured  Boolean  @default(false)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("portfolio_projects")
+}
+
+model Lead {
+  id         String     @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  company    String?
+  clientType ClientType
+  services   String[]
+  budget     Float?
+  message    String?
+  status     LeadStatus @default(new)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  quoteItems QuoteItem[]
+
+  @@map("leads")
+}
+
+model QuoteItem {
+  id        String   @id @default(cuid())
+  leadId    String
+  serviceId String
+  quantity  Int      @default(1)
+  basePrice Float
+  currency  Currency @default(COP)
+  createdAt DateTime @default(now())
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  service   Service  @relation(fields: [serviceId], references: [id])
+
+  @@map("quote_items")
+}
+
+model SeasonalTheme {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  labelEs    String
+  labelEn    String
+  bg         String
+  accent     String
+  secondary  String
+  startMonth Int
+  endMonth   Int
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("seasonal_themes")
+}
+
+model FAQ {
+  id         String   @id @default(cuid())
+  questionEs String
+  questionEn String
+  answerEs   String
+  answerEn   String
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("faqs")
+}
