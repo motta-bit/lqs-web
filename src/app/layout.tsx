@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { Bebas_Neue, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import ThemeProvider   from '@/components/layout/ThemeProvider'
-import LenisProvider   from '@/components/layout/LenisProvider'
-import Preloader       from '@/components/layout/Preloader'
+import ThemeProvider       from '@/components/layout/ThemeProvider'
+import LenisProvider       from '@/components/layout/LenisProvider'
+import Preloader           from '@/components/layout/Preloader'
 import { DuckCursor, HeaderDuck } from '@/components/layout/DuckCursor'
+import { NextAuthProvider } from '@/components/layout/NextAuthProvider'
 
 const bebasNeue = Bebas_Neue({
   weight:   '400',
@@ -83,14 +84,16 @@ export default function RootLayout({
           color:           'var(--imi-textPrimary)',
         }}
       >
-        <ThemeProvider>
-          <Preloader />
-          <DuckCursor />
-          <HeaderDuck />
-          <LenisProvider>
-            {children}
-          </LenisProvider>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <ThemeProvider>
+            <Preloader />
+            <DuckCursor />
+            <HeaderDuck />
+            <LenisProvider>
+              {children}
+            </LenisProvider>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

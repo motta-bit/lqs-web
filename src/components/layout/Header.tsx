@@ -3,14 +3,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import clsx from 'clsx'
 import CTAButton from '@/components/ui/CTAButton'
 import { useQuoterStore } from '@/store/quoterStore'
 
 const NAV_LINKS = [
-  { label: 'Nosotros',   href: '/nosotros'   },
-  { label: 'Servicios',  href: '/servicios'  },
+  { label: 'Planes',     href: '/planes'     },
   { label: 'Portafolio', href: '/portafolio' },
+  { label: 'Nosotros',   href: '/nosotros'   },
   { label: 'Contacto',   href: '/contacto'   },
 ]
 
@@ -19,6 +20,7 @@ export default function Header() {
   const [menuOpen,  setMenuOpen]  = useState(false)
   const { openPanel } = useQuoterStore()
   const pathname = usePathname()
+  const { data: session } = useSession()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -76,7 +78,20 @@ export default function Header() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
+          {session ? (
+            <Link href="/mi-proyecto"
+              className="font-data-mono text-xs tracking-[0.2em] uppercase transition-colors px-4 py-2 border"
+              style={{ borderColor: 'rgba(255,70,0,0.3)', color: '#FF4600' }}>
+              Mi proyecto
+            </Link>
+          ) : (
+            <Link href="/login"
+              className="font-data-mono text-xs tracking-[0.2em] uppercase transition-colors"
+              style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Login
+            </Link>
+          )}
           <CTAButton size="sm" variant="primary" onClick={openPanel}>
             Cotizar
           </CTAButton>
