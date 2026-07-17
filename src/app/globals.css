@@ -82,15 +82,69 @@
 
 /* ─── CSS Variable Aliases --imi-* (document compatibility) ─────────── */
 :root {
-  --imi-bgAbsolute:     #000000;
+  --imi-bgAbsolute:     #040a1a;
   --imi-accentOrange:   #FF4600;
-  --imi-securityTeal:   #008080;
-  --imi-innovationBlue: #0055FF;
-  --imi-gridBorder:     #262626;
-  --imi-cardBg:         #0A0A0A;
+  --imi-securityTeal:   #00E5FF;
+  --imi-innovationBlue: #9B59FF;
+  --imi-gridBorder:     rgba(255,255,255,0.07);
+  --imi-cardBg:         rgba(255,255,255,0.04);
   --imi-textPrimary:    #FFFFFF;
-  --imi-textMuted:      #A0A0A0;
+  --imi-textMuted:      rgba(255,255,255,0.4);
+
+  /* Cyber Aero neons */
+  --neon-cyan:   #00E5FF;
+  --neon-green:  #00FF88;
+  --neon-pink:   #FF2D78;
+  --neon-purple: #9B59FF;
+  --neon-orange: #FF4600;
+  --neon-sky:    #38BDF8;
+
+  /* Glass */
+  --glass-bg:      rgba(255,255,255,0.04);
+  --glass-border:  rgba(255,255,255,0.09);
+  --glass-hover:   rgba(255,255,255,0.08);
+  --glass-blur:    blur(24px) saturate(180%);
+
+  /* Sky depths */
+  --sky-0: #020810;
+  --sky-1: #04101e;
+  --sky-2: #071528;
+  --sky-3: #0a1c38;
 }
+
+/* ─── Cyber Aero — Glass utilities ──────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+.glass-hover:hover {
+  background: var(--glass-hover);
+  border-color: rgba(255,255,255,0.15);
+}
+.glass-cyan   { border-color: rgba(0,229,255,0.25) !important; box-shadow: 0 0 30px rgba(0,229,255,0.06), inset 0 0 30px rgba(0,229,255,0.03); }
+.glass-green  { border-color: rgba(0,255,136,0.25) !important; box-shadow: 0 0 30px rgba(0,255,136,0.06), inset 0 0 30px rgba(0,255,136,0.03); }
+.glass-pink   { border-color: rgba(255,45,120,0.25)  !important; box-shadow: 0 0 30px rgba(255,45,120,0.06),  inset 0 0 30px rgba(255,45,120,0.03);  }
+.glass-purple { border-color: rgba(155,89,255,0.25) !important; box-shadow: 0 0 30px rgba(155,89,255,0.06), inset 0 0 30px rgba(155,89,255,0.03); }
+.glass-orange { border-color: rgba(255,70,0,0.25)   !important; box-shadow: 0 0 30px rgba(255,70,0,0.06),   inset 0 0 30px rgba(255,70,0,0.03);   }
+
+/* Sky background */
+.sky-bg {
+  background: radial-gradient(ellipse 140% 80% at 50% -10%, var(--sky-3) 0%, var(--sky-1) 50%, var(--sky-0) 100%);
+}
+
+/* Neon text glows */
+.glow-cyan   { text-shadow: 0 0 20px rgba(0,229,255,0.7),   0 0 60px rgba(0,229,255,0.3);   }
+.glow-green  { text-shadow: 0 0 20px rgba(0,255,136,0.7),   0 0 60px rgba(0,255,136,0.3);   }
+.glow-pink   { text-shadow: 0 0 20px rgba(255,45,120,0.7),  0 0 60px rgba(255,45,120,0.3);  }
+.glow-purple { text-shadow: 0 0 20px rgba(155,89,255,0.7),  0 0 60px rgba(155,89,255,0.3);  }
+.glow-white  { text-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(255,255,255,0.15);}
+
+/* Neon border glow on hover */
+.neon-hover-cyan:hover   { border-color: rgba(0,229,255,0.5)  !important; box-shadow: 0 0 40px rgba(0,229,255,0.15);   }
+.neon-hover-green:hover  { border-color: rgba(0,255,136,0.5)  !important; box-shadow: 0 0 40px rgba(0,255,136,0.15);   }
+.neon-hover-pink:hover   { border-color: rgba(255,45,120,0.5) !important; box-shadow: 0 0 40px rgba(255,45,120,0.15);  }
 
 /* ─── Seasonal Theme Variables ──────────────────────────────────────── */
 :root,
@@ -127,7 +181,7 @@ html {
 }
 
 body {
-  background-color: var(--theme-bg);
+  background-color: var(--sky-0);
   color: #ffffff;
   font-family: var(--font-inter), system-ui, sans-serif;
   line-height: 1.6;
@@ -169,6 +223,40 @@ main > section {
 
 img, picture, video, canvas, svg { display: block; max-width: 100%; }
 input, button, textarea, select   { font: inherit; }
+
+/* ─── Cyber Aero — Cloud & Sky Keyframes ────────────────────────────── */
+@keyframes cloud-drift {
+  0%   { transform: translate(0,0)       scale(1);    opacity: 0.06; }
+  33%  { transform: translate(40px,-20px) scale(1.04); opacity: 0.09; }
+  66%  { transform: translate(-15px,30px) scale(0.97); opacity: 0.07; }
+  100% { transform: translate(0,0)       scale(1);    opacity: 0.06; }
+}
+@keyframes star-twinkle {
+  0%,100% { opacity: 0.15; transform: scale(1); }
+  50%      { opacity: 0.7;  transform: scale(1.4); }
+}
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer-aero {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.95); opacity: 0.6; }
+  70%  { transform: scale(1.05); opacity: 0;   }
+  100% { transform: scale(0.95); opacity: 0;   }
+}
+
+.animate-cloud-drift { animation: cloud-drift var(--drift,30s) ease-in-out infinite; }
+.animate-float-up    { animation: float-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-scale-in    { animation: scale-in 0.6s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-pulse-ring  { animation: pulse-ring 2.4s ease-out infinite; }
 
 /* ─── Redesign V3 — New Keyframes ────────────────────────────────────── */
 @keyframes orb-drift {

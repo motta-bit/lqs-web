@@ -39,11 +39,17 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 left-0 right-0 z-40 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-40 transition-all duration-500',
         scrolled
-          ? 'bg-black/80 backdrop-blur-md border-b border-[#262626]'
+          ? 'border-b'
           : 'bg-transparent'
       )}
+      style={scrolled ? {
+        background: 'rgba(4,10,26,0.75)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        borderColor: 'rgba(255,255,255,0.07)',
+      } : undefined}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
