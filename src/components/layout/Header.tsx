@@ -9,10 +9,10 @@ import CTAButton from '@/components/ui/CTAButton'
 import { useQuoterStore } from '@/store/quoterStore'
 
 const NAV_LINKS = [
-  { label: 'Planes',     href: '/planes'     },
-  { label: 'Portafolio', href: '/portafolio' },
-  { label: 'Nosotros',   href: '/nosotros'   },
-  { label: 'Contacto',   href: '/contacto'   },
+  { label: 'Portafolio', href: '/#portafolio' },
+  { label: 'Planes',     href: '/#planes'     },
+  { label: 'Nosotros',   href: '/nosotros'    },
+  { label: 'Contacto',   href: '/#contacto'   },
 ]
 
 export default function Header() {
@@ -64,7 +64,8 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => {
-            const active = pathname === link.href
+            const base = link.href.split('#')[0] || '/'
+            const active = link.href.startsWith('#') ? false : (pathname === base && !link.href.includes('#'))
             return (
               <Link
                 key={link.href}
@@ -125,7 +126,8 @@ export default function Header() {
         )}
       >
         {NAV_LINKS.map((link) => {
-          const active = pathname === link.href
+          const base = link.href.split('#')[0] || '/'
+          const active = !link.href.includes('#') && pathname === base
           return (
             <Link
               key={link.href}
