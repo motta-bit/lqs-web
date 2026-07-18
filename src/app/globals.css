@@ -166,6 +166,38 @@
   --theme-secondary: #00FF88;
 }
 
+/* ─── Premium Animations ────────────────────────────────────────────── */
+@keyframes section-reveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes line-expand {
+  from { scaleX: 0; opacity: 0; }
+  to   { scaleX: 1; opacity: 1; }
+}
+@keyframes glow-pulse {
+  0%,100% { opacity: 0.5; }
+  50%     { opacity: 1; }
+}
+@keyframes float-bob {
+  0%,100% { transform: translateY(0px); }
+  50%     { transform: translateY(-8px); }
+}
+@keyframes text-shimmer {
+  from { background-position: -200% center; }
+  to   { background-position: 200% center; }
+}
+
+.animate-section-reveal { animation: section-reveal 1s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-float-bob      { animation: float-bob 4s ease-in-out infinite; }
+.text-shimmer-cyan {
+  background: linear-gradient(90deg, var(--neon-cyan), #fff, var(--neon-cyan));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 4s linear infinite;
+}
+
 /* ─── Intro & Cinematic Scroll ──────────────────────────────────────── */
 @keyframes intro-word-in {
   from { opacity: 0; transform: translateY(20px) scale(0.96); filter: blur(6px); }
