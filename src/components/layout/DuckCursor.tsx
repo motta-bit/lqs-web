@@ -4,21 +4,19 @@ import { useEffect, useRef, useState } from 'react'
 import { useCursorDuck } from '@/hooks/useCursorDuck'
 import { useIsMobile }   from '@/hooks/useMediaQuery'
 
-// ─── Paleta: boceto blanco ────────────────────────────────────────────────
-const W = '#FFFFFF'
-const S = '#1a1a2e'      // stroke oscuro
-const BOOT = '#00E5FF'   // botas neon-cyan (único color)
-const BEAK = '#FFD166'   // pico amarillo suave
+// ─── Paleta: boceto exacto ────────────────────────────────────────────────
+const W = '#FFFFFF'   // relleno blanco
+const S = '#111111'   // trazo oscuro sketch
 
 type Pose = 'idle' | 'walking' | 'waving' | 'photo' | 'sleeping'
 
-// ─── SVG boceto del pato ─────────────────────────────────────────────────
+// ─── SVG fiel al boceto: cabeza pequeña, cuerpo oval, patas, botas ───────
 export function DuckSVG({
   pose      = 'idle',
   wingPhase = 0,
   direction = 'right',
   frame     = 0,
-  size      = 48,
+  size      = 52,
   isMoving  = false,
 }: {
   pose?:      Pose
@@ -30,142 +28,163 @@ export function DuckSVG({
 }) {
   const flip = direction === 'left' ? -1 : 1
 
-  // Animaciones calculadas
-  const bob       = pose === 'idle'     ? Math.sin(frame * 0.04) * 1.5 : 0
-  const waddle    = pose === 'walking'  ? Math.sin(frame * 0.28) * 3 : 0
-  const sleepNod  = pose === 'sleeping' ? Math.sin(frame * 0.07) * 2 : 0
-  const wingWave  = pose === 'waving'   ? Math.sin(frame * 0.2) * 25 : isMoving ? Math.sin(wingPhase) * 12 : 0
-  const bootL     = pose === 'walking'  ? Math.sin(frame * 0.28) * 12 : 0
-  const bootR     = pose === 'walking'  ? Math.sin(frame * 0.28 + Math.PI) * 12 : 0
-  const eyeClose  = pose === 'sleeping'
+  // Animaciones
+  const bob       = Math.sin(frame * 0.05) * 1.5
+  const bootL     = pose === 'walking' ? Math.sin(frame  * 0.28) * 10 : 0
+  const bootR     = pose === 'walking' ? Math.sin(frame  * 0.28 + Math.PI) * 10 : 0
+  const sleepNod  = pose === 'sleeping' ? Math.sin(frame * 0.07) * 3 : 0
+  const waveAngle = pose === 'waving'   ? Math.sin(frame * 0.22) * 30 : 0
+
+  // Coordenadas base (viewBox 0 0 60 72)
+  const bodyX = 28, bodyY = 38 + bob
+  const headX = 38, headY = 14 + bob + sleepNod
+  const neckX = 34, neckY = 22 + bob
 
   return (
     <svg
-      width={size} height={size}
-      viewBox="0 0 52 58"
+      width={size}
+      height={Math.round(size * 72 / 60)}
+      viewBox="0 0 60 72"
       style={{ transform: `scaleX(${flip})`, overflow: 'visible' }}
       aria-hidden="true"
     >
-      <g transform={`translate(0, ${bob + waddle * 0.3})`}>
+      {/* ── Cuerpo oval (gran elipse, como en el boceto) ── */}
+      <ellipse
+        cx={bodyX} cy={bodyY} rx="17" ry="13"
+        fill={W} stroke={S} strokeWidth="1.8"
+      />
 
-        {/* ── Cuerpo principal ── */}
-        <ellipse cx="25" cy="35" rx="14" ry="11"
-          fill={W} stroke={S} strokeWidth="1.6"
-          strokeLinejoin="round" />
+      {/* ── Ala sugerida (línea curva sobre el cuerpo) ── */}
+      <path
+        d={`M ${bodyX - 12} ${bodyY - 4} Q ${bodyX - 2} ${bodyY - 8} ${bodyX + 10} ${bodyY - 2}`}
+        fill="none" stroke={S} strokeWidth="1.1" strokeLinecap="round" opacity="0.4"
+      />
 
-        {/* Pliegue del ala */}
-        <path d="M 14 32 Q 22 28 34 32 Q 30 36 14 35 Z"
-          fill="rgba(0,0,0,0.04)" stroke={S} strokeWidth="1" strokeLinecap="round" />
-
-        {/* ── Ala levantada (waving / moving) ── */}
-        <g style={{ transformOrigin: '14px 30px', transform: `rotate(${-wingWave}deg)` }}>
-          <path d="M 10 30 Q 6 22 12 18 Q 16 22 14 30 Z"
-            fill={W} stroke={S} strokeWidth="1.4" strokeLinejoin="round" />
+      {/* ── Ala agitada (waving pose) ── */}
+      {(pose === 'waving' || (isMoving && pose === 'walking')) && (
+        <g style={{ transformOrigin: `${bodyX - 14}px ${bodyY - 6}px`, transform: `rotate(${-waveAngle - (isMoving ? Math.sin(wingPhase) * 15 : 0)}deg)` }}>
+          <path
+            d={`M ${bodyX - 14} ${bodyY - 6} Q ${bodyX - 22} ${bodyY - 14} ${bodyX - 18} ${bodyY - 18}`}
+            fill="none" stroke={S} strokeWidth="1.6" strokeLinecap="round"
+          />
         </g>
+      )}
 
-        {/* ── Cuello ── */}
-        <path d="M 22 26 Q 25 22 28 24"
-          fill="none" stroke={S} strokeWidth="1.8" strokeLinecap="round" />
+      {/* ── Cuello ── */}
+      <path
+        d={`M ${neckX - 3} ${neckY + 5} Q ${neckX} ${neckY} ${headX - 4} ${headY + 5}`}
+        fill={W} stroke={S} strokeWidth="1.6" strokeLinecap="round"
+      />
 
-        {/* ── Cabeza ── */}
-        <circle cx="29" cy="19" r="9"
-          fill={W} stroke={S} strokeWidth="1.6"
-          transform={`translate(0, ${sleepNod})`} />
+      {/* ── Cabeza (círculo, más pequeño que el cuerpo) ── */}
+      <circle
+        cx={headX} cy={headY} r="9"
+        fill={W} stroke={S} strokeWidth="1.8"
+      />
 
-        {/* Mejilla suave */}
-        <ellipse cx="32" cy="21" rx="4" ry="3"
-          fill="rgba(255,200,200,0.15)"
-          transform={`translate(0, ${sleepNod})`} />
+      {/* ── Ojo ── */}
+      {pose !== 'sleeping' ? (
+        <circle cx={headX + 2} cy={headY - 2} r="1.4" fill={S} />
+      ) : (
+        <path
+          d={`M ${headX} ${headY - 2} Q ${headX + 3} ${headY - 4.5} ${headX + 5} ${headY - 2}`}
+          stroke={S} strokeWidth="1.3" fill="none" strokeLinecap="round"
+        />
+      )}
 
-        {/* ── Ojo ── */}
-        {!eyeClose ? (
-          <g transform={`translate(0, ${sleepNod})`}>
-            <circle cx="32" cy="17" r="2" fill={S} />
-            <circle cx="32.8" cy="16.3" r="0.6" fill={W} />
+      {/* ── Pico (triángulo pequeño, apunta a la derecha) ── */}
+      <path
+        d={`M ${headX + 7} ${headY} L ${headX + 12} ${headY + 1} L ${headX + 7} ${headY + 3} Z`}
+        fill={W} stroke={S} strokeWidth="1.3" strokeLinejoin="round"
+      />
+
+      {/* ── Patas (dos líneas delgadas rectas) ── */}
+      {pose !== 'sleeping' && (
+        <>
+          {/* Pata izquierda */}
+          <line
+            x1={bodyX - 4} y1={bodyY + 12}
+            x2={bodyX - 4} y2={bodyY + 22}
+            stroke={S} strokeWidth="1.8" strokeLinecap="round"
+            style={{ transform: `rotate(${bootL}deg)`, transformOrigin: `${bodyX - 4}px ${bodyY + 12}px` }}
+          />
+          {/* Pata derecha */}
+          <line
+            x1={bodyX + 4} y1={bodyY + 12}
+            x2={bodyX + 4} y2={bodyY + 22}
+            stroke={S} strokeWidth="1.8" strokeLinecap="round"
+            style={{ transform: `rotate(${bootR}deg)`, transformOrigin: `${bodyX + 4}px ${bodyY + 12}px` }}
+          />
+
+          {/* ── Bota izquierda ── */}
+          <g style={{ transform: `rotate(${bootL}deg)`, transformOrigin: `${bodyX - 4}px ${bodyY + 12}px` }}>
+            {/* caña de la bota */}
+            <rect
+              x={bodyX - 7} y={bodyY + 20}
+              width="6" height="8" rx="1"
+              fill={W} stroke={S} strokeWidth="1.5"
+            />
+            {/* suela / punta */}
+            <rect
+              x={bodyX - 7} y={bodyY + 26}
+              width="10" height="4" rx="1.5"
+              fill={W} stroke={S} strokeWidth="1.5"
+            />
           </g>
-        ) : (
-          <path d="M 30 17 Q 32 15.5 34 17"
-            stroke={S} strokeWidth="1.4" fill="none" strokeLinecap="round"
-            transform={`translate(0, ${sleepNod})`} />
-        )}
 
-        {/* ── Pico ── */}
-        <path d="M 36.5 19 L 41 20.5 L 39 22.5 Z"
-          fill={BEAK} stroke={S} strokeWidth="1.1" strokeLinejoin="round"
-          transform={`translate(0, ${sleepNod})`} />
-
-        {/* ── Botas de caucho (neon-cyan) ── */}
-        {pose !== 'sleeping' && (
-          <>
-            {/* Bota izquierda */}
-            <g style={{ transformOrigin: '19px 45px', transform: `rotate(${bootL}deg)` }}>
-              <rect x="16" y="44" width="6" height="8" rx="2"
-                fill={BOOT} stroke={S} strokeWidth="1.3" />
-              <rect x="14.5" y="49.5" width="9" height="3" rx="1.5"
-                fill={BOOT} stroke={S} strokeWidth="1.1" />
-              {/* brillo bota */}
-              <rect x="17.5" y="45.5" width="1.5" height="3" rx="0.75"
-                fill="rgba(255,255,255,0.35)" />
-            </g>
-
-            {/* Bota derecha */}
-            <g style={{ transformOrigin: '29px 45px', transform: `rotate(${bootR}deg)` }}>
-              <rect x="26" y="44" width="6" height="8" rx="2"
-                fill={BOOT} stroke={S} strokeWidth="1.3" />
-              <rect x="24.5" y="49.5" width="9" height="3" rx="1.5"
-                fill={BOOT} stroke={S} strokeWidth="1.1" />
-              <rect x="27.5" y="45.5" width="1.5" height="3" rx="0.75"
-                fill="rgba(255,255,255,0.35)" />
-            </g>
-          </>
-        )}
-
-        {/* ── Cámara ── */}
-        {(pose === 'idle' || pose === 'walking' || pose === 'photo') && (
-          <g transform={`translate(0, ${bob})`}>
-            {/* correa */}
-            <path d="M 25 26 Q 30 22 36 23"
-              fill="none" stroke="rgba(0,0,0,0.25)" strokeWidth="1" strokeLinecap="round" />
-            {/* cuerpo cámara */}
-            <rect x="34" y="10" width="11" height="8" rx="2"
-              fill="#1a1a2e" stroke={S} strokeWidth="1.2" />
-            {/* lente */}
-            <circle cx="39.5" cy="14" r="2.5"
-              fill="#0a0a1a" stroke={S} strokeWidth="1" />
-            <circle cx="39.5" cy="14" r="1.5"
-              fill="#4a9eff" opacity="0.8" />
-            <circle cx="40.2" cy="13.3" r="0.5"
-              fill={W} opacity="0.7" />
-            {/* flash */}
-            {pose === 'photo' && (
-              <circle cx="43.5" cy="10.5" r="1.5" fill="#FFE566">
-                <animate attributeName="opacity" values="1;0;1" dur="0.8s" repeatCount="indefinite" />
-                <animate attributeName="r"       values="1.5;2.5;1.5" dur="0.8s" repeatCount="indefinite" />
-              </circle>
-            )}
-            {pose !== 'photo' && (
-              <rect x="42.5" y="9.5" width="3" height="2" rx="0.6"
-                fill="#2a2a4a" stroke={S} strokeWidth="0.8" />
-            )}
+          {/* ── Bota derecha ── */}
+          <g style={{ transform: `rotate(${bootR}deg)`, transformOrigin: `${bodyX + 4}px ${bodyY + 12}px` }}>
+            {/* caña de la bota */}
+            <rect
+              x={bodyX + 1} y={bodyY + 20}
+              width="6" height="8" rx="1"
+              fill={W} stroke={S} strokeWidth="1.5"
+            />
+            {/* suela / punta */}
+            <rect
+              x={bodyX + 1} y={bodyY + 26}
+              width="10" height="4" rx="1.5"
+              fill={W} stroke={S} strokeWidth="1.5"
+            />
           </g>
-        )}
+        </>
+      )}
 
-        {/* ── Zzz durmiendo ── */}
-        {pose === 'sleeping' && (
-          <g opacity="0.55">
-            <text x="38" y="14" fontSize="6"   fill={S} fontFamily="sans-serif" fontWeight="bold">z</text>
-            <text x="42" y="8"  fontSize="4.5" fill={S} fontFamily="sans-serif" fontWeight="bold">z</text>
-            <text x="45" y="3"  fontSize="3"   fill={S} fontFamily="sans-serif" fontWeight="bold">z</text>
-          </g>
-        )}
+      {/* ── Cámara (accesorio de marca) ── */}
+      {(pose === 'idle' || pose === 'walking' || pose === 'photo') && (
+        <g transform={`translate(0, ${bob})`}>
+          {/* correa */}
+          <path d={`M ${headX - 2} ${headY + 8} Q ${headX + 4} ${bodyY - 14} ${headX + 10} ${bodyY - 16}`}
+            fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="0.9" strokeLinecap="round" />
+          {/* cámara */}
+          <rect x={headX + 9} y={bodyY - 22} width="10" height="7" rx="1.5"
+            fill="#111" stroke={S} strokeWidth="1.1" />
+          {/* lente */}
+          <circle cx={headX + 14} cy={bodyY - 18.5} r="2.2"
+            fill="#1a1aff" opacity="0.7" stroke={S} strokeWidth="0.8" />
+          <circle cx={headX + 14.6} cy={bodyY - 19.3} r="0.7"
+            fill={W} opacity="0.6" />
+          {/* flash / botón */}
+          {pose === 'photo' ? (
+            <circle cx={headX + 18} cy={bodyY - 23} r="1.3" fill="#FFE566">
+              <animate attributeName="opacity" values="1;0;1" dur="0.7s" repeatCount="indefinite" />
+              <animate attributeName="r"       values="1.3;2.5;1.3" dur="0.7s" repeatCount="indefinite" />
+            </circle>
+          ) : (
+            <rect x={headX + 17} y={bodyY - 24} width="2.5" height="1.8" rx="0.5"
+              fill="#333" stroke={S} strokeWidth="0.7" />
+          )}
+        </g>
+      )}
 
-        {/* ── Detalles de boceto (líneas de textura) ── */}
-        <path d="M 16 33 Q 20 32 24 33"
-          fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="1" strokeLinecap="round" />
-        <path d="M 30 34 Q 34 33 36 35"
-          fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="1" strokeLinecap="round" />
-
-      </g>
+      {/* ── Zzz ── */}
+      {pose === 'sleeping' && (
+        <g opacity="0.5" fontFamily="sans-serif" fontWeight="bold">
+          <text x={headX + 8}  y={headY - 5}  fontSize="5.5" fill={S}>z</text>
+          <text x={headX + 13} y={headY - 11} fontSize="4"   fill={S}>z</text>
+          <text x={headX + 17} y={headY - 16} fontSize="3"   fill={S}>z</text>
+        </g>
+      )}
     </svg>
   )
 }
@@ -196,17 +215,17 @@ export function DuckCursor() {
   return (
     <>
       <div className="fixed pointer-events-none z-[999]"
-        style={{ left: duck.x - 26, top: duck.y - 44, willChange: 'transform' }}>
+        style={{ left: duck.x - 28, top: duck.y - 48, willChange: 'transform' }}>
         <DuckSVG
           pose={pose}
           wingPhase={duck.wingPhase}
           direction={duck.direction}
           frame={frame}
           isMoving={duck.isMoving}
-          size={52}
+          size={56}
         />
       </div>
-      {/* Punto del cursor */}
+      {/* Punto cursor neon-cyan */}
       <div className="fixed pointer-events-none z-[998] rounded-full"
         style={{
           left: duck.x - 3, top: duck.y - 3,
@@ -223,12 +242,11 @@ export function DuckCursor() {
 export function DuckFloat() {
   const [frame, setFrame] = useState(0)
   const [visible, setVisible] = useState(false)
-  const [pose, setPose] = useState<Pose>('idle')
-  const [msg, setMsg] = useState<string | null>(null)
-  const [side, setSide] = useState<'left' | 'right'>('right')
+  const [pose, setPose]     = useState<Pose>('idle')
+  const [msg,  setMsg]      = useState<string | null>(null)
+  const [side, setSide]     = useState<'left' | 'right'>('right')
 
   useEffect(() => {
-    // Aparece después de 3s
     const t = setTimeout(() => setVisible(true), 3000)
     return () => clearTimeout(t)
   }, [])
@@ -239,15 +257,13 @@ export function DuckFloat() {
     return () => clearInterval(id)
   }, [])
 
-  // Reacciona al scroll
   useEffect(() => {
-    const sections: { id: string; msg: string; pose: Pose; side: 'left' | 'right' }[] = [
-      { id: 'inicio',     msg: null!,                     pose: 'idle',   side: 'right' },
+    const sections: { id: string; msg: string | null; pose: Pose; side: 'left' | 'right' }[] = [
+      { id: 'inicio',     msg: null,                      pose: 'idle',   side: 'right' },
       { id: 'portafolio', msg: '¡Mira lo que hicimos!',  pose: 'photo',  side: 'right' },
       { id: 'planes',     msg: '¿Cuál es el tuyo?',      pose: 'waving', side: 'left'  },
       { id: 'contacto',   msg: '¡Hablemos!',             pose: 'waving', side: 'right' },
     ]
-
     const observers = sections.map(sec => {
       const el = document.getElementById(sec.id)
       if (!el) return null
@@ -264,7 +280,6 @@ export function DuckFloat() {
       obs.observe(el)
       return obs
     })
-
     return () => observers.forEach(o => o?.disconnect())
   }, [])
 
@@ -272,18 +287,17 @@ export function DuckFloat() {
     <div
       className="fixed bottom-28 z-50 flex flex-col items-center gap-2 pointer-events-none select-none transition-all duration-700"
       style={{
-        right:     side === 'right' ? 20 : 'auto',
-        left:      side === 'left'  ? 20 : 'auto',
+        right:     side === 'right' ? 16 : 'auto',
+        left:      side === 'left'  ? 16 : 'auto',
         opacity:   visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(30px)',
       }}
       aria-hidden="true"
     >
-      {/* Burbuja de mensaje */}
       {msg && (
         <div className="px-3 py-1.5 rounded-xl text-xs font-mono-data text-center max-w-[140px] animate-intro-in"
           style={{
-            background: 'rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.07)',
             border: '1px solid rgba(255,255,255,0.15)',
             backdropFilter: 'blur(12px)',
             color: 'rgba(255,255,255,0.8)',
@@ -292,17 +306,15 @@ export function DuckFloat() {
           {msg}
         </div>
       )}
-
-      {/* Pato */}
       <div style={{
-        filter: 'drop-shadow(0 4px 20px rgba(0,229,255,0.2)) drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
+        filter: 'drop-shadow(0 4px 16px rgba(0,0,0,0.5)) drop-shadow(0 0 20px rgba(0,229,255,0.1))',
       }}>
         <DuckSVG
           pose={pose}
           direction={side === 'right' ? 'left' : 'right'}
           frame={frame}
           isMoving={false}
-          size={56}
+          size={52}
         />
       </div>
     </div>
@@ -313,7 +325,7 @@ export function DuckFloat() {
 export function HeaderDuck() {
   const isMobile = useIsMobile()
   const [frame, setFrame] = useState(0)
-  const [x, setX] = useState(80)
+  const [x, setX]         = useState(80)
   const dirRef  = useRef<'left' | 'right'>('right')
   const xRef    = useRef(80)
   const rafRef  = useRef<number>(0)
@@ -329,8 +341,8 @@ export function HeaderDuck() {
     const tick = () => {
       const maxX = typeof window !== 'undefined' ? window.innerWidth - 70 : 320
       const newX = xRef.current + (dirRef.current === 'right' ? SPEED : -SPEED)
-      if (newX >= maxX) { xRef.current = maxX; dirRef.current = 'left' }
-      else if (newX <= 70) { xRef.current = 70; dirRef.current = 'right' }
+      if      (newX >= maxX) { xRef.current = maxX; dirRef.current = 'left' }
+      else if (newX <= 70)   { xRef.current = 70;   dirRef.current = 'right' }
       else xRef.current = newX
       setX(Math.round(xRef.current))
       rafRef.current = requestAnimationFrame(tick)
@@ -345,18 +357,12 @@ export function HeaderDuck() {
     <div className="fixed top-0 pointer-events-none select-none"
       style={{ left: x, height: 64, zIndex: 39, display: 'flex', alignItems: 'center' }}
       aria-hidden="true">
-      <DuckSVG
-        pose="walking"
-        direction={dirRef.current}
-        frame={frame}
-        isMoving={true}
-        size={30}
-      />
+      <DuckSVG pose="walking" direction={dirRef.current} frame={frame} isMoving size={28} />
     </div>
   )
 }
 
-// ─── DuckMascot (legacy compat) ──────────────────────────────────────────
+// ─── DuckMascot (legacy) ─────────────────────────────────────────────────
 export function DuckMascot({ visible, message }: { visible: boolean; message?: string }) {
   const [frame, setFrame] = useState(0)
   useEffect(() => {
@@ -365,11 +371,10 @@ export function DuckMascot({ visible, message }: { visible: boolean; message?: s
     return () => clearInterval(id)
   }, [])
   return (
-    <div className="fixed bottom-20 right-4 z-50 flex flex-col items-end gap-2 transition-all duration-500"
+    <div className="fixed bottom-20 right-4 z-50 flex flex-col items-end gap-2 transition-all duration-500 pointer-events-none"
       style={{
         transform: visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.8)',
         opacity:   visible ? 1 : 0,
-        pointerEvents: 'none',
       }}>
       {message && (
         <div className="max-w-[180px] px-3 py-2 rounded-lg text-xs font-mono-data text-right"
