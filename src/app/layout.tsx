@@ -4,7 +4,7 @@ import './globals.css'
 import ThemeProvider       from '@/components/layout/ThemeProvider'
 import LenisProvider       from '@/components/layout/LenisProvider'
 import Preloader           from '@/components/layout/Preloader'
-import { DuckCursor, HeaderDuck } from '@/components/layout/DuckCursor'
+import { DuckCursor, HeaderDuck, DuckFloat } from '@/components/layout/DuckCursor'
 import { NextAuthProvider } from '@/components/layout/NextAuthProvider'
 
 const bebasNeue = Bebas_Neue({
@@ -89,6 +89,7 @@ export default function RootLayout({
             <Preloader />
             <DuckCursor />
             <HeaderDuck />
+            <DuckFloat />
             <LenisProvider>
               {children}
             </LenisProvider>
