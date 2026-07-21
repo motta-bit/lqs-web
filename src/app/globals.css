@@ -14,8 +14,10 @@
   --color-imi-textPrimary:    #FFFFFF;
   --color-imi-textMuted:      #A0A0A0;
 
-  /* Fonts */
-  --font-authority:   var(--font-bebas), sans-serif;
+  /* Fonts — D-02: display pasa a Archivo variable (eje wdth al maximo, 900).
+     `--font-authority` se mantiene como alias para no romper consumidores. */
+  --font-display:     var(--font-archivo), sans-serif;
+  --font-authority:   var(--font-archivo), sans-serif;
   --font-readability: var(--font-inter), sans-serif;
   --font-data-mono:   var(--font-jetbrains), monospace;
 
@@ -80,24 +82,36 @@
 .animate-slide-in-right  { animation: slide-in-right  0.35s cubic-bezier(0.32, 0.72, 0, 1) both; }
 .animate-slide-in-bottom { animation: slide-in-bottom 0.35s cubic-bezier(0.32, 0.72, 0, 1) both; }
 
-/* ─── CSS Variable Aliases --imi-* (document compatibility) ─────────── */
+/* ─── CSS Variable Aliases --imi-* ──────────────────────────────────────
+   D-01: estos alias sobrescribían la paleta del brief con una "Cyber Aero"
+   (#040a1a, cian, morado). Reapuntados a los tokens del brief para no
+   refactorizar los ~40 componentes que ya los consumen.
+   Fuente de verdad: negro #000 · naranja #FF4600 · teal #008080 · azul #0055FF
+   ──────────────────────────────────────────────────────────────────────── */
 :root {
-  --imi-bgAbsolute:     #040a1a;
+  --imi-bgAbsolute:     #000000;
   --imi-accentOrange:   #FF4600;
-  --imi-securityTeal:   #00E5FF;
-  --imi-innovationBlue: #9B59FF;
+  --imi-securityTeal:   #008080;
+  --imi-innovationBlue: #0055FF;
   --imi-gridBorder:     rgba(255,255,255,0.07);
   --imi-cardBg:         rgba(255,255,255,0.04);
   --imi-textPrimary:    #FFFFFF;
-  --imi-textMuted:      rgba(255,255,255,0.4);
+  --imi-textMuted:      rgba(255,255,255,0.55);
 
-  /* Cyber Aero neons */
-  --neon-cyan:   #00E5FF;
-  --neon-green:  #00FF88;
-  --neon-pink:   #FF2D78;
-  --neon-purple: #9B59FF;
+  /* Acentos de marca — los únicos permitidos en los niveles nuevos */
+  --lqs-orange: #FF4600;
+  --lqs-teal:   #008080;
+  --lqs-blue:   #0055FF;
+  --lqs-black:  #000000;
+
+  /* Legacy "Cyber Aero" — reapuntados a la paleta del brief.
+     No usar en código nuevo; se retiran cuando el sitio viejo salga. */
+  --neon-cyan:   #008080;
+  --neon-green:  #008080;
+  --neon-pink:   #FF4600;
+  --neon-purple: #0055FF;
   --neon-orange: #FF4600;
-  --neon-sky:    #38BDF8;
+  --neon-sky:    #0055FF;
 
   /* Glass */
   --glass-bg:      rgba(255,255,255,0.04);
@@ -105,11 +119,12 @@
   --glass-hover:   rgba(255,255,255,0.08);
   --glass-blur:    blur(24px) saturate(180%);
 
-  /* Sky depths */
-  --sky-0: #020810;
-  --sky-1: #04101e;
-  --sky-2: #071528;
-  --sky-3: #0a1c38;
+  /* Sky depths — colapsadas a negro absoluto (D-01, referencia Zentry:
+     paleta de un solo color). Se conservan los nombres por compatibilidad. */
+  --sky-0: #000000;
+  --sky-1: #000000;
+  --sky-2: #050505;
+  --sky-3: #0A0A0A;
 }
 
 /* ─── Cyber Aero — Glass utilities ──────────────────────────────────── */
@@ -251,13 +266,138 @@ html {
 }
 
 body {
-  background-color: var(--sky-0);
-  color: #ffffff;
-  font-family: var(--font-inter), system-ui, sans-serif;
+  background-color: var(--imi-bgAbsolute);
+  color: var(--imi-textPrimary);
+  font-family: var(--font-readability), system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ─── Display: Archivo con el eje de anchura al máximo (D-02) ────────────
+   Tailwind genera `.font-display` con solo font-family; esta regla sin capa
+   añade el ancho y el peso, que es lo que aproxima el corte "Expanded Black".
+   Archivo expone wdth 62–125.
+   ──────────────────────────────────────────────────────────────────────── */
+.font-display {
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Pato: animación en CSS, no en React (D-03) ─────────────────────────
+   Los periodos replican exactamente el bucle original (`frame` a 28ms):
+     bob    sin(f*0.05) → 125.7 frames × 28ms ≈ 3.52s
+     waddle sin(f*0.22) →  28.6 frames × 28ms ≈ 0.80s
+     patas  sin(f*0.28) →  22.4 frames × 28ms ≈ 0.63s
+   Misma personalidad, cero re-renders.
+   ──────────────────────────────────────────────────────────────────────── */
+@keyframes duck-bob {
+  0%, 100% { transform: translateY(0); }
+  25%      { transform: translateY(1.2px); }
+  75%      { transform: translateY(-1.2px); }
+}
+@keyframes duck-waddle {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(2.5px); }
+  75%      { transform: translateX(-2.5px); }
+}
+@keyframes duck-leg-swing {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(16deg); }
+  75%      { transform: rotate(-16deg); }
+}
+
+.duck-cursor { will-change: transform; }
+
+.duck-cursor .duck-bob {
+  animation: duck-bob 3.52s ease-in-out infinite;
+  transform-box: view-box;
+}
+
+/* El balanceo y las patas solo corren cuando el pato camina. */
+.duck-cursor .duck-waddle { transform-box: view-box; }
+.duck-cursor[data-pose='walking'] .duck-waddle {
+  animation: duck-waddle 0.8s ease-in-out infinite;
+}
+
+.duck-cursor .duck-leg-l,
+.duck-cursor .duck-leg-r {
+  transform-box: view-box;
+}
+.duck-cursor .duck-leg-l { transform-origin: 24px 64px; }
+.duck-cursor .duck-leg-r { transform-origin: 36px 64px; }
+
+.duck-cursor[data-pose='walking'] .duck-leg-l {
+  animation: duck-leg-swing 0.63s ease-in-out infinite;
+}
+.duck-cursor[data-pose='walking'] .duck-leg-r {
+  animation: duck-leg-swing 0.63s ease-in-out infinite;
+  animation-delay: -0.315s; /* media fase: la pata opuesta */
+}
+
+/* Dirección: se voltea el SVG entero, como hacía scaleX(flip). */
+.duck-cursor[data-direction='left'] svg { transform: scaleX(-1); }
+
+/* Estados de ojo y Zzz — hoy solo 'idle'/'walking' están cableados. */
+.duck-cursor .duck-eye-shut,
+.duck-cursor .duck-zzz { display: none; }
+.duck-cursor[data-pose='sleeping'] .duck-eye-open { display: none; }
+.duck-cursor[data-pose='sleeping'] .duck-eye-shut,
+.duck-cursor[data-pose='sleeping'] .duck-zzz { display: block; }
+.duck-cursor[data-pose='sleeping'] .duck-legs { display: none; }
+
+/* El cursor nativo se oculta solo mientras el pato conduce, y nunca sobre
+   campos de texto o controles: ahí el usuario necesita ver dónde escribe. */
+body.duck-cursor-active { cursor: none; }
+body.duck-cursor-active input,
+body.duck-cursor-active textarea,
+body.duck-cursor-active select,
+body.duck-cursor-active [contenteditable='true'] { cursor: auto; }
+
+/* ─── prefers-reduced-motion — red de seguridad global ───────────────────
+   Regla innegociable 5. Esto es el piso, no la implementación: cada feature
+   además consulta `useCapability()` para no montar el canvas ni la física.
+   Aquí se neutraliza todo lo que ya existe en el sitio (loops infinitos,
+   scroll suave, autoplay) sin tener que tocar 40 componentes.
+   ──────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Los loops ambientales del sitio actual: se detienen en su estado final. */
+  .animate-float-bob,
+  .animate-ready-glow,
+  .animate-btn-pulse,
+  .text-shimmer-cyan {
+    animation: none !important;
+  }
+
+  .text-shimmer-cyan {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* Parallax y transformaciones de scroll quedan neutralizadas. */
+  [data-parallax] {
+    transform: none !important;
+  }
+
+  video[autoplay] {
+    display: none;
+  }
+}
+
 
 /* ─── Secciones como pantallas individuales ─────────────────────────── */
 main > section {

@@ -1,16 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Inter, JetBrains_Mono } from 'next/font/google'
+import { Archivo, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProvider       from '@/components/layout/ThemeProvider'
 import LenisProvider       from '@/components/layout/LenisProvider'
 import Preloader           from '@/components/layout/Preloader'
-import { DuckCursor, HeaderDuck, DuckFloat } from '@/components/layout/DuckCursor'
 import { NextAuthProvider } from '@/components/layout/NextAuthProvider'
+import { WebVitals }        from '@/components/layout/WebVitals'
 
-const bebasNeue = Bebas_Neue({
-  weight:   '400',
+// D-02: "Archivo Expanded Black" no existe como familia en Google Fonts.
+// Se usa Archivo variable con el eje de anchura (`wdth`) disponible y peso 900.
+// Si LQS consigue licencia del corte Expanded real, esto pasa a next/font/local
+// sin tocar ningún consumidor: el token `--font-archivo` no cambia.
+// `axes` solo se permite con peso variable, así que el 900 se aplica en CSS
+// (`.font-display`), junto con el eje de anchura al máximo (font-stretch 125%).
+const archivo = Archivo({
   subsets:  ['latin'],
-  variable: '--font-bebas',
+  axes:     ['wdth'],
+  variable: '--font-archivo',
   display:  'swap',
 })
 
@@ -74,7 +80,7 @@ export default function RootLayout({
     <html
       lang="es"
       data-theme="default"
-      className={`${bebasNeue.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${archivo.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body
@@ -84,12 +90,15 @@ export default function RootLayout({
           color:           'var(--imi-textPrimary)',
         }}
       >
+        <WebVitals />
         <NextAuthProvider>
           <ThemeProvider>
             <Preloader />
-            <DuckCursor />
-            <HeaderDuck />
-            <DuckFloat />
+            {/*
+              Los patos legacy (cursor/header/float) bajaron a (main)/layout:
+              corren bucles de re-render por frame y las rutas de la ciudad no
+              deben pagarlos. La ciudad usa @/components/duck.
+            */}
             <LenisProvider>
               {children}
             </LenisProvider>

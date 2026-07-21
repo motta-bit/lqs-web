@@ -1,0 +1,47 @@
+name: Performance Budget
+
+# Regla innegociable 4 del brief: si se rompe el presupuesto, falla el build.
+# LCP <2.5s · INP <200ms (TBT como proxy en lab) · CLS <0.1
+
+on:
+  push:
+    branches: [master, 'redesign/**']
+  pull_request:
+    branches: [master]
+
+jobs:
+  budget:
+    name: CWV + tamano de bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      # El build necesita las variables presentes, no una BD real:
+      # Prisma solo genera el cliente en build time.
+      DATABASE_URL: postgresql://user:pass@localhost:5432/db
+      NEXTAUTH_SECRET: ci-placeholder-secret
+      NEXTAUTH_URL: http://localhost:3000
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Build de produccion
+        run: npm run build
+
+      - name: El bundle 3D sigue diferido
+        run: npm run perf:3d
+
+      - name: Presupuesto de tamano de bundle
+        run: npx size-limit
+
+      - name: Core Web Vitals (Lighthouse CI)
+        run: npx lhci autorun
