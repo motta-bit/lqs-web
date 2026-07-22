@@ -6,6 +6,7 @@ import LenisProvider       from '@/components/layout/LenisProvider'
 import Preloader           from '@/components/layout/Preloader'
 import { NextAuthProvider } from '@/components/layout/NextAuthProvider'
 import { WebVitals }        from '@/components/layout/WebVitals'
+import { CurtainProvider }  from '@/city/transitions/CurtainProvider'
 
 // D-02: "Archivo Expanded Black" no existe como familia en Google Fonts.
 // Se usa Archivo variable con el eje de anchura (`wdth`) disponible y peso 900.
@@ -100,7 +101,9 @@ export default function RootLayout({
               deben pagarlos. La ciudad usa @/components/duck.
             */}
             <LenisProvider>
-              {children}
+              <CurtainProvider>
+                {children}
+              </CurtainProvider>
             </LenisProvider>
           </ThemeProvider>
         </NextAuthProvider>

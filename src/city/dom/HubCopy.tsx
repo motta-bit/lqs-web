@@ -13,8 +13,8 @@
  * enhancement; the persistent, keyboard-reachable trigger is this list.
  */
 
-import Link from 'next/link'
 import { DISTRICTS, CITY_COPY, ACCENT_HEX } from '../districts'
+import { DistrictLink } from './DistrictLink'
 
 export function HubCopy() {
   return (
@@ -39,8 +39,9 @@ export function HubCopy() {
         <ul className="grid grid-cols-2 gap-x-6 gap-y-1 sm:grid-cols-4 lg:flex lg:flex-wrap lg:gap-x-8">
           {DISTRICTS.map((district) => (
             <li key={district.slug}>
-              <Link
+              <DistrictLink
                 href={`/ciudad/${district.slug}`}
+                accent={district.accent}
                 data-district={district.slug}
                 className="group inline-flex items-baseline gap-2 py-2 font-display text-lg font-black uppercase tracking-wide transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:opacity-60"
                 style={{ outlineColor: ACCENT_HEX[district.accent] }}
@@ -53,7 +54,7 @@ export function HubCopy() {
                 {district.name}
                 {/* Named for screen readers without spending visible copy. */}
                 <span className="sr-only"> — {district.domain}</span>
-              </Link>
+              </DistrictLink>
             </li>
           ))}
         </ul>

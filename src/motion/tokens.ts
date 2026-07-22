@@ -77,3 +77,44 @@ export const SHIFT = {
 export function cssEase(name: EaseName): string {
   return `cubic-bezier(${EASE[name].join(', ')})`
 }
+
+/**
+ * Cubic-bezier as a progress function, for GSAP (which takes an ease function,
+ * not a CSS string, without the CustomEase plugin).
+ *
+ * Newton-Raphson to invert x(t) for a given input, then evaluate y(t). Same
+ * math the browser uses for CSS cubic-bezier, so the curve is identical across
+ * CSS and GSAP — one motion system, two engines.
+ */
+export function gsapEase(name: EaseName): (progress: number) => number {
+  const [x1, y1, x2, y2] = EASE[name]
+
+  const cx = 3 * x1
+  const bx = 3 * (x2 - x1) - cx
+  const ax = 1 - cx - bx
+  const cy = 3 * y1
+  const by = 3 * (y2 - y1) - cy
+  const ay = 1 - cy - by
+
+  const sampleX = (t: number) => ((ax * t + bx) * t + cx) * t
+  const sampleY = (t: number) => ((ay * t + by) * t + cy) * t
+  const slopeX = (t: number) => (3 * ax * t + 2 * bx) * t + cx
+
+  const solveT = (x: number) => {
+    let t = x
+    for (let i = 0; i < 8; i++) {
+      const dx = sampleX(t) - x
+      if (Math.abs(dx) < 1e-5) return t
+      const d = slopeX(t)
+      if (Math.abs(d) < 1e-6) break
+      t -= dx / d
+    }
+    return t
+  }
+
+  return (progress: number) => {
+    if (progress <= 0) return 0
+    if (progress >= 1) return 1
+    return sampleY(solveT(progress))
+  }
+}
