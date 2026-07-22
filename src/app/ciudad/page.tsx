@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { CityStage } from '@/city/CityStage'
+import { CityPreloader } from '@/city/CityPreloader'
 import { HubCopy } from '@/city/dom/HubCopy'
 import { CITY_COPY } from '@/city/districts'
 import { DuckCursor } from '@/components/duck/DuckCursor'
@@ -27,6 +28,7 @@ export default function CiudadPage() {
       <CityStage />
       <HubCopy />
       <DuckCursor />
+      <CityPreloader />
 
       <noscript>
         {/*

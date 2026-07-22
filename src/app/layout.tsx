@@ -3,7 +3,6 @@ import { Archivo, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import ThemeProvider       from '@/components/layout/ThemeProvider'
 import LenisProvider       from '@/components/layout/LenisProvider'
-import Preloader           from '@/components/layout/Preloader'
 import { NextAuthProvider } from '@/components/layout/NextAuthProvider'
 import { WebVitals }        from '@/components/layout/WebVitals'
 import { CurtainProvider }  from '@/city/transitions/CurtainProvider'
@@ -94,8 +93,9 @@ export default function RootLayout({
         <WebVitals />
         <NextAuthProvider>
           <ThemeProvider>
-            <Preloader />
             {/*
+              El preloader falso global (progreso por setInterval) se retiró:
+              la ciudad tiene su propio preloader con carga real (CityPreloader).
               Los patos legacy (cursor/header/float) bajaron a (main)/layout:
               corren bucles de re-render por frame y las rutas de la ciudad no
               deben pagarlos. La ciudad usa @/components/duck.

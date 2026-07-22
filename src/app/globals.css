@@ -285,6 +285,23 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* ─── Preloader: pato ensamblándose (nivel 0) ────────────────────────────
+   Entra con un latido y flota suave mientras la escena carga de verdad. */
+@keyframes duck-assemble-in {
+  0%   { opacity: 0; transform: scale(0.6) translateY(12px); filter: blur(6px); }
+  60%  { opacity: 1; transform: scale(1.06) translateY(0);    filter: blur(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes duck-assemble-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.duck-assemble {
+  animation:
+    duck-assemble-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both,
+    duck-assemble-float 2.4s ease-in-out 0.7s infinite;
+}
+
 /* ─── Pato: animación en CSS, no en React (D-03) ─────────────────────────
    Los periodos replican exactamente el bucle original (`frame` a 28ms):
      bob    sin(f*0.05) → 125.7 frames × 28ms ≈ 3.52s

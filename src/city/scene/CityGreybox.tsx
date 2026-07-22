@@ -15,6 +15,24 @@ import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import type { Group, Mesh } from 'three'
 import { DISTRICTS, ACCENT_HEX } from '../districts'
+import { useCityReadyStore } from './cityReadyStore'
+
+/**
+ * Marca la escena como lista en el primer frame realmente pintado. Ese es el
+ * momento honesto de "cargó": el canvas ya tiene contenido en pantalla.
+ */
+function ReadySignal() {
+  const painted = useRef(false)
+  const markReady = useCityReadyStore((s) => s.markReady)
+
+  useFrame(() => {
+    if (painted.current) return
+    painted.current = true
+    markReady()
+  })
+
+  return null
+}
 
 const GROUND_SIZE = 40
 
@@ -88,6 +106,8 @@ function DriftingCity({ ambient }: { ambient: boolean }) {
 }
 
 export function CityGreybox({ ambient = true }: { ambient?: boolean }) {
+  const setProgress = useCityReadyStore((s) => s.setProgress)
+
   return (
     <Canvas
       // Overhead three-quarter view: the "aerial view of a stylised city" the
@@ -97,9 +117,12 @@ export function CityGreybox({ ambient = true }: { ambient?: boolean }) {
       dpr={[1, 1.75]}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ position: 'fixed', inset: 0 }}
+      // GL context created: real milestone before the first frame.
+      onCreated={() => setProgress(0.6)}
       // The canvas is decorative; all meaning is in the DOM layer above it.
       aria-hidden="true"
     >
+      <ReadySignal />
       <DriftingCity ambient={ambient} />
     </Canvas>
   )
