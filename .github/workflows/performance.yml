@@ -37,6 +37,9 @@ jobs:
       - name: Build de produccion
         run: npm run build
 
+      - name: Consistencia mascota-servicio
+        run: npm run check:city
+
       - name: El bundle 3D sigue diferido
         run: npm run perf:3d
 

@@ -60,6 +60,11 @@ model Service {
   descriptionEs String
   descriptionEn String
   category      Category
+  // Distrito/mascota al que pertenece (reel, lumi, bass, brand, festa,
+  // pixel, arty, muse). Nullable: migración aditiva segura sobre filas
+  // existentes. La capa de presentación de cada mascota vive en
+  // src/city/districts.ts; acá solo se guarda la clave del vínculo.
+  district      String?
   basePrice     Float
   deliveryDays  Int
   tags          String[]

@@ -65,7 +65,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'orange',
     position: octagon(0),
     massing: { footprint: 4.2, height: 3.4 },
-    services: ['video-produccion', 'contenido-redes'],
+    services: ['video-produccion', 'contenido-redes', 'reel-motion-graphics'],
   },
   {
     slug: 'lumi',
@@ -75,7 +75,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'teal',
     position: octagon(1),
     massing: { footprint: 3.6, height: 2.6 },
-    services: ['fotografia-corporativa', 'fotografia-producto'],
+    services: ['fotografia-corporativa', 'fotografia-producto', 'lumi-retrato-lifestyle'],
   },
   {
     slug: 'bass',
@@ -85,7 +85,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'blue',
     position: octagon(2),
     massing: { footprint: 3.2, height: 4.8 },
-    services: [],
+    services: ['bass-produccion-musical', 'bass-branding-sonoro', 'bass-podcast'],
   },
   {
     slug: 'brand',
@@ -95,7 +95,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'orange',
     position: octagon(3),
     massing: { footprint: 4.6, height: 2.2 },
-    services: ['branding-identidad', 'naming-copywriting'],
+    services: ['branding-identidad', 'naming-copywriting', 'brand-manual-identidad'],
   },
   {
     slug: 'festa',
@@ -105,7 +105,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'orange',
     position: octagon(4),
     massing: { footprint: 5.0, height: 1.8 },
-    services: [],
+    services: ['festa-cobertura', 'festa-produccion-evento'],
   },
   {
     slug: 'pixel',
@@ -115,7 +115,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'blue',
     position: octagon(5),
     massing: { footprint: 3.8, height: 4.2 },
-    services: ['diseno-web', 'seo-analitica'],
+    services: ['diseno-web', 'seo-analitica', 'pixel-ecommerce'],
   },
   {
     slug: 'arty',
@@ -125,7 +125,7 @@ export const DISTRICTS: readonly District[] = [
     accent: 'teal',
     position: octagon(6),
     massing: { footprint: 3.4, height: 3.0 },
-    services: [],
+    services: ['arty-ilustracion', 'arty-direccion-arte'],
   },
   {
     slug: 'muse',

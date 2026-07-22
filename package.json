@@ -10,6 +10,7 @@
     "lint": "eslint",
     "perf:size": "size-limit",
     "perf:3d": "node scripts/assert-3d-deferred.mjs",
+    "check:city": "tsx scripts/check-city-services.ts",
     "perf:lhci": "lhci autorun",
     "perf": "npm run build && npm run perf:3d && npm run perf:size && npm run perf:lhci",
     "prisma:generate": "prisma generate",
