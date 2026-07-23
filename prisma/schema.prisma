@@ -33,6 +33,20 @@ enum PackageType {
   enterprise
 }
 
+// Cómo se cobra un paquete: encargo único o mensualidad recurrente.
+enum BillingType {
+  ONE_TIME
+  MONTHLY
+}
+
+// A quién apunta el paquete. Ordena el catálogo por tamaño de cliente:
+// emprendedor/persona natural → pyme → gran empresa.
+enum Audience {
+  EMPRENDEDOR
+  PYME
+  CORPORATIVO
+}
+
 enum Currency {
   COP
   USD
@@ -85,9 +99,27 @@ model Package {
   descriptionEs String
   descriptionEn String
   type          PackageType
+  // Modelo comercial. Campos nuevos con default: migración aditiva segura
+  // por db push sobre filas existentes.
+  billing       BillingType      @default(ONE_TIME)
+  audience      Audience         @default(PYME)
+  // Precio único (ONE_TIME) o el techo de referencia. Para planes MONTHLY,
+  // el precio que se muestra es monthlyPrice.
   totalPrice    Float
+  // Mensualidad, solo para billing = MONTHLY.
+  monthlyPrice  Float?
+  // Posición en la escalera de desarrollo de marca dentro de su audiencia:
+  // el usuario sube de tierStep 1 → 2 → 3 mejorando el plan.
+  tierStep      Int              @default(1)
+  // Meses mínimos de compromiso (contratos a largo plazo, sobre todo
+  // corporativos). Null = sin permanencia.
+  commitmentMonths Int?
   discountPct   Float            @default(0)
   clientTypes   ClientType[]
+  // "Cosas vitales" incluidas que no son un Service discreto: reportes,
+  // rondas de ajustes, soporte, reuniones. Enriquecen los planes mensuales.
+  perksEs       String[]
+  perksEn       String[]
   isHighlighted Boolean          @default(false)
   isActive      Boolean          @default(true)
   createdAt     DateTime         @default(now())

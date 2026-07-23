@@ -105,6 +105,29 @@ Decisiones tomadas con criterio para no frenar el trabajo. Cada una es reversibl
 
 ---
 
+### D-11 — Modelo comercial: precios de emprendedor + escalera mensual mejorable
+**Fecha:** 2026-07-22 · **Estado:** decidida (indicación del cliente)
+
+**Contexto.** El cliente pidió precios económicos y competitivos, enfocados en emprendedores, personas naturales y encargos pequeños; los paquetes grandes reservados y muy específicos solo para grandes empresas; planes mensuales por pasos de desarrollo de marca, mejorables; y contratos a largo plazo.
+
+**Decisión.**
+1. **Servicios repreciados a la baja** como precios de entrada ("desde"), accesibles para emprendedores (COP 280k–1.9M; la mayoría de encargos pequeños bajo 1M). Antes eran tarifas de gran agencia (hasta 5.5M).
+2. **Escalera comercial por audiencia** (nuevo enum `Audience`): EMPRENDEDOR → PYME → CORPORATIVO.
+3. **Facturación** (nuevo enum `BillingType`): `ONE_TIME` (encargo) vs `MONTHLY` (plan). Los planes mensuales son la columna vertebral del desarrollo de marca por pasos.
+4. **Planes mensuales mejorables** ordenados por `tierStep`: Semilla (emprendedor, 1) → Despegue (pyme, 2) → Escala (pyme, 3). El usuario sube de paso mejorando el plan. Cada paso suma "cosas vitales" (campo `perksEs/En`: reportes, rondas, reuniones, SLA).
+5. **Corporativo específico y con permanencia** (`commitmentMonths`): Marca Corporativa 360 (encargo grande) y Retainer Corporativo (mensual, 12 meses), reservados a grandes empresas.
+
+**Precios resultantes** (con descuento por volumen aplicado):
+- Emprendedor único: Arranque de Marca $873k · Presencia Express $1.32M
+- Mensual: Semilla $654k/mes · Despegue $918k/mes · Escala $1.456M/mes
+- Corporativo: Marca 360 $4.63M · Retainer $2.0M/mes (12 meses)
+
+**Esquema.** Campos nuevos en `Package` (`billing`, `audience`, `monthlyPrice`, `tierStep`, `commitmentMonths`, `perksEs/En`), todos con default → migración aditiva segura por `db push`. `PackageType` (starter/pro/enterprise) se conserva y se mapea desde la audiencia.
+
+**Pendiente.** Aplicar a Neon con `prisma db push && prisma db seed` (el `.env` local tiene host placeholder). Las páginas legacy de catálogo (`/planes`, PackagesSection) siguen hardcodeadas con precios viejos; se reemplazan cuando la ciudad absorba la conversión (Fase 3), no las sincronizo ahora.
+
+---
+
 ### D-07 — Se trabaja en rama, no en `master`
 **Fecha:** 2026-07-21 · **Estado:** decidida
 

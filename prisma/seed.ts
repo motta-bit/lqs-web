@@ -25,35 +25,36 @@ async function main() {
   }
   console.log(`✅ ${SERVICES.length} servicios creados`)
 
-  // ─── Paquetes (4) ─────────────────────────────────────────────────────
+  // ─── Paquetes y planes ─────────────────────────────────────────────────
   for (const p of PACKAGES) {
     const subtotal = p.serviceSlugs.reduce((acc, slug) => {
       const price = priceBySlug.get(slug)
       if (price === undefined) throw new Error(`Paquete ${p.slug}: servicio inexistente ${slug}`)
       return acc + price
     }, 0)
-    const totalPrice = Math.round(subtotal * (1 - p.discountPct))
+    const discounted = Math.round(subtotal * (1 - p.discountPct))
+    // MONTHLY: el subtotal es el costo mensual recurrente → monthlyPrice.
+    // ONE_TIME: es el precio único → totalPrice, sin mensualidad.
+    const monthlyPrice = p.billing === 'MONTHLY' ? discounted : null
+    const totalPrice = discounted
+
     const serviceLinks = p.serviceSlugs.map((slug) => ({ serviceId: idBySlug.get(slug)! }))
+    const fields = {
+      nameEs: p.nameEs, nameEn: p.nameEn,
+      descriptionEs: p.descriptionEs, descriptionEn: p.descriptionEn,
+      type: p.type, billing: p.billing, audience: p.audience,
+      totalPrice, monthlyPrice, tierStep: p.tierStep,
+      commitmentMonths: p.commitmentMonths, discountPct: p.discountPct,
+      clientTypes: p.clientTypes, perksEs: p.perksEs, perksEn: p.perksEn,
+      isHighlighted: p.isHighlighted,
+    }
 
     // Reemplazo total de vínculos para que el seed sea idempotente.
     await prisma.packageService.deleteMany({ where: { package: { slug: p.slug } } })
     await prisma.package.upsert({
       where:  { slug: p.slug },
-      update: {
-        nameEs: p.nameEs, nameEn: p.nameEn,
-        descriptionEs: p.descriptionEs, descriptionEn: p.descriptionEn,
-        type: p.type, totalPrice, discountPct: p.discountPct,
-        clientTypes: p.clientTypes, isHighlighted: p.isHighlighted,
-        services: { create: serviceLinks },
-      },
-      create: {
-        slug: p.slug,
-        nameEs: p.nameEs, nameEn: p.nameEn,
-        descriptionEs: p.descriptionEs, descriptionEn: p.descriptionEn,
-        type: p.type, totalPrice, discountPct: p.discountPct,
-        clientTypes: p.clientTypes, isHighlighted: p.isHighlighted,
-        services: { create: serviceLinks },
-      },
+      update: { ...fields, services: { create: serviceLinks } },
+      create: { slug: p.slug, ...fields, services: { create: serviceLinks } },
     })
   }
   console.log(`✅ ${PACKAGES.length} paquetes creados`)
