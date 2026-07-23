@@ -2,17 +2,16 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { DISTRICTS, getDistrict, ACCENT_HEX, CITY_COPY } from '@/city/districts'
+import { getCases } from '@/city/cases'
+import { DistrictLink } from '@/city/dom/DistrictLink'
 
 /**
- * Level 2 — District.
+ * Nivel 2 — Distrito.
  *
- * Phase 0 scope: routing, copy contract and the accessible spine only. The
- * curtain transition, the sub-world and the 2-3 cases as objects land in
- * Phase 1.
- *
- * Brief rule 1 is enforced structurally here: a district renders exactly one
- * sentence (`phrase`). There is no slot for a paragraph, so none can be added
- * without changing the type.
+ * Regla 1: una sola frase de propósito. Los casos son "edificios": muestran
+ * su título siempre (disparador persistente, regla 7) y revelan la línea al
+ * hover/focus con CSS — sin JS, sigue siendo Server Component y accesible por
+ * teclado. El texto largo no está aquí: vive en el nivel 3.
  */
 
 export function generateStaticParams() {
@@ -38,6 +37,7 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
   if (!district) notFound()
 
   const accent = ACCENT_HEX[district.accent]
+  const cases = getCases(district.slug)
 
   return (
     <main className="relative min-h-dvh bg-black px-6 py-10 md:px-10">
@@ -55,26 +55,64 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
         >
           {district.name}
         </h1>
-        {/* The one sentence. Level 2's entire copy budget. */}
+        {/* La única frase. Todo el presupuesto de copy del nivel 2. */}
         <p className="mt-6 font-display text-[clamp(1.5rem,4vw,2.75rem)] font-black uppercase leading-tight">
           {district.phrase}
         </p>
       </header>
 
-      <p className="mt-20 text-xs uppercase tracking-[0.2em] text-[color:var(--imi-textMuted)]">
-        Casos — Fase 1
-      </p>
+      {/* Casos como objetos. */}
+      {cases.length > 0 ? (
+        <section aria-label={`Casos de ${district.name}`} className="mt-20">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {cases.map((c) => (
+              <li key={c.slug}>
+                <DistrictLink
+                  href={`/ciudad/${district.slug}/${c.slug}`}
+                  accent={district.accent}
+                  className="group relative flex h-56 flex-col justify-end overflow-hidden rounded-sm border border-white/10 p-5 transition-colors hover:border-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  style={{ outlineColor: accent }}
+                >
+                  {/* Barra de acento del "edificio". */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-0 h-1 w-full origin-left scale-x-100"
+                    style={{ background: accent }}
+                  />
+                  {/* Título: visible siempre (disparador persistente). */}
+                  <h2 className="font-display text-xl font-black uppercase leading-none tracking-tight">
+                    {c.title}
+                  </h2>
+                  {/* Métrica: visible siempre, discreta. */}
+                  <p className="mt-2 text-xs uppercase tracking-[0.15em]" style={{ color: accent }}>
+                    {c.metric}
+                  </p>
+                  {/* Línea: se revela al hover/focus (progresiva). */}
+                  <p className="mt-2 max-h-0 overflow-hidden text-sm text-[color:var(--imi-textMuted)] opacity-0 transition-all duration-300 group-hover:max-h-24 group-hover:opacity-100 group-focus-within:max-h-24 group-focus-within:opacity-100">
+                    {c.tagline}
+                  </p>
+                </DistrictLink>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : (
+        <p className="mt-20 text-xs uppercase tracking-[0.2em] text-[color:var(--imi-textMuted)]">
+          Casos — próximamente
+        </p>
+      )}
 
       <nav aria-label="Otros distritos" className="mt-24 border-t border-white/10 pt-6">
         <ul className="flex flex-wrap gap-x-6 gap-y-2">
           {DISTRICTS.filter((d) => d.slug !== district.slug).map((d) => (
             <li key={d.slug}>
-              <Link
+              <DistrictLink
                 href={`/ciudad/${d.slug}`}
+                accent={d.accent}
                 className="font-display text-sm font-black uppercase tracking-wide opacity-50 transition-opacity hover:opacity-100"
               >
                 {d.name}
-              </Link>
+              </DistrictLink>
             </li>
           ))}
         </ul>
