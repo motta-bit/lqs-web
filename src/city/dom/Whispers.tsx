@@ -83,7 +83,7 @@ export function Whispers() {
       )}
 
       {sent ? (
-        <p role="status" className="font-data-mono text-[11px] text-white/40">
+        <p role="status" className="font-data-mono text-[11px] text-white/60">
           Cuac. Tu susurro quedó en revisión.
         </p>
       ) : open ? (
@@ -110,7 +110,7 @@ export function Whispers() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="font-data-mono text-[11px] uppercase tracking-[0.15em] text-white/40 underline-offset-4 hover:text-white/80 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="font-data-mono text-[11px] uppercase tracking-[0.15em] text-white/60 underline-offset-4 hover:text-white/80 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           style={{ outlineColor: 'var(--lqs-orange)' }}
         >
           Deja un susurro

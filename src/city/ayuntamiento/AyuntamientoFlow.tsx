@@ -341,7 +341,7 @@ export function AyuntamientoFlow() {
             <button
               type="button"
               onClick={() => store.setCurrency(store.currency === 'COP' ? 'USD' : 'COP')}
-              className="mt-2 font-data-mono text-[11px] uppercase tracking-wide text-white/40 underline-offset-4 hover:text-white/80 hover:underline"
+              className="mt-2 font-data-mono text-[11px] uppercase tracking-wide text-white/60 underline-offset-4 hover:text-white/80 hover:underline"
             >
               Ver en {store.currency === 'COP' ? 'USD' : 'COP'}
             </button>
