@@ -145,6 +145,24 @@ Decisiones tomadas con criterio para no frenar el trabajo. Cada una es reversibl
 
 ---
 
+### D-13 — La ciudad es la home (Fase 4)
+**Fecha:** 2026-07-24 · **Estado:** decidida
+
+**Contexto.** El informe manda que "la ciudad reemplaza `/` una vez que los 8 distritos tengan contenido" (Fase 2/4). Ya lo tienen (17 casos).
+
+**Decisión.**
+1. `/` renderiza el hub (`CityHub`, componente compartido). Está fuera del route group `(main)`, así que usa solo el layout raíz: sin Header/Footer legacy.
+2. La home legacy (`(main)/page.tsx` → HomeClient) se elimina. HomeClient queda huérfano pero se conserva por si se reusan secciones.
+3. `/ciudad` redirige permanente a `/` (consolidación SEO, sin contenido duplicado). Los distritos siguen en `/ciudad/[distrito]`.
+4. La navegación tradicional la cubre el **CityMenu** (vía de escape del informe). Las páginas legacy (`/nosotros`, `/contacto`, etc.) siguen accesibles desde ahí.
+5. Sitemap reescrito sobre la nueva IA: home + Ayuntamiento + 8 distritos + 17 casos + nosotros/contacto.
+
+**Pendiente / deuda conocida.**
+- Las páginas legacy de catálogo con precios viejos hardcodeados (`/planes`/PlanesTabs, PackagesSection) siguen existiendo y **contradicen el modelo D-11**. Ya no están enlazadas desde la home, pero `/planes` es alcanzable por URL. Retirarlas o reescribirlas queda como siguiente paso.
+- El Header legacy (en las páginas `(main)`) enlaza a anclas `/#planes` que ya no existen en `/`; inofensivo pero conviene limpiarlo al retirar el chrome legacy.
+
+---
+
 ### D-07 — Se trabaja en rama, no en `master`
 **Fecha:** 2026-07-21 · **Estado:** decidida
 
