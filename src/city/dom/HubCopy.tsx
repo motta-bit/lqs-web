@@ -36,14 +36,15 @@ export function HubCopy() {
         all three modes — that is decision D-04 in practice.
       */}
       <nav aria-label="Distritos de la ciudad" className="pointer-events-auto">
-        <ul className="grid grid-cols-2 gap-x-6 gap-y-1 sm:grid-cols-4 lg:flex lg:flex-wrap lg:gap-x-8">
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-4 lg:flex lg:flex-wrap lg:gap-x-8">
           {DISTRICTS.map((district) => (
             <li key={district.slug}>
               <DistrictLink
                 href={`/ciudad/${district.slug}`}
                 accent={district.accent}
                 data-district={district.slug}
-                className="group inline-flex items-baseline gap-2 py-2 font-display text-lg font-black uppercase tracking-wide transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:opacity-60"
+                // min-h-11 (44px) + py-2.5: target táctil holgado (WCAG 2.5.8).
+                className="group inline-flex min-h-11 items-center gap-2 py-2.5 font-display text-lg font-black uppercase tracking-wide transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 lg:opacity-60"
                 style={{ outlineColor: ACCENT_HEX[district.accent] }}
               >
                 <span

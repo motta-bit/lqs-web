@@ -65,10 +65,11 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor:    '#000000',
-  width:         'device-width',
-  initialScale:  1,
-  maximumScale:  1,
+  themeColor:   '#000000',
+  width:        'device-width',
+  initialScale: 1,
+  // Sin maximumScale: bloquear el zoom es una falla de accesibilidad
+  // (meta-viewport, WCAG 1.4.4). El usuario debe poder ampliar.
 }
 
 export default function RootLayout({
