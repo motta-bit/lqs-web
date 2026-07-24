@@ -5,6 +5,7 @@ import { DISTRICTS, getDistrict, ACCENT_HEX, ACCENT_TEXT_HEX, CITY_COPY } from '
 import { getCases } from '@/city/cases'
 import { DistrictLink } from '@/city/dom/DistrictLink'
 import { SoundToggle } from '@/city/sound/SoundToggle'
+import { CityMenu } from '@/city/dom/CityMenu'
 
 /**
  * Nivel 2 — Distrito.
@@ -127,6 +128,7 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
       </p>
 
       <SoundToggle />
+      <CityMenu />
     </main>
   )
 }

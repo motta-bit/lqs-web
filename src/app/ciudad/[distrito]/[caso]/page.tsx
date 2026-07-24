@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { DISTRICTS, getDistrict, ACCENT_TEXT_HEX, CITY_COPY } from '@/city/districts'
 import { getCases, getCase } from '@/city/cases'
 import { SoundToggle } from '@/city/sound/SoundToggle'
+import { CityMenu } from '@/city/dom/CityMenu'
 
 /**
  * Nivel 3 — Local / deep-dive.
@@ -94,6 +95,7 @@ export default async function CasoPage(props: PageProps<'/ciudad/[distrito]/[cas
       </article>
 
       <SoundToggle />
+      <CityMenu />
     </main>
   )
 }

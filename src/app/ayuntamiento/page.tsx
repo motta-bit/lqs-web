@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { CITY_COPY } from '@/city/districts'
 import { AyuntamientoFlow } from '@/city/ayuntamiento/AyuntamientoFlow'
 import { SoundToggle } from '@/city/sound/SoundToggle'
+import { CityMenu } from '@/city/dom/CityMenu'
 
 /**
  * Nivel 4 — Ayuntamiento (Fase 3).
@@ -50,6 +51,7 @@ export default function AyuntamientoPage() {
       </noscript>
 
       <SoundToggle />
+      <CityMenu />
     </main>
   )
 }
