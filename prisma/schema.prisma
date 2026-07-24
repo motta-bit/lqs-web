@@ -129,6 +129,18 @@ model Package {
   @@map("packages")
 }
 
+// Whispers — mensajes efímeros de visitantes en el hub (referencia Bruno
+// Simon, informe §A). Máx. 30 visibles, SIEMPRE moderados: nada se muestra
+// sin aprobación (isApproved=false por defecto).
+model Whisper {
+  id         String   @id @default(cuid())
+  text       String
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("whispers")
+}
+
 model PackageService {
   packageId String
   serviceId String

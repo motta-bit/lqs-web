@@ -6,6 +6,7 @@ import { CITY_COPY } from '@/city/districts'
 import { DuckCursor } from '@/components/duck/DuckCursor'
 import { SoundToggle } from '@/city/sound/SoundToggle'
 import { DuckEasterEgg } from '@/city/DuckEasterEgg'
+import { Whispers } from '@/city/dom/Whispers'
 
 /**
  * Level 1 — the Hub.
@@ -33,6 +34,7 @@ export default function CiudadPage() {
       <CityPreloader />
       <SoundToggle />
       <DuckEasterEgg />
+      <Whispers />
 
       <noscript>
         {/*
