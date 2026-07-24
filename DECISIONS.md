@@ -128,6 +128,23 @@ Decisiones tomadas con criterio para no frenar el trabajo. Cada una es reversibl
 
 ---
 
+### D-12 — Ayuntamiento: reusar la máquina y el motor, cambiar solo la piel
+**Fecha:** 2026-07-24 · **Estado:** decidida
+
+**Contexto.** Fase 3 pedía el cotizador de 6 pasos "reformulado como conversación guiada, no formulario", con la matriz diagnóstica alimentando la recomendación.
+
+**Decisión.**
+1. **Se reusa `useQuoterStore` y `calculateQuote` tal cual** (mandato del brief: reusar, no reinventar). Lo nuevo es la piel (`AyuntamientoFlow`) y la recomendación.
+2. **Flujo de 6 pasos:** quién → distritos → servicios → urgencia → resultado → contacto. El precio aparece por primera y única vez en el paso 5 (regla 2, verificado: cero fuga en pasos previos).
+3. **La recomendación** (`suggestPlan`) sale del catálogo D-11: el paquete/plan que más servicios elegidos cubre, filtrado por tipo de cliente; empates los gana el más barato — la escalera empieza por el paso alcanzable, no por el techo. Mínimo 2 servicios cubiertos para no recomendar por ruido.
+4. **El catálogo cliente importa `prisma/seed-data` directamente** (objetos planos, una sola fuente de verdad, verificada por check:city). Cuando la BD esté viva, se puede hidratar desde `/api/v1/services` sin cambiar la superficie.
+5. **Propuesta navegable:** el cierre re-usa la metáfora de ciudad (distritos visitados con sus servicios) + referencia de lead + WhatsApp. La versión rica (propuesta como mini-mundo explorable) queda para Fase 4/post-lanzamiento.
+6. El panel legacy del cotizador (QuoterPanel flotante) sigue intacto en las rutas viejas; se retira cuando la ciudad reemplace la home.
+
+**De paso.** `POST /api/v1/leads` hacía `lead.create` con campos inexistentes en el modelo (`totalEstimate`, `currency`) — habría lanzado con BD real. Mapeado a `budget`/`services` y guardado condicionado a tener name+email (el modelo los exige).
+
+---
+
 ### D-07 — Se trabaja en rama, no en `master`
 **Fecha:** 2026-07-21 · **Estado:** decidida
 

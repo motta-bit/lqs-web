@@ -1,19 +1,18 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CITY_COPY } from '@/city/districts'
+import { AyuntamientoFlow } from '@/city/ayuntamiento/AyuntamientoFlow'
+import { SoundToggle } from '@/city/sound/SoundToggle'
 
 /**
- * Level 4 — Ayuntamiento.
+ * Nivel 4 — Ayuntamiento (Fase 3).
  *
- * Placeholder. The real thing (the existing 6-step quoter re-framed as a guided
- * conversation, plus the diagnostic matrix) is Phase 3.
+ * El cotizador de 6 pasos reformulado como conversación guiada, montado
+ * sobre la máquina de estados y el motor de precios existentes. El shell es
+ * Server Component: h1 y copy indexables; la conversación es la isla cliente.
  *
- * It exists now because every district already links here via the duck's
- * contextual CTA, and shipping a 404 behind the site's main conversion path is
- * not an acceptable Phase 0 state.
- *
- * The price rule (brief rule 2) is inherited for free: nothing here shows a
- * price, and the quoter that will live here only reveals one at the end.
+ * Regla 2: ninguna lista de precios. El precio aparece una única vez, en el
+ * paso de resultado del flujo.
  */
 
 export const metadata: Metadata = {
@@ -31,19 +30,26 @@ export default function AyuntamientoPage() {
         ← Volver a la ciudad
       </Link>
 
-      <h1 className="mt-16 max-w-3xl font-display text-[clamp(2rem,7vw,5rem)] font-black uppercase leading-[0.9]">
-        {CITY_COPY.quoterIntro}
-      </h1>
+      <header className="mx-auto mt-14 max-w-2xl">
+        <h1 className="font-display text-[clamp(1.75rem,6vw,4rem)] font-black uppercase leading-[0.9]">
+          {CITY_COPY.quoterIntro}
+        </h1>
+      </header>
 
-      <p className="mt-10 text-xs uppercase tracking-[0.2em] text-[color:var(--imi-textMuted)]">
-        Cotizador — Fase 3
-      </p>
+      <div className="mt-10">
+        <AyuntamientoFlow />
+      </div>
 
-      <p className="mt-6">
-        <Link href="/contacto" className="underline underline-offset-4" style={{ color: 'var(--lqs-orange)' }}>
-          {CITY_COPY.leadClose}
-        </Link>
-      </p>
+      <noscript>
+        <p className="mx-auto mt-10 max-w-2xl">
+          El cotizador necesita JavaScript.{' '}
+          <a href="/contacto" className="underline">
+            Escríbenos directo y te cotizamos a mano.
+          </a>
+        </p>
+      </noscript>
+
+      <SoundToggle />
     </main>
   )
 }
