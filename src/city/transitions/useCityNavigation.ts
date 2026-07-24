@@ -16,14 +16,18 @@ import { useRouter } from 'next/navigation'
 import { useCapability } from '@/motion/useCapability'
 import { allows } from '@/motion/rules'
 import { useCurtainStore } from './curtainStore'
+import { useSound } from '../sound/useSound'
 import type { DistrictAccent } from '../districts'
 
 export function useCityNavigation() {
   const router = useRouter()
   const { mode } = useCapability()
   const cover = useCurtainStore((s) => s.cover)
+  const cue = useSound()
 
   return function navigateTo(href: string, accent: DistrictAccent = 'orange') {
+    // Cue solo suena si el usuario activó el sonido (doble barrera en useSound).
+    cue('curtain')
     if (allows(mode, 'levelTransitions')) {
       cover(href, accent)
     } else {

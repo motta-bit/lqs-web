@@ -84,6 +84,150 @@ const CASES: Record<string, CityCase[]> = {
       ],
     },
   ],
+  bass: [
+    {
+      slug: 'jingle-panaderia',
+      title: 'Jingle de barrio',
+      tagline: 'Cinco segundos que todo el barrio ya se sabe.',
+      metric: 'Recordación instantánea',
+      deepDive: [
+        'Una panadería de barrio quería algo que sonara suyo en sus historias y en la radio local. No un temón: una firma corta, pegajosa, imposible de olvidar.',
+        'Compusimos un jingle de cinco segundos a partir del nombre del local. Grabamos tres versiones —cantada, silbada e instrumental— para que sirviera en cualquier formato.',
+        'A las pocas semanas los clientes entraban tarareándolo. Esa firma sonora hizo por la recordación de marca más que cualquier volante.',
+      ],
+    },
+    {
+      slug: 'podcast-emprendedor',
+      title: 'Podcast de una PYME',
+      tagline: 'De idea suelta a programa con episodios y audiencia.',
+      metric: '12 episodios, audiencia fiel',
+      deepDive: [
+        'Un emprendedor tenía mucho que contar de su sector pero cero estructura para hacerlo. Montamos su podcast de punta a punta: formato, cortinillas, guía de grabación y post.',
+        'Le armamos un flujo simple: él graba desde su oficina, nosotros editamos, limpiamos el audio y entregamos listo para publicar en todas las plataformas.',
+        'Doce episodios después, el podcast se volvió su mejor herramienta de autoridad: prospectos que llegaban ya habiéndolo escuchado y confiando en él.',
+      ],
+    },
+  ],
+  brand: [
+    {
+      slug: 'rebranding-restaurante',
+      title: 'Rebranding de restaurante',
+      tagline: 'La misma cocina de siempre, por fin con la cara que merece.',
+      metric: '+30% en reservas',
+      deepDive: [
+        'Un restaurante con años de trayectoria tenía una comida excelente y una imagen que parecía de otra época. El reto: modernizar sin perder el alma del lugar.',
+        'Rehicimos logo, carta, señalética y redes con una identidad coherente que respetaba su historia pero hablaba el idioma de hoy. Todo salido de un mismo sistema.',
+        'Con la marca renovada, las reservas subieron un 30% en el primer trimestre. La gente nueva por fin se atrevía a entrar, y los de siempre sintieron que su lugar seguía siendo suyo.',
+      ],
+    },
+    {
+      slug: 'identidad-emprendimiento',
+      title: 'Identidad desde cero',
+      tagline: 'Un emprendimiento que nació ya pareciendo marca grande.',
+      metric: 'Marca lista en 2 semanas',
+      deepDive: [
+        'Una persona natural lanzaba su emprendimiento y no tenía nada: ni nombre definido, ni logo, ni norte visual. Empezamos por lo esencial sin inflar el presupuesto.',
+        'Definimos nombre, logo, colores y tipografía en un paquete de arranque pensado para emprendedores. Lo justo para salir con dignidad y crecer después.',
+        'En dos semanas tenía una marca que se veía seria desde el día uno. Nadie que la viera adivinaría que apenas estaba empezando.',
+      ],
+    },
+  ],
+  festa: [
+    {
+      slug: 'lanzamiento-producto',
+      title: 'Lanzamiento de producto',
+      tagline: 'Un evento que se sintió, y que siguió vivo en redes.',
+      metric: '3x alcance esperado',
+      deepDive: [
+        'Una marca local lanzaba un producto y quería que el evento no muriera al cerrar las puertas. Producimos la experiencia completa: concepto, montaje, cobertura y contenido.',
+        'Pensamos el evento como set de grabación: cada rincón diseñado para verse bien en cámara. Lo vivido en sala se convirtió en material para semanas de redes.',
+        'El alcance en redes triplicó lo esperado. El evento duró una noche; el contenido que generó siguió trabajando durante más de un mes.',
+      ],
+    },
+    {
+      slug: 'cobertura-feria',
+      title: 'Cobertura de feria',
+      tagline: 'Un stand que se llenó gracias a lo que se publicaba en vivo.',
+      metric: 'Contenido en vivo, 72h',
+      deepDive: [
+        'Un expositor en una feria comercial quería aprovechar los tres días al máximo. Montamos cobertura en vivo: foto y video con entregas el mismo día para publicar mientras la feria pasaba.',
+        'Cada pieza salía a redes en cuestión de horas, invitando a la gente a pasar por el stand antes de que cerrara. El contenido trabajaba en tiempo real.',
+        'El stand se llenó en los momentos clave gracias a ese empuje digital. Al terminar, el cliente tenía además un banco de material para todo el año.',
+      ],
+    },
+  ],
+  pixel: [
+    {
+      slug: 'tienda-online',
+      title: 'Tienda que vende sola',
+      tagline: 'De vender por DM a cobrar en automático mientras duerme.',
+      metric: 'Primeras ventas en 1 semana',
+      deepDive: [
+        'Una emprendedora vendía todo por mensajes de Instagram y vivía pegada al celular. Le montamos una tienda online real: catálogo, pasarela de pago y despacho configurados.',
+        'Priorizamos lo vital para una PYME: que cargue rápido, que se vea bien en el celular y que cobrar sea un clic, sin fricción para el comprador.',
+        'La primera semana ya tenía ventas que se cerraban solas, sin que ella escribiera un mensaje. Recuperó tiempo y dejó de perder ventas por no contestar a tiempo.',
+      ],
+    },
+    {
+      slug: 'landing-servicios',
+      title: 'Landing que convierte',
+      tagline: 'Una página, un objetivo: que te escriban.',
+      metric: '+3x contactos por WhatsApp',
+      deepDive: [
+        'Un profesional independiente tenía un perfil de redes pero ningún lugar serio a dónde mandar a sus prospectos. Le diseñamos una landing enfocada en una sola cosa: generar el contacto.',
+        'Rápida, clara y con el botón de WhatsApp siempre a la mano. Sin menús que distraen ni texto de más: cada sección empuja hacia el mensaje.',
+        'Los contactos por WhatsApp se triplicaron. Ahora tiene un lugar propio que trabaja por él, en vez de depender del algoritmo de una red social.',
+      ],
+    },
+  ],
+  arty: [
+    {
+      slug: 'ilustracion-empaque',
+      title: 'Ilustración de empaque',
+      tagline: 'Un empaque que la gente no bota: lo colecciona.',
+      metric: 'Producto más fotografiado',
+      deepDive: [
+        'Una marca de producto artesanal quería que su empaque fuera parte de la experiencia, no solo una caja. Creamos una ilustración original que contaba la historia del producto.',
+        'El arte se pensó para que funcionara en repisa, en la mano y en foto: detalles que invitan a mirar de cerca y a querer compartirlo.',
+        'El empaque se volvió el producto más fotografiado de la marca. Los clientes lo publicaban solos: publicidad gratis hecha por la propia gente.',
+      ],
+    },
+    {
+      slug: 'direccion-campana',
+      title: 'Dirección de campaña',
+      tagline: 'Una campaña con un mundo visual propio, imposible de confundir.',
+      metric: 'Identidad de campaña coherente',
+      deepDive: [
+        'Una PYME lanzaba una campaña de temporada y no quería que se viera genérica. Le dimos dirección de arte: un concepto visual propio que amarraba todas las piezas.',
+        'De ese concepto salieron los colores, el estilo y el tono para redes, pauta y punto de venta. Todo distinto, todo reconociblemente de la misma campaña.',
+        'La campaña se sintió como algo pensado, no improvisado. Ese mundo visual propio hizo que la marca se destacara en un feed lleno de competidores parecidos.',
+      ],
+    },
+  ],
+  muse: [
+    {
+      slug: 'estrategia-redes',
+      title: 'Estrategia que ordenó el caos',
+      tagline: 'De publicar por publicar a saber por qué cada post existe.',
+      metric: '+50% interacción en 3 meses',
+      deepDive: [
+        'Una PYME publicaba sin rumbo: a veces mucho, a veces nada, sin saber qué funcionaba. Entramos a poner orden con una estrategia clara y un calendario realista.',
+        'Definimos pilares de contenido, tono y frecuencia sostenible. Cada publicación pasó a tener un propósito: informar, conectar o vender, nunca rellenar.',
+        'En tres meses la interacción subió un 50% publicando menos, pero mejor. El equipo dejó de vivir la ansiedad del "hay que subir algo" y empezó a ver resultados.',
+      ],
+    },
+    {
+      slug: 'plan-crecimiento',
+      title: 'Plan de crecimiento por pasos',
+      tagline: 'Una marca que creció al ritmo de su bolsillo, sin frenar.',
+      metric: 'De Semilla a Escala en 6 meses',
+      deepDive: [
+        'Un emprendimiento quería crecer pero no podía comprometerse de golpe con un presupuesto grande. Le armamos un plan mensual por pasos, pensado para ir mejorando.',
+        'Arrancó con lo vital —presencia constante en redes— y fue sumando pauta, SEO y video a medida que las ventas lo permitían. Cada paso financiaba el siguiente.',
+        'En seis meses pasó del plan de arranque al de crecimiento, sin sobresaltos de caja. La marca creció al ritmo del negocio, no al revés.',
+      ],
+    },
+  ],
 }
 
 export function getCases(districtSlug: string): CityCase[] {

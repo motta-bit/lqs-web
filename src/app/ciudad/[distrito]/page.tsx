@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { DISTRICTS, getDistrict, ACCENT_HEX, CITY_COPY } from '@/city/districts'
+import { DISTRICTS, getDistrict, ACCENT_HEX, ACCENT_TEXT_HEX, CITY_COPY } from '@/city/districts'
 import { getCases } from '@/city/cases'
 import { DistrictLink } from '@/city/dom/DistrictLink'
+import { SoundToggle } from '@/city/sound/SoundToggle'
 
 /**
  * Nivel 2 — Distrito.
@@ -37,6 +38,7 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
   if (!district) notFound()
 
   const accent = ACCENT_HEX[district.accent]
+  const accentText = ACCENT_TEXT_HEX[district.accent]
   const cases = getCases(district.slug)
 
   return (
@@ -83,8 +85,8 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
                   <h2 className="font-display text-xl font-black uppercase leading-none tracking-tight">
                     {c.title}
                   </h2>
-                  {/* Métrica: visible siempre, discreta. */}
-                  <p className="mt-2 text-xs uppercase tracking-[0.15em]" style={{ color: accent }}>
+                  {/* Métrica: visible siempre, discreta. Texto pequeño → color accesible. */}
+                  <p className="mt-2 text-xs uppercase tracking-[0.15em]" style={{ color: accentText }}>
                     {c.metric}
                   </p>
                   {/* Línea: se revela al hover/focus (progresiva). */}
@@ -119,10 +121,12 @@ export default async function DistritoPage(props: PageProps<'/ciudad/[distrito]'
       </nav>
 
       <p className="mt-16">
-        <Link href="/ayuntamiento" className="underline underline-offset-4" style={{ color: accent }}>
+        <Link href="/ayuntamiento" className="underline underline-offset-4" style={{ color: accentText }}>
           {CITY_COPY.duckCTA}
         </Link>
       </p>
+
+      <SoundToggle />
     </main>
   )
 }

@@ -38,11 +38,25 @@ export interface District {
   services: readonly string[]
 }
 
-/** Accent hex, resolved from the brand palette. No colours outside these three. */
+/** Accent hex, resolved from the brand palette. No colours outside these three.
+ *  Para RELLENOS y titulares GRANDES (umbral WCAG 3:1). */
 export const ACCENT_HEX: Record<DistrictAccent, string> = {
   orange: '#FF4600',
   teal: '#008080',
   blue: '#0055FF',
+}
+
+/**
+ * Variantes accesibles para TEXTO PEQUEÑO sobre negro (umbral WCAG 4.5:1).
+ * El teal y el azul de marca fallan como texto chico (4.4:1 y 3.4:1); estas
+ * versiones aclaradas pasan (~7:1 y ~5.4:1) manteniendo el tono. El naranja
+ * ya pasa, se conserva idéntico. Los colores de marca reales siguen en
+ * ACCENT_HEX para rellenos y display grande.
+ */
+export const ACCENT_TEXT_HEX: Record<DistrictAccent, string> = {
+  orange: '#FF4600',
+  teal: '#00A8A8',
+  blue: '#4477FF',
 }
 
 const RADIUS = 12

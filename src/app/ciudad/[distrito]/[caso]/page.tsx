@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { DISTRICTS, getDistrict, ACCENT_HEX, CITY_COPY } from '@/city/districts'
+import { DISTRICTS, getDistrict, ACCENT_TEXT_HEX, CITY_COPY } from '@/city/districts'
 import { getCases, getCase } from '@/city/cases'
+import { SoundToggle } from '@/city/sound/SoundToggle'
 
 /**
  * Nivel 3 — Local / deep-dive.
@@ -38,7 +39,7 @@ export default async function CasoPage(props: PageProps<'/ciudad/[distrito]/[cas
   const caseData = getCase(distrito, caso)
   if (!district || !caseData) notFound()
 
-  const accent = ACCENT_HEX[district.accent]
+  const accentText = ACCENT_TEXT_HEX[district.accent]
 
   return (
     <main className="relative min-h-dvh bg-black px-6 py-10 md:px-10">
@@ -50,7 +51,7 @@ export default async function CasoPage(props: PageProps<'/ciudad/[distrito]/[cas
       </Link>
 
       <article className="mx-auto mt-16 max-w-2xl">
-        <p className="text-xs uppercase tracking-[0.2em]" style={{ color: accent }}>
+        <p className="text-xs uppercase tracking-[0.2em]" style={{ color: accentText }}>
           {district.name} · {caseData.metric}
         </p>
 
@@ -86,11 +87,13 @@ export default async function CasoPage(props: PageProps<'/ciudad/[distrito]/[cas
         </nav>
 
         <p className="mt-12">
-          <Link href="/ayuntamiento" className="underline underline-offset-4" style={{ color: accent }}>
+          <Link href="/ayuntamiento" className="underline underline-offset-4" style={{ color: accentText }}>
             {CITY_COPY.duckCTA}
           </Link>
         </p>
       </article>
+
+      <SoundToggle />
     </main>
   )
 }
