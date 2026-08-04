@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Productora · Audiovisual — Galaxia LQS</title>
+<meta name="description" content="La productora de LQS: video institucional, foto producto, contenido para redes y cobertura de eventos en Medellín.">
+<meta name="theme-color" content="#05060f">
+<meta property="og:title" content="Productora · Audiovisual — Galaxia LQS"><meta property="og:description" content="La productora de LQS: video institucional, foto producto, contenido para redes y cobertura de eventos en Medellín."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05060f; --acc:#3fc6d6; --acc-l:#cdf3f8; --acc-d:#155e6b;
+  --txt:#e9f6f8; --mut:#93b8bf; --glass:rgba(255,255,255,.045);
+  --line:rgba(255,255,255,.12);
+  --pix:'Press Start 2P',monospace; --sans:'Manrope','Segoe UI',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+a{color:inherit;text-decoration:none}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 70% 12%,#155e6b44,transparent 55%),radial-gradient(circle at 12% 78%,#155e6b33,transparent 55%)}
+.wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,34px)}
+nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1120px;margin:0 auto;padding:13px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:.2s;white-space:nowrap}
+.back:hover{color:var(--acc);border-color:var(--acc)}
+.hero{padding:clamp(48px,9vw,96px) 0 clamp(40px,7vw,72px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
+.badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px;color:var(--txt)}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.4s steps(6) infinite}
+@keyframes bp{50%{opacity:.35}}
+.kicker{font-family:var(--pix);font-size:.58rem;letter-spacing:.2em;color:var(--acc);margin-bottom:16px}
+h1{font-family:var(--pix);font-size:clamp(1.5rem,5.6vw,2.7rem);line-height:1.28;margin-bottom:18px;letter-spacing:-.01em}
+.lead{font-size:clamp(1.02rem,2.1vw,1.2rem);color:var(--txt);margin-bottom:10px;font-weight:600}
+.lead span{color:var(--mut);font-weight:400}
+.sub{color:var(--mut);margin-bottom:26px;max-width:46ch}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.98rem;color:#06120c;background:linear-gradient(135deg,#cdf3f8,#3fc6d6);border:none;border-radius:16px;padding:16px 26px;cursor:pointer;transition:.2s;box-shadow:0 16px 40px -16px #3fc6d6}
+.cta:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.cta.ghost{background:none;color:var(--txt);border:1px solid var(--line);box-shadow:none}
+.cta.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.panel{position:relative;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));padding:16px;overflow:hidden}
+.panel::before{content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;border:2px solid var(--acc);opacity:.3;animation:scr 2.3s steps(6) infinite}
+@keyframes scr{0%{opacity:.2}30%{opacity:.55}52%{opacity:.24}74%{opacity:.5}100%{opacity:.22}}
+.panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
+.panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
+section{padding:clamp(44px,7vw,80px) 0;position:relative;z-index:2}
+.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:14px}
+h2{font-family:var(--pix);font-size:clamp(1.05rem,3vw,1.5rem);line-height:1.45;margin-bottom:14px}
+.intro{color:var(--mut);max-width:60ch;margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:22px;transition:.25s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:var(--acc)}
+.ico{width:44px;height:44px;border-radius:13px;background:linear-gradient(140deg,#3fc6d633,#3fc6d614);border:1px solid #3fc6d655;display:grid;place-items:center;margin-bottom:15px}
+.ico svg{width:21px;height:21px;stroke:var(--acc);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.02rem;font-weight:800;margin-bottom:7px}
+.card p{font-size:.88rem;color:var(--mut);line-height:1.55}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;counter-reset:s}
+.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:22px;position:relative}
+.step .n{font-family:var(--pix);font-size:.72rem;color:var(--acc);margin-bottom:12px;display:block}
+.step h3{font-size:.98rem;font-weight:800;margin-bottom:6px}
+.step p{font-size:.86rem;color:var(--mut)}
+.final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(32px,6vw,58px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
+.final h2{margin-bottom:12px}
+.final p{color:var(--mut);max-width:52ch;margin:0 auto 26px}
+footer{border-top:1px solid var(--line);padding:30px 0 46px;position:relative;z-index:2}
+footer .in{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;font-size:.84rem;color:var(--mut)}
+footer a:hover{color:var(--acc)}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px}.panel{order:-1}}
+@media(max-width:600px){.brand{font-size:.6rem}.back{padding:8px 13px;font-size:.76rem}.cta{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style></head><body>
+<canvas id="stars"></canvas><div class="bgglow"></div>
+<nav><div class="in"><div class="brand">🎥 PRODUCTORA</div><a class="back" href="../index.html">← Volver a la galaxia</a></div></nav>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="badge"><i></i>○ Próximamente · agenda abierta por WhatsApp</div>
+      <div class="kicker">GALAXIA LQS ·· PLANETA AUDIOVISUAL</div>
+      <h1>Productora</h1>
+      <p class="lead">Historias que se ven y se sienten — <span>producción audiovisual LQS.</span></p>
+      <p class="sub">Rodamos, editamos y entregamos listo para publicar. Desde una pieza de marca hasta la foto de tu carta: todo con la misma dirección de arte.</p>
+      <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%2C%20quiero%20hablar%20de%20Productora%20para%20mi%20proyecto." target="_blank" rel="noopener">Hablemos de tu proyecto</a>
+    </div>
+    <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">PRODUCTORA-01 · EN SET</div></div>
+  </header>
+</div>
+<div class="wrap"><section>
+  <div class="eyebrow">SERVICIOS</div><h2>Lo que rodamos</h2><p class="intro">Producción completa: dirección, rodaje y post. Entregamos en los formatos que de verdad vas a usar.</p>
+  <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="13" height="11" rx="2"/><path d="m15 11 6-3v9l-6-3z"/></svg></div><h3>Video institucional</h3><p>La pieza que explica quién eres. Guion, rodaje y edición con dirección de arte propia.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 4 4 2-2 3 3"/></svg></div><h3>Foto producto</h3><p>Catálogo y carta que dan hambre. Luz, estilismo y retoque para web y redes.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg></div><h3>Contenido para redes</h3><p>Reels y cortos pensados para el feed: verticales, con ritmo y subtítulos.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Cobertura de eventos</h3><p>Registro del evento en foto y video, con entrega rápida para publicar el mismo día.</p></div></div>
+</section></div>
+<div class="wrap"><section>
+  <div class="eyebrow">EL FLUJO</div><h2>Del guion a la pantalla</h2><p class="intro">Un proceso claro para que sepas siempre en qué punto va tu proyecto.</p>
+  <div class="steps"><div class="step"><span class="n">01</span><h3>Idea y guion</h3><p>Definimos el mensaje, el tono y el plan de rodaje.</p></div><div class="step"><span class="n">02</span><h3>Rodaje</h3><p>Grabamos con luz y dirección de arte cuidadas. Tú solo apareces (o ni eso).</p></div><div class="step"><span class="n">03</span><h3>Post</h3><p>Montaje, color, música y subtítulos hasta que quede fino.</p></div><div class="step"><span class="n">04</span><h3>Entrega multiplataforma</h3><p>Master + versiones para reels, web y pauta, en los formatos correctos.</p></div></div>
+</section></div>
+<div class="wrap"><section><div class="final">
+  <h2>Cuéntanos qué quieres rodar</h2><p>Escríbenos por WhatsApp con la idea (o el desorden de ideas) y te armamos una propuesta.</p>
+  <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%2C%20quiero%20hablar%20de%20Productora%20para%20mi%20proyecto." target="_blank" rel="noopener">Hablemos de tu proyecto</a>
+</div></section></div>
+<footer><div class="wrap"><div class="in">
+  <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="../index.html">Galaxia LQS</a></span>
+</div></div></footer>
+<script>
+(function(){
+ var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
+ function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(150,Math.round(innerWidth*innerHeight/11000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
+ rz();addEventListener('resize',rz);
+ (function lp(){t+=1/60;x.clearRect(0,0,c.width,c.height);for(var i=0;i<S.length;i++){var s=S[i],tw=R?.7:(.5+.5*Math.sin(t*1.6+s.p));x.globalAlpha=tw*s.z;x.fillStyle=s.z>.82?'#cdf3f8':'#c9d4ff';x.fillRect(s.x|0,s.y|0,s.z>.82?2:1,s.z>.82?2:1);}x.globalAlpha=1;requestAnimationFrame(lp);})();
+})();
+(function(){
+ var c=document.getElementById('pl');if(!c)return;var g=c.getContext('2d'),t=0,R=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ 
+ function draw(){ t+=1/60;var W=c.width,H=c.height;g.clearRect(0,0,W,H);
+  for(var i=0;i<50;i++){var sx=(i*71)%W,sy=(i*47)%H;g.globalAlpha=.25+.5*Math.abs(Math.sin(t*.9+i));g.fillStyle=i%5?'#c9d4ff':'#cdf3f8';g.fillRect(sx,sy,1,1);}
+  g.globalAlpha=1;
+  var cx=W/2,cy=H/2+4,r=48,px=3;
+  g.save();g.translate(cx,cy);g.rotate(-.5);g.scale(1,.3);
+  g.strokeStyle='rgba(205,243,248,.55)';g.lineWidth=7;g.beginPath();g.arc(0,0,r*1.42,0,7);g.stroke();g.restore();
+  for(var yy=-r;yy<r;yy+=px)for(var xx=-r;xx<r;xx+=px){
+    var d=(xx*xx+yy*yy)/(r*r); if(d>1)continue;
+    var nz=Math.sqrt(Math.max(0,1-d)), li=(-xx/r*.5-yy/r*.5+nz*.85);
+    var band=Math.sin((yy+r)/(2*r)*Math.PI*6);
+    var base=band>.2?[205,243,248]:[63,198,214];
+    var lf=Math.round((.42+li*.9)*4)/4;
+    g.fillStyle='rgb('+Math.min(255,base[0]*lf|0)+','+Math.min(255,base[1]*lf|0)+','+Math.min(255,base[2]*lf|0)+')';
+    g.fillRect(cx+xx|0,cy+yy|0,px,px);
+  }
+  g.save();g.translate(cx,cy);g.rotate(-.5);g.scale(1,.3);
+  g.strokeStyle='#cdf3f8';g.globalAlpha=.9;g.lineWidth=6;g.beginPath();g.arc(0,0,r*1.42,0,Math.PI);g.stroke();g.restore();g.globalAlpha=1;
+  // REC
+  g.fillStyle='#ff4d5e';g.globalAlpha=.55+.45*Math.sin(t*4);g.beginPath();g.arc(26,22,5,0,7);g.fill();g.globalAlpha=1;
+  g.fillStyle='#e9f6f8';g.font='bold 11px Manrope,sans-serif';g.fillText('REC',37,26);
+  if(!R)requestAnimationFrame(draw); }
+ draw();
+
+})();
+</script></body></html>

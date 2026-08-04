@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛸 Galaxia LQS — Super matriz del ecosistema
 
-## Getting Started
+Hub inmersivo del **ecosistema creativo LQS** (Medellín, Colombia): una galaxia pixel-art
+donde cada planeta es una rama de la marca. Todo es HTML estático autocontenido —
+funciona en GitHub Pages, local o cualquier hosting, sin build.
 
-First, run the development server:
+## Estructura
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+index.html            ← Galaxia LQS (página madre: carrusel orbital, nave, mundos isométricos)
+mundos/
+  mercury.html        ← 💎 Mercury · Joyería (marca propia)
+  foma.html           ← 👕 foma · Ropa (marca propia)
+  express.html        ← ⚡ Express · Diseño día a día (con cotizador WhatsApp)
+  creadores.html      ← 🎬 Creadores · Marca personal y contenido
+  empresas.html       ← 🏢 Empresas · Branding, web y automatización
+  productora.html     ← 🎥 Productora · Audiovisual
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mundos ya en vivo en repos propios:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Planeta | Rama | Sitio |
+|---|---|---|
+| 🛎️ Aloja | Hoteles | https://motta-bit.github.io/Vita-Nova/ |
+| 🍽️ Carta | Restaurantes | https://motta-bit.github.io/vitanova/ |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Publicar (GitHub Pages)
 
-## Learn More
+Settings → Pages → *Deploy from a branch* → elegir la rama y carpeta `/ (root)`.
+La galaxia queda en `https://motta-bit.github.io/lqs-web/` y los mundos en
+`https://motta-bit.github.io/lqs-web/mundos/<planeta>.html` (links relativos, sin config).
 
-To learn more about Next.js, take a look at the following resources:
+## Contacto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+WhatsApp **+57 333 279 1710** · cdparravargas@gmail.com
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Los archivos de Next.js del scaffold original se conservan pero no se usan para el sitio estático.*
