@@ -1,134 +1,167 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>foma · Ropa — Galaxia LQS</title>
-<meta name="description" content="foma es la línea de indumentaria de autor de LQS. Colecciones propias, diseño con intención. Muy pronto.">
+<title>foma · Ropa y merch — LQS</title>
+<meta name="description" content="foma es la línea de indumentaria de LQS: cápsulas de autor y merch/uniformes personalizados para marcas, hoteles y restaurantes en Colombia.">
 <meta name="theme-color" content="#05060f">
-<meta property="og:title" content="foma · Ropa — Galaxia LQS"><meta property="og:description" content="foma es la línea de indumentaria de autor de LQS. Colecciones propias, diseño con intención. Muy pronto."><meta property="og:type" content="website">
+<meta property="og:title" content="foma · Ropa y merch — LQS"><meta property="og:description" content="foma es la línea de indumentaria de LQS: cápsulas de autor y merch/uniformes personalizados para marcas, hoteles y restaurantes en Colombia."><meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👕</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#05060f; --acc:#b6ad98; --acc-l:#f3efe6; --acc-d:#5a5346;
-  --txt:#f1eee7; --mut:#a8a294; --glass:rgba(255,255,255,.045);
-  --line:rgba(255,255,255,.12);
-  --pix:'Press Start 2P',monospace; --sans:'Manrope','Segoe UI',system-ui,sans-serif;
-}
+:root{--bg:#05060f;--acc:#b6ad98;--acc-l:#f3efe6;--acc-d:#5a5346;--txt:#f1eee7;--mut:#a8a294;
+--glass:rgba(255,255,255,.045);--line:rgba(255,255,255,.12);
+--pix:'Press Start 2P',monospace;--sans:'Manrope','Segoe UI',system-ui,sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
 a{color:inherit;text-decoration:none}
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
-.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 70% 12%,#5a534644,transparent 55%),radial-gradient(circle at 12% 78%,#5a534633,transparent 55%)}
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 72% 10%,#5a534644,transparent 55%),radial-gradient(circle at 10% 76%,#5a534630,transparent 55%)}
 .wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,34px)}
-nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1120px;margin:0 auto;padding:13px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);display:flex;align-items:center;gap:8px}
 .back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:.2s;white-space:nowrap}
 .back:hover{color:var(--acc);border-color:var(--acc)}
-.hero{padding:clamp(48px,9vw,96px) 0 clamp(40px,7vw,72px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
-.badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px;color:var(--txt)}
+.hero{padding:clamp(44px,8vw,88px) 0 clamp(34px,6vw,60px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
+.badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px}
 .badge i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.4s steps(6) infinite}
 @keyframes bp{50%{opacity:.35}}
-.kicker{font-family:var(--pix);font-size:.58rem;letter-spacing:.2em;color:var(--acc);margin-bottom:16px}
-h1{font-family:var(--pix);font-size:clamp(1.5rem,5.6vw,2.7rem);line-height:1.28;margin-bottom:18px;letter-spacing:-.01em}
-.lead{font-size:clamp(1.02rem,2.1vw,1.2rem);color:var(--txt);margin-bottom:10px;font-weight:600}
+.kicker{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:15px}
+h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;margin-bottom:18px}
+.lead{font-size:clamp(1rem,2vw,1.16rem);margin-bottom:10px;font-weight:600}
 .lead span{color:var(--mut);font-weight:400}
-.sub{color:var(--mut);margin-bottom:26px;max-width:46ch}
-.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.98rem;color:#06120c;background:linear-gradient(135deg,#f3efe6,#b6ad98);border:none;border-radius:16px;padding:16px 26px;cursor:pointer;transition:.2s;box-shadow:0 16px 40px -16px #b6ad98}
+.sub{color:var(--mut);margin-bottom:24px;max-width:48ch}
+.btns{display:flex;flex-wrap:wrap;gap:11px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.95rem;color:#06120c;background:linear-gradient(135deg,#f3efe6,#b6ad98);border:none;border-radius:15px;padding:15px 24px;cursor:pointer;transition:.2s;box-shadow:0 16px 38px -18px #b6ad98;font-family:inherit}
 .cta:hover{filter:brightness(1.08);transform:translateY(-2px)}
 .cta.ghost{background:none;color:var(--txt);border:1px solid var(--line);box-shadow:none}
 .cta.ghost:hover{border-color:var(--acc);color:var(--acc)}
 .panel{position:relative;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));padding:16px;overflow:hidden}
-.panel::before{content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;border:2px solid var(--acc);opacity:.3;animation:scr 2.3s steps(6) infinite}
+.panel::before{content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;border:2px solid var(--acc);opacity:.3;animation:scr 2.4s steps(6) infinite}
 @keyframes scr{0%{opacity:.2}30%{opacity:.55}52%{opacity:.24}74%{opacity:.5}100%{opacity:.22}}
 .panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
 .panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
-section{padding:clamp(44px,7vw,80px) 0;position:relative;z-index:2}
-.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:14px}
-h2{font-family:var(--pix);font-size:clamp(1.05rem,3vw,1.5rem);line-height:1.45;margin-bottom:14px}
-.intro{color:var(--mut);max-width:60ch;margin-bottom:34px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(216px,1fr));gap:16px}
-.card{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:22px;transition:.25s;position:relative;overflow:hidden}
+section{padding:clamp(40px,6.5vw,74px) 0;position:relative;z-index:2}
+.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:13px}
+h2{font-family:var(--pix);font-size:clamp(1rem,2.9vw,1.42rem);line-height:1.45;margin-bottom:13px}
+.intro{color:var(--mut);max-width:62ch;margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:15px}
+.card{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:21px;transition:.25s}
 .card:hover{transform:translateY(-4px);border-color:var(--acc)}
-.ico{width:44px;height:44px;border-radius:13px;background:linear-gradient(140deg,#b6ad9833,#b6ad9814);border:1px solid #b6ad9855;display:grid;place-items:center;margin-bottom:15px}
-.ico svg{width:21px;height:21px;stroke:var(--acc);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.card h3{font-size:1.02rem;font-weight:800;margin-bottom:7px}
-.card p{font-size:.88rem;color:var(--mut);line-height:1.55}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;counter-reset:s}
-.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:22px;position:relative}
-.step .n{font-family:var(--pix);font-size:.72rem;color:var(--acc);margin-bottom:12px;display:block}
-.step h3{font-size:.98rem;font-weight:800;margin-bottom:6px}
-.step p{font-size:.86rem;color:var(--mut)}
-.final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(32px,6vw,58px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
+.ico{width:42px;height:42px;border-radius:12px;background:linear-gradient(140deg,#b6ad9833,#b6ad9814);border:1px solid #b6ad9855;display:grid;place-items:center;margin-bottom:14px}
+.ico svg{width:20px;height:20px;stroke:var(--acc);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+.card p{font-size:.87rem;color:var(--mut);line-height:1.55}
+/* paquetes */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:17px;align-items:start}
+.plan{border:1px solid var(--line);border-radius:22px;background:var(--glass);padding:25px 23px 23px;display:flex;flex-direction:column;position:relative;transition:.25s}
+.plan:hover{border-color:var(--acc);transform:translateY(-4px)}
+.plan.pop{border-color:var(--acc);background:linear-gradient(170deg,#b6ad981a,rgba(255,255,255,.03))}
+.tag{position:absolute;top:-11px;left:23px;font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(135deg,#f3efe6,#b6ad98);color:#06120c;padding:5px 12px;border-radius:999px}
+.plan h3{font-family:var(--pix);font-size:.82rem;margin-bottom:9px;line-height:1.4}
+.plan .who{font-size:.8rem;color:var(--mut);margin-bottom:16px;min-height:2.6em}
+.price{font-size:1.75rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.price small{display:block;font-size:.72rem;font-weight:600;color:var(--mut);letter-spacing:.04em;margin-top:5px}
+.plan ul{list-style:none;margin:18px 0 20px;display:flex;flex-direction:column;gap:9px}
+.plan li{font-size:.86rem;color:var(--txt);display:flex;gap:9px;align-items:flex-start;line-height:1.45}
+.plan li::before{content:'';flex:none;width:15px;height:15px;margin-top:3px;border-radius:5px;background:#b6ad982e;border:1px solid #b6ad9870;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4 10-10'/%3E%3C/svg%3E");background-size:11px;background-position:center;background-repeat:no-repeat}
+.plan .go{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:.9rem;border-radius:14px;padding:13px 18px;border:1px solid var(--line);color:var(--txt);transition:.2s}
+.plan .go:hover{border-color:var(--acc);color:var(--acc)}
+.plan.pop .go{background:linear-gradient(135deg,#f3efe6,#b6ad98);color:#06120c;border:none}
+.plan.pop .go:hover{filter:brightness(1.08);color:#06120c}
+/* extras */
+.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:11px}
+.ex{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;background:var(--glass);padding:14px 17px}
+.ex b{font-size:.89rem;font-weight:700}
+.ex span{font-size:.86rem;font-weight:800;color:var(--acc);white-space:nowrap}
+/* comparativa */
+.cmp{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--glass)}
+.cmp table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
+.cmp th,.cmp td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line)}
+.cmp th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:800}
+.cmp td:last-child,.cmp th:last-child{text-align:right}
+.cmp tr:last-child td{border-bottom:none}
+.cmp .lqs{color:var(--acc);font-weight:800}
+.cmp .mkt{color:var(--mut);text-decoration:line-through}
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:15px}
+.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:21px}
+.step .n{font-family:var(--pix);font-size:.7rem;color:var(--acc);margin-bottom:11px;display:block}
+.step h3{font-size:.96rem;font-weight:800;margin-bottom:6px}
+.step p{font-size:.85rem;color:var(--mut)}
+.note{font-size:.8rem;color:var(--mut);margin-top:18px;line-height:1.6}
+.final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(30px,5.5vw,54px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
 .final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
-.final h2{margin-bottom:12px}
-.final p{color:var(--mut);max-width:52ch;margin:0 auto 26px}
-footer{border-top:1px solid var(--line);padding:30px 0 46px;position:relative;z-index:2}
-footer .in{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;font-size:.84rem;color:var(--mut)}
+.final p{color:var(--mut);max-width:52ch;margin:0 auto 24px}
+.final .btns{justify-content:center}
+footer{border-top:1px solid var(--line);padding:28px 0 44px;position:relative;z-index:2}
+footer .in{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;font-size:.83rem;color:var(--mut)}
 footer a:hover{color:var(--acc)}
-@media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px}.panel{order:-1}}
-@media(max-width:600px){.brand{font-size:.6rem}.back{padding:8px 13px;font-size:.76rem}.cta{width:100%}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:28px}.panel{order:-1}}
+@media(max-width:600px){.brand{font-size:.58rem}.back{padding:8px 13px;font-size:.75rem}.cta{width:100%}.btns{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style></head><body>
 <canvas id="stars"></canvas><div class="bgglow"></div>
 <nav><div class="in"><div class="brand">👕 foma</div><a class="back" href="../index.html">← Volver a la galaxia</a></div></nav>
-<div class="wrap">
-  <header class="hero">
-    <div>
-      <div class="badge"><i></i>○ Próximamente · lista de espera abierta</div>
-      <div class="kicker">GALAXIA LQS ·· PLANETA TEXTIL</div>
-      <h1>foma</h1>
-      <p class="lead">Indumentaria de autor — <span>marca propia de LQS.</span></p>
-      <p class="sub">Prendas pensadas con calma: pocas piezas, buenos materiales y un diseño que no grita. Ropa para durar, no para una temporada.</p>
-      <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%2C%20av%C3%ADsenme%20cuando%20foma%20est%C3%A9%20listo." target="_blank" rel="noopener">Avísame cuando salga</a>
-    </div>
-    <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">FOMA-01 · TEJIENDO</div></div>
-  </header>
-</div>
+<div class="wrap"><header class="hero">
+  <div>
+    <div class="badge"><i></i>Merch por encargo abierto · cápsula propia en camino</div>
+    <div class="kicker">GALAXIA LQS ·· PLANETA TEXTIL</div>
+    <h1>foma</h1>
+    <p class="lead">Indumentaria de autor — <span>y merch que la gente sí se pone.</span></p>
+    <p class="sub">Prendas pensadas con calma: pocas piezas, buenos materiales y diseño que no grita. Y para marcas: uniformes y merch que se ven parte de tu identidad, no un disfraz.</p>
+    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes</a><a class="cta ghost" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%95%20quiero%20cotizar%20prendas%20con%20foma." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+  </div>
+  <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">FOMA-01 · TEJIENDO</div></div>
+</header></div>
 <div class="wrap"><section>
-  <div class="eyebrow">SERVICIOS</div><h2>Lo que estamos tejiendo</h2><p class="intro">foma nace de la misma cabeza que LQS: diseño con intención. Estas son las líneas con las que arranca el planeta.</p>
-  <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 7a2 2 0 1 1 2-2"/><path d="M12 7v3"/><path d="m12 10-8 6h16z"/></svg></div><h3>Colecciones</h3><p>Cápsulas cortas y numeradas. Cuando se acaban, se acaban — sin reposiciones infinitas.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M8.1 8.1 20 20"/></svg></div><h3>Diseño de autor</h3><p>Cada prenda parte de un boceto propio: siluetas simples, paleta contenida, detalles que se notan de cerca.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.8 6.4 20l1.5-6.2L3 9.6l6.4-.5z"/></svg></div><h3>Marca propia</h3><p>foma es de LQS, no un encargo. Eso nos deja cuidar el material, la horma y el precio.</p></div></div>
+  <div class="eyebrow">QUÉ HACEMOS</div><h2>Dos caminos: tu clóset y tu marca</h2><p class="intro">foma es marca propia de LQS, y también el taller donde vestimos a las marcas del ecosistema.</p>
+  <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 7a2 2 0 1 1 2-2"/><path d="M12 7v3"/><path d="m12 10-8 6h16z"/></svg></div><h3>Cápsulas propias</h3><p>Series cortas y numeradas, con diseño de autor y materiales elegidos a mano.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 3 4 6l2 3 2-1v13h8V8l2 1 2-3-4-3-4 2z"/></svg></div><h3>Merch de marca</h3><p>Camisetas, gorras y hoodies con tu identidad, bien aplicada — no un logo estampado a la fuerza.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M8.1 8.1 20 20"/></svg></div><h3>Uniformes</h3><p>Para restaurantes, hoteles y equipos: cómodos, resistentes y con tu marca integrada.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.8 6.4 20l1.5-6.2L3 9.6l6.4-.5z"/></svg></div><h3>Diseño textil</h3><p>Estampados y gráficas originales, diseñadas por el mismo estudio que hace tu marca.</p></div></div>
+</section></div>
+<div class="wrap"><section id="paquetes">
+  <div class="eyebrow">PAQUETES</div><h2>Paquetes de producción textil</h2><p class="intro">Precios de referencia por unidad en pesos colombianos. A más unidades, mejor precio por prenda.</p>
+  <div class="plans"><div class="plan"><h3>Prenda de Cápsula</h3><p class="who">Quieres una pieza foma para ti.</p><div class="price">desde $89.000<small>COP · por prenda</small></div><ul><li>Camisetas de la cápsula vigente</li><li>Algodón de buen gramaje</li><li>Estampado de larga duración</li><li>Serie corta y numerada</li><li>Envío a todo el país</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%95%20quiero%20ver%20la%20c%C3%A1psula%20de%20foma." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Merch de Marca</h3><p class="who">Tu marca quiere ropa que la gente use.</p><div class="price">desde $46.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño aplicado a la prenda</li><li>Camisetas, gorras o tote bags</li><li>Estampado o bordado</li><li>Muestra física antes de producir</li><li>Entrega en 3–4 semanas</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%95%20quiero%20cotizar%20merch%20para%20mi%20marca." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan"><h3>Uniformes</h3><p class="who">Tu equipo necesita verse como una marca.</p><div class="price">desde $68.000<small>COP · por unidad · mín. 15</small></div><ul><li>Diseño de uniforme completo</li><li>Camisas, delantales o polos</li><li>Bordado del logo incluido</li><li>Tallas por persona</li><li>Reposición fácil después</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%95%20quiero%20cotizar%20uniformes%20para%20mi%20equipo." target="_blank" rel="noopener">Lo quiero →</a></div></div>
+  <p class="note">Precios de referencia en pesos colombianos (COP), varían según prenda, técnica (estampado/bordado), número de tintas y cantidad. Cotizamos exacto en 48h.</p>
 </section></div>
 <div class="wrap"><section>
-  <div class="eyebrow">EL PROCESO</div><h2>De la idea a la prenda</h2><p class="intro">Sin intermediarios ni prisas. Así llega cada pieza a tus manos.</p>
-  <div class="steps"><div class="step"><span class="n">01</span><h3>Boceto</h3><p>Dibujamos la silueta y elegimos la paleta de la cápsula.</p></div><div class="step"><span class="n">02</span><h3>Muestra</h3><p>Se corta una muestra física, se prueba y se ajusta la horma.</p></div><div class="step"><span class="n">03</span><h3>Producción corta</h3><p>Se produce en cantidades pequeñas, cuidando materiales y acabados.</p></div><div class="step"><span class="n">04</span><h3>A tus manos</h3><p>Se anuncia por WhatsApp y redes. Quien está en la lista, entra primero.</p></div></div>
+  <div class="eyebrow">A LA CARTA</div><h2>Extras del taller</h2><p class="intro">Lo que puedes sumar a cualquier pedido.</p>
+  <div class="extras"><div class="ex"><b>Diseño de estampado original</b><span>$180.000</span></div><div class="ex"><b>Muestra física previa</b><span>$60.000</span></div><div class="ex"><b>Etiqueta de marca cosida</b><span>$6.000 c/u</span></div><div class="ex"><b>Empaque individual</b><span>$4.500 c/u</span></div><div class="ex"><b>Bordado (en vez de estampado)</b><span>+$12.000 c/u</span></div><div class="ex"><b>Entrega express</b><span>+30%</span></div></div>
+</section></div>
+<div class="wrap"><section><div class="eyebrow">POR QUÉ LQS</div><h2>Merch con criterio de diseño</h2><p class="intro">El merch barato se ve barato y nadie se lo pone. Nuestro diferencial: el mismo estudio que diseña tu marca diseña la prenda.</p><div class="cmp scrollx"><table><tr><th>Servicio</th><th>Mercado Colombia</th><th>LQS</th></tr><tr><td>Camiseta personalizada (x20)</td><td class="mkt">$55.000 – $80.000</td><td class="lqs">desde $46.000</td></tr><tr><td>Uniforme con bordado</td><td class="mkt">$85.000 – $130.000</td><td class="lqs">desde $68.000</td></tr><tr><td>Diseño de estampado</td><td class="mkt">$250.000 – $500.000</td><td class="lqs">$180.000</td></tr><tr><td>Tote bag con marca (x20)</td><td class="mkt">$32.000 – $50.000</td><td class="lqs">desde $26.000</td></tr></table></div><p class="note">Si ya trabajas con otro mundo de LQS (Carta, Aloja o Empresas), el diseño del merch sale del mismo manual de marca — sin costo de diseño adicional.</p></section></div>
+<div class="wrap"><section>
+  <div class="eyebrow">EL PROCESO</div><h2>De la idea a la prenda</h2><p class="intro">Sin intermediarios ni prisas. Así llega cada pieza.</p>
+  <div class="steps"><div class="step"><span class="n">01</span><h3>Boceto</h3><p>Definimos prenda, técnica y aplicación del diseño.</p></div><div class="step"><span class="n">02</span><h3>Muestra</h3><p>Producimos una muestra física para aprobar.</p></div><div class="step"><span class="n">03</span><h3>Producción</h3><p>Se produce el lote cuidando materiales y acabados.</p></div><div class="step"><span class="n">04</span><h3>Entrega</h3><p>Empacadas por talla y listas para repartir.</p></div></div>
 </section></div>
 <div class="wrap"><section><div class="final">
-  <h2>Entra a la lista de espera</h2><p>Te escribimos apenas abra la primera cápsula de foma. Sin spam, solo el aviso.</p>
-  <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%2C%20av%C3%ADsenme%20cuando%20foma%20est%C3%A9%20listo." target="_blank" rel="noopener">Avísame cuando salga</a>
+  <h2>¿Vestimos tu marca?</h2><p>Cuéntanos qué prenda tienes en mente y cuántas necesitas. Cotizamos en 48 horas.</p>
+  <div class="btns"><a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%95%20quiero%20cotizar%20prendas%20con%20foma." target="_blank" rel="noopener">Cotizar mi pedido</a><a class="cta ghost" href="../index.html">Explorar otros mundos</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
-  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="../index.html">Galaxia LQS</a></span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html">Galaxia LQS</a></span>
 </div></div></footer>
 <script>
-(function(){
- var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
- function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(150,Math.round(innerWidth*innerHeight/11000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
+(function(){var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
+ function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(140,Math.round(innerWidth*innerHeight/12000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
  rz();addEventListener('resize',rz);
- (function lp(){t+=1/60;x.clearRect(0,0,c.width,c.height);for(var i=0;i<S.length;i++){var s=S[i],tw=R?.7:(.5+.5*Math.sin(t*1.6+s.p));x.globalAlpha=tw*s.z;x.fillStyle=s.z>.82?'#f3efe6':'#c9d4ff';x.fillRect(s.x|0,s.y|0,s.z>.82?2:1,s.z>.82?2:1);}x.globalAlpha=1;requestAnimationFrame(lp);})();
-})();
-(function(){
- var c=document.getElementById('pl');if(!c)return;var g=c.getContext('2d'),t=0,R=matchMedia('(prefers-reduced-motion:reduce)').matches;
- 
- function draw(){ t+=1/60;var W=c.width,H=c.height;g.clearRect(0,0,W,H);
-  for(var i=0;i<50;i++){var sx=(i*79)%W,sy=(i*53)%H;g.globalAlpha=.25+.5*Math.abs(Math.sin(t*.8+i));g.fillStyle=i%5?'#c9d4ff':'#f3efe6';g.fillRect(sx,sy,1,1);}
-  g.globalAlpha=1;
-  var cx=W/2,cy=H/2+6,r=54,px=3;
+ (function lp(){t+=1/60;x.clearRect(0,0,c.width,c.height);for(var i=0;i<S.length;i++){var s=S[i],tw=R?.7:(.5+.5*Math.sin(t*1.6+s.p));x.globalAlpha=tw*s.z;x.fillStyle=s.z>.82?'#f3efe6':'#c9d4ff';x.fillRect(s.x|0,s.y|0,s.z>.82?2:1,s.z>.82?2:1);}x.globalAlpha=1;requestAnimationFrame(lp);})();})();
+(function(){var c=document.getElementById('pl');if(!c)return;var g=c.getContext('2d'),t=0,R=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ var P=[[243,239,230],[182,173,152],[90,83,70]];
+ function draw(){t+=1/60;var W=c.width,H=c.height;g.clearRect(0,0,W,H);
+  for(var i=0;i<46;i++){var sx=(i*79)%W,sy=(i*53)%H;g.globalAlpha=.22+.5*Math.abs(Math.sin(t*.8+i));g.fillStyle=i%5?'#c9d4ff':'#f3efe6';g.fillRect(sx,sy,1,1);}
+  g.globalAlpha=1;var cx=W/2,cy=H/2+4,r=50,px=3;
+  
   for(var yy=-r;yy<r;yy+=px)for(var xx=-r;xx<r;xx+=px){
     var d=(xx*xx+yy*yy)/(r*r); if(d>1)continue;
-    var nz=Math.sqrt(Math.max(0,1-d)), li=(-xx/r*.5-yy/r*.5+nz*.85);
-    var band=Math.sin((yy+r)/(2*r)*Math.PI*5+Math.sin(xx/14)*.6);
-    var base=band>.3?[243,239,230]:(band<-.3?[90,83,70]:[182,173,152]);
-    var lf=Math.round((.45+li*.85)*4)/4;
+    var nz=Math.sqrt(Math.max(0,1-d)),li=(-xx/r*.5-yy/r*.5+nz*.85);
+    var band=Math.sin((yy+r)/(2*r)*Math.PI*5+Math.sin(xx/13)*.5);
+    var base=band>.3?P[0]:(band<-.3?P[2]:P[1]);
+    var lf=Math.round((.44+li*.88)*4)/4;
     g.fillStyle='rgb('+Math.min(255,base[0]*lf|0)+','+Math.min(255,base[1]*lf|0)+','+Math.min(255,base[2]*lf|0)+')';
-    g.fillRect(cx+xx|0,cy+yy|0,px,px);
-  }
-  g.globalAlpha=.5;g.fillStyle='#fff';
-  for(var k=0;k<10;k++){var a=t*.2+k,rr=r*.34;g.fillRect(cx-r*.3+Math.cos(a)*rr|0,cy-r*.32+Math.sin(a)*rr*.6|0,1,1);}
-  g.globalAlpha=1;
-  if(!R)requestAnimationFrame(draw); }
- draw();
-
-})();
+    g.fillRect(cx+xx|0,cy+yy|0,px,px);}
+  
+  g.globalAlpha=.5;g.fillStyle='#fff';for(var k=0;k<10;k++){var a=t*.2+k,rr=r*.34;g.fillRect(cx-r*.3+Math.cos(a)*rr|0,cy-r*.32+Math.sin(a)*rr*.6|0,1,1);}g.globalAlpha=1;
+  if(!R)requestAnimationFrame(draw);}
+ draw();})();
 </script></body></html>
