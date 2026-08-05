@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muestras · Productora — LQS</title>
+<meta name="description" content="Muestras interactivas de la productora LQS: reel simulado, comparativa antes y después de foto de producto, adaptación a 4 formatos y storyboard de planos. Medellín, Colombia.">
+<meta name="theme-color" content="#05060f">
+<meta property="og:title" content="Muestras · Productora — LQS"><meta property="og:description" content="Reel, antes/después de foto de producto, formatos y storyboard: así rodamos en LQS."><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060f;--acc:#3fc6d6;--acc-l:#cdf3f8;--acc-d:#155e6b;--txt:#e9f6f8;--mut:#8fb2b9;
+--glass:rgba(255,255,255,.045);--line:rgba(255,255,255,.115);--line2:rgba(255,255,255,.07);
+--pix:'Press Start 2P',monospace;--sans:'Manrope','Segoe UI',system-ui,sans-serif;--ez:cubic-bezier(.22,1,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.62}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%}
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 40% at 75% 4%,#155e6b3d,transparent 60%),radial-gradient(ellipse 55% 45% at 6% 62%,#155e6b2b,transparent 60%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,34px)}
+nav{position:sticky;top:0;z-index:40;background:rgba(5,6,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+nav .in{max-width:1120px;margin:0 auto;padding:12px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-family:var(--pix);font-size:.6rem;letter-spacing:.06em;color:var(--acc)}
+.navl{display:flex;gap:8px;flex-wrap:wrap}
+.back{font-size:.8rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:8px 15px;transition:.22s var(--ez);white-space:nowrap}
+.back:hover,.back:focus-visible{color:var(--acc);border-color:var(--acc);background:#3fc6d611}
+section{padding:clamp(46px,7vw,86px) 0;position:relative;z-index:2}
+.eyebrow{font-family:var(--pix);font-size:.5rem;letter-spacing:.22em;color:var(--acc);margin-bottom:16px;display:block}
+h1{font-size:clamp(2.1rem,7.2vw,4.05rem);line-height:1.03;letter-spacing:-.035em;font-weight:800;margin-bottom:20px}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--acc-l),var(--acc) 55%,#7fd9e4);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(1.5rem,3.6vw,2.28rem);line-height:1.14;letter-spacing:-.03em;font-weight:800;margin-bottom:14px}
+h3{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
+.lead{font-size:clamp(1.02rem,1.7vw,1.2rem);color:#cfe4e8;max-width:56ch}
+.intro{color:var(--mut);max-width:60ch;margin-bottom:clamp(26px,4vw,40px);font-size:.98rem}
+.hero{padding:clamp(52px,9vw,104px) 0 clamp(10px,2vw,22px)}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.tg{font-size:.74rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--glass)}
+.tg b{color:var(--acc-l);font-weight:800}
+.card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.014));backdrop-filter:blur(8px);transition:.3s var(--ez)}
+/* ---------- REEL ---------- */
+.player{border:1px solid var(--line);border-radius:24px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));padding:clamp(10px,1.4vw,16px);backdrop-filter:blur(8px);box-shadow:0 40px 90px -50px #000,0 0 0 1px rgba(255,255,255,.02) inset}
+.screen{position:relative;border-radius:15px;overflow:hidden;background:#000;aspect-ratio:16/9}
+.screen canvas{width:100%;height:100%;display:block}
+.scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 78% 62% at 50% 46%,transparent 42%,rgba(0,0,0,.5) 100%);mix-blend-mode:multiply}
+.scan{position:absolute;inset:0;pointer-events:none;opacity:.16;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.09) 0 1px,transparent 1px 3px)}
+.slug{position:absolute;left:14px;top:14px;font-family:var(--pix);font-size:.42rem;letter-spacing:.18em;color:#dff6fa;opacity:.72;text-shadow:0 1px 6px #000;pointer-events:none}
+.tcode{position:absolute;right:14px;top:14px;font-family:var(--pix);font-size:.42rem;letter-spacing:.12em;color:#dff6fa;opacity:.72;text-shadow:0 1px 6px #000;pointer-events:none}
+.bigplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(5,6,15,.42);cursor:pointer;opacity:0;transition:.28s var(--ez);backdrop-filter:blur(2px)}
+.bigplay[data-show="1"]{opacity:1}
+.bigplay span{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;backdrop-filter:blur(6px)}
+.bigplay svg{width:26px;height:26px;fill:#fff;margin-left:4px}
+.ctrls{display:flex;align-items:center;gap:13px;padding:13px 6px 4px}
+.pp{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);color:var(--txt);cursor:pointer;display:grid;place-items:center;transition:.22s var(--ez)}
+.pp:hover{border-color:var(--acc);color:var(--acc);transform:scale(1.06)}
+.pp svg{width:15px;height:15px;fill:currentColor}
+.bar{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.11);overflow:hidden;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--acc-d),var(--acc),var(--acc-l));border-radius:99px}
+.bar u{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.34)}
+.tm{font-family:var(--pix);font-size:.46rem;color:var(--mut);letter-spacing:.06em;white-space:nowrap}
+.shots{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;padding:0 6px}
+.shot{font-size:.7rem;font-weight:700;color:var(--mut);border:1px solid var(--line2);border-radius:9px;padding:6px 11px;transition:.25s var(--ez);background:rgba(255,255,255,.02)}
+.shot[data-on="1"]{color:#06171b;background:linear-gradient(135deg,var(--acc-l),var(--acc));border-color:transparent}
+/* ---------- COMPARADOR ---------- */
+.cmpwrap{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#0a0c16;aspect-ratio:600/420;touch-action:pan-y}
+.cmpwrap svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cmpwrap .after{clip-path:inset(0 0 0 var(--x,50%))}
+.cmpwrap input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:none;z-index:5}
+.cmpwrap input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:-3px}
+.handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:linear-gradient(180deg,transparent,var(--acc-l) 12%,var(--acc-l) 88%,transparent);pointer-events:none;z-index:4;box-shadow:0 0 22px #3fc6d6aa}
+.handle b{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:rgba(5,6,15,.72);border:1.5px solid var(--acc-l);display:grid;place-items:center;backdrop-filter:blur(4px);box-shadow:0 8px 26px -8px #000}
+.handle b::before{content:'';width:16px;height:9px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 16' fill='none' stroke='%23cdf3f8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 3 5 8l6 5M21 3l6 5-6 5'/%3E%3C/svg%3E")}
+.pill{position:absolute;top:14px;z-index:4;font-family:var(--pix);font-size:.42rem;letter-spacing:.14em;padding:8px 11px;border-radius:9px;background:rgba(5,6,15,.66);border:1px solid var(--line);backdrop-filter:blur(6px);pointer-events:none}
+.pill.l{left:14px;color:#e3b8b8}.pill.r{right:14px;color:var(--acc-l)}
+.cmpnote{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:16px}
+.cmpnote div{border:1px solid var(--line2);border-radius:15px;padding:14px 16px;background:var(--glass)}
+.cmpnote strong{display:block;font-size:.83rem;margin-bottom:4px}
+.cmpnote p{font-size:.82rem;color:var(--mut);line-height:1.5}
+/* ---------- FORMATOS ---------- */
+.fmt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end}
+.fmt figure{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:12px;transition:.3s var(--ez)}
+.fmt figure:hover{border-color:var(--acc);transform:translateY(-5px);box-shadow:0 30px 60px -40px var(--acc)}
+.fmt svg{width:100%;height:auto;display:block;border-radius:10px;background:#07101a}
+.fmt figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px}
+.fmt .fn{font-family:var(--pix);font-size:.45rem;letter-spacing:.1em;color:var(--acc)}
+.fmt .fu{font-size:.74rem;color:var(--mut);font-weight:600}
+/* ---------- STORYBOARD ---------- */
+.sb{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.sb button{border:1px solid var(--line);border-radius:15px;background:var(--glass);padding:9px;cursor:pointer;color:inherit;font-family:inherit;transition:.28s var(--ez);display:block;width:100%;text-align:left}
+.sb button:hover,.sb button:focus-visible{border-color:var(--acc);transform:translateY(-4px)}
+.sb button[data-on="1"]{border-color:var(--acc);background:linear-gradient(165deg,#3fc6d626,rgba(255,255,255,.02));box-shadow:0 26px 50px -36px var(--acc)}
+.sb svg{width:100%;height:auto;display:block;border-radius:8px;background:#060d15}
+.sb .n{display:flex;align-items:center;justify-content:space-between;margin-top:9px;gap:6px}
+.sb .n span{font-family:var(--pix);font-size:.4rem;color:var(--mut);letter-spacing:.08em}
+.sb button[data-on="1"] .n span{color:var(--acc)}
+.sb .n b{font-size:.72rem;font-weight:700;line-height:1.25}
+.sbinfo{margin-top:16px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(150deg,rgba(63,198,214,.09),rgba(255,255,255,.018));padding:clamp(18px,2.6vw,26px);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;min-height:132px}
+.sbinfo .no{font-family:var(--pix);font-size:1.5rem;color:var(--acc);opacity:.55;line-height:1}
+.sbinfo h3{font-size:1.14rem;margin-bottom:6px;letter-spacing:-.02em}
+.sbinfo p{color:var(--mut);font-size:.93rem;max-width:60ch}
+.sbinfo .kit{margin-top:11px;display:flex;flex-wrap:wrap;gap:7px}
+.sbinfo .kit span{font-size:.7rem;font-weight:700;color:var(--acc-l);background:#3fc6d61c;border:1px solid #3fc6d63d;border-radius:8px;padding:5px 10px}
+/* ---------- CTA ---------- */
+.final{border:1px solid var(--line);border-radius:26px;background:linear-gradient(150deg,rgba(63,198,214,.14),rgba(255,255,255,.02));padding:clamp(30px,5vw,58px);text-align:center;position:relative;overflow:hidden}
+.final::after{content:'';position:absolute;left:50%;top:-58%;width:78%;height:110%;transform:translateX(-50%);background:radial-gradient(ellipse at center,#3fc6d629,transparent 66%);pointer-events:none}
+.final p{color:var(--mut);max-width:52ch;margin:0 auto 26px;position:relative}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.96rem;color:#06171b;background:linear-gradient(135deg,var(--acc-l),var(--acc));border:none;border-radius:15px;padding:16px 27px;cursor:pointer;transition:.24s var(--ez);box-shadow:0 20px 44px -20px var(--acc);font-family:inherit;position:relative}
+.cta:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.cta.ghost{background:none;color:var(--txt);border:1px solid var(--line);box-shadow:none}
+.cta.ghost:hover{border-color:var(--acc);color:var(--acc)}
+.btns{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;position:relative}
+footer{border-top:1px solid var(--line2);padding:26px 0 40px;position:relative;z-index:2}
+footer .in{display:flex;flex-wrap:wrap;gap:9px;justify-content:space-between;font-size:.79rem;color:var(--mut)}
+footer a:hover{color:var(--acc)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ez),transform .8s var(--ez)}
+.rv.in{opacity:1;transform:none}
+@media(max-width:880px){.fmt{grid-template-columns:repeat(2,1fr)}.sb{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.sb{grid-template-columns:repeat(2,1fr)}.sbinfo{grid-template-columns:1fr;gap:10px}.ctrls{gap:10px}.tm{font-size:.4rem}}
+@media(max-width:400px){.fmt{grid-template-columns:1fr 1fr;gap:10px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style></head><body>
+<div class="bgglow"></div><div class="grain"></div>
+
+<nav><div class="in">
+  <span class="brand">LQS</span>
+  <span class="navl"><a class="back" href="productora.html">← Productora</a><a class="back" href="../index.html">Galaxia</a></span>
+</div></nav>
+
+<div class="wrap"><header class="hero rv">
+  <span class="eyebrow">MUESTRAS · PRODUCTORA</span>
+  <h1>Así <em>rodamos</em></h1>
+  <p class="lead">Esta página no cuenta lo que hacemos: lo muestra. Un reel armado en vivo, una comparativa real de foto de producto, la misma pieza adaptada a cuatro formatos y el storyboard con el que planeamos cada plano.</p>
+  <div class="tagrow"><span class="tg"><b>4</b> escenas en el reel</span><span class="tg"><b>1</b> pieza, <b>4</b> formatos</span><span class="tg"><b>5</b> planos de storyboard</span><span class="tg">Medellín, Colombia</span></div>
+</header></div>
+
+<div class="wrap"><section>
+  <span class="eyebrow rv">01 · REEL</span>
+  <h2 class="rv">Un reel que se arma frente a ti</h2>
+  <p class="intro rv">Cuatro escenas encadenadas con cortes cada dos segundos: apertura con bokeh, movimiento de cámara sobre producto, texto cinético de marca y cierre de logo. Letterbox 2.39:1 y corrección de color aplicada, igual que en una entrega real.</p>
+  <div class="player rv">
+    <div class="screen">
+      <canvas id="reel" width="960" height="540" aria-label="Reel simulado de la productora LQS"></canvas>
+      <div class="scrim"></div><div class="scan"></div>
+      <span class="slug">LQS · REEL 2026</span><span class="tcode" id="tc">00:00:00</span>
+      <button class="bigplay" id="big" aria-label="Reproducir reel"><span><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></span></button>
+    </div>
+    <div class="ctrls">
+      <button class="pp" id="pp" aria-label="Pausar reel"><svg id="ppi" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+      <div class="bar" id="bar" role="progressbar" aria-label="Progreso del reel"><i id="fill"></i><u style="left:25%"></u><u style="left:50%"></u><u style="left:75%"></u></div>
+      <span class="tm" id="tm">00:00 / 00:09</span>
+    </div>
+    <div class="shots" id="shots">
+      <span class="shot" data-i="0">01 Apertura</span><span class="shot" data-i="1">02 Producto</span><span class="shot" data-i="2">03 Texto cinético</span><span class="shot" data-i="3">04 Cierre</span>
+    </div>
+  </div>
+</section></div>
+
+<div class="wrap"><section>
+  <span class="eyebrow rv">02 · FOTO DE PRODUCTO</span>
+  <h2 class="rv">Antes y después, sin retoques mágicos</h2>
+  <p class="intro rv">Arrastra la cortina. A la izquierda, la foto típica de celular: flash directo, fondo desordenado y color verdoso. A la derecha, la misma pieza con luz suave, fondo controlado, sombra dirigida y reflejo. Mismo producto, otro precio de venta.</p>
+  <div class="cmpwrap rv" id="cmp" style="--x:50%">
+    <svg viewBox="0 0 600 420" role="img" aria-label="Foto tomada con celular"><defs>
+      <linearGradient id="pfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e6250"/><stop offset="1" stop-color="#3a3d33"/></linearGradient>
+      <radialGradient id="pfsh" cx=".5" cy=".18" r=".62"><stop offset="0" stop-color="#fffdf0" stop-opacity=".62"/><stop offset="1" stop-color="#fffdf0" stop-opacity="0"/></radialGradient>
+      <filter id="pbl"><feGaussianBlur stdDeviation="7"/></filter></defs>
+      <rect width="600" height="420" fill="url(#pfl)"/>
+      <path d="M0 268 L600 244 L600 420 L0 420Z" fill="#4a4c40"/>
+      <path d="M0 268 L600 244 L600 258 L0 282Z" fill="#2f312a" opacity=".7"/>
+      <rect x="18" y="292" width="120" height="46" rx="6" fill="#6a6252" opacity=".85" transform="rotate(-5 78 315)"/>
+      <path d="M470 300c22-16 60-10 70 12s-16 42-44 36-44-32-26-48z" fill="#575a4b" opacity=".9"/>
+      <rect x="0" y="0" width="600" height="120" fill="#6d7160" opacity=".5"/>
+      <rect x="352" y="118" width="16" height="150" fill="#3d4036" opacity=".55"/>
+      <g transform="rotate(-4 300 250)">
+        <ellipse cx="300" cy="330" rx="86" ry="13" fill="#22241d" opacity=".75"/>
+        <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="#8a9a94"/>
+        <rect x="278" y="120" width="44" height="30" rx="5" fill="#6f7d78"/>
+        <rect x="274" y="112" width="52" height="14" rx="4" fill="#98a29c"/>
+        <rect x="268" y="212" width="64" height="52" rx="4" fill="#d9d5c4"/>
+        <rect x="276" y="228" width="40" height="5" rx="2" fill="#7d7a6c"/><rect x="276" y="240" width="28" height="5" rx="2" fill="#8d8a7c"/>
+        <rect x="256" y="150" width="92" height="176" fill="#fff" opacity=".1"/>
+      </g>
+      <ellipse cx="300" cy="96" rx="128" ry="86" fill="url(#pfsh)" filter="url(#pbl)"/>
+      <rect width="600" height="420" fill="#9bff7a" opacity=".05"/>
+      <g fill="#fff" opacity=".05"><rect x="60" y="80" width="2" height="2"/><rect x="140" y="200" width="2" height="2"/><rect x="420" y="120" width="2" height="2"/><rect x="500" y="330" width="2" height="2"/><rect x="220" y="380" width="2" height="2"/><rect x="360" y="60" width="2" height="2"/></g>
+    </svg>
+    <svg class="after" viewBox="0 0 600 420" role="img" aria-label="Foto de producto hecha por LQS"><defs>
+      <linearGradient id="lbg" x1=".2" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#16323a"/><stop offset=".55" stop-color="#0a1820"/><stop offset="1" stop-color="#05090f"/></linearGradient>
+      <radialGradient id="lkey" cx=".38" cy=".2" r=".7"><stop offset="0" stop-color="#bfeef6" stop-opacity=".5"/><stop offset="1" stop-color="#bfeef6" stop-opacity="0"/></radialGradient>
+      <linearGradient id="lbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f2f38"/><stop offset=".22" stop-color="#3d8b99"/><stop offset=".5" stop-color="#9fdfe9"/><stop offset=".78" stop-color="#2c6b78"/><stop offset="1" stop-color="#0a2027"/></linearGradient>
+      <linearGradient id="lref" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdfe9" stop-opacity=".3"/><stop offset="1" stop-color="#9fdfe9" stop-opacity="0"/></linearGradient>
+      <filter id="lsh"><feGaussianBlur stdDeviation="9"/></filter>
+      <filter id="lgl"><feGaussianBlur stdDeviation="14"/></filter></defs>
+      <rect width="600" height="420" fill="url(#lbg)"/>
+      <ellipse cx="228" cy="86" rx="230" ry="170" fill="url(#lkey)"/>
+      <path d="M0 300h600v120H0z" fill="#050b10" opacity=".55"/>
+      <ellipse cx="300" cy="302" rx="150" ry="26" fill="#00131a" opacity=".85" filter="url(#lsh)"/>
+      <ellipse cx="358" cy="300" rx="98" ry="15" fill="#000" opacity=".55" filter="url(#lsh)"/>
+      <g opacity=".26" transform="translate(0 604) scale(1 -1)">
+        <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="url(#lbody)"/>
+        <rect x="278" y="118" width="44" height="32" rx="6" fill="#2a5f6b"/>
+      </g>
+      <rect x="230" y="300" width="140" height="90" fill="url(#lref)" opacity=".5"/>
+      <ellipse cx="300" cy="196" rx="120" ry="120" fill="#3fc6d6" opacity=".1" filter="url(#lgl)"/>
+      <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="url(#lbody)"/>
+      <rect x="278" y="118" width="44" height="32" rx="6" fill="#2a5f6b"/>
+      <rect x="274" y="110" width="52" height="14" rx="6" fill="#cdf3f8" opacity=".92"/>
+      <rect x="272" y="212" width="56" height="56" rx="6" fill="#f2fbfd" opacity=".95"/>
+      <rect x="281" y="230" width="38" height="5" rx="2.5" fill="#155e6b"/><rect x="281" y="243" width="24" height="5" rx="2.5" fill="#3fc6d6"/>
+      <path d="M270 158h9v168a10 10 0 0 1-9-10z" fill="#fff" opacity=".5"/>
+      <path d="M334 168h6v150h-6z" fill="#cdf3f8" opacity=".55"/>
+      <path d="M285 122h30v6h-30z" fill="#fff" opacity=".5"/>
+      <ellipse cx="300" cy="140" rx="66" ry="30" fill="#cdf3f8" opacity=".09" filter="url(#lgl)"/>
+    </svg>
+    <span class="pill l">CELULAR</span><span class="pill r">LQS</span>
+    <span class="handle" id="hnd"><b></b></span>
+    <input type="range" id="cmpr" min="0" max="100" value="50" step="0.5" aria-label="Comparar foto con celular y foto LQS">
+  </div>
+  <div class="cmpnote rv">
+    <div><strong>Luz, no filtros</strong><p>Key suave a 45°, rebote frío y recorte de fondo con bandera negra.</p></div>
+    <div><strong>Sombra dirigida</strong><p>La sombra da peso y apoya el producto en la superficie.</p></div>
+    <div><strong>Fondo controlado</strong><p>Degradado limpio y reflejo tenue: el ojo va directo a la etiqueta.</p></div>
+  </div>
+</section></div>
+
+<div class="wrap"><section>
+  <span class="eyebrow rv">03 · FORMATOS</span>
+  <h2 class="rv">Una pieza, cuatro encuadres</h2>
+  <p class="intro rv">No recortamos: recomponemos. Cada formato se piensa desde el rodaje para que el producto, el texto y el aire respiren donde toca. Estas son las cuatro entregas que salen de la misma campaña.</p>
+  <div class="fmt rv">
+    <figure><svg viewBox="0 0 320 180" role="img" aria-label="Encuadre 16:9 para web"><defs>
+      <linearGradient id="f1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#122a33"/><stop offset="1" stop-color="#06101a"/></linearGradient>
+      <radialGradient id="fk" cx=".72" cy=".3" r=".6"><stop offset="0" stop-color="#ffd9a8" stop-opacity=".42"/><stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="320" height="180" fill="url(#f1)"/><rect width="320" height="180" fill="url(#fk)"/>
+      <rect x="204" y="112" width="72" height="9" rx="4" fill="#1b3f4a"/>
+      <ellipse cx="240" cy="112" rx="30" ry="6" fill="#000" opacity=".45"/>
+      <circle cx="240" cy="86" r="20" fill="none" stroke="#e6c489" stroke-width="5"/>
+      <path d="M240 62l5 8h-10z" fill="#cdf3f8"/><circle cx="240" cy="66" r="4" fill="#cdf3f8"/>
+      <text x="32" y="82" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="17" font-weight="800" letter-spacing="3">MERCURY</text>
+      <text x="32" y="100" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.4">Colección Aura · plata 925</text>
+      <rect x="32" y="112" width="52" height="16" rx="8" fill="#3fc6d6"/><text x="43" y="123" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
+      <text x="286" y="168" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="7" font-weight="800">LQS</text>
+    </svg><figcaption><span class="fn">16:9</span><span class="fu">Web / YouTube</span></figcaption></figure>
+
+    <figure><svg viewBox="0 0 180 320" role="img" aria-label="Encuadre 9:16 para reel"><defs>
+      <radialGradient id="fk2" cx=".5" cy=".32" r=".62"><stop offset="0" stop-color="#ffd9a8" stop-opacity=".42"/><stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="180" height="320" fill="url(#f1)"/><rect width="180" height="320" fill="url(#fk2)"/>
+      <rect x="52" y="150" width="76" height="10" rx="5" fill="#1b3f4a"/>
+      <ellipse cx="90" cy="150" rx="34" ry="7" fill="#000" opacity=".45"/>
+      <circle cx="90" cy="114" r="28" fill="none" stroke="#e6c489" stroke-width="7"/>
+      <path d="M90 80l6 10H84z" fill="#cdf3f8"/><circle cx="90" cy="85" r="5.5" fill="#cdf3f8"/>
+      <text x="24" y="216" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="19" font-weight="800" letter-spacing="3">MERCURY</text>
+      <text x="24" y="236" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.2">Colección Aura</text>
+      <rect x="24" y="250" width="94" height="22" rx="11" fill="#3fc6d6"/><text x="38" y="265" fill="#06171b" font-family="Manrope,sans-serif" font-size="9" font-weight="800">VER PIEZAS</text>
+      <rect x="24" y="26" width="44" height="4" rx="2" fill="#cdf3f8" opacity=".8"/><rect x="72" y="26" width="84" height="4" rx="2" fill="#ffffff" opacity=".22"/>
+      <text x="24" y="300" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="8" font-weight="800">LQS</text>
+    </svg><figcaption><span class="fn">9:16</span><span class="fu">Reel / Story</span></figcaption></figure>
+
+    <figure><svg viewBox="0 0 240 240" role="img" aria-label="Encuadre 1:1 para feed"><defs>
+      <radialGradient id="fk3" cx=".5" cy=".36" r=".6"><stop offset="0" stop-color="#ffd9a8" stop-opacity=".42"/><stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="240" height="240" fill="url(#f1)"/><rect width="240" height="240" fill="url(#fk3)"/>
+      <rect x="84" y="146" width="72" height="9" rx="4" fill="#1b3f4a"/>
+      <ellipse cx="120" cy="146" rx="32" ry="6" fill="#000" opacity=".45"/>
+      <circle cx="120" cy="114" r="25" fill="none" stroke="#e6c489" stroke-width="6.5"/>
+      <path d="M120 84l6 9h-12z" fill="#cdf3f8"/><circle cx="120" cy="88" r="5" fill="#cdf3f8"/>
+      <text x="120" y="196" text-anchor="middle" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="17" font-weight="800" letter-spacing="3.4">MERCURY</text>
+      <text x="120" y="212" text-anchor="middle" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="8.5" letter-spacing="1.2">Colección Aura · plata 925</text>
+      <text x="120" y="30" text-anchor="middle" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" letter-spacing="2">LQS</text>
+    </svg><figcaption><span class="fn">1:1</span><span class="fu">Feed / catálogo</span></figcaption></figure>
+
+    <figure><svg viewBox="0 0 200 250" role="img" aria-label="Encuadre 4:5 para post"><defs>
+      <radialGradient id="fk4" cx=".56" cy=".3" r=".62"><stop offset="0" stop-color="#ffd9a8" stop-opacity=".42"/><stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/></radialGradient></defs>
+      <rect width="200" height="250" fill="url(#f1)"/><rect width="200" height="250" fill="url(#fk4)"/>
+      <rect x="62" y="140" width="76" height="9" rx="4" fill="#1b3f4a"/>
+      <ellipse cx="100" cy="140" rx="34" ry="6" fill="#000" opacity=".45"/>
+      <circle cx="100" cy="104" r="27" fill="none" stroke="#e6c489" stroke-width="7"/>
+      <path d="M100 71l6 10H94z" fill="#cdf3f8"/><circle cx="100" cy="76" r="5.2" fill="#cdf3f8"/>
+      <text x="22" y="192" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="16" font-weight="800" letter-spacing="2.6">MERCURY</text>
+      <text x="22" y="208" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="8.5" letter-spacing="1.1">Colección Aura</text>
+      <rect x="22" y="218" width="60" height="17" rx="8.5" fill="#3fc6d6"/><text x="33" y="230" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
+      <text x="176" y="230" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">LQS</text>
+    </svg><figcaption><span class="fn">4:5</span><span class="fu">Post / pauta</span></figcaption></figure>
+  </div>
+</section></div>
+
+<div class="wrap"><section>
+  <span class="eyebrow rv">04 · STORYBOARD</span>
+  <h2 class="rv">Cada plano decidido antes de encender</h2>
+  <p class="intro rv">Así llega el guion visual al rodaje. Pasa el cursor o toca una viñeta para ver qué se busca en cada plano, con qué lente y cuánto dura.</p>
+  <div class="sb rv" id="sb">
+    <button data-i="0" data-on="1"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#081420"/><circle cx="126" cy="24" r="9" fill="#ffd9a8" opacity=".8"/><path d="M0 64h160v26H0z" fill="#10303a"/><path d="M0 64 40 46l34 12 30-16 56 22z" fill="#0e2530"/><rect x="74" y="52" width="5" height="14" rx="2.5" fill="#cdf3f8"/><circle cx="76.5" cy="49" r="3" fill="#cdf3f8"/><path d="M0 78h160" stroke="#3fc6d6" stroke-width="1" opacity=".25"/></svg><span class="n"><b>General</b><span>01</span></span></button>
+    <button data-i="1"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#081420"/><rect x="0" y="0" width="160" height="90" fill="#0d1f2a"/><ellipse cx="80" cy="34" rx="17" ry="19" fill="#d9b48f"/><path d="M63 30c0-14 34-14 34 0 0-9-34-9-34 0z" fill="#2b2118"/><path d="M46 90c0-24 15-38 34-38s34 14 34 38z" fill="#3fc6d6" opacity=".72"/><rect x="72" y="56" width="16" height="8" rx="3" fill="#cdf3f8" opacity=".8"/><circle cx="122" cy="20" r="24" fill="#ffd9a8" opacity=".14"/></svg><span class="n"><b>Medio</b><span>02</span></span></button>
+    <button data-i="2"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#081420"/><ellipse cx="80" cy="60" rx="62" ry="26" fill="#123240" opacity=".9"/><circle cx="80" cy="44" r="21" fill="none" stroke="#e6c489" stroke-width="6"/><circle cx="80" cy="24" r="6" fill="#cdf3f8"/><path d="M28 74c14-14 34-16 52-16s38 2 52 16" stroke="#d9b48f" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="118" cy="26" r="18" fill="#cdf3f8" opacity=".1"/></svg><span class="n"><b>Detalle</b><span>03</span></span></button>
+    <button data-i="3"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0a1b28"/><path d="M0 0h160v40H0z" fill="#123a4a" opacity=".7"/><path d="M18 90 62 8h36l44 82z" fill="#0d2733"/><path d="M62 8 80 0l18 8-18 10z" fill="#3fc6d6" opacity=".6"/><ellipse cx="80" cy="30" rx="12" ry="14" fill="#d9b48f"/><path d="M52 90c0-20 12-32 28-32s28 12 28 32z" fill="#3fc6d6" opacity=".62"/><path d="M0 6h160" stroke="#ffd9a8" stroke-width="2" opacity=".35"/></svg><span class="n"><b>Contrapicado</b><span>04</span></span></button>
+    <button data-i="4"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#04080e"/><circle cx="80" cy="42" r="26" fill="none" stroke="#3fc6d6" stroke-width="2" opacity=".55"/><text x="80" y="49" text-anchor="middle" fill="#cdf3f8" font-family="Manrope,sans-serif" font-size="19" font-weight="800" letter-spacing="2">LQS</text><rect x="52" y="70" width="56" height="3" rx="1.5" fill="#3fc6d6" opacity=".5"/><rect x="0" y="0" width="160" height="90" fill="#000" opacity=".2"/></svg><span class="n"><b>Cierre</b><span>05</span></span></button>
+  </div>
+  <div class="sbinfo rv" id="sbi"><span class="no" id="sbn">01</span><div><h3 id="sbt"></h3><p id="sbd"></p><div class="kit" id="sbk"></div></div></div>
+</section></div>
+
+<div class="wrap"><section><div class="final rv">
+  <h2>¿Te imaginaste tu marca en ese reel?</h2>
+  <p>Cuéntanos qué producto, servicio o evento quieres mostrar. Te devolvemos propuesta con planos, formatos de entrega y precio cerrado.</p>
+  <div class="btns">
+    <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%A5%20vi%20las%20muestras%20y%20quiero%20cotizar%20un%20rodaje." target="_blank" rel="noopener">Cotizar un rodaje</a>
+    <a class="cta ghost" href="productora.html">Ver paquetes y precios</a>
+  </div>
+</div></section></div>
+
+<footer><div class="wrap"><div class="in">
+  <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html">Galaxia LQS</a></span>
+</div></div></footer>
+
+<script>
+var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+/* ---- reveal ---- */
+(function(){var els=[].slice.call(document.querySelectorAll('.rv'));
+ if(RM||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){var i=+(e.target.dataset.d||0);e.target.style.transitionDelay=(i*90)+'ms';e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+ els.forEach(function(e,i){e.dataset.d=(i%4);io.observe(e);});})();
+
+/* ---- reel ---- */
+(function(){
+var c=document.getElementById('reel');if(!c)return;
+var g=c.getContext('2d'),W=960,H=540,LB=69,CT=LB,CB=H-LB,CH=CB-CT;
+var DUR=2.25,N=4,TOT=DUR*N,t=0,playing=!RM,vis=true,last=0;
+var fill=document.getElementById('fill'),tm=document.getElementById('tm'),tc=document.getElementById('tc');
+var pp=document.getElementById('pp'),ppi=document.getElementById('ppi'),big=document.getElementById('big');
+var chips=[].slice.call(document.querySelectorAll('.shot'));
+var PLAY='M7 4l13 8-13 8z',PAUSE='M6 4h4v16H6zM14 4h4v16h-4z';
+function ease(x){return 1-Math.pow(1-Math.min(1,Math.max(0,x)),3)}
+function bg(a,b){var lg=g.createLinearGradient(0,CT,W,CB);lg.addColorStop(0,a);lg.addColorStop(1,b);g.fillStyle=lg;g.fillRect(0,CT,W,CH)}
+
+function s0(p){bg('#06202b','#0a343d');
+ for(var i=0;i<40;i++){var sd=i*97.7,bx=((sd*11)%W+Math.sin(t*.3+i*1.7)*46+W)%W,
+  by=CB+40-(((t*30*(.35+(i%5)/5.5)+i*83)%(CH+120))),r=7+(i%8)*8,a=.09+.2*((i%4)/3),
+  col=i%4===0?'255,222,178':(i%4===1?'160,236,246':'205,243,248');
+  var rg=g.createRadialGradient(bx,by,0,bx,by,r);
+  rg.addColorStop(0,'rgba('+col+','+(a*1.5)+')');rg.addColorStop(.66,'rgba('+col+','+(a*.6)+')');rg.addColorStop(1,'rgba('+col+',0)');
+  g.fillStyle=rg;g.beginPath();g.arc(bx,by,r,0,7);g.fill();
+  if(i%9===0){g.strokeStyle='rgba('+col+',.14)';g.lineWidth=1.6;g.beginPath();g.arc(bx,by,r*.82,0,7);g.stroke();}}
+ var st=g.createLinearGradient(0,CT,W,CB);st.addColorStop(0,'rgba(205,243,248,0)');st.addColorStop(.5,'rgba(205,243,248,.13)');st.addColorStop(1,'rgba(205,243,248,0)');
+ g.save();g.translate(W*.5,CT+CH*.5);g.rotate(-.36);g.fillStyle=st;g.fillRect(-700,-26+Math.sin(t)*30,1400,52);g.restore();
+ var o=ease(p*2.2);g.globalAlpha=.5*(1-Math.min(1,p*1.6));g.fillStyle='#000';g.fillRect(0,CT,W,CH);g.globalAlpha=1;
+ g.fillStyle='rgba(233,246,248,'+(.9*o)+')';g.font='600 21px Manrope,sans-serif';g.fillText('Luz antes que palabras.',86,CB-74);}
+
+function s1(p){bg('#08202a','#04101a');
+ var cam=-46+p*92,zoom=1+p*.09;
+ g.save();g.translate(W/2,CT+CH*.58);g.scale(zoom,zoom);g.translate(-W/2+cam*-1,-(CT+CH*.58));
+ var kg=g.createRadialGradient(W*.34,CT+CH*.18,10,W*.34,CT+CH*.18,430);
+ kg.addColorStop(0,'rgba(205,243,248,.36)');kg.addColorStop(1,'rgba(205,243,248,0)');g.fillStyle=kg;g.fillRect(0,CT,W,CH);
+ var fy=CT+CH*.74;g.fillStyle='#03090f';g.fillRect(0,fy,W,CB-fy);
+ var cx=W/2+cam*.55;
+ g.fillStyle='rgba(0,0,0,.65)';g.beginPath();g.ellipse(cx+34,fy,150,20,0,0,7);g.fill();
+ var bd=g.createLinearGradient(cx-64,0,cx+64,0);
+ bd.addColorStop(0,'#0a2028');bd.addColorStop(.2,'#356f7d');bd.addColorStop(.48,'#a5e3ec');bd.addColorStop(.76,'#255b68');bd.addColorStop(1,'#08191f');
+ g.fillStyle=bd;g.beginPath();
+ var bx=cx-58,by=fy-196,bw=116,bh=196,r=16;
+ g.moveTo(bx+r,by);g.lineTo(bx+bw-r,by);g.quadraticCurveTo(bx+bw,by,bx+bw,by+r);g.lineTo(bx+bw,fy-r);g.quadraticCurveTo(bx+bw,fy,bx+bw-r,fy);g.lineTo(bx+r,fy);g.quadraticCurveTo(bx,fy,bx,fy-r);g.lineTo(bx,by+r);g.quadraticCurveTo(bx,by,bx+r,by);g.fill();
+ g.fillStyle='#2a5f6b';g.fillRect(cx-26,by-38,52,40);
+ g.fillStyle='#cdf3f8';g.fillRect(cx-31,by-50,62,16);
+ g.fillStyle='#f4fcfd';g.fillRect(cx-40,by+72,80,74);
+ g.fillStyle='#155e6b';g.font='800 15px Manrope,sans-serif';g.fillText('MERCURY',cx-33,by+104);
+ g.fillStyle='#3fc6d6';g.fillRect(cx-33,by+114,44,4);
+ var sp=(p*1.5-.15);g.globalAlpha=.55;g.fillStyle='#ffffff';
+ g.save();g.beginPath();g.rect(bx,by,bw,bh);g.clip();g.fillRect(bx+bw*sp-30,by-20,20,bh+40);g.restore();g.globalAlpha=1;
+ g.fillStyle='rgba(255,255,255,.42)';g.fillRect(bx+7,by+16,8,bh-34);
+ g.fillStyle='rgba(205,243,248,.5)';g.fillRect(bx+bw-11,by+24,5,bh-52);
+ g.restore();
+ g.globalAlpha=.28;g.fillStyle='#04121a';g.fillRect(0,CT,W*.12,CH);g.fillRect(W*.88,CT,W*.12,CH);g.globalAlpha=1;
+ var o=ease((p-.25)*2.4);g.fillStyle='rgba(233,246,248,'+(.88*o)+')';g.font='600 19px Manrope,sans-serif';g.fillText('Movimiento de cámara · dolly in',86,CB-74);}
+
+function s2(p){bg('#04121a','#071e26');
+ var kg=g.createRadialGradient(W/2,CT+CH*.42,20,W/2,CT+CH*.42,470);
+ kg.addColorStop(0,'rgba(63,198,214,.24)');kg.addColorStop(1,'rgba(63,198,214,0)');g.fillStyle=kg;g.fillRect(0,CT,W,CH);
+ var word='MERCURY',fs=88;g.font='800 '+fs+'px Manrope,sans-serif';
+ var ws=0,i,wd=[];for(i=0;i<word.length;i++){wd.push(g.measureText(word[i]).width+9);ws+=wd[i];}
+ var x=(W-ws)/2,base=CT+CH*.5;
+ for(i=0;i<word.length;i++){
+  var lp=ease((p*1.75)-i*.075),dy=(1-lp)*74;
+  g.globalAlpha=Math.min(1,lp*1.4);
+  g.fillStyle='#e9f6f8';g.fillText(word[i],x,base+dy);
+  g.globalAlpha=Math.min(1,lp)*.35;g.fillStyle='#3fc6d6';g.fillText(word[i],x+3,base+dy+3);
+  x+=wd[i];}
+ g.globalAlpha=1;
+ var bp=ease((p-.32)*2.6);
+ g.fillStyle='#3fc6d6';g.fillRect(W/2-150*bp,base+26,300*bp,3);
+ g.globalAlpha=ease((p-.42)*2.6);g.fillStyle='#8fb2b9';g.font='600 21px Manrope,sans-serif';
+ var sub='JOYERÍA DE AUTOR · MEDELLÍN',sw=g.measureText(sub).width;g.fillText(sub,(W-sw)/2,base+66);g.globalAlpha=1;
+ g.globalAlpha=.16;g.fillStyle='#cdf3f8';g.fillRect(0,base+CH*.24-((p*260)%CH),W,2);g.globalAlpha=1;}
+
+function s3(p){bg('#04080f','#050d14');
+ var o=ease(p*1.6);
+ g.save();g.translate(W/2,CT+CH*.46);
+ g.strokeStyle='rgba(63,198,214,'+(.6*o)+')';g.lineWidth=2.4;g.beginPath();g.arc(0,0,108,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,p*1.5));g.stroke();
+ g.strokeStyle='rgba(205,243,248,'+(.16*o)+')';g.lineWidth=1;g.beginPath();g.arc(0,0,132,0,7);g.stroke();
+ g.globalAlpha=o;g.fillStyle='#e9f6f8';g.font='800 74px Manrope,sans-serif';
+ var lw=g.measureText('LQS').width;g.fillText('LQS',-lw/2,26);
+ g.globalAlpha=ease((p-.34)*2.2);g.fillStyle='#8fb2b9';g.font='600 17px Manrope,sans-serif';
+ var s='PRODUCTORA AUDIOVISUAL',sw=g.measureText(s).width;g.fillText(s,-sw/2,74);
+ g.restore();g.globalAlpha=1;
+ var fo=Math.max(0,(p-.82)/.18);g.fillStyle='rgba(0,0,0,'+fo+')';g.fillRect(0,CT,W,CH);}
+
+function grade(){g.save();g.beginPath();g.rect(0,CT,W,CH);g.clip();
+ g.globalCompositeOperation='soft-light';
+ var lg=g.createLinearGradient(0,CT,W,CB);lg.addColorStop(0,'#0e6474');lg.addColorStop(.52,'#8b95a0');lg.addColorStop(1,'#e8b184');
+ g.fillStyle=lg;g.fillRect(0,CT,W,CH);
+ g.globalCompositeOperation='multiply';
+ var vg=g.createRadialGradient(W/2,CT+CH/2,W*.16,W/2,CT+CH/2,W*.63);
+ vg.addColorStop(0,'#ffffff');vg.addColorStop(1,'#6d7c88');g.fillStyle=vg;g.fillRect(0,CT,W,CH);
+ g.globalCompositeOperation='source-over';
+ g.fillStyle='rgba(255,255,255,.055)';
+ for(var i=0;i<130;i++)g.fillRect(Math.random()*W|0,CT+Math.random()*CH|0,1,1);
+ g.restore();}
+
+function frame(){
+ var lt=t%TOT,si=Math.floor(lt/DUR)%N,p=(lt%DUR)/DUR;
+ g.clearRect(0,0,W,H);
+ if(si===0)s0(p);else if(si===1)s1(p);else if(si===2)s2(p);else s3(p);
+ grade();
+ if(p<.07){g.globalAlpha=(1-p/.07)*.42;g.fillStyle='#dff6fa';g.fillRect(0,CT,W,CH);g.globalAlpha=1;}
+ g.fillStyle='#000';g.fillRect(0,0,W,CT);g.fillRect(0,CB,W,H-CB);
+ var pc=lt/TOT;fill.style.width=(pc*100)+'%';
+ var sec=lt|0,fr=((lt-sec)*24)|0;
+ tm.textContent='00:0'+sec+' / 00:0'+(TOT|0);
+ tc.textContent='00:0'+sec+':'+(fr<10?'0':'')+fr;
+ for(var i=0;i<chips.length;i++)chips[i].dataset.on=(i===si)?'1':'0';}
+
+function loop(ts){if(!last)last=ts;var dt=Math.min(.05,(ts-last)/1000);last=ts;
+ if(playing&&vis)t+=dt;
+ frame();requestAnimationFrame(loop);}
+function setPlay(v){playing=v;ppi.innerHTML='<path d="'+(v?PAUSE:PLAY)+'"/>';pp.setAttribute('aria-label',v?'Pausar reel':'Reproducir reel');big.dataset.show=v?'0':'1';}
+pp.addEventListener('click',function(){setPlay(!playing)});
+big.addEventListener('click',function(){setPlay(true)});
+document.getElementById('bar').addEventListener('click',function(e){var r=this.getBoundingClientRect();t=((e.clientX-r.left)/r.width)*TOT;frame();});
+if('IntersectionObserver' in window){new IntersectionObserver(function(en){vis=en[0].isIntersecting},{threshold:.05}).observe(c);}
+setPlay(!RM);frame();requestAnimationFrame(loop);
+})();
+
+/* ---- comparador ---- */
+(function(){var w=document.getElementById('cmp'),r=document.getElementById('cmpr');if(!w)return;
+ function up(){w.style.setProperty('--x',r.value+'%');}
+ r.addEventListener('input',up);up();
+ var t0=null;if(!RM){t0=setTimeout(function(){var v=50,d=1,id=setInterval(function(){v+=d*1.6;if(v>74||v<30)d*=-1;if(v<50.2&&d>0){clearInterval(id);r.value=50;up();return;}r.value=v;up();},22);},900);}
+ r.addEventListener('pointerdown',function(){if(t0)clearTimeout(t0)});
+})();
+
+/* ---- storyboard ---- */
+(function(){var sb=document.getElementById('sb');if(!sb)return;
+ var D=[
+ ['Plano general','Abre la historia y ubica al espectador: el espacio, la luz del lugar y la escala del producto o del evento. Suele ser el plano que usamos como primer segundo del reel.',['24 mm','3 s','Trípode + slider']],
+ ['Plano medio','Aquí entra la persona: manos, gesto, mirada. Es el plano que genera confianza porque muestra a alguien real usando lo que vendes.',['35 mm','2,5 s','Cámara en mano']],
+ ['Plano detalle','El macro que vende la textura: el brillo del metal, la costura de la tela, la gota en el vaso. Va siempre con luz rasante y foco muy corto.',['90 mm macro','2 s','Foco manual']],
+ ['Contrapicado','Cámara abajo mirando arriba. Da autoridad y tamaño; lo usamos para producto premium y para retratos de marca con actitud.',['24 mm','2 s','Low mode']],
+ ['Cierre de marca','El logo aparece sobre el último gesto de la escena y se sostiene lo justo para que quede grabado. Cierre con silencio, no con música cortada.',['50 mm','1,5 s','Fade a negro']]];
+ var no=document.getElementById('sbn'),ti=document.getElementById('sbt'),de=document.getElementById('sbd'),ki=document.getElementById('sbk');
+ var btns=[].slice.call(sb.querySelectorAll('button'));
+ function sel(i){for(var k=0;k<btns.length;k++)btns[k].dataset.on=(k===i)?'1':'0';
+  no.textContent='0'+(i+1);ti.textContent=D[i][0];de.textContent=D[i][1];
+  ki.innerHTML='';D[i][2].forEach(function(x){var s=document.createElement('span');s.textContent=x;ki.appendChild(s);});}
+ btns.forEach(function(b,i){b.addEventListener('click',function(){sel(i)});b.addEventListener('mouseenter',function(){sel(i)});b.addEventListener('focus',function(){sel(i)});});
+ sel(0);window.__sbSel=sel;})();
+</script></body></html>
