@@ -264,8 +264,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <div class="nlinks" id="nl">
     <a data-go="inicio">Inicio</a>
     <a data-go="servicios">Servicios</a>
-    <a data-go="muestras">Ejemplos</a>
-    <a data-go="whatsapp">WhatsApp</a>
+    <a data-go="muestras">Muestras</a>
+    <a data-go="whatsapp">Automatización</a>
     <a data-go="estudio">Nosotros</a>
     <a data-go="cotizar">Cotizar</a>
     <a class="nbtn" id="authBtn">Ingresar</a>
@@ -341,7 +341,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ MUESTRAS ═══════ -->
 <div class="view" id="v-muestras"><section class="sec"><div class="wrap">
-  <div class="kick">Ejemplos</div>
+  <div class="kick">Muestras</div>
   <h2 class="disp">Pruébalo antes<br>de <span class="gold">contratar</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot.</p>
   <div class="cards" id="demos"></div>
@@ -384,7 +384,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ WHATSAPP AUTOMÁTICO ═══════ -->
 <div class="view" id="v-whatsapp"><section class="sec"><div class="wrap">
-  <div class="kick">WhatsApp automático</div>
+  <div class="kick">Automatización</div>
   <h2 class="disp">Tu negocio responde,<br>aunque tú <span class="gold">no estés</span>.</h2>
   <div class="wa-hero" style="margin-top:34px">
     <div>
@@ -487,17 +487,16 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <p style="font-size:.84rem;color:var(--faint);line-height:1.6">Estudio creativo en Medellín. Gente que resuelve: marca, web, automatización, audiovisual y producto.</p>
     </div>
     <div class="fc"><h4>Secciones</h4>
-      <a data-go="servicios">Servicios</a><a data-go="muestras">Ejemplos</a>
+      <a data-go="servicios">Servicios</a><a data-go="muestras">Muestras</a>
       <a data-go="estudio">Nosotros</a><a data-go="cotizar">Cotizar</a></div>
     <div class="fc"><h4>Servicios</h4>
       <a data-demo="mundos/empresas.html" data-titulo="Empresas">Empresas</a>
-      <a data-demo="mundos/express.html" data-titulo="Diseño rápido">Diseño rápido</a>
-      <a data-demo="mundos/productora.html" data-titulo="Video y foto">Video y foto</a>
+      <a data-demo="mundos/express.html" data-titulo="Express">Express</a>
+      <a data-demo="mundos/productora.html" data-titulo="Productora">Productora</a>
       <a data-demo="mundos/creadores.html" data-titulo="Creadores">Creadores</a></div>
     <div class="fc"><h4>Herramientas</h4>
-      <a data-go="whatsapp">WhatsApp automático</a>
+      <a data-go="whatsapp">Automatización</a>
       <a data-demo="mundos/productora-calculadora.html" data-titulo="Calculadora de rodaje">Calculadora de rodaje</a>
-      <a data-demo="mundos/mercury.html" data-titulo="Joyería">Joyería</a>
       <a data-demo="mundos/foma.html" data-titulo="Ropa y merch">Ropa y merch</a></div>
     <div class="fc"><h4>Contacto</h4>
       <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a>
@@ -659,8 +658,8 @@ const ART={
 };
 const AREAS=[
  {k:'servicios',n:'01',t:'Servicios y precios',c:'#5b8def',go:'servicios',cls:'wide',d:'Qué hacemos y cuánto cuesta. Precio cerrado, sin sorpresas.'},
- {k:'automat',n:'02',t:'WhatsApp automático',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
- {k:'muestras',n:'03',t:'Ejemplos',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
+ {k:'automat',n:'02',t:'Automatización',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
+ {k:'muestras',n:'03',t:'Muestras',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
  {k:'cotizar',n:'04',t:'Pedir cotización',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea. Respondemos en 48 horas.'},
  {k:'estudio',n:'05',t:'Nosotros',c:'#e6c877',go:'estudio',cls:'half',d:'Quiénes somos y cómo trabajamos.'},
  {k:'cuenta',n:'06',t:'Mi cuenta',c:'#ff6b6b',go:'cuenta',cls:'half',d:'Mira el avance de tus proyectos.'}
@@ -681,11 +680,11 @@ document.getElementById('proc').innerHTML=[
 ].map(([n,t,d])=>`<div class="card"><div class="un">${n}</div><h3>${t}</h3><p>${d}</p></div>`).join('');
 const DEMOS=[
  ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
- ['Diseño rápido','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#39c07a'],
- ['Video y foto','Rodaje y formatos','Reel de ejemplo, antes/después de foto de producto y la pieza en 4 formatos.','mundos/productora-muestras.html','#3fc6d6'],
- ['Joyería y ropa','Joyas y merch','Configura tu joya o previsualiza tu merch y cotiza el lote en segundos.','mundos/marcas-muestras.html','#d98aa6'],
- ['WhatsApp','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
- ['Video y foto','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
+ ['Express','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#39c07a'],
+ ['Productora','Rodaje y formatos','Reel de ejemplo, antes/después de foto de producto y la pieza en 4 formatos.','mundos/productora-muestras.html','#3fc6d6'],
+ ['Ropa y merch','Merch y uniformes','Previsualiza tu merch, elige color y aplicación, y cotiza el lote en segundos.','mundos/marcas-muestras.html','#b6ad98'],
+ ['Automatización','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
+ ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
  ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5'],
  ['Restaurantes','Menú digital','Cómo queda la carta de un restaurante en el celular.','https://motta-bit.github.io/vitanova/','#e0614a'],
  ['Hoteles','Plataforma de hotel','Reservas, check-in con QR y llave digital.','https://motta-bit.github.io/Vita-Nova/','#2fb8a3']
@@ -720,14 +719,14 @@ addEventListener('popstate',()=>go((location.hash||'#inicio').slice(1),false));
 let UNIS=[],PAKS=[],uniSel='todos';
 /* respaldo por si la base no responde: el sitio nunca queda vacío */
 const RESPALDO_U=[
- {id:'aloja',nombre:'Aloja',categoria:'Hoteles y hospedaje',color:'#2fb8a3',orden:1},
- {id:'carta',nombre:'Carta',categoria:'Restaurantes y bares',color:'#e0614a',orden:2},
- {id:'empresas',nombre:'Empresas',categoria:'Corporativo',color:'#5b8def',orden:3},
- {id:'express',nombre:'Express',categoria:'Diseño día a día',color:'#39c07a',orden:4},
- {id:'creadores',nombre:'Creadores',categoria:'Marca personal',color:'#a97bd6',orden:5},
- {id:'productora',nombre:'Productora',categoria:'Audiovisual',color:'#3fc6d6',orden:6},
- {id:'mercury',nombre:'Mercury',categoria:'Joyería',color:'#d98aa6',orden:7},
- {id:'foma',nombre:'foma',categoria:'Ropa y merch',color:'#b6ad98',orden:8}];
+ {id:'empresas',nombre:'Empresas',categoria:'Empresas',color:'#5b8def',orden:1},
+ {id:'express',nombre:'Express',categoria:'Express',color:'#39c07a',orden:2},
+ {id:'productora',nombre:'Productora',categoria:'Productora',color:'#3fc6d6',orden:3},
+ {id:'creadores',nombre:'Creadores',categoria:'Creadores',color:'#a97bd6',orden:4},
+ {id:'carta',nombre:'Carta',categoria:'Restaurantes',color:'#e0614a',orden:5},
+ {id:'aloja',nombre:'Aloja',categoria:'Hoteles',color:'#2fb8a3',orden:6},
+ {id:'foma',nombre:'Ropa y merch',categoria:'Ropa y merch',color:'#b6ad98',orden:7},
+ {id:'mercury',nombre:'Joyería',categoria:'Joyería',color:'#d98aa6',orden:8,proximamente:true}];
 const RESPALDO_P=[
  {id:'r1',universo_id:'express',nombre:'Pieza suelta',descripcion:'Necesitas una sola cosa, bien hecha.',precio_cop:45000,unidad:'desde · 48-72h',incluye:['1 pieza a elección','2 rondas de ajustes','Archivos en alta']},
  {id:'r2',universo_id:'express',nombre:'Combo Emprendedor',descripcion:'Arrancas y necesitas lo básico ya.',precio_cop:390000,unidad:'pago único',incluye:['Logo básico','Paleta y tipografías','6 posts','Tarjeta personal']},
@@ -735,7 +734,6 @@ const RESPALDO_P=[
  {id:'r4',universo_id:'productora',nombre:'Foto Producto',descripcion:'Tienes productos o carta que mostrar.',precio_cop:320000,unidad:'20 fotos',incluye:['Hasta 20 fotos editadas','Retoque incluido','Formatos web y redes']},
  {id:'r5',universo_id:'empresas',nombre:'Identidad Esencial',descripcion:'Empresas que necesitan verse serias ya.',precio_cop:890000,unidad:'pago único',incluye:['Logo (3 propuestas)','Paleta y tipografías','Mini manual de marca','Papelería digital']},
  {id:'r6',universo_id:'empresas',nombre:'Despegue Total',descripcion:'Marca, web y atención resueltas de una.',precio_cop:3900000,unidad:'pago único',incluye:['Identidad Esencial','Presencia Digital','Automatización de WhatsApp','3 meses de soporte']},
- {id:'r7',universo_id:'mercury',nombre:'Pieza por Encargo',descripcion:'Tienes una idea y quieres hacerla real.',precio_cop:280000,unidad:'desde · 3-4 semanas',incluye:['Asesoría y boceto','2 rondas de ajustes','Grabado incluido']},
  {id:'r8',universo_id:'foma',nombre:'Merch de Marca',descripcion:'Ropa que la gente sí usa.',precio_cop:46000,unidad:'por unidad · mín. 20',incluye:['Diseño aplicado','Muestra física previa','Entrega 3-4 semanas']}];
 async function cargarCatalogo(){
  try{
@@ -745,10 +743,10 @@ async function cargarCatalogo(){
   UNIS=(u&&u.length)?u:RESPALDO_U; PAKS=(p&&p.length)?p:RESPALDO_P;
  }catch(e){ UNIS=RESPALDO_U; PAKS=RESPALDO_P; }
  const sel=document.getElementById('solUni');
- sel.innerHTML='<option value="">No estoy seguro</option>'+UNIS.map(x=>`<option value="${x.id}">${x.nombre} · ${x.categoria}</option>`).join('');
+ sel.innerHTML='<option value="">No estoy seguro</option>'+UNIS.filter(x=>!x.proximamente).map(x=>`<option value="${x.id}">${x.categoria}</option>`).join('');
  document.getElementById('uniChips').innerHTML=
   `<button class="btn g chip on" data-u="todos" style="padding:9px 16px;font-size:.72rem">Todos</button>`+
-  UNIS.map(x=>`<button class="btn g chip" data-u="${x.id}" style="padding:9px 16px;font-size:.72rem">${x.nombre}</button>`).join('');
+  UNIS.map(x=>`<button class="btn g chip" data-u="${x.id}" style="padding:9px 16px;font-size:.72rem${x.proximamente?';opacity:.55':''}">${x.categoria}${x.proximamente?' · pronto':''}</button>`).join('');
  document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{
   uniSel=b.dataset.u;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b));
   document.querySelectorAll('.chip').forEach(x=>x.style.borderColor=x===b?'var(--gold)':'');
@@ -758,11 +756,14 @@ async function cargarCatalogo(){
 function cargarPaquetes(){
  const box=document.getElementById('paks');
  const lista=uniSel==='todos'?PAKS:PAKS.filter(p=>p.universo_id===uniSel);
- if(!lista.length){box.innerHTML='<div class="empty">Aún no hay paquetes en esta área. Escríbenos y lo armamos a tu medida.</div>';return;}
+ if(!lista.length){const u=UNIS.find(x=>x.id===uniSel)||{};
+  box.innerHTML=`<div class="empty"><h3 class="disp" style="margin-bottom:8px">${u.proximamente?u.categoria+' viene en camino':'Aún no hay paquetes aquí'}</h3>
+   <p style="margin-bottom:18px">${u.proximamente?'Estamos preparando esta línea. Déjanos tus datos y eres de los primeros en saber.':'Escríbenos y lo armamos a tu medida.'}</p>
+   <button class="btn gold" data-go="cotizar">Escribirnos</button></div>`;return;}
  box.innerHTML=lista.map(p=>{
   const u=UNIS.find(x=>x.id===p.universo_id)||{};
   const inc=Array.isArray(p.incluye)?p.incluye:[];
-  return `<div class="card"><span class="tagd" style="color:${u.color||'#e6c877'}">${u.nombre||''}</span>
+  return `<div class="card"><span class="tagd" style="color:${u.color||'#e6c877'}">${u.categoria||u.nombre||''}</span>
    <h3>${p.nombre}</h3><p>${p.descripcion||''}</p>
    <div class="pz">${fmt(p.precio_cop)}</div><div class="un">${p.unidad}</div>
    <ul>${inc.map(i=>`<li>${i}</li>`).join('')}</ul>
