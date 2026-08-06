@@ -39,13 +39,14 @@ svg{display:block;max-width:100%}
 /* ---------- nav ---------- */
 nav{position:sticky;top:0;z-index:60;background:rgba(6,7,15,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1200px;margin:0 auto;padding:12px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:9px}
-.brand b{color:var(--ink);font-weight:700}
+.brand{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:9px;white-space:nowrap;min-width:0}
+.brand b{color:var(--ink);font-weight:700;overflow:hidden;text-overflow:ellipsis}
 .navlinks{display:flex;gap:8px;align-items:center}
 .nlink{font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:9px 15px;transition:.22s;white-space:nowrap}
 .nlink:hover{color:var(--gold);border-color:var(--line2);background:rgba(230,200,119,.06)}
 /* ---------- hero ---------- */
-.hero{padding:clamp(38px,7vw,78px) 0 clamp(24px,4vw,44px);display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(22px,4vw,52px);align-items:center}
+.hero{padding:clamp(38px,7vw,78px) 0 clamp(24px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(22px,4vw,52px);align-items:center}
+.hero>*{min-width:0}
 .kick{font-family:var(--tech);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .kick::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent);max-width:180px}
 h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.92;
@@ -63,7 +64,7 @@ section{padding:clamp(30px,5vw,56px) 0;position:relative;z-index:3}
 h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.92;font-size:clamp(2rem,5.4vw,3.4rem);margin-bottom:12px}
 .sec-intro{color:var(--dim);max-width:62ch;margin-bottom:26px}
 /* ---------- calculadora ---------- */
-.calc{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(18px,2.4vw,30px);align-items:start}
+.calc{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(18px,2.4vw,30px);align-items:start}
 .controls{display:flex;flex-direction:column;gap:16px;min-width:0}
 .block{border:1px solid var(--line);border-radius:20px;background:linear-gradient(168deg,rgba(255,255,255,.045),rgba(255,255,255,.012));padding:clamp(16px,2.4vw,22px)}
 .blabel{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:9px}
@@ -163,15 +164,17 @@ footer a:hover{color:var(--gold)}
 .rv.on{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.75,.3,1)}
 /* ---------- responsive ---------- */
 @media(max-width:960px){
-  .hero{grid-template-columns:1fr;gap:26px}
+  .hero{grid-template-columns:minmax(0,1fr);gap:26px}
   .artbox{order:-1}
-  .calc{grid-template-columns:1fr}
+  .calc{grid-template-columns:minmax(0,1fr)}
   .summary{position:static}
 }
 @media(max-width:640px){
   body{padding-bottom:84px}
   .navlinks .nlink.sec{display:none}
-  .brand{font-size:.62rem}
+  .brand{font-size:.58rem;letter-spacing:.13em;gap:6px}
+  .brand .lg{display:none}
+  .nlink{padding:8px 12px;font-size:.6rem;letter-spacing:.12em}
   .opts{grid-template-columns:1fr 1fr}
   .exlist{grid-template-columns:1fr}
   .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;align-items:center;justify-content:space-between;gap:12px;
@@ -192,7 +195,7 @@ footer a:hover{color:var(--gold)}
 <div class="aura"></div><div class="grainy"></div>
 
 <nav><div class="in">
-  <div class="brand">🎬 LQS <b>· Calculadora de rodaje</b></div>
+  <div class="brand">🎬 LQS <b>· Calculadora<span class="lg"> de rodaje</span></b></div>
   <div class="navlinks">
     <a class="nlink" href="productora.html">← Productora</a>
     <a class="nlink sec" href="../index.html">Sitio</a>
@@ -272,7 +275,7 @@ footer a:hover{color:var(--gold)}
             <polygon points="-31,-9 -15,-25 15,-25 31,-9 31,9 15,25 -15,25 -31,9"/>
           </g>
           <polygon points="-62,-19 -30,-51 30,-51 62,-19 0,0" fill="#fff" opacity=".3"/>
-          <polygon points="-62,-19 -34,-58 34,-58 70,-22 62,-19 30,-51 -30,-51z" fill="#fff" opacity=".08"/>
+          <polygon points="-62,-19 -34,-58 34,-58 70,-22 62,-19 30,-51 -30,-51" fill="#fff" opacity=".08"/>
         </g>
         <!-- cuerpo de la luz detrás -->
         <rect x="424" y="176" width="44" height="26" rx="7" fill="url(#mtl)" stroke="rgba(210,215,240,.18)"/>
@@ -622,6 +625,7 @@ function calcular(){
   eqOut.innerHTML=personas+'<small>'+(personas>1?'personas':'persona')+'</small>';
   entOut.innerHTML=entregables+'<small>'+(entregables>1?'entregables':'entregable')+'</small>';
   fill(eq);fill(ent);
+  ajustar(totalEl);
 }
 
 function mensaje(){
@@ -653,6 +657,24 @@ form.addEventListener('change',calcular);
 form.addEventListener('input',calcular);
 exWrap.addEventListener('change',calcular);
 calcular();
+
+/* --- ajuste tipográfico: nunca desbordar horizontalmente --- */
+function ajustar(el){
+  el.style.fontSize='';
+  var g=0;
+  if(el.clientWidth<2)return;
+  while(el.scrollWidth>el.clientWidth+1&&g++<28){
+    var s=parseFloat(getComputedStyle(el).fontSize);
+    el.style.fontSize=Math.max(11,s*Math.max(.8,el.clientWidth/el.scrollWidth*.99))+'px';
+  }
+}
+function ajustarTodo(){
+  [].forEach.call(document.querySelectorAll('h1,h2,.amount,.bignum'),ajustar);
+}
+addEventListener('load',ajustarTodo);
+ajustarTodo();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ajustarTodo).catch(function(){});
+var rt=null;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(ajustarTodo,160);});
 
 /* --- reveal --- */
 var R=matchMedia('(prefers-reduced-motion:reduce)').matches;

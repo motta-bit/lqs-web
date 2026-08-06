@@ -54,14 +54,14 @@ nav .in{max-width:1200px;margin:0 auto;padding:12px var(--pad);display:flex;alig
 h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.9;
   font-size:clamp(4.2rem,20vw,13rem);margin-bottom:6px;
   background:linear-gradient(160deg,#fffdf7 8%,#f2efe8 40%,#6a6f8c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .sub{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(16px,4vw,44px);align-items:end;border-top:1px solid var(--line);padding-top:20px}
+.hero .sub{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(16px,4vw,44px);align-items:end;border-top:1px solid var(--line);padding-top:20px}
 .hero .sub p{color:var(--dim);font-size:clamp(1rem,1.7vw,1.14rem);max-width:56ch}
 .hero .sub p b{color:var(--ink);font-weight:700}
 .facts{display:flex;flex-wrap:wrap;gap:22px}
 .fact b{display:block;font-family:var(--sport);font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1;color:var(--gold)}
 .fact span{font-family:var(--tech);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 /* ---------- chips ---------- */
-.chipbar{position:sticky;top:56px;z-index:50;background:rgba(6,7,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);margin-top:clamp(20px,4vw,40px)}
+.chipbar{position:sticky;top:var(--navh,58px);z-index:50;background:rgba(6,7,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);margin-top:clamp(20px,4vw,40px)}
 .chips{max-width:1200px;margin:0 auto;padding:11px var(--pad);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
@@ -69,9 +69,10 @@ h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spaci
 .chip:hover{color:var(--ink);border-color:var(--line2)}
 .chip.act{color:var(--gold);border-color:rgba(230,200,119,.55);background:rgba(230,200,119,.1)}
 /* ---------- bloques de servicio ---------- */
-.svc{padding:clamp(46px,7vw,86px) 0;border-bottom:1px solid var(--line);scroll-margin-top:112px;position:relative;z-index:3}
-.svc .row{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(24px,4.5vw,58px);align-items:center}
-.svc:nth-child(even) .row{grid-template-columns:1.08fr .92fr}
+.svc{padding:clamp(46px,7vw,86px) 0;border-bottom:1px solid var(--line);scroll-margin-top:calc(var(--navh,58px) + var(--chiph,46px) + 12px);position:relative;z-index:3}
+.svc .row{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(24px,4.5vw,58px);align-items:center}
+.svc:nth-child(even) .row{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
+.svc .row>*{min-width:0}
 .svc:nth-child(even) .art{order:2}
 .art{position:relative;border:1px solid var(--line);border-radius:24px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));padding:clamp(10px,2vw,18px);overflow:hidden}
 .art::after{content:attr(data-tag);position:absolute;right:15px;bottom:11px;font-family:var(--tech);font-size:.58rem;letter-spacing:.2em;color:var(--faint)}
@@ -128,14 +129,13 @@ footer a:hover{color:var(--gold)}
 .rv.on{opacity:1;transform:none;transition:opacity .85s ease,transform .85s cubic-bezier(.2,.75,.3,1)}
 /* ---------- responsive ---------- */
 @media(max-width:940px){
-  .svc .row,.svc:nth-child(even) .row{grid-template-columns:1fr;gap:26px}
+  .svc .row,.svc:nth-child(even) .row{grid-template-columns:minmax(0,1fr);gap:26px}
   .svc .art,.svc:nth-child(even) .art{order:-1}
-  .hero .sub{grid-template-columns:1fr;align-items:start;gap:20px}
+  .hero .sub{grid-template-columns:minmax(0,1fr);align-items:start;gap:20px}
 }
 @media(max-width:640px){
   .navlinks .nlink.sec{display:none}
   .brand{font-size:.62rem}
-  .chipbar{top:55px}
   .deliv{grid-template-columns:1fr}
   .btn{width:100%;justify-content:center}
   .acts{width:100%}
@@ -229,20 +229,19 @@ footer a:hover{color:var(--gold)}
       </g>
       <!-- paleta -->
       <g transform="translate(248 74)">
-        <rect x="0" y="0" width="118" height="150" rx="10" fill="#141826" stroke="rgba(210,215,240,.18)"/>
-        <rect x="0" y="0" width="118" height="150" rx="10" fill="url(#gGlass)"/>
+        <rect x="0" y="0" width="118" height="122" rx="10" fill="#141826" stroke="rgba(210,215,240,.18)"/>
+        <rect x="0" y="0" width="118" height="122" rx="10" fill="url(#gGlass)"/>
         <text x="14" y="24" font-family="'Chakra Petch',monospace" font-size="9" fill="#5f6480" letter-spacing="1.6">PALETA</text>
         <g>
           <rect x="14" y="34" width="90" height="22" rx="5" fill="url(#gGold)"/>
           <rect x="14" y="62" width="90" height="22" rx="5" fill="#3b4266"/>
           <rect x="14" y="90" width="90" height="22" rx="5" fill="#f2efe8"/>
-          <rect x="14" y="118" width="90" height="22" rx="5" fill="#232838" stroke="rgba(210,215,240,.2)"/>
         </g>
         <g fill="#0a0810" font-family="'Chakra Petch',monospace" font-size="8" letter-spacing="1">
           <text x="20" y="49">E6C877</text><text x="20" y="105">F2EFE8</text>
         </g>
         <g fill="#9aa0b8" font-family="'Chakra Petch',monospace" font-size="8" letter-spacing="1">
-          <text x="20" y="77">3B4266</text><text x="20" y="133">232838</text>
+          <text x="20" y="77">3B4266</text>
         </g>
       </g>
       <!-- plumilla -->
@@ -802,6 +801,24 @@ footer a:hover{color:var(--gold)}
 "use strict";
 var R=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
+/* ajuste tipográfico: nunca desbordar horizontalmente */
+function ajustar(el){
+  el.style.fontSize='';
+  var g=0;
+  if(el.clientWidth<2)return;
+  while(el.scrollWidth>el.clientWidth+1&&g++<28){
+    var s=parseFloat(getComputedStyle(el).fontSize);
+    el.style.fontSize=Math.max(11,s*Math.max(.8,el.clientWidth/el.scrollWidth*.99))+'px';
+  }
+}
+function ajustarTodo(){
+  [].forEach.call(document.querySelectorAll('h1,h2,.pr b,.fact b'),ajustar);
+}
+addEventListener('load',ajustarTodo);
+ajustarTodo();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ajustarTodo).catch(function(){});
+var rt=null;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(ajustarTodo,160);});
+
 /* reveal */
 var els=document.querySelectorAll('.rv');
 if(R||!('IntersectionObserver' in window)){[].forEach.call(els,function(n){n.classList.add('on');});}
@@ -812,19 +829,33 @@ else{
   [].forEach.call(els,function(n){io.observe(n);});
 }
 
+/* alturas reales de las barras fijas */
+var navEl=document.querySelector('nav'),chipEl=document.querySelector('.chipbar'),chipsEl=document.getElementById('chips');
+function medir(){
+  var nh=Math.round(navEl.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--navh',nh+'px');
+  document.documentElement.style.setProperty('--chiph',Math.round(chipEl.getBoundingClientRect().height)+'px');
+}
+medir();addEventListener('load',medir);
+var mt=null;addEventListener('resize',function(){clearTimeout(mt);mt=setTimeout(medir,150);});
+
 /* chip activo */
 var chips=[].slice.call(document.querySelectorAll('.chip')),
-    secs=chips.map(function(c){return document.querySelector(c.getAttribute('href'));});
+    secs=chips.map(function(c){return document.querySelector(c.getAttribute('href'));}),
+    ultimo=-1;
 function marca(){
-  var y=window.scrollY+160,act=0;
+  var y=window.scrollY+(navEl.offsetHeight+chipEl.offsetHeight+40),act=0;
   secs.forEach(function(s,i){if(s&&s.offsetTop<=y)act=i;});
+  if(act===ultimo)return;
+  ultimo=act;
   chips.forEach(function(c,i){c.classList.toggle('act',i===act);});
+  /* mantener el chip activo visible dentro de la barra */
+  var c=chips[act],cl=c.offsetLeft,cw=c.offsetWidth,sl=chipsEl.scrollLeft,vw=chipsEl.clientWidth;
+  if(cl<sl+12||cl+cw>sl+vw-12)chipsEl.scrollTo({left:Math.max(0,cl-16),behavior:R?'auto':'smooth'});
 }
-if('IntersectionObserver' in window){
-  var t=null;
-  addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;marca();},120);},{passive:true});
-  marca();
-}
+var t=null;
+addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;marca();},110);},{passive:true});
+marca();
 })();
 </script>
 </body>
