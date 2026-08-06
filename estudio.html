@@ -1,0 +1,855 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El estudio — LQS</title>
+<meta name="description" content="LQS no es una agencia: es un taller creativo en Medellín. Hablas con quien hace el trabajo. Marca, web, automatización, audiovisual y producto — propuesta cerrada en 48 horas.">
+<meta name="theme-color" content="#06070f">
+<meta property="og:title" content="El estudio — LQS">
+<meta property="og:description" content="No somos una agencia. Somos un taller. Así trabajamos, así cobramos y por eso organizamos todo en universos.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070f; --bg2:#0a0c17; --ink:#f2efe8; --dim:#9aa0b8; --faint:#5f6480;
+  --gold:#e6c877; --line:rgba(210,215,240,.11); --line2:rgba(210,215,240,.22);
+  --disp:'Bebas Neue',Impact,Haettenschweiler,sans-serif;
+  --sport:'Anton',Impact,sans-serif;
+  --tech:'Chakra Petch',ui-monospace,SFMono-Regular,monospace;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif;
+  --pad:clamp(20px,5vw,64px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+svg{display:block;max-width:100%}
+::selection{background:var(--gold);color:#07060d}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-9999px;top:10px;z-index:200;background:var(--gold);color:#07060d;padding:10px 16px;border-radius:8px;font-weight:700}
+.skip:focus{left:16px}
+
+/* ---------- fondo ---------- */
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(58% 42% at 76% 4%,rgba(96,74,186,.20),transparent 62%),
+             radial-gradient(52% 40% at 6% 64%,rgba(186,96,120,.12),transparent 62%),
+             radial-gradient(40% 30% at 50% 112%,rgba(230,200,119,.07),transparent 60%)}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(210,215,240,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(210,215,240,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(70% 55% at 50% 26%,#000,transparent 78%);
+  mask-image:radial-gradient(70% 55% at 50% 26%,#000,transparent 78%)}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:80;transition:.4s}
+nav.solid{background:rgba(6,7,15,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1240px;margin:0 auto;padding:14px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:baseline;gap:2px;font-family:var(--disp);font-size:1.5rem;letter-spacing:.06em;line-height:1}
+.logo .l{color:#ff6b6b}.logo .q{color:var(--gold)}.logo .s{color:#3fd0e6}
+.logo em{font-family:var(--tech);font-style:normal;font-size:.52rem;letter-spacing:.2em;color:var(--faint);margin-left:9px;text-transform:uppercase}
+.nlinks{display:flex;gap:28px;align-items:center;font-family:var(--tech);font-size:.76rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.nlinks a{transition:.2s;position:relative}
+.nlinks a:hover,.nlinks a[aria-current]{color:var(--ink)}
+.nlinks a::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--gold);transition:right .35s cubic-bezier(.2,.7,.3,1)}
+.nlinks a:hover::after,.nlinks a[aria-current]::after{right:0}
+.nbtn{border:1px solid var(--line2);border-radius:999px;padding:9px 18px;color:var(--ink);transition:.25s;white-space:nowrap}
+.nbtn:hover{background:var(--ink);color:#06070f;border-color:var(--ink)}
+.nbtn::after{display:none}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line2);border-radius:12px;background:none;cursor:pointer;place-items:center;z-index:82}
+.burger span{display:block;width:18px;height:1.5px;background:var(--ink);position:relative;transition:.3s}
+.burger span::before,.burger span::after{content:'';position:absolute;left:0;width:18px;height:1.5px;background:var(--ink);transition:.3s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+body.menu .burger span{background:transparent}
+body.menu .burger span::before{top:0;transform:rotate(45deg)}
+body.menu .burger span::after{top:0;transform:rotate(-45deg)}
+@media(max-width:900px){
+  .nlinks{position:fixed;inset:0;flex-direction:column;justify-content:center;gap:6px;background:rgba(6,7,15,.97);backdrop-filter:blur(20px);
+    font-family:var(--disp);font-size:2rem;letter-spacing:.04em;color:var(--ink);opacity:0;visibility:hidden;transition:.4s;z-index:-1}
+  body.menu .nlinks{opacity:1;visibility:visible}
+  .nlinks a{padding:10px 20px}
+  .nlinks .nbtn{font-family:var(--tech);font-size:.85rem;margin-top:18px;letter-spacing:.14em}
+  .burger{display:grid}
+}
+
+/* ---------- layout ---------- */
+.wrap{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 var(--pad)}
+section{position:relative;z-index:2}
+.sec{padding:clamp(78px,10vw,144px) 0}
+.sec-line{border-top:1px solid var(--line)}
+.kick{font-family:var(--tech);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.kick::before{content:'';width:26px;height:1px;background:var(--gold);opacity:.55;flex:none}
+.kick.c{justify-content:center}
+h1,h2,h3{font-weight:400}
+.disp{font-family:var(--disp);text-transform:uppercase;letter-spacing:.01em;line-height:.92;font-weight:400}
+h1.disp{font-size:clamp(3.1rem,11.4vw,8.4rem)}
+h2.disp{font-size:clamp(2.5rem,6.4vw,5rem);margin-bottom:20px}
+h3.disp{font-size:clamp(1.6rem,3vw,2.3rem)}
+.gold{color:var(--gold)}
+.hollow{color:transparent;-webkit-text-stroke:1.4px rgba(242,239,232,.55)}
+.body-l{font-size:clamp(1.02rem,1.7vw,1.2rem);color:var(--dim);max-width:60ch}
+
+/* ---------- botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--tech);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;padding:15px 26px;border-radius:999px;transition:.3s cubic-bezier(.2,.7,.3,1);border:1px solid transparent;cursor:pointer}
+.btn.p{background:var(--ink);color:#06070f}
+.btn.p:hover{transform:translateY(-2px);box-shadow:0 18px 44px -16px rgba(242,239,232,.45)}
+.btn.g{border-color:var(--line2);color:var(--ink)}
+.btn.g:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.3,1),transform .9s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:132px 0 74px}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,5vw,64px);align-items:center}
+.hero h1{margin-bottom:26px}
+.hero h1 .l2{display:block}
+.hero .sub{max-width:46ch;margin-bottom:34px}
+.hbtns{display:flex;flex-wrap:wrap;gap:12px}
+.hero-art{position:relative}
+.hero-art .glow{position:absolute;inset:-8% -6%;background:radial-gradient(52% 52% at 54% 40%,rgba(230,200,119,.16),transparent 70%);filter:blur(6px);pointer-events:none}
+@media(max-width:980px){
+  .hero{min-height:auto;padding:118px 0 60px}
+  .hero .in{grid-template-columns:1fr;gap:34px}
+  .hero-art{order:-1;max-width:380px}
+}
+
+/* ---------- marquee ---------- */
+.mq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;overflow:hidden;background:rgba(255,255,255,.014);position:relative;z-index:2}
+.mq .track{display:flex;width:max-content;animation:mv 38s linear infinite}
+.mq b{font-family:var(--tech);font-weight:600;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:34px;padding-right:34px}
+.mq b::after{content:'✦';font-size:.6rem;color:var(--gold)}
+@keyframes mv{to{transform:translateX(-50%)}}
+
+/* ---------- manifiesto ---------- */
+.man{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin-top:46px}
+.mblock{background:var(--bg);padding:clamp(30px,4.4vw,52px);display:grid;grid-template-columns:88px minmax(0,1fr);gap:clamp(18px,3vw,40px);transition:background .4s}
+.mblock:hover{background:var(--bg2)}
+.mblock .num{font-family:var(--sport);font-size:clamp(2.4rem,4vw,3.4rem);line-height:.8;color:transparent;-webkit-text-stroke:1.2px rgba(230,200,119,.5)}
+.mblock h3{margin-bottom:14px}
+.mblock p{font-size:clamp(1rem,1.55vw,1.13rem);color:var(--dim);margin-bottom:15px;max-width:66ch}
+.mblock p:last-child{margin-bottom:0}
+.mblock strong{color:var(--ink);font-weight:700}
+.mblock .orn{grid-column:1;grid-row:2;align-self:start;margin-top:-8px}
+@media(max-width:720px){
+  .mblock{grid-template-columns:1fr;gap:14px}
+  .mblock .orn{display:none}
+}
+
+/* ---------- cifras ---------- */
+.figs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fig{background:var(--bg);padding:clamp(28px,4vw,46px) clamp(18px,2.6vw,30px);position:relative;overflow:hidden}
+.fig::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transition:width .8s cubic-bezier(.2,.7,.3,1)}
+.fig.in::after{width:78%}
+.fig b{display:block;font-family:var(--sport);font-size:clamp(2.6rem,5.6vw,4.4rem);line-height:.86;letter-spacing:-.01em;margin-bottom:12px}
+.fig span{font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--faint);display:block;line-height:1.6}
+@media(max-width:820px){.figs{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- toderos ---------- */
+.tod{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);gap:clamp(32px,5vw,72px);align-items:center;margin-top:44px}
+@media(max-width:980px){.tod{grid-template-columns:1fr;gap:36px}}
+.tod p{color:var(--dim);font-size:clamp(1rem,1.55vw,1.13rem);margin-bottom:16px;max-width:56ch}
+.tod strong{color:var(--ink);font-weight:700}
+.tlist{list-style:none;margin-top:26px;border-top:1px solid var(--line)}
+.tlist li{display:flex;align-items:baseline;gap:16px;padding:14px 2px;border-bottom:1px solid var(--line);transition:.3s;position:relative}
+.tlist li:hover{padding-left:10px;border-color:var(--line2)}
+.tlist .t{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);flex:none;width:118px}
+.tlist .d{font-size:.93rem;color:var(--dim);flex:1;min-width:0}
+.tlist .pz{font-family:var(--sport);font-size:.98rem;color:var(--gold);white-space:nowrap;letter-spacing:.01em}
+@media(max-width:560px){
+  .tlist li{flex-wrap:wrap;gap:6px 14px}
+  .tlist .t{width:auto}
+  .tlist .d{flex-basis:100%;order:3}
+}
+.shopfig{position:relative}
+.shopfig figcaption{font-family:var(--tech);font-size:.62rem;letter-spacing:.17em;text-transform:uppercase;color:var(--faint);margin-top:16px;text-align:center}
+
+/* ---------- proceso ---------- */
+.tl{position:relative;margin-top:56px;padding-left:clamp(46px,7vw,92px)}
+.tl::before{content:'';position:absolute;left:clamp(17px,2.6vw,34px);top:10px;bottom:10px;width:1px;
+  background:linear-gradient(180deg,transparent,rgba(230,200,119,.55) 8%,rgba(230,200,119,.55) 88%,transparent)}
+.tl::after{content:'';position:absolute;left:clamp(13px,2.6vw,30px);top:0;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(230,200,119,.12)}
+.step{position:relative;padding:0 0 clamp(38px,5vw,58px)}
+.step:last-child{padding-bottom:0}
+.step .dot{position:absolute;left:calc(-1 * clamp(46px,7vw,92px) + clamp(9px,2.6vw,26px));top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:1px solid var(--line2);display:grid;place-items:center;transition:.4s}
+.step .dot i{width:6px;height:6px;border-radius:50%;background:var(--faint);transition:.4s;display:block}
+.step.in .dot{border-color:var(--gold);transform:scale(1.05)}
+.step.in .dot i{background:var(--gold);box-shadow:0 0 12px rgba(230,200,119,.8)}
+.step .head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.step .no{font-family:var(--sport);font-size:clamp(1.5rem,2.6vw,2rem);line-height:1;color:transparent;-webkit-text-stroke:1.1px rgba(242,239,232,.4)}
+.step h3{line-height:1}
+.step .when{font-family:var(--tech);font-size:.62rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(230,200,119,.3);border-radius:999px;padding:4px 11px}
+.step p{color:var(--dim);max-width:62ch;font-size:1rem}
+.step .icn{position:absolute;right:0;top:0;opacity:.9}
+@media(max-width:820px){.step .icn{display:none}}
+
+/* ---------- CTA ---------- */
+.cta{text-align:center;border:1px solid var(--line);border-radius:26px;padding:clamp(42px,6.5vw,84px) clamp(22px,4vw,60px);
+  background:radial-gradient(78% 130% at 50% 0%,rgba(230,200,119,.09),transparent 62%),linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.007));position:relative;overflow:hidden}
+.cta h2{margin-bottom:16px}
+.cta p{color:var(--dim);max-width:52ch;margin:0 auto 30px;font-size:clamp(1rem,1.6vw,1.14rem)}
+.cta .btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.cta .meta{margin-top:26px;font-family:var(--tech);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.cta .meta a:hover{color:var(--gold)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:52px 0 40px;position:relative;z-index:2}
+.fgrid{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start}
+.fgrid p{color:var(--faint);font-size:.86rem;max-width:34ch;margin-top:12px}
+.flinks{display:flex;gap:26px;flex-wrap:wrap;font-family:var(--tech);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.flinks a:hover{color:var(--gold)}
+.fbot{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-family:var(--tech);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+}
+
+/* fix: el titular del hero debe fluir como bloque y caber en pantalla */
+.hero h1{display:block!important;font-size:clamp(2.5rem,6.4vw,4.9rem);line-height:.94}
+.hero h1 .l2{display:block;width:100%}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="aura"></div><div class="grid-bg"></div>
+
+<nav id="nav">
+  <div class="in">
+    <a class="logo" href="index.html" aria-label="LQS, inicio"><span class="l">L</span><span class="q">Q</span><span class="s">S</span><em>Estudio · Medellín</em></a>
+    <div class="nlinks" id="nl">
+      <a href="index.html">Inicio</a>
+      <a href="estudio.html" aria-current="page">El estudio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="muestras.html">Muestras</a>
+      <a class="nbtn" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20quiero%20hablar%20de%20un%20proyecto." target="_blank" rel="noopener">Hablemos</a>
+    </div>
+    <button class="burger" id="bg" aria-label="Abrir menú" aria-expanded="false"><span></span></button>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="wrap in">
+    <div>
+      <div class="kick rv">El estudio · Medellín, Colombia</div>
+      <h1 class="disp rv">No somos una agencia.<span class="l2">Somos un <span class="gold">taller</span>.</span></h1>
+      <p class="body-l sub rv">Un grupo pequeño que diseña, construye y entrega. Sin capas de gente entre tu idea y el trabajo terminado: hablas directo con quien lo hace, y por eso sale mejor y cuesta menos.</p>
+      <div class="hbtns rv">
+        <a class="btn p" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20quiero%20contarles%20mi%20proyecto." target="_blank" rel="noopener">Contarnos tu proyecto
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn g" href="muestras.html">Ver muestras</a>
+      </div>
+    </div>
+    <div class="hero-art rv">
+      <div class="glow"></div>
+      <!-- Ilustración: compás sobre plano de construcción de marca -->
+      <svg viewBox="0 0 520 520" role="img" aria-label="Ilustración de un compás trazando una circunferencia sobre un plano técnico de construcción de un logotipo">
+        <defs>
+          <linearGradient id="hMet" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f3efe6"/><stop offset=".42" stop-color="#9aa0b8"/>
+            <stop offset=".62" stop-color="#e6c877"/><stop offset="1" stop-color="#4a4f68"/>
+          </linearGradient>
+          <linearGradient id="hMet2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#5f6480"/><stop offset=".5" stop-color="#d7d3c8"/><stop offset="1" stop-color="#3b3f55"/>
+          </linearGradient>
+          <linearGradient id="hPaper" x1=".2" y1="0" x2=".8" y2="1">
+            <stop offset="0" stop-color="#141828"/><stop offset="1" stop-color="#0a0c16"/>
+          </linearGradient>
+          <radialGradient id="hSpark" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#e6c877" stop-opacity=".9"/><stop offset="1" stop-color="#e6c877" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="hSh" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="4" dy="10" stdDeviation="9" flood-color="#000" flood-opacity=".6"/>
+          </filter>
+          <pattern id="hHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#e6c877" stroke-opacity=".22" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <!-- hoja / plano -->
+        <g transform="rotate(-4 260 268)">
+          <rect x="46" y="58" width="428" height="420" rx="10" fill="url(#hPaper)" stroke="rgba(210,215,240,.16)"/>
+          <rect x="58" y="70" width="404" height="396" rx="6" fill="none" stroke="rgba(210,215,240,.09)"/>
+          <!-- retícula fina -->
+          <g stroke="rgba(210,215,240,.075)">
+            <path d="M94 70V466M130 70V466M166 70V466M202 70V466M238 70V466M274 70V466M310 70V466M346 70V466M382 70V466M418 70V466"/>
+            <path d="M58 106H462M58 142H462M58 178H462M58 214H462M58 250H462M58 286H462M58 322H462M58 358H462M58 394H462M58 430H462"/>
+          </g>
+          <!-- ejes principales -->
+          <g stroke="rgba(230,200,119,.35)" stroke-dasharray="7 5">
+            <path d="M256 74V462"/><path d="M62 268H458"/>
+          </g>
+          <!-- construcción geométrica -->
+          <circle cx="256" cy="268" r="134" fill="none" stroke="rgba(210,215,240,.2)"/>
+          <circle cx="256" cy="268" r="98" fill="none" stroke="rgba(210,215,240,.28)"/>
+          <circle cx="256" cy="268" r="62" fill="none" stroke="rgba(210,215,240,.16)"/>
+          <path d="M256 134 L372 335 L140 335 Z" fill="none" stroke="rgba(230,200,119,.28)"/>
+          <path d="M158 170 L354 170 L354 366 L158 366 Z" fill="none" stroke="rgba(210,215,240,.14)"/>
+          <!-- marca en construcción: monograma -->
+          <g class="draw" stroke="#e6c877" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M206 214v108h58"/>
+            <path d="M306 214a34 34 0 0 1 0 68 34 34 0 0 1 0-68z" opacity=".95"/>
+            <path d="M316 272l24 34"/>
+          </g>
+          <path d="M206 214v108h58" fill="none" stroke="rgba(230,200,119,.15)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- arco trazado por el compás -->
+          <path class="draw2" d="M256 122a146 146 0 0 1 130 80" fill="none" stroke="#f2efe8" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- cotas -->
+          <g stroke="rgba(210,215,240,.35)" stroke-width="1">
+            <path d="M158 402h196"/><path d="M158 396v12"/><path d="M354 396v12"/>
+          </g>
+          <text x="256" y="422" text-anchor="middle" font-family="'Chakra Petch',monospace" font-size="11" letter-spacing="2.4" fill="#9aa0b8">7 UNIDADES</text>
+          <text x="76" y="96" font-family="'Chakra Petch',monospace" font-size="10.5" letter-spacing="2.6" fill="#5f6480">LQS · CONSTRUCCIÓN 01</text>
+          <rect x="70" y="440" width="66" height="1" fill="rgba(230,200,119,.5)"/>
+        </g>
+
+        <!-- compás -->
+        <g filter="url(#hSh)" transform="translate(-6 -14)">
+          <!-- pierna izquierda (aguja) -->
+          <path d="M262 96 L214 300" stroke="url(#hMet2)" stroke-width="11" stroke-linecap="round"/>
+          <path d="M262 96 L214 300" stroke="rgba(255,255,255,.28)" stroke-width="2.4" stroke-linecap="round" transform="translate(-2.6 0)"/>
+          <path d="M214 300 l-4 22 6 8 6-26z" fill="#cfcbc0" stroke="#2b2f42" stroke-width="1"/>
+          <!-- pierna derecha (mina) -->
+          <path d="M266 96 L344 286" stroke="url(#hMet2)" stroke-width="11" stroke-linecap="round"/>
+          <path d="M266 96 L344 286" stroke="rgba(255,255,255,.24)" stroke-width="2.2" stroke-linecap="round" transform="translate(2.6 -1)"/>
+          <rect x="332" y="278" width="20" height="16" rx="3" transform="rotate(22 342 286)" fill="#3b3f55" stroke="#20243a"/>
+          <path d="M344 292 l7 18-11 4z" fill="#e6c877"/>
+          <!-- articulación -->
+          <circle cx="264" cy="94" r="19" fill="url(#hMet)" stroke="#20243a" stroke-width="1.4"/>
+          <circle cx="264" cy="94" r="9" fill="#0d1120" stroke="rgba(255,255,255,.28)"/>
+          <circle cx="259" cy="88" r="3.4" fill="rgba(255,255,255,.5)"/>
+          <!-- mango -->
+          <rect x="256" y="42" width="16" height="42" rx="7" fill="url(#hMet)" stroke="#20243a"/>
+          <rect x="259" y="46" width="4" height="34" rx="2" fill="rgba(255,255,255,.35)"/>
+          <path d="M256 62h16M256 70h16" stroke="rgba(0,0,0,.35)" stroke-width="1.4"/>
+          <!-- barra de ajuste -->
+          <path d="M232 196 L318 216" stroke="#4a4f68" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="318" cy="216" r="6" fill="url(#hMet)" stroke="#20243a"/>
+          <circle cx="232" cy="196" r="5" fill="#2b2f42" stroke="rgba(255,255,255,.2)"/>
+        </g>
+        <!-- chispa en la punta -->
+        <circle cx="208" cy="316" r="34" fill="url(#hSpark)" opacity=".55"/>
+        <!-- viruta / textura -->
+        <g fill="url(#hHatch)" opacity=".5">
+          <path d="M392 402h72v54h-72z" transform="rotate(-8 428 429)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="mq" aria-hidden="true"><div class="track" id="mq"></div></div>
+
+<!-- ══════════ MANIFIESTO ══════════ -->
+<section class="sec" id="manifiesto">
+  <div class="wrap">
+    <div class="kick rv">Manifiesto</div>
+    <h2 class="disp rv">Por qué existimos,<br>cómo trabajamos<br>y por qué <span class="gold">universos</span>.</h2>
+    <p class="body-l rv">Tres cosas que conviene decir antes de hablar de precios.</p>
+
+    <div class="man">
+      <article class="mblock rv">
+        <div class="num">01</div>
+        <div>
+          <h3 class="disp">Las buenas marcas no deberían costar una fortuna</h3>
+          <p>LQS nació de una molestia concreta: en Colombia, un negocio que factura bien pero no es una multinacional queda atrapado entre dos extremos. De un lado, la agencia que cobra millones y entrega un PDF de 80 páginas que nadie vuelve a abrir. Del otro, el freelance de mil pesos que copia una plantilla, no pregunta nada y desaparece a los tres días.</p>
+          <p>En el medio no había casi nada. Y en ese medio está <strong>la mayoría de negocios reales</strong>: el hotel boutique de 14 habitaciones, el restaurante que ya llenó el local y quiere abrir el segundo, la empresa de servicios que lleva ocho años facturando con un logo hecho en Word.</p>
+          <p>Ninguno de ellos necesita una agencia con cinco capas de gente. Necesita a alguien que entienda el negocio, lo diseñe bien y lo entregue funcionando. <strong>Eso es lo que hacemos</strong>, y por eso el precio se parece más a lo que cuesta el trabajo que a lo que cuesta la oficina de quien lo vende.</p>
+        </div>
+        <svg class="orn" width="88" height="120" viewBox="0 0 88 120" aria-hidden="true">
+          <g fill="none" stroke="rgba(230,200,119,.3)"><path d="M12 108V26a14 14 0 0 1 28 0v82"/><path d="M48 108V44a14 14 0 0 1 28 0v64"/></g>
+          <g fill="none" stroke="rgba(210,215,240,.18)"><path d="M6 108h76"/><path d="M20 96h12M56 96h12"/></g>
+          <circle cx="26" cy="26" r="4" fill="#e6c877" opacity=".7"/>
+        </svg>
+      </article>
+
+      <article class="mblock rv">
+        <div class="num">02</div>
+        <div>
+          <h3 class="disp">Estudio compacto: hablas con quien hace el trabajo</h3>
+          <p>No hay ejecutivo de cuentas. No hay junior que traduce mal lo que dijiste, ni reunión para preparar la reunión. La persona que te escucha en la primera llamada es la misma que dibuja el logo, la que arma el sitio y la que te escribe el día del lanzamiento.</p>
+          <p>Eso tiene dos efectos que se notan en la factura y en el resultado. <strong>Baja el precio</strong>, porque no estás pagando una estructura que no te sirve. Y <strong>sube la calidad</strong>, porque nada se pierde en la traducción: el matiz que contaste sobre tus clientes llega intacto a la pieza final.</p>
+          <p>También significa que decimos que no. Cuando un proyecto no nos cabe o no es lo nuestro, lo decimos de una y, si podemos, te pasamos a alguien que sí. Preferimos hacer pocas cosas bien que muchas a medias.</p>
+        </div>
+        <svg class="orn" width="88" height="120" viewBox="0 0 88 120" aria-hidden="true">
+          <g fill="none" stroke="rgba(210,215,240,.22)"><circle cx="26" cy="40" r="13"/><path d="M8 84c0-11 8-19 18-19s18 8 18 19"/></g>
+          <g fill="none" stroke="rgba(230,200,119,.34)"><circle cx="62" cy="40" r="13"/><path d="M44 84c0-11 8-19 18-19s18 8 18 19"/></g>
+          <path d="M30 104h28" stroke="rgba(230,200,119,.5)"/>
+          <path d="M40 40h8" stroke="rgba(230,200,119,.6)" stroke-width="1.4"/>
+        </svg>
+      </article>
+
+      <article class="mblock rv">
+        <div class="num">03</div>
+        <div>
+          <h3 class="disp">Universos, porque un hotel no necesita lo mismo que un restaurante</h3>
+          <p>Un hotel vive de reservas directas, de que la llave digital funcione a las 2 de la mañana y de que la foto de la habitación se parezca a la habitación. Un restaurante vive del menú, del turno del viernes y de la foto del plato que hace que alguien decida entrar. Un creador vive de publicar sin quemarse. Son negocios distintos, con calendarios distintos y con urgencias distintas.</p>
+          <p>Por eso no vendemos «servicios de diseño» a granel. Organizamos todo en <strong>ocho universos</strong> — Aloja, Carta, Empresas, Express, Creadores, Productora, Mercury y foma — y cada uno trae sus paquetes, sus precios y sus muestras pensados para ese sector.</p>
+          <p>Cuando entras al universo que te corresponde, no tienes que explicarnos tu industria desde cero: ya llegamos con el mapa dibujado. <strong>Eso ahorra semanas</strong> y evita la propuesta genérica que sirve para todo y no le sirve a nadie.</p>
+        </div>
+        <svg class="orn" width="88" height="120" viewBox="0 0 88 120" aria-hidden="true">
+          <ellipse cx="44" cy="56" rx="34" ry="12" fill="none" stroke="rgba(230,200,119,.34)" transform="rotate(-18 44 56)"/>
+          <circle cx="44" cy="56" r="19" fill="none" stroke="rgba(210,215,240,.28)"/>
+          <path d="M28 50c8 5 22 5 32 0" fill="none" stroke="rgba(210,215,240,.18)"/>
+          <circle cx="38" cy="50" r="3.5" fill="rgba(230,200,119,.5)"/>
+          <g fill="#e6c877" opacity=".55"><circle cx="14" cy="94" r="2"/><circle cx="70" cy="88" r="1.6"/><circle cx="58" cy="102" r="2.4"/><circle cx="20" cy="24" r="1.8"/></g>
+        </svg>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CIFRAS ══════════ -->
+<section class="figs" aria-label="Cifras del estudio">
+  <div class="fig rv"><b>8</b><span>Universos<br>activos</span></div>
+  <div class="fig rv"><b>48h</b><span>Para tu<br>propuesta</span></div>
+  <div class="fig rv"><b>−40%</b><span>Frente al precio<br>de agencia</span></div>
+  <div class="fig rv"><b>1</b><span>Interlocutor,<br>siempre</span></div>
+</section>
+
+<!-- ══════════ TODEROS ══════════ -->
+<section class="sec" id="toderos">
+  <div class="wrap">
+    <div class="kick rv">En qué somos toderos</div>
+    <h2 class="disp rv">De un flyer de $45.000<br>a la marca completa <span class="gold">de un hotel</span>.</h2>
+    <div class="tod">
+      <div>
+        <p class="rv">Toderos no significa improvisar: significa que en el taller hay herramientas para casi todo lo que una marca necesita, y que <strong>no te mandamos a otra parte</strong> cuando el encargo cambia de tamaño.</p>
+        <p class="rv">El mismo estudio que te resuelve el flyer del jueves para una promoción de fin de semana es el que, tres meses después, te construye la identidad completa, el sitio con reservas y el WhatsApp que atiende solo. Y si el proyecto pide una pieza de joyería para el aniversario de la empresa o 60 uniformes que el equipo sí quiera ponerse, también sale de acá — <strong>Mercury</strong> y <strong>foma</strong> son marcas propias, no proveedores intermediados.</p>
+        <p class="rv">Eso es lo que hace un taller: cambia de herramienta sin cambiar de manos.</p>
+        <ul class="tlist rv">
+          <li><span class="t">Express</span><span class="d">Flyers, posts, tarjetas y logo básico con precio cerrado</span><span class="pz">desde $45.000</span></li>
+          <li><span class="t">Marca + web</span><span class="d">Identidad documentada, sitio responsive y correo propio</span><span class="pz">desde $890.000</span></li>
+          <li><span class="t">Automatización</span><span class="d">WhatsApp que responde, reserva y deriva a una persona</span><span class="pz">API oficial Meta</span></li>
+          <li><span class="t">Audiovisual</span><span class="d">Foto de producto, reels y video institucional en Medellín</span><span class="pz">por jornada</span></li>
+          <li><span class="t">Mercury</span><span class="d">Joyería por encargo, cápsulas y piezas corporativas</span><span class="pz">marca propia</span></li>
+          <li><span class="t">foma</span><span class="d">Merch, cápsulas de autor y uniformes de equipo</span><span class="pz">por lote</span></li>
+        </ul>
+      </div>
+
+      <figure class="shopfig rv">
+        <!-- Ilustración: mesa de trabajo del taller -->
+        <svg viewBox="0 0 760 560" role="img" aria-label="Ilustración detallada de una mesa de taller vista desde arriba con lámpara, bocetos, lápices, regla, tijeras, cámara, carrete de hilo con aguja y muestras de color">
+          <defs>
+            <linearGradient id="wood" x1=".1" y1="0" x2=".9" y2="1">
+              <stop offset="0" stop-color="#221a2c"/><stop offset=".45" stop-color="#17121f"/><stop offset="1" stop-color="#0d0a14"/>
+            </linearGradient>
+            <linearGradient id="mat" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#132024"/><stop offset="1" stop-color="#0b1418"/>
+            </linearGradient>
+            <linearGradient id="paper" x1=".1" y1="0" x2=".9" y2="1">
+              <stop offset="0" stop-color="#efece2"/><stop offset=".6" stop-color="#ddd8c9"/><stop offset="1" stop-color="#c3bdad"/>
+            </linearGradient>
+            <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e8e5db"/><stop offset=".35" stop-color="#8d92a8"/>
+              <stop offset=".6" stop-color="#d5d1c6"/><stop offset="1" stop-color="#41465e"/>
+            </linearGradient>
+            <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fbeec2"/><stop offset=".45" stop-color="#e6c877"/><stop offset="1" stop-color="#8a6f2c"/>
+            </linearGradient>
+            <linearGradient id="pencil" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f0d99a"/><stop offset=".5" stop-color="#d9b45f"/><stop offset="1" stop-color="#8d6f2e"/>
+            </linearGradient>
+            <linearGradient id="camB" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2b3048"/><stop offset=".55" stop-color="#1b1f31"/><stop offset="1" stop-color="#0e1120"/>
+            </linearGradient>
+            <radialGradient id="lampL" cx=".5" cy=".1" r=".8">
+              <stop offset="0" stop-color="#ffe9b0" stop-opacity=".30"/>
+              <stop offset=".55" stop-color="#e6c877" stop-opacity=".10"/>
+              <stop offset="1" stop-color="#e6c877" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="lens" cx=".38" cy=".32" r=".72">
+              <stop offset="0" stop-color="#8fd8e6"/><stop offset=".32" stop-color="#2b5f7a"/>
+              <stop offset=".7" stop-color="#101a2c"/><stop offset="1" stop-color="#05070e"/>
+            </radialGradient>
+            <radialGradient id="thread" cx=".35" cy=".3" r=".8">
+              <stop offset="0" stop-color="#ff9a8a"/><stop offset="1" stop-color="#8c3b34"/>
+            </radialGradient>
+            <filter id="sh" x="-35%" y="-35%" width="180%" height="190%">
+              <feDropShadow dx="3" dy="9" stdDeviation="8" flood-color="#000" flood-opacity=".62"/>
+            </filter>
+            <filter id="shS" x="-40%" y="-40%" width="190%" height="200%">
+              <feDropShadow dx="2" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".6"/>
+            </filter>
+            <filter id="blr" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+          </defs>
+
+          <!-- ░░ mesa ░░ -->
+          <rect x="18" y="62" width="724" height="466" rx="16" fill="url(#wood)" stroke="rgba(210,215,240,.13)"/>
+          <rect x="18" y="62" width="724" height="10" rx="5" fill="rgba(242,239,232,.06)"/>
+          <!-- veta de madera -->
+          <g stroke="rgba(230,200,119,.055)" fill="none" stroke-width="1.2">
+            <path d="M18 104c150 16 320-14 470 6s186 2 254-8"/>
+            <path d="M18 146c180 22 300-18 460 4s200 6 264-10"/>
+            <path d="M18 196c130-18 300 20 440 0s220-16 284 4"/>
+            <path d="M18 252c200 20 330-16 480 4s180 10 244-6"/>
+            <path d="M18 312c160-20 300 18 448 2s216-18 276 2"/>
+            <path d="M18 372c190 18 320-14 470 4s180 8 254-8"/>
+            <path d="M18 432c150-16 310 18 456 0s230-14 268 6"/>
+            <path d="M18 480c170 16 330-12 480 6s160 4 244-8"/>
+          </g>
+          <g stroke="rgba(0,0,0,.4)" fill="none"><path d="M18 128c180 14 320-16 480 4"/><path d="M18 340c200-18 340 20 490 2"/></g>
+
+          <!-- ░░ luz de lámpara ░░ -->
+          <path d="M96 40 L470 40 L636 528 L14 528 Z" fill="url(#lampL)" opacity=".9"/>
+
+          <!-- ░░ tapete de corte ░░ -->
+          <g transform="rotate(-2 300 330)">
+            <rect x="92" y="196" width="380" height="290" rx="8" fill="url(#mat)" stroke="rgba(210,215,240,.14)" filter="url(#shS)"/>
+            <g stroke="rgba(160,220,230,.11)">
+              <path d="M132 196v290M172 196v290M212 196v290M252 196v290M292 196v290M332 196v290M372 196v290M412 196v290M452 196v290"/>
+              <path d="M92 236h380M92 276h380M92 316h380M92 356h380M92 396h380M92 436h380"/>
+            </g>
+            <g stroke="rgba(230,200,119,.28)"><path d="M92 216h380"/><path d="M112 196v290"/></g>
+            <g fill="rgba(160,220,230,.4)" font-family="'Chakra Petch',monospace" font-size="8.5" letter-spacing="1.4">
+              <text x="134" y="212">10</text><text x="214" y="212">30</text><text x="294" y="212">50</text><text x="374" y="212">70</text>
+            </g>
+          </g>
+
+          <!-- ░░ hojas de boceto ░░ -->
+          <g filter="url(#sh)">
+            <rect x="146" y="238" width="228" height="206" rx="3" fill="#b9b3a3" transform="rotate(-9 260 340)"/>
+            <rect x="152" y="232" width="228" height="206" rx="3" fill="#cfc9b9" transform="rotate(-5 266 334)"/>
+            <rect x="158" y="226" width="228" height="206" rx="3" fill="url(#paper)" transform="rotate(-1.5 272 328)"/>
+          </g>
+          <g transform="rotate(-1.5 272 328)">
+            <!-- boceto de logotipo -->
+            <g fill="none" stroke="#8b8577" stroke-width="1" opacity=".85">
+              <path d="M172 252h200M172 262h140"/>
+              <circle cx="240" cy="322" r="42" stroke-dasharray="4 4"/>
+              <path d="M198 322h84M240 280v84"/>
+            </g>
+            <g fill="none" stroke="#22242e" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M218 300v44h26"/>
+              <circle cx="272" cy="322" r="17"/>
+              <path d="M282 334l14 16"/>
+            </g>
+            <path d="M218 300v44h26" fill="none" stroke="rgba(230,200,119,.5)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+            <!-- anotaciones -->
+            <g fill="none" stroke="#9a9386" stroke-width="1">
+              <path d="M176 386h190M176 396h150M176 406h172M176 416h96"/>
+              <path d="M300 262l-22 30" stroke-dasharray="3 3"/>
+            </g>
+            <text x="308" y="258" font-family="'Chakra Petch',monospace" font-size="9" letter-spacing="1.6" fill="#5c564b">V.03</text>
+            <rect x="330" y="382" width="36" height="36" rx="3" fill="none" stroke="#9a9386"/>
+            <path d="M334 400l8 8 20-20" fill="none" stroke="#3f7d5a" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- ░░ regla metálica ░░ -->
+          <g filter="url(#shS)" transform="rotate(-64 596 322)">
+            <rect x="454" y="306" width="284" height="34" rx="4" fill="url(#steel)" stroke="#2b2f42"/>
+            <rect x="454" y="306" width="284" height="9" rx="4" fill="rgba(255,255,255,.35)"/>
+            <g stroke="#2b2f42" stroke-width="1">
+              <path d="M470 306v14M486 306v9M502 306v9M518 306v9M534 306v14M550 306v9M566 306v9M582 306v9M598 306v14M614 306v9M630 306v9M646 306v9M662 306v14M678 306v9M694 306v9M710 306v9M726 306v14"/>
+            </g>
+            <g fill="#2b2f42" font-family="'Chakra Petch',monospace" font-size="9" letter-spacing="1">
+              <text x="466" y="334">5</text><text x="529" y="334">10</text><text x="593" y="334">15</text><text x="657" y="334">20</text>
+            </g>
+          </g>
+
+          <!-- ░░ lápices ░░ -->
+          <g filter="url(#shS)" transform="rotate(24 300 470)">
+            <rect x="180" y="462" width="200" height="15" rx="2.5" fill="url(#pencil)" stroke="#5d4a1e" stroke-width=".8"/>
+            <rect x="180" y="462" width="200" height="4.5" rx="2" fill="rgba(255,255,255,.35)"/>
+            <path d="M380 462l30 7.5-30 7.5z" fill="#e2d3ae" stroke="#5d4a1e" stroke-width=".8"/>
+            <path d="M400 466.6l10 2.9-10 2.9z" fill="#20222c"/>
+            <rect x="160" y="461" width="21" height="17" rx="2" fill="url(#steel)" stroke="#2b2f42" stroke-width=".8"/>
+            <path d="M164 461v17M170 461v17M176 461v17" stroke="rgba(0,0,0,.25)"/>
+            <rect x="144" y="462" width="18" height="15" rx="4" fill="#d98aa6" stroke="#7a3b53" stroke-width=".8"/>
+          </g>
+          <g filter="url(#shS)" transform="rotate(14 330 500)">
+            <rect x="238" y="494" width="176" height="13" rx="2.5" fill="#3a3f56" stroke="#20243a" stroke-width=".8"/>
+            <rect x="238" y="494" width="176" height="4" rx="2" fill="rgba(255,255,255,.16)"/>
+            <path d="M414 494l26 6.5-26 6.5z" fill="#c9c3b4" stroke="#20243a" stroke-width=".8"/>
+            <path d="M432 498.5l8 2-8 2z" fill="#14161f"/>
+          </g>
+
+          <!-- ░░ tijeras ░░ -->
+          <g filter="url(#shS)" transform="rotate(-32 596 456)">
+            <path d="M540 442c26 6 52 12 78 17l40 8-6 12-40-6c-26-4-52-9-78-15z" fill="url(#steel)" stroke="#2b2f42" stroke-width=".9"/>
+            <path d="M540 470c26-6 52-11 78-15l40-6 6 12-40 8c-26 5-52 11-78 17z" fill="url(#steel)" stroke="#2b2f42" stroke-width=".9"/>
+            <circle cx="546" cy="456" r="7" fill="#5f6480" stroke="#20243a"/>
+            <path d="M540 442c-14-8-30-6-34 4s6 18 20 16" fill="none" stroke="#c05a5a" stroke-width="7.5" stroke-linecap="round"/>
+            <path d="M540 470c-14 8-30 6-34-4s6-18 20-16" fill="none" stroke="#c05a5a" stroke-width="7.5" stroke-linecap="round"/>
+            <path d="M556 448l70 14" stroke="rgba(255,255,255,.4)" stroke-width="1.4"/>
+          </g>
+
+          <!-- ░░ cámara ░░ -->
+          <g filter="url(#sh)" transform="translate(452 92) rotate(-7)">
+            <rect x="0" y="26" width="196" height="118" rx="14" fill="url(#camB)" stroke="rgba(210,215,240,.2)"/>
+            <rect x="0" y="26" width="196" height="26" rx="13" fill="rgba(242,239,232,.055)"/>
+            <rect x="58" y="6" width="72" height="26" rx="6" fill="#242942" stroke="rgba(210,215,240,.16)"/>
+            <rect x="70" y="0" width="48" height="10" rx="4" fill="#171b2b" stroke="rgba(210,215,240,.12)"/>
+            <!-- empuñadura texturizada -->
+            <rect x="8" y="40" width="40" height="92" rx="8" fill="#141827" stroke="rgba(210,215,240,.1)"/>
+            <g stroke="rgba(242,239,232,.09)"><path d="M14 50h28M14 58h28M14 66h28M14 74h28M14 82h28M14 90h28M14 98h28M14 106h28M14 114h28M14 122h28"/></g>
+            <!-- objetivo -->
+            <circle cx="122" cy="86" r="52" fill="#0f1322" stroke="rgba(210,215,240,.2)"/>
+            <circle cx="122" cy="86" r="45" fill="#191d2e" stroke="rgba(242,239,232,.1)"/>
+            <g stroke="rgba(242,239,232,.13)" fill="none"><circle cx="122" cy="86" r="49"/><path d="M122 37v6M171 86h-6M122 135v-6M73 86h6"/></g>
+            <circle cx="122" cy="86" r="34" fill="url(#lens)"/>
+            <circle cx="122" cy="86" r="17" fill="#050810"/>
+            <ellipse cx="108" cy="70" rx="13" ry="9" fill="rgba(255,255,255,.35)" transform="rotate(-30 108 70)"/>
+            <circle cx="140" cy="106" r="5" fill="rgba(230,200,119,.5)"/>
+            <!-- disparador y diales -->
+            <circle cx="30" cy="34" r="9" fill="url(#brass)" stroke="#5d4a1e"/>
+            <circle cx="170" cy="42" r="12" fill="#2b3048" stroke="rgba(210,215,240,.2)"/>
+            <g stroke="rgba(242,239,232,.25)"><path d="M170 32v4M180 42h-4M170 52v-4M160 42h4"/></g>
+            <text x="60" y="136" font-family="'Chakra Petch',monospace" font-size="9" letter-spacing="2.2" fill="rgba(230,200,119,.6)">LQS 50MM</text>
+            <!-- correa -->
+            <path d="M4 44C-26 30-30 6-6-2" fill="none" stroke="#3a3f56" stroke-width="7" stroke-linecap="round"/>
+          </g>
+
+          <!-- ░░ carrete de hilo + aguja ░░ -->
+          <g filter="url(#shS)" transform="translate(560 372)">
+            <ellipse cx="52" cy="96" rx="52" ry="14" fill="rgba(0,0,0,.4)" filter="url(#blr)" opacity=".7"/>
+            <rect x="10" y="14" width="84" height="12" rx="5" fill="#8f7a52" stroke="#4c3f26" stroke-width=".8"/>
+            <rect x="10" y="70" width="84" height="12" rx="5" fill="#7a663f" stroke="#4c3f26" stroke-width=".8"/>
+            <rect x="22" y="22" width="60" height="52" rx="4" fill="url(#thread)"/>
+            <g stroke="rgba(0,0,0,.28)" stroke-width="1.1">
+              <path d="M22 28h60M22 34h60M22 40h60M22 46h60M22 52h60M22 58h60M22 64h60M22 70h60"/>
+            </g>
+            <g stroke="rgba(255,255,255,.3)" stroke-width=".9"><path d="M26 24v50M32 24v50M38 24v50"/></g>
+            <ellipse cx="52" cy="20" rx="42" ry="7" fill="#a08a5c" stroke="#4c3f26" stroke-width=".8"/>
+            <ellipse cx="52" cy="20" rx="9" ry="3" fill="#2a2318"/>
+            <!-- hilo suelto -->
+            <path d="M22 48C-22 62-40 96-96 88" fill="none" stroke="#d97a6c" stroke-width="2" stroke-linecap="round"/>
+            <!-- aguja -->
+            <g transform="translate(-150 60) rotate(-16)">
+              <path d="M0 6 L84 12 L94 14 L84 16 L0 12 Z" fill="url(#steel)" stroke="#2b2f42" stroke-width=".7"/>
+              <ellipse cx="10" cy="11" rx="6" ry="2.6" fill="#0d0a14" stroke="#2b2f42" stroke-width=".7"/>
+              <path d="M4 11C-14 4-30 20-46 16" fill="none" stroke="#d97a6c" stroke-width="1.6"/>
+            </g>
+          </g>
+
+          <!-- ░░ muestras de color ░░ -->
+          <g filter="url(#shS)" transform="translate(94 92) rotate(-6)">
+            <rect x="0" y="0" width="42" height="66" rx="4" fill="#e0614a" stroke="rgba(0,0,0,.35)"/>
+            <rect x="46" y="-4" width="42" height="66" rx="4" fill="#e6c877" stroke="rgba(0,0,0,.35)"/>
+            <rect x="92" y="2" width="42" height="66" rx="4" fill="#2fb8a3" stroke="rgba(0,0,0,.35)"/>
+            <rect x="138" y="-2" width="42" height="66" rx="4" fill="#5b8def" stroke="rgba(0,0,0,.35)"/>
+            <g fill="rgba(0,0,0,.42)">
+              <rect x="0" y="52" width="42" height="14" rx="0"/><rect x="46" y="48" width="42" height="14"/>
+              <rect x="92" y="54" width="42" height="14"/><rect x="138" y="50" width="42" height="14"/>
+            </g>
+            <g fill="rgba(255,255,255,.85)" font-family="'Chakra Petch',monospace" font-size="7.5" letter-spacing=".8">
+              <text x="5" y="62">E0614A</text><text x="51" y="58">E6C877</text><text x="97" y="64">2FB8A3</text><text x="143" y="60">5B8DEF</text>
+            </g>
+            <g fill="rgba(255,255,255,.22)"><rect x="0" y="0" width="42" height="6"/><rect x="46" y="-4" width="42" height="6"/><rect x="92" y="2" width="42" height="6"/><rect x="138" y="-2" width="42" height="6"/></g>
+          </g>
+
+          <!-- ░░ taza de café ░░ -->
+          <g filter="url(#shS)" transform="translate(624 208)">
+            <path d="M62 4c22 0 34 10 34 24s-14 22-34 22" fill="none" stroke="#6a7089" stroke-width="7"/>
+            <path d="M4 2h68v40c0 20-15 34-34 34S4 62 4 42z" fill="#1c2033" stroke="rgba(210,215,240,.2)"/>
+            <ellipse cx="38" cy="4" rx="34" ry="9" fill="#2a3048" stroke="rgba(210,215,240,.22)"/>
+            <ellipse cx="38" cy="4" rx="27" ry="6.4" fill="#2a1a10"/>
+            <ellipse cx="30" cy="2" rx="9" ry="2.4" fill="rgba(255,255,255,.14)"/>
+            <path d="M12 22c8 6 44 6 52 0" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="3"/>
+            <!-- vapor -->
+            <g fill="none" stroke="rgba(230,200,119,.3)" stroke-linecap="round">
+              <path d="M22-12c-6-10 6-14 0-24"/><path d="M38-16c-6-10 6-16 0-26"/><path d="M54-12c-6-10 6-14 0-24"/>
+            </g>
+          </g>
+
+          <!-- ░░ lámpara ░░ -->
+          <g filter="url(#sh)">
+            <path d="M254 -34 L206 24" stroke="#3a3f56" stroke-width="10" stroke-linecap="round"/>
+            <path d="M254 -34 L206 24" stroke="rgba(255,255,255,.16)" stroke-width="2.6" stroke-linecap="round" transform="translate(-2 -2)"/>
+            <circle cx="206" cy="26" r="10" fill="url(#steel)" stroke="#20243a"/>
+            <path d="M206 30 L96 96 L286 96 Z" fill="#242942" stroke="rgba(210,215,240,.2)"/>
+            <path d="M206 30 L118 90 L206 90 Z" fill="rgba(255,255,255,.06)"/>
+            <ellipse cx="191" cy="96" rx="95" ry="13" fill="#141827" stroke="rgba(210,215,240,.2)"/>
+            <ellipse cx="191" cy="96" rx="42" ry="7" fill="url(#brass)" opacity=".9"/>
+            <ellipse cx="191" cy="96" rx="42" ry="7" fill="#ffe9b0" opacity=".55"/>
+          </g>
+          <ellipse cx="191" cy="104" rx="132" ry="34" fill="url(#lampL)" opacity=".8"/>
+
+          <!-- ░░ borde de mesa ░░ -->
+          <rect x="18" y="62" width="724" height="466" rx="16" fill="none" stroke="rgba(210,215,240,.13)"/>
+        </svg>
+        <figcaption>La mesa del taller — todo sale del mismo lugar</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROCESO ══════════ -->
+<section class="sec sec-line" id="proceso">
+  <div class="wrap">
+    <div class="kick rv">Cómo trabajamos</div>
+    <h2 class="disp rv">Cuatro pasos.<br>Sin <span class="gold">sorpresas</span>.</h2>
+    <p class="body-l rv">Sabes siempre en qué punto va tu proyecto, qué sigue y cuánto cuesta.</p>
+
+    <div class="tl">
+      <article class="step rv">
+        <div class="dot"><i></i></div>
+        <div class="head"><span class="no">01</span><h3 class="disp">Diagnóstico</h3><span class="when">40 minutos</span></div>
+        <p>Una conversación, no un formulario. Entendemos el negocio, quién compra, qué está haciendo la competencia y a dónde quieres llegar en los próximos doce meses. Salimos de ahí con el problema real escrito en una frase — que casi nunca es el que traías al principio.</p>
+        <svg class="icn" width="92" height="82" viewBox="0 0 92 82" aria-hidden="true">
+          <circle cx="38" cy="34" r="24" fill="none" stroke="rgba(210,215,240,.3)" stroke-width="2"/>
+          <circle cx="38" cy="34" r="24" fill="rgba(230,200,119,.05)"/>
+          <path d="M56 52l22 22" stroke="rgba(230,200,119,.6)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M27 34h22M38 23v22" stroke="rgba(210,215,240,.3)" stroke-width="1.4"/>
+          <path d="M22 40c6-14 22-20 32-14" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </article>
+
+      <article class="step rv">
+        <div class="dot"><i></i></div>
+        <div class="head"><span class="no">02</span><h3 class="disp">Propuesta en 48h</h3><span class="when">48 horas</span></div>
+        <p>Alcance detallado, precio cerrado en pesos colombianos y cronograma con fechas. Sin letra pequeña, sin «depende» y sin cotizaciones que tardan tres semanas. Si la propuesta no te sirve, te queda igual el diagnóstico escrito — contrates o no.</p>
+        <svg class="icn" width="92" height="82" viewBox="0 0 92 82" aria-hidden="true">
+          <rect x="10" y="8" width="52" height="66" rx="5" fill="rgba(255,255,255,.03)" stroke="rgba(210,215,240,.28)"/>
+          <g stroke="rgba(210,215,240,.28)"><path d="M20 24h32M20 34h32M20 44h20"/></g>
+          <path d="M20 58h18" stroke="rgba(230,200,119,.7)" stroke-width="2.4"/>
+          <circle cx="68" cy="52" r="20" fill="#0a0c17" stroke="rgba(230,200,119,.55)" stroke-width="2"/>
+          <path d="M68 40v12l8 6" stroke="rgba(230,200,119,.9)" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <g stroke="rgba(230,200,119,.35)"><path d="M68 34v4M86 52h-4M68 70v-4M50 52h4"/></g>
+        </svg>
+      </article>
+
+      <article class="step rv">
+        <div class="dot"><i></i></div>
+        <div class="head"><span class="no">03</span><h3 class="disp">Producción por entregas</h3><span class="when">Por hitos</span></div>
+        <p>Nada de desaparecer un mes y reaparecer con todo hecho. Trabajamos por entregas parciales: ves avances reales, ajustas sobre la marcha y apruebas por partes. Pagas 50% al inicio y 50% contra entrega final, con cada hito documentado.</p>
+        <svg class="icn" width="92" height="82" viewBox="0 0 92 82" aria-hidden="true">
+          <g fill="rgba(255,255,255,.04)" stroke="rgba(210,215,240,.28)">
+            <path d="M8 40l20-10 20 10-20 10z"/><path d="M8 40v18l20 10V50z"/><path d="M48 40v18L28 68V50z"/>
+          </g>
+          <g fill="rgba(230,200,119,.09)" stroke="rgba(230,200,119,.55)">
+            <path d="M44 18l20-10 20 10-20 10z"/><path d="M44 18v18l20 10V28z"/><path d="M84 18v18L64 46V28z"/>
+          </g>
+          <path d="M28 30V16" stroke="rgba(210,215,240,.3)" stroke-dasharray="3 3"/>
+          <circle cx="28" cy="12" r="3.4" fill="rgba(230,200,119,.7)"/>
+        </svg>
+      </article>
+
+      <article class="step rv">
+        <div class="dot"><i></i></div>
+        <div class="head"><span class="no">04</span><h3 class="disp">Lanzamiento y medición</h3><span class="when">Y después</span></div>
+        <p>Publicamos, dejamos todo en tus cuentas y a tu nombre, y capacitamos a tu equipo para que pueda mover lo del día a día sin depender de nosotros. A los 30 días miramos números juntos: qué funcionó, qué hay que ajustar y qué conviene hacer después.</p>
+        <svg class="icn" width="92" height="82" viewBox="0 0 92 82" aria-hidden="true">
+          <path d="M12 70h72" stroke="rgba(210,215,240,.28)"/>
+          <g fill="rgba(230,200,119,.16)" stroke="rgba(230,200,119,.5)">
+            <rect x="18" y="48" width="12" height="22" rx="2"/><rect x="36" y="36" width="12" height="34" rx="2"/>
+            <rect x="54" y="24" width="12" height="46" rx="2"/><rect x="72" y="12" width="12" height="58" rx="2"/>
+          </g>
+          <path d="M18 46l18-12 18-12 18-10" fill="none" stroke="rgba(242,239,232,.6)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="78" cy="12" r="4" fill="#e6c877"/>
+        </svg>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="sec sec-line" id="contacto">
+  <div class="wrap">
+    <div class="cta rv">
+      <div class="kick c">Contacto directo</div>
+      <h2 class="disp">¿Hablamos<br>de <span class="gold">lo tuyo</span>?</h2>
+      <p>Escríbenos por WhatsApp y cuéntanos qué necesitas — o el desorden de ideas que tienes. Te respondemos con un plan concreto y un precio cerrado en 48 horas.</p>
+      <div class="btns">
+        <a class="btn p" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20le%C3%AD%20la%20p%C3%A1gina%20del%20estudio%20y%20quiero%20hablar%20de%20un%20proyecto." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.5 8.5 0 1 1 21 11.5z"/></svg>
+          Escribir por WhatsApp</a>
+        <a class="btn g" href="muestras.html">Ver las muestras</a>
+      </div>
+      <div class="meta"><a href="https://wa.me/573332791710" target="_blank" rel="noopener">+57 333 279 1710</a> &nbsp;·&nbsp; <a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="logo"><span class="l">L</span><span class="q">Q</span><span class="s">S</span></div>
+        <p>Taller creativo en Medellín. Construimos universos alrededor de las marcas.</p>
+      </div>
+      <div class="flinks">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="muestras.html">Muestras</a>
+        <a href="galaxia.html">La galaxia</a>
+        <a href="automatizacion-guia.html">Guía técnica</a>
+      </div>
+    </div>
+    <div class="fbot"><span>© <span id="yr">2026</span> LQS · Medellín, Colombia</span><span>Hecho en casa, con criterio.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* año */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* nav sólido */
+var nav = document.getElementById('nav');
+function onScroll(){ nav.classList.toggle('solid', window.scrollY > 24); }
+onScroll(); addEventListener('scroll', onScroll, {passive:true});
+
+/* menú móvil */
+var bg = document.getElementById('bg');
+bg.addEventListener('click', function(){
+  var open = document.body.classList.toggle('menu');
+  bg.setAttribute('aria-expanded', open ? 'true' : 'false');
+  bg.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+});
+document.getElementById('nl').addEventListener('click', function(e){
+  if(e.target.tagName === 'A'){ document.body.classList.remove('menu'); bg.setAttribute('aria-expanded','false'); }
+});
+addEventListener('keydown', function(e){ if(e.key === 'Escape'){ document.body.classList.remove('menu'); bg.setAttribute('aria-expanded','false'); } });
+
+/* marquee */
+var MQ = ['Marca','Sitios web','Automatización','Audiovisual','Contenido','Joyería','Textil','Estrategia','Precio cerrado','Medellín'];
+var line = MQ.map(function(m){ return '<b>' + m + '</b>'; }).join('');
+document.getElementById('mq').innerHTML = line + line;
+
+/* reveal */
+var els = document.querySelectorAll('.rv');
+if(RM || !('IntersectionObserver' in window)){
+  els.forEach(function(el){ el.classList.add('in'); });
+} else {
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:.14, rootMargin:'0px 0px -8% 0px'});
+  var i = 0;
+  els.forEach(function(el){
+    var parent = el.parentElement;
+    var sibs = parent ? Array.prototype.indexOf.call(parent.children, el) : 0;
+    el.style.transitionDelay = Math.min(sibs, 5) * 70 + 'ms';
+    io.observe(el); i++;
+  });
+}
+
+/* trazo del monograma del hero */
+if(!RM){
+  document.querySelectorAll('.draw path, .draw2').forEach(function(p, i){
+    try{
+      var len = p.getTotalLength();
+      p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+      p.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.3,.8,.3,1) ' + (400 + i*320) + 'ms';
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ p.style.strokeDashoffset = 0; }); });
+    }catch(e){}
+  });
+}
+})();
+</script>
+</body>
+</html>

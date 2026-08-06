@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Servicios y precios — LQS</title>
+<meta name="description" content="Todos los servicios de LQS en un solo lugar: marca, web, automatización, audiovisual, contenido y producto. Precios reales en COP para Colombia, desde $45.000.">
+<meta name="theme-color" content="#06070f">
+<meta property="og:title" content="Servicios y precios — LQS">
+<meta property="og:description" content="Marca, web, automatización, audiovisual, contenido y producto. Capacidades y precios del estudio, en pesos colombianos.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070f; --bg2:#090b16; --ink:#f2efe8; --dim:#9aa0b8; --faint:#5f6480;
+  --gold:#e6c877; --line:rgba(210,215,240,.11); --line2:rgba(210,215,240,.22);
+  --disp:'Bebas Neue',Impact,sans-serif;
+  --sport:'Anton',Impact,sans-serif;
+  --tech:'Chakra Petch',ui-monospace,monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+  --pad:clamp(18px,5vw,56px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+svg{display:block;max-width:100%}
+::selection{background:var(--gold);color:#0a0810}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(56% 42% at 80% 2%,rgba(112,92,200,.20),transparent 62%),
+             radial-gradient(50% 38% at 4% 62%,rgba(190,120,90,.12),transparent 62%),
+             radial-gradient(50% 38% at 60% 100%,rgba(90,150,190,.10),transparent 62%)}
+.grainy{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:60;background:rgba(6,7,15,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1200px;margin:0 auto;padding:12px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:9px}
+.brand b{color:var(--ink);font-weight:700}
+.navlinks{display:flex;gap:8px;align-items:center}
+.nlink{font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:9px 15px;transition:.22s;white-space:nowrap}
+.nlink:hover{color:var(--gold);border-color:var(--line2);background:rgba(230,200,119,.06)}
+.nlink.hot{color:#0a0810;background:linear-gradient(100deg,#fff1cf,var(--gold));border-color:transparent;font-weight:700}
+.nlink.hot:hover{filter:brightness(1.06);color:#0a0810}
+/* ---------- hero ---------- */
+.hero{padding:clamp(40px,8vw,84px) 0 clamp(20px,3vw,34px)}
+.kick{font-family:var(--tech);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.kick::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.9;
+  font-size:clamp(4.2rem,20vw,13rem);margin-bottom:6px;
+  background:linear-gradient(160deg,#fffdf7 8%,#f2efe8 40%,#6a6f8c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(16px,4vw,44px);align-items:end;border-top:1px solid var(--line);padding-top:20px}
+.hero .sub p{color:var(--dim);font-size:clamp(1rem,1.7vw,1.14rem);max-width:56ch}
+.hero .sub p b{color:var(--ink);font-weight:700}
+.facts{display:flex;flex-wrap:wrap;gap:22px}
+.fact b{display:block;font-family:var(--sport);font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1;color:var(--gold)}
+.fact span{font-family:var(--tech);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+/* ---------- chips ---------- */
+.chipbar{position:sticky;top:56px;z-index:50;background:rgba(6,7,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);margin-top:clamp(20px,4vw,40px)}
+.chips{max-width:1200px;margin:0 auto;padding:11px var(--pad);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--line);border-radius:999px;padding:8px 15px;transition:.22s;white-space:nowrap}
+.chip:hover{color:var(--ink);border-color:var(--line2)}
+.chip.act{color:var(--gold);border-color:rgba(230,200,119,.55);background:rgba(230,200,119,.1)}
+/* ---------- bloques de servicio ---------- */
+.svc{padding:clamp(46px,7vw,86px) 0;border-bottom:1px solid var(--line);scroll-margin-top:112px;position:relative;z-index:3}
+.svc .row{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(24px,4.5vw,58px);align-items:center}
+.svc:nth-child(even) .row{grid-template-columns:1.08fr .92fr}
+.svc:nth-child(even) .art{order:2}
+.art{position:relative;border:1px solid var(--line);border-radius:24px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));padding:clamp(10px,2vw,18px);overflow:hidden}
+.art::after{content:attr(data-tag);position:absolute;right:15px;bottom:11px;font-family:var(--tech);font-size:.58rem;letter-spacing:.2em;color:var(--faint)}
+.num{font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.num i{font-style:normal;font-family:var(--sport);font-size:1.05rem;color:rgba(230,200,119,.5)}
+h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.92;font-size:clamp(2.6rem,7vw,4.4rem);margin-bottom:12px}
+.desc{color:var(--dim);max-width:56ch;margin-bottom:20px}
+.desc b{color:var(--ink);font-weight:700}
+.deliv{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:7px 18px;margin-bottom:24px}
+.deliv li{position:relative;padding-left:20px;font-size:.9rem;color:var(--ink);line-height:1.5}
+.deliv li::before{content:'';position:absolute;left:0;top:.55em;width:9px;height:1px;background:var(--gold)}
+.deliv li em{font-style:normal;color:var(--dim)}
+.priceline{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;border-top:1px solid var(--line);padding-top:18px;margin-bottom:18px}
+.pr{display:flex;flex-direction:column}
+.pr span{font-family:var(--tech);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.pr b{font-family:var(--sport);font-size:clamp(1.55rem,3.6vw,2rem);line-height:1.06;letter-spacing:.005em;
+  background:linear-gradient(100deg,#fff6e0,var(--gold) 62%,#c49b3e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pr b small{font-family:var(--tech);font-size:.6rem;letter-spacing:.16em;color:var(--dim);-webkit-text-fill-color:var(--dim);display:block;margin-top:3px}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:.88rem;font-weight:800;border-radius:14px;padding:13px 20px;transition:.22s;
+  color:#0a0810;background:linear-gradient(100deg,#fff1cf,var(--gold) 64%,#d0a844);box-shadow:0 16px 36px -22px var(--gold)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line2);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+/* ---------- comparativa ---------- */
+.cmpsec{padding:clamp(46px,7vw,84px) 0;position:relative;z-index:3}
+.lead2{color:var(--dim);max-width:60ch;margin-bottom:26px}
+.tblwrap{border:1px solid var(--line2);border-radius:22px;overflow:hidden;background:linear-gradient(170deg,rgba(255,255,255,.055),rgba(255,255,255,.012))}
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.92rem}
+th{font-family:var(--tech);font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);background:rgba(255,255,255,.03)}
+th:last-child,td:last-child{text-align:right}
+tr:last-child td{border-bottom:none}
+td.svcname{font-weight:700}
+td.svcname em{display:block;font-style:normal;font-family:var(--tech);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+td.mkt{color:var(--faint);font-family:var(--tech);font-size:.86rem}
+td.lqs{font-family:var(--sport);font-size:1.12rem;color:var(--gold);white-space:nowrap}
+.tnote{font-size:.79rem;color:var(--faint);margin-top:14px;line-height:1.6;max-width:70ch}
+/* ---------- cta ---------- */
+.final{margin:clamp(20px,4vw,40px) 0 clamp(40px,6vw,70px);border:1px solid var(--line2);border-radius:28px;overflow:hidden;position:relative;
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.014));
+  padding:clamp(30px,5.5vw,58px) clamp(22px,4vw,48px);text-align:center}
+.final::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 50% 0%,rgba(230,200,119,.14),transparent 70%)}
+.final h2{font-size:clamp(2.2rem,6.4vw,4rem);position:relative}
+.final p{position:relative;color:var(--dim);max-width:52ch;margin:0 auto 26px}
+.final .acts{position:relative;justify-content:center}
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:26px 0 44px;position:relative;z-index:3}
+footer .in{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between;font-size:.82rem;color:var(--dim)}
+footer a:hover{color:var(--gold)}
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(22px)}
+.rv.on{opacity:1;transform:none;transition:opacity .85s ease,transform .85s cubic-bezier(.2,.75,.3,1)}
+/* ---------- responsive ---------- */
+@media(max-width:940px){
+  .svc .row,.svc:nth-child(even) .row{grid-template-columns:1fr;gap:26px}
+  .svc .art,.svc:nth-child(even) .art{order:-1}
+  .hero .sub{grid-template-columns:1fr;align-items:start;gap:20px}
+}
+@media(max-width:640px){
+  .navlinks .nlink.sec{display:none}
+  .brand{font-size:.62rem}
+  .chipbar{top:55px}
+  .deliv{grid-template-columns:1fr}
+  .btn{width:100%;justify-content:center}
+  .acts{width:100%}
+  .facts{gap:16px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="aura"></div><div class="grainy"></div>
+
+<!-- defs compartidos para las ilustraciones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="gMtl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3d425c"/><stop offset=".5" stop-color="#232838"/><stop offset="1" stop-color="#12151f"/></linearGradient>
+  <linearGradient id="gMtl2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a5070"/><stop offset=".55" stop-color="#2a2f42"/><stop offset="1" stop-color="#171a26"/></linearGradient>
+  <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3d4"/><stop offset=".5" stop-color="#e6c877"/><stop offset="1" stop-color="#9c7a2c"/></linearGradient>
+  <linearGradient id="gGlass" x1="0" y1="0" x2=".6" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".14"/><stop offset="1" stop-color="#ffffff" stop-opacity=".02"/></linearGradient>
+  <radialGradient id="gHalo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e6c877" stop-opacity=".28"/><stop offset="1" stop-color="#e6c877" stop-opacity="0"/></radialGradient>
+  <linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d2d7f0" stop-opacity=".14"/><stop offset="1" stop-color="#d2d7f0" stop-opacity="0"/></linearGradient>
+</defs></svg>
+
+<nav><div class="in">
+  <div class="brand">✦ LQS <b>· Servicios</b></div>
+  <div class="navlinks">
+    <a class="nlink sec" href="index.html">← Inicio</a>
+    <a class="nlink hot" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9C%A6%20vengo%20de%20la%20p%C3%A1gina%20de%20servicios%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div></nav>
+
+<div class="wrap"><header class="hero">
+  <div class="kick">Capacidades del estudio · Medellín, Colombia</div>
+  <h1>Servicios</h1>
+  <div class="sub">
+    <p>Todo lo que hace LQS, en un solo lugar y con precios a la vista. <b>Seis frentes de trabajo</b> que funcionan solos o encadenados: la marca alimenta la web, la web alimenta la automatización, y el contenido mantiene todo vivo.</p>
+    <div class="facts">
+      <div class="fact"><b>6</b><span>Frentes</span></div>
+      <div class="fact"><b>48h</b><span>Respuesta</span></div>
+      <div class="fact"><b>COP</b><span>Precios reales</span></div>
+    </div>
+  </div>
+</header></div>
+
+<div class="chipbar"><div class="chips" id="chips">
+  <a class="chip" href="#marca">Marca</a>
+  <a class="chip" href="#web">Web</a>
+  <a class="chip" href="#automatizacion">Automatización</a>
+  <a class="chip" href="#audiovisual">Audiovisual</a>
+  <a class="chip" href="#contenido">Contenido</a>
+  <a class="chip" href="#producto">Producto</a>
+</div></div>
+
+<div class="wrap" id="secs">
+
+<!-- ══════════ MARCA ══════════ -->
+<section class="svc" id="marca"><div class="row">
+  <div class="art rv" data-tag="IDENTIDAD">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración de identidad de marca: plumilla, retícula de construcción del logo y paleta de color">
+      <ellipse cx="210" cy="284" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="150" cy="128" r="112" fill="url(#gHalo)"/>
+      <!-- hoja trasera -->
+      <g transform="rotate(-7 118 140)">
+        <rect x="42" y="42" width="164" height="204" rx="8" fill="#12151f" stroke="rgba(210,215,240,.14)"/>
+        <rect x="42" y="42" width="164" height="204" rx="8" fill="url(#gGlass)"/>
+      </g>
+      <!-- hoja principal: retícula de construcción -->
+      <g transform="rotate(3 150 150)">
+        <rect x="58" y="50" width="168" height="206" rx="8" fill="#161a26" stroke="rgba(210,215,240,.2)"/>
+        <rect x="58" y="50" width="168" height="206" rx="8" fill="url(#gGlass)"/>
+        <g stroke="rgba(210,215,240,.09)" stroke-width="1">
+          <path d="M58 84h168M58 118h168M58 152h168M58 186h168M58 220h168"/>
+          <path d="M92 50v206M126 50v206M160 50v206M194 50v206"/>
+        </g>
+        <g stroke="rgba(230,200,119,.34)" stroke-width="1" fill="none" stroke-dasharray="3 4">
+          <circle cx="142" cy="132" r="54"/><circle cx="142" cy="132" r="34"/>
+          <path d="M142 66v132M76 132h132"/>
+        </g>
+        <!-- marca construida -->
+        <path d="M142 88l13.5 30.5L186 132l-30.5 13.5L142 176l-13.5-30.5L98 132l30.5-13.5z" fill="url(#gGold)"/>
+        <path d="M142 88l13.5 30.5L142 132z" fill="#fff" opacity=".35"/>
+        <circle cx="142" cy="132" r="6" fill="#161a26"/>
+        <!-- cotas -->
+        <g stroke="rgba(210,215,240,.35)" stroke-width="1">
+          <path d="M98 200h88M98 196v8M186 196v8"/>
+        </g>
+        <text x="130" y="216" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.4">4x</text>
+        <text x="70" y="242" font-family="'Chakra Petch',monospace" font-size="9" fill="#5f6480" letter-spacing="1.6">LQS · MARCA / GRID 01</text>
+      </g>
+      <!-- paleta -->
+      <g transform="translate(248 74)">
+        <rect x="0" y="0" width="118" height="150" rx="10" fill="#141826" stroke="rgba(210,215,240,.18)"/>
+        <rect x="0" y="0" width="118" height="150" rx="10" fill="url(#gGlass)"/>
+        <text x="14" y="24" font-family="'Chakra Petch',monospace" font-size="9" fill="#5f6480" letter-spacing="1.6">PALETA</text>
+        <g>
+          <rect x="14" y="34" width="90" height="22" rx="5" fill="url(#gGold)"/>
+          <rect x="14" y="62" width="90" height="22" rx="5" fill="#3b4266"/>
+          <rect x="14" y="90" width="90" height="22" rx="5" fill="#f2efe8"/>
+          <rect x="14" y="118" width="90" height="22" rx="5" fill="#232838" stroke="rgba(210,215,240,.2)"/>
+        </g>
+        <g fill="#0a0810" font-family="'Chakra Petch',monospace" font-size="8" letter-spacing="1">
+          <text x="20" y="49">E6C877</text><text x="20" y="105">F2EFE8</text>
+        </g>
+        <g fill="#9aa0b8" font-family="'Chakra Petch',monospace" font-size="8" letter-spacing="1">
+          <text x="20" y="77">3B4266</text><text x="20" y="133">232838</text>
+        </g>
+      </g>
+      <!-- plumilla -->
+      <g transform="translate(268 200) rotate(24)">
+        <path d="M0 0h34l6 66-23 34-23-34z" fill="url(#gMtl2)" stroke="rgba(210,215,240,.24)"/>
+        <path d="M0 0h17v100l-23-34z" fill="rgba(255,255,255,.07)"/>
+        <path d="M17 22v58" stroke="rgba(210,215,240,.35)" stroke-width="1.4"/>
+        <circle cx="17" cy="62" r="7" fill="#0d101a" stroke="rgba(210,215,240,.3)"/>
+        <path d="M17 88v14" stroke="url(#gGold)" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M2 8h30" stroke="rgba(255,255,255,.2)"/>
+      </g>
+      <circle cx="286" cy="290" r="4" fill="url(#gGold)" opacity=".7"/>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>01</i> Marca</div>
+    <h2>Identidad<br>que aguanta</h2>
+    <p class="desc">No es un logo bonito: es un <b>sistema completo</b> con el que tu equipo puede producir sin llamarnos cada vez. Naming, símbolo, tipografía, color, aplicaciones y un manual corto que sí se lee.</p>
+    <ul class="deliv">
+      <li>Logo principal + variantes <em>(horizontal, iso, monocromo)</em></li>
+      <li>Paleta de color con códigos <em>HEX, RGB y CMYK</em></li>
+      <li>Sistema tipográfico y jerarquías</li>
+      <li>Manual de marca en PDF</li>
+      <li>Plantillas editables para redes</li>
+      <li>Archivos fuente <em>(SVG, AI, PNG)</em></li>
+    </ul>
+    <div class="priceline"><div class="pr"><span>Desde</span><b>$890.000<small>COP · 2 a 3 semanas</small></b></div></div>
+    <div class="acts">
+      <a class="btn" href="mundos/empresas.html">Ver el mundo Marca →</a>
+      <a class="btn ghost" href="mundos/marcas-muestras.html">Ver muestras</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ WEB ══════════ -->
+<section class="svc" id="web"><div class="row">
+  <div class="art rv" data-tag="SITIOS">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración de desarrollo web: ventanas de navegador en capas y una versión móvil">
+      <ellipse cx="210" cy="286" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="228" cy="120" r="118" fill="url(#gHalo)"/>
+      <!-- capa trasera -->
+      <g transform="translate(78 34) skewY(-4)" opacity=".55">
+        <rect x="0" y="0" width="262" height="164" rx="10" fill="#10131d" stroke="rgba(210,215,240,.12)"/>
+        <path d="M0 26h262" stroke="rgba(210,215,240,.12)"/>
+      </g>
+      <!-- ventana principal -->
+      <g transform="translate(52 62)">
+        <rect x="0" y="0" width="282" height="186" rx="12" fill="#161a26" stroke="rgba(210,215,240,.22)"/>
+        <rect x="0" y="0" width="282" height="30" rx="12" fill="#1d2231"/>
+        <path d="M0 30h282" stroke="rgba(210,215,240,.18)"/>
+        <circle cx="18" cy="15" r="4" fill="#ff5d5d"/><circle cx="33" cy="15" r="4" fill="#e6c877"/><circle cx="48" cy="15" r="4" fill="#5fd6a0"/>
+        <rect x="66" y="8" width="150" height="14" rx="7" fill="#0f131d" stroke="rgba(210,215,240,.14)"/>
+        <text x="76" y="18.5" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1.2">lqs.studio</text>
+        <!-- contenido -->
+        <rect x="0" y="30" width="282" height="156" fill="url(#gGlass)"/>
+        <rect x="18" y="46" width="120" height="13" rx="4" fill="url(#gGold)"/>
+        <rect x="18" y="66" width="164" height="7" rx="3.5" fill="rgba(210,215,240,.28)"/>
+        <rect x="18" y="78" width="132" height="7" rx="3.5" fill="rgba(210,215,240,.18)"/>
+        <rect x="18" y="96" width="62" height="20" rx="6" fill="url(#gGold)"/>
+        <rect x="88" y="96" width="52" height="20" rx="6" fill="none" stroke="rgba(210,215,240,.3)"/>
+        <g>
+          <rect x="18" y="128" width="76" height="44" rx="7" fill="#1d2231" stroke="rgba(210,215,240,.16)"/>
+          <rect x="102" y="128" width="76" height="44" rx="7" fill="#1d2231" stroke="rgba(210,215,240,.16)"/>
+          <rect x="186" y="128" width="76" height="44" rx="7" fill="#1d2231" stroke="rgba(210,215,240,.16)"/>
+          <g fill="rgba(210,215,240,.22)">
+            <rect x="26" y="136" width="30" height="6" rx="3"/><rect x="26" y="148" width="52" height="5" rx="2.5"/><rect x="26" y="157" width="40" height="5" rx="2.5"/>
+            <rect x="110" y="136" width="30" height="6" rx="3"/><rect x="110" y="148" width="52" height="5" rx="2.5"/><rect x="110" y="157" width="40" height="5" rx="2.5"/>
+            <rect x="194" y="136" width="30" height="6" rx="3"/><rect x="194" y="148" width="52" height="5" rx="2.5"/><rect x="194" y="157" width="40" height="5" rx="2.5"/>
+          </g>
+          <path d="M26 136h22" stroke="url(#gGold)" stroke-width="6" stroke-linecap="round"/>
+        </g>
+        <rect x="196" y="42" width="68" height="68" rx="10" fill="#0f131d" stroke="rgba(210,215,240,.16)"/>
+        <path d="M204 100l18-22 12 14 10-12 12 20z" fill="rgba(230,200,119,.3)"/>
+        <circle cx="216" cy="60" r="6" fill="rgba(230,200,119,.5)"/>
+      </g>
+      <!-- móvil -->
+      <g transform="translate(288 128)">
+        <rect x="0" y="0" width="82" height="150" rx="14" fill="#1d2231" stroke="rgba(210,215,240,.26)"/>
+        <rect x="5" y="5" width="72" height="140" rx="10" fill="#0f131d"/>
+        <rect x="30" y="9" width="22" height="4" rx="2" fill="#2a2f42"/>
+        <rect x="13" y="24" width="42" height="8" rx="4" fill="url(#gGold)"/>
+        <rect x="13" y="38" width="56" height="5" rx="2.5" fill="rgba(210,215,240,.24)"/>
+        <rect x="13" y="47" width="44" height="5" rx="2.5" fill="rgba(210,215,240,.16)"/>
+        <rect x="13" y="60" width="56" height="34" rx="6" fill="#1d2231" stroke="rgba(210,215,240,.14)"/>
+        <path d="M17 90l14-16 9 10 8-9 11 15z" fill="rgba(230,200,119,.28)"/>
+        <rect x="13" y="102" width="56" height="16" rx="6" fill="url(#gGold)"/>
+        <rect x="13" y="124" width="26" height="5" rx="2.5" fill="rgba(210,215,240,.16)"/>
+        <rect x="45" y="124" width="24" height="5" rx="2.5" fill="rgba(210,215,240,.16)"/>
+        <path d="M5 5h72" stroke="rgba(255,255,255,.08)"/>
+      </g>
+      <!-- métricas flotantes -->
+      <g transform="translate(24 214)">
+        <rect x="0" y="0" width="122" height="52" rx="10" fill="#141826" stroke="rgba(210,215,240,.2)"/>
+        <rect x="0" y="0" width="122" height="52" rx="10" fill="url(#gGlass)"/>
+        <text x="12" y="19" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1.6">CARGA</text>
+        <text x="12" y="40" font-family="Anton,sans-serif" font-size="19" fill="#e6c877">0.9s</text>
+        <path d="M74 38l10-12 8 7 10-15 8 12" fill="none" stroke="rgba(95,214,160,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>02</i> Web</div>
+    <h2>Sitios que<br>sí convierten</h2>
+    <p class="desc">Rápidos, medibles y fáciles de actualizar. Diseñamos y desarrollamos de cero, con <b>carga por debajo del segundo</b>, SEO técnico resuelto y analítica conectada desde el día uno.</p>
+    <ul class="deliv">
+      <li>Diseño UX/UI a medida <em>(no plantillas)</em></li>
+      <li>Desarrollo responsive 390px a 4K</li>
+      <li>SEO técnico y datos estructurados</li>
+      <li>Formularios y WhatsApp integrados</li>
+      <li>Analítica y panel de métricas</li>
+      <li>Dominio, hosting y despliegue</li>
+    </ul>
+    <div class="priceline">
+      <div class="pr"><span>Desde</span><b>$1.850.000<small>COP · 3 a 5 semanas</small></b></div>
+      <div class="pr"><span>Mantenimiento</span><b>$260.000<small>COP · mensual</small></b></div>
+    </div>
+    <div class="acts">
+      <a class="btn" href="mundos/empresas.html">Ver el mundo Web →</a>
+      <a class="btn ghost" href="mundos/empresas-muestras.html">Ver muestras</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ AUTOMATIZACIÓN ══════════ -->
+<section class="svc" id="automatizacion"><div class="row">
+  <div class="art rv" data-tag="FLUJOS">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración de automatización: nodos conectados, engranajes y un flujo de mensajes">
+      <ellipse cx="210" cy="286" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="212" cy="140" r="126" fill="url(#gHalo)"/>
+      <!-- conexiones -->
+      <g fill="none" stroke="rgba(210,215,240,.2)" stroke-width="1.6">
+        <path d="M104 88h44c12 0 16 6 16 16v34c0 10 6 14 16 14h34"/>
+        <path d="M104 222h44c12 0 16-6 16-16v-34c0-10 6-14 16-14h34"/>
+        <path d="M290 152h32c10 0 14 4 14 14v22"/>
+        <path d="M290 152h32c10 0 14-4 14-14v-22"/>
+      </g>
+      <g fill="none" stroke="url(#gGold)" stroke-width="1.6" stroke-dasharray="5 8" opacity=".85">
+        <path d="M104 88h44c12 0 16 6 16 16v34c0 10 6 14 16 14h34">
+          <animate attributeName="stroke-dashoffset" values="52;0" dur="2.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M290 152h32c10 0 14-4 14-14v-22">
+          <animate attributeName="stroke-dashoffset" values="52;0" dur="2.6s" repeatCount="indefinite"/>
+        </path>
+      </g>
+      <!-- nodos entrada -->
+      <g transform="translate(20 62)">
+        <rect x="0" y="0" width="86" height="52" rx="11" fill="#161a26" stroke="rgba(210,215,240,.24)"/>
+        <rect x="0" y="0" width="86" height="52" rx="11" fill="url(#gGlass)"/>
+        <circle cx="20" cy="26" r="11" fill="rgba(95,214,160,.16)" stroke="rgba(95,214,160,.55)"/>
+        <path d="M15 26l4 4 7-8" fill="none" stroke="#5fd6a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="38" y="23" font-family="'Chakra Petch',monospace" font-size="8.5" fill="#f2efe8" letter-spacing=".8">FORM</text>
+        <text x="38" y="35" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#5f6480" letter-spacing=".8">web</text>
+      </g>
+      <g transform="translate(20 196)">
+        <rect x="0" y="0" width="86" height="52" rx="11" fill="#161a26" stroke="rgba(210,215,240,.24)"/>
+        <rect x="0" y="0" width="86" height="52" rx="11" fill="url(#gGlass)"/>
+        <circle cx="20" cy="26" r="11" fill="rgba(230,200,119,.14)" stroke="rgba(230,200,119,.5)"/>
+        <path d="M14 22h12v9l-6-3-6 3z" fill="none" stroke="#e6c877" stroke-width="1.6" stroke-linejoin="round"/>
+        <text x="38" y="23" font-family="'Chakra Petch',monospace" font-size="8.5" fill="#f2efe8" letter-spacing=".8">CHAT</text>
+        <text x="38" y="35" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#5f6480" letter-spacing=".8">whatsapp</text>
+      </g>
+      <!-- motor central: engranajes -->
+      <g transform="translate(200 152)">
+        <circle cx="0" cy="0" r="62" fill="rgba(230,200,119,.05)" stroke="rgba(230,200,119,.18)" stroke-dasharray="2 6"/>
+        <g>
+          <g transform="translate(-16 -12)">
+            <path d="M0-34l7 2 5-8 9 5-2 9 8 6-5 9-9-2-6 8-9-5 2-9-8-6 5-9z" fill="none"/>
+            <g fill="url(#gMtl2)" stroke="rgba(210,215,240,.3)" stroke-width="1">
+              <path d="M-4-32h8l1.6 7.4 6.8 2.8 6-4.4 5.6 5.6-4.4 6 2.8 6.8 7.4 1.6v8l-7.4 1.6-2.8 6.8 4.4 6-5.6 5.6-6-4.4-6.8 2.8L4 32h-8l-1.6-7.4-6.8-2.8-6 4.4-5.6-5.6 4.4-6-2.8-6.8L-32 4v-8l7.4-1.6 2.8-6.8-4.4-6 5.6-5.6 6 4.4 6.8-2.8z">
+                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="14s" repeatCount="indefinite"/>
+              </path>
+            </g>
+            <circle cx="0" cy="0" r="12" fill="#0f131d" stroke="rgba(230,200,119,.5)"/>
+            <circle cx="0" cy="0" r="4.5" fill="url(#gGold)"/>
+          </g>
+          <g transform="translate(24 26)">
+            <g fill="url(#gMtl)" stroke="rgba(210,215,240,.26)" stroke-width="1">
+              <path d="M-3-22h6l1.2 5.2 4.8 2 4.2-3 4.2 4.2-3 4.2 2 4.8L21-3v6l-5.2 1.2-2 4.8 3 4.2-4.2 4.2-4.2-3-4.8 2L3 21h-6l-1.2-5.2-4.8-2-4.2 3-4.2-4.2 3-4.2-2-4.8L-21 3v-6l5.2-1.2 2-4.8-3-4.2 4.2-4.2 4.2 3 4.8-2z">
+                <animateTransform attributeName="transform" type="rotate" from="30" to="-330" dur="10s" repeatCount="indefinite"/>
+              </path>
+            </g>
+            <circle cx="0" cy="0" r="8" fill="#0f131d" stroke="rgba(210,215,240,.35)"/>
+            <circle cx="0" cy="0" r="3" fill="rgba(230,200,119,.7)"/>
+          </g>
+        </g>
+      </g>
+      <!-- nodos salida -->
+      <g transform="translate(322 88)">
+        <rect x="0" y="0" width="84" height="48" rx="11" fill="#161a26" stroke="rgba(230,200,119,.4)"/>
+        <rect x="0" y="0" width="84" height="48" rx="11" fill="url(#gGlass)"/>
+        <text x="14" y="21" font-family="'Chakra Petch',monospace" font-size="8.5" fill="#e6c877" letter-spacing=".8">CRM</text>
+        <text x="14" y="34" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#5f6480" letter-spacing=".8">lead creado</text>
+      </g>
+      <g transform="translate(322 178)">
+        <rect x="0" y="0" width="84" height="48" rx="11" fill="#161a26" stroke="rgba(210,215,240,.24)"/>
+        <rect x="0" y="0" width="84" height="48" rx="11" fill="url(#gGlass)"/>
+        <text x="14" y="21" font-family="'Chakra Petch',monospace" font-size="8.5" fill="#f2efe8" letter-spacing=".8">REPORTE</text>
+        <text x="14" y="34" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#5f6480" letter-spacing=".8">cada lunes</text>
+      </g>
+      <!-- consola -->
+      <g transform="translate(112 250)">
+        <rect x="0" y="0" width="196" height="42" rx="10" fill="#0f131d" stroke="rgba(210,215,240,.2)"/>
+        <text x="12" y="18" font-family="'Chakra Petch',monospace" font-size="8" fill="#5fd6a0" letter-spacing="1">&gt; flujo activo · 24/7</text>
+        <text x="12" y="32" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1">&gt; 412 tareas / mes sin tocar nada</text>
+        <circle cx="182" cy="14" r="3.5" fill="#5fd6a0"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle>
+      </g>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>03</i> Automatización</div>
+    <h2>Que el negocio<br>trabaje solo</h2>
+    <p class="desc">Conectamos las herramientas que ya usas para que <b>dejes de copiar y pegar</b>. Formularios que crean leads, respuestas automáticas en WhatsApp, reportes que llegan solos y bots que atienden fuera de horario.</p>
+    <ul class="deliv">
+      <li>Mapa de procesos y diagnóstico</li>
+      <li>Flujos con n8n, Make o Zapier</li>
+      <li>Bot de WhatsApp con respuestas</li>
+      <li>Integración CRM, Sheets y correo</li>
+      <li>Reportes automáticos programados</li>
+      <li>Capacitación y documentación</li>
+    </ul>
+    <div class="priceline"><div class="pr"><span>Desde</span><b>$780.000<small>COP · 1 a 2 semanas</small></b></div></div>
+    <div class="acts">
+      <a class="btn" href="mundos/automatizacion.html">Ver el mundo Automatización →</a>
+      <a class="btn ghost" href="automatizacion-guia.html">Leer la guía</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ AUDIOVISUAL ══════════ -->
+<section class="svc" id="audiovisual"><div class="row">
+  <div class="art rv" data-tag="RODAJE">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración audiovisual: cámara sobre trípode, foco con softbox y claqueta">
+      <ellipse cx="210" cy="288" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="322" cy="120" r="112" fill="url(#gHalo)"/>
+      <!-- luz softbox -->
+      <g>
+        <path d="M330 226l-24 62M330 226l24 62M330 226v60" stroke="url(#gMtl2)" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="306" cy="288" r="3.4" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <circle cx="354" cy="288" r="3.4" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <rect x="325" y="146" width="10" height="84" rx="4" fill="url(#gMtl2)"/>
+        <rect x="327" y="146" width="2.6" height="84" fill="rgba(255,255,255,.14)"/>
+        <rect x="320" y="188" width="20" height="8" rx="4" fill="#333a52" stroke="rgba(210,215,240,.22)"/>
+        <g transform="translate(330 112) rotate(-14)">
+          <polygon points="-54,-17 -26,-45 26,-45 54,-17 54,17 26,45 -26,45 -54,17" fill="#1b1f2d" stroke="rgba(210,215,240,.2)"/>
+          <polygon points="-47,-14 -23,-38 23,-38 47,-14 47,14 23,38 -23,38 -47,14" fill="#f3e4bd"/>
+          <g stroke="rgba(120,105,70,.35)" fill="none" stroke-width="1">
+            <path d="M-47-14 47 14M47-14-47 14M0-38V38M-47 0H47"/>
+          </g>
+          <polygon points="-47,-14 -23,-38 23,-38 47,-14 0,0" fill="#fff" opacity=".32"/>
+        </g>
+        <rect x="314" y="132" width="32" height="20" rx="6" fill="url(#gMtl)" stroke="rgba(210,215,240,.2)"/>
+        <path d="M319 142h8M332 142h8" stroke="rgba(230,200,119,.55)" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- cámara + trípode -->
+      <g>
+        <path d="M150 176 106 284M150 176l44 108M150 176l-5 102" stroke="url(#gMtl2)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M124 232l26-9 26 9" fill="none" stroke="rgba(210,215,240,.3)" stroke-width="2.6" stroke-linejoin="round"/>
+        <ellipse cx="106" cy="284" rx="6" ry="3" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <ellipse cx="194" cy="284" rx="6" ry="3" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <ellipse cx="145" cy="278" rx="6" ry="3" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <path d="M134 172h32l-4 10h-24z" fill="url(#gMtl)" stroke="rgba(210,215,240,.2)"/>
+        <rect x="130" y="160" width="40" height="14" rx="5" fill="url(#gMtl2)" stroke="rgba(210,215,240,.2)"/>
+        <path d="M170 166c18 5 27 13 35 24" stroke="url(#gMtl2)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <!-- cuerpo -->
+        <rect x="112" y="104" width="96" height="56" rx="11" fill="url(#gMtl)" stroke="rgba(210,215,240,.24)"/>
+        <rect x="118" y="110" width="84" height="16" rx="6" fill="rgba(255,255,255,.07)"/>
+        <path d="M112 144h96" stroke="rgba(0,0,0,.35)"/>
+        <path d="M126 104v-11h60v11" fill="none" stroke="url(#gMtl2)" stroke-width="7" stroke-linejoin="round"/>
+        <rect x="142" y="82" width="28" height="11" rx="4" fill="#2a3044" stroke="rgba(210,215,240,.2)"/>
+        <rect x="180" y="84" width="44" height="8" rx="4" fill="url(#gMtl2)" stroke="rgba(210,215,240,.18)" transform="rotate(-6 180 84)"/>
+        <g transform="rotate(-8 108 124)">
+          <rect x="72" y="108" width="40" height="30" rx="5" fill="#232838" stroke="rgba(210,215,240,.25)"/>
+          <rect x="76" y="112" width="32" height="22" rx="3" fill="#0c1018"/>
+          <path d="M76 130l9-8 7 6 6-8 10 12z" fill="rgba(230,200,119,.35)"/>
+          <circle cx="88" cy="119" r="3" fill="rgba(230,200,119,.55)"/>
+        </g>
+        <path d="M204 110h18l7 7v9l-7 7h-18z" fill="url(#gMtl2)" stroke="rgba(210,215,240,.2)"/>
+        <circle cx="222" cy="121" r="4" fill="#0e121c" stroke="rgba(210,215,240,.3)"/>
+        <circle cx="198" cy="112" r="3.4" fill="#ff5d5d"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
+        <!-- lente -->
+        <rect x="60" y="114" width="54" height="36" rx="8" fill="url(#gMtl2)" stroke="rgba(210,215,240,.22)"/>
+        <g stroke="rgba(210,215,240,.25)"><path d="M72 114v36M84 114v36M96 114v36"/></g>
+        <rect x="56" y="110" width="10" height="44" rx="4" fill="#2b3142" stroke="rgba(210,215,240,.25)"/>
+        <ellipse cx="58" cy="132" rx="8" ry="21" fill="#12172a"/>
+        <ellipse cx="58" cy="132" rx="4.6" ry="14" fill="#080b13"/>
+        <ellipse cx="56" cy="125" rx="2" ry="4.4" fill="rgba(230,200,119,.55)"/>
+        <rect x="140" y="132" width="26" height="9" rx="3" fill="#171b28" stroke="rgba(210,215,240,.16)"/>
+        <text x="144" y="139" font-family="'Chakra Petch',monospace" font-size="6.5" fill="#e6c877" letter-spacing="1.2">4K</text>
+        <circle cx="182" cy="137" r="6" fill="#1c2130" stroke="rgba(210,215,240,.25)"/>
+      </g>
+      <!-- claqueta -->
+      <g transform="translate(228 218) rotate(-8)">
+        <rect x="0" y="14" width="112" height="62" rx="7" fill="url(#gMtl)" stroke="rgba(210,215,240,.22)"/>
+        <g stroke="rgba(210,215,240,.16)"><path d="M6 34h100M6 50h100M40 22v52"/></g>
+        <text x="8" y="31" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#9aa0b8" letter-spacing="1">PROD</text>
+        <text x="46" y="31" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#e6c877" letter-spacing="1">LQS</text>
+        <text x="8" y="47" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#9aa0b8" letter-spacing="1">ESC</text>
+        <text x="46" y="47" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#f2efe8" letter-spacing="1">02</text>
+        <text x="8" y="66" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#9aa0b8" letter-spacing="1">TOMA</text>
+        <text x="46" y="66" font-family="'Chakra Petch',monospace" font-size="7.5" fill="#f2efe8" letter-spacing="1">01</text>
+        <g transform="rotate(-13 5 14)">
+          <rect x="0" y="-3" width="112" height="17" rx="4" fill="#0f131d" stroke="rgba(210,215,240,.25)"/>
+          <g fill="#f2efe8">
+            <path d="M5-3h12l-9 17H-1z"/><path d="M29-3h12l-9 17H20z"/><path d="M53-3h12l-9 17H44z"/><path d="M77-3h12l-9 17H68z"/><path d="M101-3h11l-9 17H92z"/>
+          </g>
+          <rect x="0" y="-3" width="112" height="17" rx="4" fill="none" stroke="rgba(210,215,240,.25)"/>
+          <rect x="0" y="-3" width="112" height="5" fill="rgba(255,255,255,.08)"/>
+        </g>
+        <circle cx="5" cy="14" r="3.6" fill="#333a52" stroke="rgba(210,215,240,.35)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>04</i> Audiovisual</div>
+    <h2>Rodaje,<br>post y entrega</h2>
+    <p class="desc">Foto de producto, reels, video institucional, cobertura de eventos y spots. Rodamos con equipo compacto y dirección de arte propia, y entregamos <b>listo para publicar</b> en cada formato.</p>
+    <ul class="deliv">
+      <li>Guion, shot list y plan de rodaje</li>
+      <li>Rodaje con luz y audio profesional</li>
+      <li>Montaje, color y diseño sonoro</li>
+      <li>Subtítulos y música con licencia</li>
+      <li>Versiones para Reels, TikTok y web</li>
+      <li>Entrega express 48h opcional</li>
+    </ul>
+    <div class="priceline"><div class="pr"><span>Desde</span><b>$320.000<small>COP · foto de producto</small></b></div></div>
+    <div class="acts">
+      <a class="btn" href="mundos/productora.html">Ver el mundo Productora →</a>
+      <a class="btn ghost" href="mundos/productora-calculadora.html">🎬 Calculadora de rodaje</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ CONTENIDO ══════════ -->
+<section class="svc" id="contenido"><div class="row">
+  <div class="art rv" data-tag="FEED">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración de contenido: teléfono con feed de publicaciones, micrófono y calendario editorial">
+      <ellipse cx="210" cy="288" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="180" cy="140" r="120" fill="url(#gHalo)"/>
+      <!-- calendario editorial -->
+      <g transform="translate(20 66)">
+        <rect x="0" y="0" width="132" height="150" rx="11" fill="#141826" stroke="rgba(210,215,240,.2)"/>
+        <rect x="0" y="0" width="132" height="150" rx="11" fill="url(#gGlass)"/>
+        <path d="M0 30h132" stroke="rgba(210,215,240,.18)"/>
+        <text x="12" y="20" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1.6">PARRILLA · MES</text>
+        <g>
+          <g fill="#1d2231" stroke="rgba(210,215,240,.1)">
+            <rect x="12" y="42" width="24" height="20" rx="4"/><rect x="42" y="42" width="24" height="20" rx="4"/><rect x="72" y="42" width="24" height="20" rx="4"/><rect x="102" y="42" width="18" height="20" rx="4"/>
+            <rect x="12" y="68" width="24" height="20" rx="4"/><rect x="42" y="68" width="24" height="20" rx="4"/><rect x="72" y="68" width="24" height="20" rx="4"/><rect x="102" y="68" width="18" height="20" rx="4"/>
+            <rect x="12" y="94" width="24" height="20" rx="4"/><rect x="42" y="94" width="24" height="20" rx="4"/><rect x="72" y="94" width="24" height="20" rx="4"/><rect x="102" y="94" width="18" height="20" rx="4"/>
+            <rect x="12" y="120" width="24" height="20" rx="4"/><rect x="42" y="120" width="24" height="20" rx="4"/><rect x="72" y="120" width="24" height="20" rx="4"/><rect x="102" y="120" width="18" height="20" rx="4"/>
+          </g>
+          <rect x="42" y="42" width="24" height="20" rx="4" fill="url(#gGold)" opacity=".85"/>
+          <rect x="72" y="68" width="24" height="20" rx="4" fill="url(#gGold)" opacity=".55"/>
+          <rect x="12" y="94" width="24" height="20" rx="4" fill="url(#gGold)" opacity=".7"/>
+          <rect x="102" y="120" width="18" height="20" rx="4" fill="url(#gGold)" opacity=".4"/>
+        </g>
+      </g>
+      <!-- teléfono con feed -->
+      <g transform="translate(168 44)">
+        <rect x="-4" y="-4" width="108" height="228" rx="22" fill="#0b0e17" opacity=".6"/>
+        <rect x="0" y="0" width="100" height="220" rx="19" fill="#1d2231" stroke="rgba(210,215,240,.28)"/>
+        <rect x="6" y="6" width="88" height="208" rx="14" fill="#0f131d"/>
+        <rect x="38" y="11" width="24" height="4" rx="2" fill="#2a2f42"/>
+        <!-- header perfil -->
+        <circle cx="22" cy="34" r="9" fill="url(#gGold)"/>
+        <circle cx="22" cy="31" r="3.2" fill="#0f131d" opacity=".5"/>
+        <path d="M16 40a6 6 0 0 1 12 0z" fill="#0f131d" opacity=".5"/>
+        <rect x="36" y="28" width="34" height="6" rx="3" fill="rgba(242,239,232,.8)"/>
+        <rect x="36" y="38" width="22" height="4" rx="2" fill="rgba(210,215,240,.3)"/>
+        <!-- post principal -->
+        <rect x="12" y="52" width="76" height="84" rx="8" fill="#161a26" stroke="rgba(210,215,240,.14)"/>
+        <path d="M12 120l20-24 14 15 12-16 18 25v8a8 8 0 0 1-8 8H20a8 8 0 0 1-8-8z" fill="rgba(230,200,119,.22)"/>
+        <circle cx="32" cy="72" r="7" fill="rgba(230,200,119,.45)"/>
+        <circle cx="50" cy="94" r="16" fill="rgba(6,7,15,.55)"/>
+        <path d="M46 87l12 7-12 7z" fill="#f2efe8"/>
+        <!-- métricas -->
+        <g fill="rgba(210,215,240,.4)">
+          <path d="M17 146a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 3-7 7-7 7s-7-4-7-7z" fill="#ff5d5d" opacity=".8"/>
+          <rect x="36" y="145" width="9" height="8" rx="2"/><rect x="50" y="145" width="9" height="8" rx="2"/>
+        </g>
+        <rect x="12" y="160" width="60" height="5" rx="2.5" fill="rgba(210,215,240,.28)"/>
+        <rect x="12" y="170" width="44" height="5" rx="2.5" fill="rgba(210,215,240,.16)"/>
+        <!-- barra inferior -->
+        <path d="M6 186h88" stroke="rgba(210,215,240,.14)"/>
+        <g fill="rgba(210,215,240,.3)">
+          <circle cx="24" cy="200" r="4"/><circle cx="44" cy="200" r="4"/><circle cx="64" cy="200" r="4"/><circle cx="82" cy="200" r="4"/>
+        </g>
+        <circle cx="24" cy="200" r="4" fill="url(#gGold)"/>
+      </g>
+      <!-- micrófono -->
+      <g transform="translate(316 96)">
+        <rect x="14" y="0" width="34" height="60" rx="17" fill="url(#gMtl2)" stroke="rgba(210,215,240,.28)"/>
+        <g stroke="rgba(210,215,240,.28)" stroke-width="1">
+          <path d="M18 12h26M18 22h26M18 32h26M18 42h26"/>
+        </g>
+        <rect x="18" y="2" width="9" height="56" rx="4.5" fill="rgba(255,255,255,.1)"/>
+        <path d="M4 46a27 27 0 0 0 54 0" fill="none" stroke="url(#gGold)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M31 74v16" stroke="url(#gMtl2)" stroke-width="5"/>
+        <path d="M14 92h34" stroke="url(#gMtl2)" stroke-width="7" stroke-linecap="round"/>
+        <ellipse cx="31" cy="98" rx="24" ry="5" fill="none" stroke="rgba(210,215,240,.16)"/>
+        <!-- ondas -->
+        <g stroke="rgba(230,200,119,.5)" stroke-width="2" stroke-linecap="round">
+          <path d="M-8 24v14"><animate attributeName="d" values="M-8 24v14;M-8 18v26;M-8 24v14" dur="1.4s" repeatCount="indefinite"/></path>
+          <path d="M-18 28v6"><animate attributeName="d" values="M-18 28v6;M-18 22v18;M-18 28v6" dur="1.8s" repeatCount="indefinite"/></path>
+        </g>
+      </g>
+      <!-- tarjeta express -->
+      <g transform="translate(288 218)">
+        <rect x="0" y="0" width="112" height="52" rx="10" fill="#141826" stroke="rgba(230,200,119,.34)"/>
+        <rect x="0" y="0" width="112" height="52" rx="10" fill="url(#gGlass)"/>
+        <text x="12" y="19" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1.5">EXPRESS</text>
+        <text x="12" y="40" font-family="Anton,sans-serif" font-size="18" fill="#e6c877">24h</text>
+        <path d="M88 16l-8 12h7l-5 10" fill="none" stroke="#e6c877" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>05</i> Contenido</div>
+    <h2>Alimentar<br>la marca</h2>
+    <p class="desc">Marca personal, parrilla mensual y piezas sueltas cuando el tiempo aprieta. Dos rutas: <b>acompañamiento continuo</b> para creadores y marcas, o <b>entregas express</b> por pieza, sin contrato.</p>
+    <ul class="deliv">
+      <li>Estrategia y línea editorial</li>
+      <li>Parrilla mensual de publicaciones</li>
+      <li>Kit visual y plantillas editables</li>
+      <li>Copy y guiones para cada pieza</li>
+      <li>Piezas sueltas en 24 a 48 horas</li>
+      <li>Reporte mensual de resultados</li>
+    </ul>
+    <div class="priceline">
+      <div class="pr"><span>Creadores · desde</span><b>$450.000<small>COP · por paquete</small></b></div>
+      <div class="pr"><span>Express · desde</span><b>$45.000<small>COP · por pieza</small></b></div>
+    </div>
+    <div class="acts">
+      <a class="btn" href="mundos/creadores.html">Ver el mundo Creadores →</a>
+      <a class="btn ghost" href="mundos/express.html">Ver Express</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ PRODUCTO ══════════ -->
+<section class="svc" id="producto"><div class="row">
+  <div class="art rv" data-tag="PRODUCTO">
+    <svg viewBox="0 0 420 310" role="img" aria-label="Ilustración de producto digital: panel de aplicación en capas, módulos y un cubo isométrico">
+      <ellipse cx="210" cy="288" rx="176" ry="20" fill="url(#gFloor)"/>
+      <circle cx="200" cy="132" r="122" fill="url(#gHalo)"/>
+      <!-- panel principal -->
+      <g transform="translate(40 52)">
+        <rect x="0" y="0" width="240" height="164" rx="13" fill="#161a26" stroke="rgba(210,215,240,.24)"/>
+        <rect x="0" y="0" width="240" height="164" rx="13" fill="url(#gGlass)"/>
+        <path d="M0 30h240M64 30v134" stroke="rgba(210,215,240,.18)"/>
+        <circle cx="18" cy="15" r="4" fill="url(#gGold)"/>
+        <text x="30" y="19" font-family="'Chakra Petch',monospace" font-size="8.5" fill="#f2efe8" letter-spacing="1.4">PANEL</text>
+        <g fill="rgba(210,215,240,.16)">
+          <rect x="12" y="44" width="40" height="7" rx="3.5"/><rect x="12" y="60" width="34" height="7" rx="3.5"/>
+          <rect x="12" y="76" width="40" height="7" rx="3.5"/><rect x="12" y="92" width="28" height="7" rx="3.5"/>
+        </g>
+        <rect x="12" y="44" width="40" height="7" rx="3.5" fill="rgba(230,200,119,.7)"/>
+        <!-- gráfica -->
+        <g transform="translate(78 44)">
+          <g stroke="rgba(210,215,240,.1)"><path d="M0 22h148M0 46h148M0 70h148"/></g>
+          <path d="M0 66l24-14 22 8 26-26 24 12 26-22 26 10" fill="none" stroke="url(#gGold)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M0 66l24-14 22 8 26-26 24 12 26-22 26 10v28H0z" fill="rgba(230,200,119,.1)"/>
+          <circle cx="98" cy="40" r="3.6" fill="#e6c877"/>
+          <g fill="#1d2231" stroke="rgba(210,215,240,.14)">
+            <rect x="0" y="82" width="46" height="26" rx="6"/><rect x="51" y="82" width="46" height="26" rx="6"/><rect x="102" y="82" width="46" height="26" rx="6"/>
+          </g>
+          <g font-family="Anton,sans-serif" font-size="12" fill="#f2efe8">
+            <text x="8" y="100">128</text><text x="59" y="100">94%</text><text x="110" y="100">3.2k</text>
+          </g>
+          <g font-family="'Chakra Petch',monospace" font-size="6" fill="#5f6480" letter-spacing="1">
+            <text x="8" y="90">USOS</text><text x="59" y="90">OK</text><text x="110" y="90">EVENTOS</text>
+          </g>
+        </g>
+      </g>
+      <!-- tarjeta flotante -->
+      <g transform="translate(232 148)">
+        <rect x="0" y="0" width="146" height="74" rx="12" fill="#1d2231" stroke="rgba(230,200,119,.35)"/>
+        <rect x="0" y="0" width="146" height="74" rx="12" fill="url(#gGlass)"/>
+        <text x="14" y="22" font-family="'Chakra Petch',monospace" font-size="8" fill="#5f6480" letter-spacing="1.5">MÓDULO ACTIVO</text>
+        <text x="14" y="46" font-family="Anton,sans-serif" font-size="18" fill="#e6c877">MERCURY</text>
+        <rect x="14" y="56" width="118" height="5" rx="2.5" fill="rgba(210,215,240,.14)"/>
+        <rect x="14" y="56" width="86" height="5" rx="2.5" fill="url(#gGold)"/>
+        <circle cx="132" cy="20" r="4" fill="#5fd6a0"><animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/></circle>
+      </g>
+      <!-- cubo isométrico -->
+      <g transform="translate(66 210)">
+        <path d="M46 0 92 26v52L46 104 0 78V26z" fill="#141826" stroke="rgba(210,215,240,.2)"/>
+        <path d="M46 0 92 26 46 52 0 26z" fill="url(#gMtl2)" stroke="rgba(210,215,240,.26)"/>
+        <path d="M46 52v52L0 78V26z" fill="#1a1f2e" stroke="rgba(210,215,240,.16)"/>
+        <path d="M46 52v52l46-26V26z" fill="#0f131d" stroke="rgba(210,215,240,.16)"/>
+        <path d="M46 12 74 28 46 44 18 28z" fill="url(#gGold)" opacity=".85"/>
+        <g stroke="rgba(230,200,119,.3)" fill="none"><path d="M46 52v40M20 40v26M72 40v26"/></g>
+        <text x="16" y="86" font-family="'Chakra Petch',monospace" font-size="7" fill="#5f6480" letter-spacing="1.2">FOMA</text>
+      </g>
+      <!-- conector -->
+      <g fill="none" stroke="rgba(230,200,119,.35)" stroke-width="1.4" stroke-dasharray="4 6">
+        <path d="M158 216c40 22 74 14 96-4"/>
+      </g>
+    </svg>
+  </div>
+  <div class="rv">
+    <div class="num"><i>06</i> Producto</div>
+    <h2>Productos<br>propios</h2>
+    <p class="desc">Herramientas que construimos y mantenemos nosotros mismos. Nacieron resolviendo problemas internos del estudio y hoy los usan otros equipos: <b>software con dueño, no un experimento</b>.</p>
+    <ul class="deliv">
+      <li>Mercury · panel de operación y métricas</li>
+      <li>Foma · sistema modular de contenido</li>
+      <li>Implementación y migración de datos</li>
+      <li>Personalización por cliente</li>
+      <li>Soporte y actualizaciones continuas</li>
+      <li>Documentación y capacitación</li>
+    </ul>
+    <div class="priceline"><div class="pr"><span>Modalidad</span><b>A medida<small>COP · según alcance y usuarios</small></b></div></div>
+    <div class="acts">
+      <a class="btn" href="mundos/mercury.html">Conocer Mercury →</a>
+      <a class="btn ghost" href="mundos/foma.html">Conocer Foma</a>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ══════════ COMPARATIVA ══════════ -->
+<div class="wrap"><section class="cmpsec" id="comparativa">
+  <div class="num rv"><i>07</i> Referencia de mercado</div>
+  <h2 class="rv">Mercado Colombia<br>vs LQS</h2>
+  <p class="lead2 rv">Rangos de agencias y estudios en Colombia para 2026, frente a nuestro precio de entrada. Trabajamos con un equipo compacto y procesos automatizados, y eso se refleja en el precio final — no en el acabado.</p>
+  <div class="tblwrap scrollx rv"><table>
+    <thead><tr><th scope="col">Servicio</th><th scope="col">Mercado Colombia</th><th scope="col">LQS</th></tr></thead>
+    <tbody>
+      <tr><td class="svcname">Identidad de marca<em>Logo + manual + aplicaciones</em></td><td class="mkt">$1.500.000 – $3.000.000</td><td class="lqs">$890.000</td></tr>
+      <tr><td class="svcname">Sitio web<em>Diseño + desarrollo + despliegue</em></td><td class="mkt">$1.700.000 – $3.050.000</td><td class="lqs">$1.850.000</td></tr>
+      <tr><td class="svcname">Mantenimiento web<em>Mensual, con soporte</em></td><td class="mkt">$350.000 – $1.500.000</td><td class="lqs">$260.000</td></tr>
+      <tr><td class="svcname">Contenido mensual<em>Parrilla + piezas + reporte</em></td><td class="mkt">$1.500.000 – $2.500.000</td><td class="lqs">$690.000</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tnote rv">Valores en pesos colombianos, sin IVA. Los rangos de mercado son referencias públicas de tarifarios de agencias y estudios en Colombia (2026). Nuestro sitio web está por encima del piso del mercado a propósito: incluye desarrollo a medida, SEO técnico y analítica, no plantillas.</p>
+</section></div>
+
+<!-- ══════════ CTA ══════════ -->
+<div class="wrap"><div class="final rv">
+  <h2>¿Empezamos?</h2>
+  <p>Cuéntanos qué necesitas y te respondemos con una propuesta concreta en menos de 48 horas. Sin formularios eternos ni reuniones de diagnóstico que no llevan a nada.</p>
+  <div class="acts">
+    <a class="btn" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9C%A6%20vengo%20de%20la%20p%C3%A1gina%20de%20servicios%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <a class="btn ghost" href="mundos/productora-calculadora.html">Calcular un rodaje</a>
+    <a class="btn ghost" href="index.html">Volver al inicio</a>
+  </div>
+</div></div>
+
+<footer><div class="wrap"><div class="in">
+  <span>LQS · Estudio creativo · Medellín, Colombia</span>
+  <span><a href="index.html">Inicio</a> · <a href="#marca">Servicios</a> · <a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a></span>
+</div></div></footer>
+
+<script>
+(function(){
+"use strict";
+var R=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* reveal */
+var els=document.querySelectorAll('.rv');
+if(R||!('IntersectionObserver' in window)){[].forEach.call(els,function(n){n.classList.add('on');});}
+else{
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x,i){if(x.isIntersecting){x.target.style.transitionDelay=(i%3)*90+'ms';x.target.classList.add('on');io.unobserve(x.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  [].forEach.call(els,function(n){io.observe(n);});
+}
+
+/* chip activo */
+var chips=[].slice.call(document.querySelectorAll('.chip')),
+    secs=chips.map(function(c){return document.querySelector(c.getAttribute('href'));});
+function marca(){
+  var y=window.scrollY+160,act=0;
+  secs.forEach(function(s,i){if(s&&s.offsetTop<=y)act=i;});
+  chips.forEach(function(c,i){c.classList.toggle('act',i===act);});
+}
+if('IntersectionObserver' in window){
+  var t=null;
+  addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;marca();},120);},{passive:true});
+  marca();
+}
+})();
+</script>
+</body>
+</html>
