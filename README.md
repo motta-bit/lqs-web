@@ -1,45 +1,36 @@
 # 🛸 Galaxia LQS — Super matriz del ecosistema
 
-Hub inmersivo del **ecosistema creativo LQS** (Medellín, Colombia): una galaxia pixel-art
-donde cada planeta es una rama de la marca. Todo es HTML estático autocontenido —
-funciona en GitHub Pages, local o cualquier hosting, sin build.
+Sitio y plataforma del **estudio creativo LQS** (Medellín, Colombia). Una sola aplicación
+que reúne servicios, ejemplos interactivos, WhatsApp automático, cotizaciones y el
+portal del cliente. HTML estático + Supabase, sin build.
 
 ## Estructura
 
 ```
-index.html                    ← Sitio LQS (landing editorial: estudio, capacidades,
-                                 automatización, universos, muestras, precios, proceso)
-galaxia.html                  ← Experiencia inmersiva pixel art (los mundos isométricos)
-automatizacion-guia.html      ← Guía técnica interna de Meta Cloud API
+index.html    ← LA APLICACIÓN. Todo se navega aquí dentro:
+                 Inicio · Servicios · Ejemplos · WhatsApp · Nosotros · Cotizar · Mi cuenta
+                 Las muestras se abren en un visor interno, sin salir del sitio.
 
-mundos/
-  ├─ Servicios y paquetes
-  │   empresas.html · express.html · creadores.html
-  │   productora.html · mercury.html · foma.html
-  ├─ Muestras interactivas (demos funcionales)
-  │   empresas-muestras.html    generador de identidad, mockup web, chat
-  │   express-muestras.html     galería SVG + configurador de pedido
-  │   productora-muestras.html  reel simulado, antes/después, formatos
-  │   marcas-muestras.html      catálogo joyería + previsualizador de merch
-  └─ automatizacion.html        chatbot funcional + paquetes
+mundos/       ← Fichas y demos que el visor carga
+  empresas · express · creadores · productora · mercury · foma
+  *-muestras · marcas-muestras · automatizacion · productora-calculadora
+
+automatizacion-guia.html   ← Guía técnica de Meta Cloud API
 ```
 
-Mundos ya en vivo en repos propios:
+## Base de datos (Supabase · proyecto `lqs`)
 
-| Planeta | Rama | Sitio |
-|---|---|---|
-| 🛎️ Aloja | Hoteles | https://motta-bit.github.io/Vita-Nova/ |
-| 🍽️ Carta | Restaurantes | https://motta-bit.github.io/vitanova/ |
+`universos` · `paquetes` · `perfiles` · `solicitudes` · `proyectos` · `hitos`
+· `citas` · `suscriptores` · `eventos`
 
-## Publicar (GitHub Pages)
+Con RLS por fila (cada cliente ve lo suyo) y triggers que registran un evento
+por cada solicitud, cita o suscriptor nuevo.
 
-Settings → Pages → *Deploy from a branch* → elegir la rama y carpeta `/ (root)`.
-La galaxia queda en `https://motta-bit.github.io/lqs-web/` y los mundos en
-`https://motta-bit.github.io/lqs-web/mundos/<planeta>.html` (links relativos, sin config).
+## Publicar
+
+Settings → Pages → *Deploy from a branch* → rama y carpeta `/ (root)`.
+Requiere servirse por HTTP (no abrir con doble clic) para que el visor interno cargue.
 
 ## Contacto
 
 WhatsApp **+57 333 279 1710** · cdparravargas@gmail.com
-
----
-*Los archivos de Next.js del scaffold original se conservan pero no se usan para el sitio estático.*

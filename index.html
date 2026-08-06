@@ -217,6 +217,39 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .fc a:hover{color:var(--gold)}
 .fb{margin-top:32px;padding-top:19px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:11px;justify-content:space-between;
  font-family:var(--tech);font-size:.68rem;letter-spacing:.08em;color:var(--faint);text-transform:uppercase}
+/* visor interno: las muestras se abren dentro del sitio */
+#visor{position:fixed;inset:0;z-index:88;background:var(--bg);display:none;flex-direction:column}
+#visor.on{display:flex}
+#visor .vtop{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px var(--pad);
+ border-bottom:1px solid var(--line);background:rgba(6,7,15,.94);backdrop-filter:blur(12px)}
+#visor .vt{font-family:var(--tech);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+#visor iframe{flex:1;width:100%;border:0;background:var(--bg)}
+/* WhatsApp: resumen para decisores, ficha abajo */
+.wa-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,58px);align-items:center;margin-bottom:56px}
+@media(max-width:900px){.wa-hero{grid-template-columns:1fr}}
+.fases{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;position:relative}
+.fase{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:22px;position:relative}
+.fase .fn{font-family:var(--sport);font-size:2rem;line-height:1;color:var(--gold);opacity:.5;margin-bottom:10px}
+.fase h4{font-family:var(--disp);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
+.fase p{font-size:.85rem;color:var(--dim);line-height:1.5}
+.fase .dur{font-family:var(--tech);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:11px}
+.ficha{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.022);overflow:hidden;margin-top:14px}
+.ficha>summary{padding:20px 24px;cursor:pointer;font-family:var(--tech);font-size:.76rem;letter-spacing:.14em;
+ text-transform:uppercase;font-weight:700;color:var(--dim);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:.2s}
+.ficha>summary::-webkit-details-marker{display:none}
+.ficha>summary:hover{color:var(--ink)}
+.ficha>summary::after{content:'+';font-size:1.3rem;color:var(--gold);transition:.3s}
+.ficha[open]>summary::after{transform:rotate(45deg)}
+.ficha .fbody{padding:0 24px 24px;border-top:1px solid var(--line)}
+.ficha h5{font-family:var(--disp);font-size:1.15rem;letter-spacing:.02em;text-transform:uppercase;margin:20px 0 8px}
+.ficha p,.ficha li{font-size:.87rem;color:var(--dim);line-height:1.6}
+.ficha ul{margin:8px 0 0 18px}
+.ficha code{font-family:var(--tech);font-size:.82rem;background:rgba(255,255,255,.06);padding:2px 7px;border-radius:6px;color:var(--gold)}
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:12px}
+.tbl th,.tbl td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line)}
+.tbl th{font-family:var(--tech);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tbl td{color:var(--dim)}
+.scrollx{overflow-x:auto}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
 .load{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
@@ -230,9 +263,10 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <div class="logo" data-go="inicio"><span class="l">L</span><span class="q">Q</span><span class="s">S</span></div>
   <div class="nlinks" id="nl">
     <a data-go="inicio">Inicio</a>
-    <a data-go="estudio">Estudio</a>
     <a data-go="servicios">Servicios</a>
-    <a data-go="muestras">Muestras</a>
+    <a data-go="muestras">Ejemplos</a>
+    <a data-go="whatsapp">WhatsApp</a>
+    <a data-go="estudio">Nosotros</a>
     <a data-go="cotizar">Cotizar</a>
     <a class="nbtn" id="authBtn">Ingresar</a>
   </div>
@@ -274,7 +308,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ ESTUDIO ═══════ -->
 <div class="view" id="v-estudio"><section class="sec"><div class="wrap">
-  <div class="kick">El estudio</div>
+  <div class="kick">Nosotros</div>
   <h2 class="disp" style="max-width:16ch">No somos una agencia.<br>Somos un <span class="gold">taller</span>.</h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);margin-top:44px" class="two">
     <div>
@@ -307,15 +341,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ MUESTRAS ═══════ -->
 <div class="view" id="v-muestras"><section class="sec"><div class="wrap">
-  <div class="kick">Muestras</div>
-  <h2 class="disp">No lo contamos.<br>Te lo <span class="gold">mostramos</span>.</h2>
-  <p class="body-l" style="margin:16px 0 34px">Demos reales que puedes tocar: genera una identidad, configura un pedido, previsualiza tu merch o prueba el chatbot.</p>
+  <div class="kick">Ejemplos</div>
+  <h2 class="disp">Pruébalo antes<br>de <span class="gold">contratar</span>.</h2>
+  <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot.</p>
   <div class="cards" id="demos"></div>
 </div></section></div>
 
 <!-- ═══════ COTIZAR ═══════ -->
 <div class="view" id="v-cotizar"><section class="sec"><div class="wrap">
-  <div class="kick">Cuéntanos</div>
+  <div class="kick">Pedir cotización</div>
   <h2 class="disp">Cotiza tu <span class="gold">proyecto</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Respondemos con un plan concreto en 48 horas. Sin compromiso.</p>
   <form class="form" id="fSol">
@@ -347,6 +381,103 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <div id="portal"><div class="empty"><span class="load"></span></div></div>
 </div></section></div>
 
+
+<!-- ═══════ WHATSAPP AUTOMÁTICO ═══════ -->
+<div class="view" id="v-whatsapp"><section class="sec"><div class="wrap">
+  <div class="kick">WhatsApp automático</div>
+  <h2 class="disp">Tu negocio responde,<br>aunque tú <span class="gold">no estés</span>.</h2>
+  <div class="wa-hero" style="margin-top:34px">
+    <div>
+      <p class="body-l" style="margin-bottom:20px">Conectamos tu WhatsApp a un sistema que <b style="color:var(--ink)">contesta al instante</b>, muestra lo que vendes, toma pedidos y reservas, y avisa a tu equipo. Funciona a las 3 de la mañana, un domingo festivo, sin que nadie esté pendiente.</p>
+      <div class="cards" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div class="card"><div class="pz">24/7</div><div class="un">siempre disponible</div></div>
+        <div class="card"><div class="pz">30 seg</div><div class="un">tiempo de respuesta</div></div>
+        <div class="card"><div class="pz">0</div><div class="un">clientes sin contestar</div></div>
+        <div class="card"><div class="pz">2-3</div><div class="un">semanas de montaje</div></div>
+      </div>
+    </div>
+    <div style="border:1px solid var(--line2);border-radius:26px;background:linear-gradient(170deg,#141829,#0a0c17);padding:16px 14px 20px;max-width:330px;margin:0 auto;width:100%">
+      <div style="display:flex;align-items:center;gap:9px;padding:4px 8px 13px;border-bottom:1px solid var(--line)">
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#3fd0e6);display:grid;place-items:center">🤖</div>
+        <div><b style="font-size:.84rem;display:block;line-height:1.2">Tu negocio</b><span style="font-size:.68rem;color:#4ade80">● en línea</span></div>
+      </div>
+      <div id="waChat" style="padding:15px 4px 0;display:flex;flex-direction:column;gap:9px;min-height:250px"></div>
+    </div>
+  </div>
+
+  <div class="kick">Qué hacemos, paso a paso</div>
+  <h3 class="disp" style="margin-bottom:24px">El plan en cuatro fases</h3>
+  <div class="fases" id="fases"></div>
+
+  <div style="margin-top:56px">
+    <div class="kick">Qué queda funcionando</div>
+    <h3 class="disp" style="margin-bottom:24px">Lo que tu cliente podrá hacer solo</h3>
+    <div class="cards" id="waCaps"></div>
+  </div>
+
+  <div style="margin-top:56px">
+    <div class="kick">Inversión</div>
+    <h3 class="disp" style="margin-bottom:10px">Precios del montaje</h3>
+    <p class="body-l" style="margin-bottom:24px">El montaje se paga una vez. La mensualidad cubre el mantenimiento, los ajustes y el costo que cobra Meta por conversación.</p>
+    <div class="cards" id="waPlanes"></div>
+  </div>
+
+  <div style="margin-top:56px">
+    <h3 class="disp" style="margin-bottom:6px">Detalle de la implementación</h3>
+    <p class="body-l" style="margin-bottom:18px">Para quien vaya a revisar el montaje a fondo.</p>
+    <details class="ficha"><summary>Arquitectura y puesta en marcha</summary><div class="fbody">
+      <h5>Sobre qué se monta</h5>
+      <p>Usamos la <b style="color:var(--ink)">API oficial de WhatsApp Business (Cloud API)</b> de Meta — no una app no oficial. Eso significa número verificado, sin riesgo de bloqueo y con historial de conversaciones respaldado.</p>
+      <h5>Pasos del montaje</h5>
+      <ul>
+        <li>Cuenta de <code>Meta Business</code> verificada a nombre del negocio.</li>
+        <li>Alta del número en la plataforma. <b style="color:var(--ink)">Importante:</b> el número no puede estar activo en la app de WhatsApp personal; si lo está, primero se libera.</li>
+        <li>Configuración del webhook que recibe los mensajes y dispara las respuestas.</li>
+        <li>Envío de plantillas a aprobación de Meta (24-48h típicamente).</li>
+        <li>Pruebas con números reales antes de abrir al público.</li>
+      </ul>
+      <h5>Sin dominio propio</h5>
+      <p>Se puede arrancar sin dominio: el webhook corre en infraestructura nuestra. Cuando el negocio tenga su dominio, se migra sin perder el historial ni los flujos.</p>
+    </div></details>
+    <details class="ficha"><summary>Plantillas de mensaje</summary><div class="fbody">
+      <p>Meta exige que los mensajes que inicia el negocio usen plantillas aprobadas. Estas son las que dejamos listas:</p>
+      <h5>Bienvenida</h5>
+      <p><i>Hola {{1}} 👋 Gracias por escribir a {{2}}. ¿En qué te ayudamos hoy?</i></p>
+      <h5>Confirmación de pedido o reserva</h5>
+      <p><i>Listo {{1}} ✅ Tu {{2}} quedó confirmado para el {{3}}. Cualquier cambio, escríbenos por aquí.</i></p>
+      <h5>Recordatorio</h5>
+      <p><i>Hola {{1}}, te recordamos tu {{2}} de mañana {{3}}. ¿Todo sigue en pie?</i></p>
+      <h5>Estado del pedido</h5>
+      <p><i>{{1}}, tu pedido {{2}} pasó a estado: {{3}}. Te avisamos cuando avance.</i></p>
+      <p style="margin-top:12px">Las categorías que aplican son <code>utility</code> (avisos de servicio) y <code>marketing</code> (promociones). La categoría afecta el costo por conversación.</p>
+    </div></details>
+    <details class="ficha"><summary>Costos por conversación</summary><div class="fbody">
+      <p>Meta cobra aparte del montaje, por conversación iniciada. Las conversaciones que <b style="color:var(--ink)">inicia el cliente</b> escribiéndote son gratis en la ventana de servicio; se cobran las que inicia el negocio.</p>
+      <div class="scrollx"><table class="tbl">
+        <tr><th>Tipo</th><th>Cuándo aplica</th><th>Costo aprox.</th></tr>
+        <tr><td>Servicio</td><td>El cliente escribe primero</td><td>Sin costo</td></tr>
+        <tr><td>Utilidad</td><td>Confirmaciones, recordatorios, estados</td><td>~$3 COP c/u</td></tr>
+        <tr><td>Marketing</td><td>Promociones y novedades</td><td>~$50 COP c/u</td></tr>
+        <tr><td>Autenticación</td><td>Códigos de verificación</td><td>~$10 COP c/u</td></tr>
+      </table></div>
+      <p style="margin-top:14px">Ejemplo real: un negocio con 400 confirmaciones al mes gasta cerca de <b style="color:var(--ink)">$1.200 COP</b> en costos de Meta. Las tarifas las fija Meta y pueden cambiar; se revisan al montar.</p>
+    </div></details>
+    <details class="ficha"><summary>Instagram y Facebook</summary><div class="fbody">
+      <p>La misma cuenta de Meta Business permite conectar los mensajes directos de Instagram y Facebook al mismo sistema, así todo llega a un solo lugar.</p>
+      <ul>
+        <li>Respuestas automáticas a mensajes directos.</li>
+        <li>Respuesta a comentarios con envío al privado.</li>
+        <li><b style="color:var(--ink)">Límite a tener en cuenta:</b> Instagram exige cuenta profesional vinculada a una página de Facebook.</li>
+      </ul>
+    </div></details>
+  </div>
+
+  <div style="margin-top:48px" class="hbtns">
+    <a class="btn gold" data-go="cotizar">Quiero automatizar mi negocio</a>
+    <button class="btn g" data-demo="mundos/automatizacion.html" data-titulo="Chatbot · probar en vivo">Probar el chatbot</button>
+  </div>
+</div></section></div>
+
 </div><!-- /top -->
 
 <footer><div class="wrap">
@@ -356,21 +487,34 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <p style="font-size:.84rem;color:var(--faint);line-height:1.6">Estudio creativo en Medellín. Gente que resuelve: marca, web, automatización, audiovisual y producto.</p>
     </div>
     <div class="fc"><h4>Secciones</h4>
-      <a data-go="estudio">El estudio</a><a data-go="servicios">Servicios</a>
-      <a data-go="muestras">Muestras</a><a data-go="cotizar">Cotizar</a></div>
-    <div class="fc"><h4>Áreas</h4>
-      <a href="mundos/empresas.html">Empresas</a><a href="mundos/express.html">Express</a>
-      <a href="mundos/creadores.html">Creadores</a><a href="mundos/productora.html">Productora</a></div>
-    <div class="fc"><h4>Más</h4>
-      <a href="mundos/automatizacion.html">Automatización</a>
-      <a href="mundos/mercury.html">Mercury</a><a href="mundos/foma.html">foma</a>
-      <a href="mundos/productora-calculadora.html">Calculadora de rodaje</a></div>
+      <a data-go="servicios">Servicios</a><a data-go="muestras">Ejemplos</a>
+      <a data-go="estudio">Nosotros</a><a data-go="cotizar">Cotizar</a></div>
+    <div class="fc"><h4>Servicios</h4>
+      <a data-demo="mundos/empresas.html" data-titulo="Empresas">Empresas</a>
+      <a data-demo="mundos/express.html" data-titulo="Diseño rápido">Diseño rápido</a>
+      <a data-demo="mundos/productora.html" data-titulo="Video y foto">Video y foto</a>
+      <a data-demo="mundos/creadores.html" data-titulo="Creadores">Creadores</a></div>
+    <div class="fc"><h4>Herramientas</h4>
+      <a data-go="whatsapp">WhatsApp automático</a>
+      <a data-demo="mundos/productora-calculadora.html" data-titulo="Calculadora de rodaje">Calculadora de rodaje</a>
+      <a data-demo="mundos/mercury.html" data-titulo="Joyería">Joyería</a>
+      <a data-demo="mundos/foma.html" data-titulo="Ropa y merch">Ropa y merch</a></div>
     <div class="fc"><h4>Contacto</h4>
       <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a>
       <a href="mailto:cdparravargas@gmail.com">Correo</a></div>
   </div>
   <div class="fb"><span>© <span id="yr"></span> LQS · Medellín</span><span>Hecho en casa, con criterio</span></div>
 </div></footer>
+
+<!-- visor interno -->
+<div id="visor">
+  <div class="vtop"><div class="vt" id="visorT">Muestra</div>
+    <div style="display:flex;gap:8px">
+      <a class="btn g" id="visorAbrir" target="_blank" rel="noopener" style="padding:9px 16px;font-size:.7rem">Abrir aparte</a>
+      <button class="btn p" id="visorX" style="padding:9px 16px;font-size:.7rem">✕ Cerrar</button>
+    </div></div>
+  <iframe id="visorF" title="Muestra"></iframe>
+</div>
 
 <!-- banner de suscripción -->
 <div id="promo">
@@ -514,12 +658,12 @@ const ART={
   <path d="M322 196 l6 6 12-14" stroke="${c}" stroke-width="2.4" fill="none"/></svg>`
 };
 const AREAS=[
- {k:'estudio',n:'01',t:'El estudio',c:'#e6c877',go:'estudio',cls:'wide',d:'Quiénes somos y cómo trabajamos.'},
- {k:'servicios',n:'02',t:'Servicios y precios',c:'#5b8def',go:'servicios',cls:'half',d:'Todas las capacidades con precio cerrado.'},
- {k:'muestras',n:'03',t:'Muestras',c:'#a97bd6',go:'muestras',cls:'half',d:'Demos reales que puedes tocar.'},
- {k:'cotizar',n:'04',t:'Cotizar',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea y te respondemos en 48h.'},
- {k:'automat',n:'05',t:'Automatización',c:'#3fd0e6',href:'mundos/automatizacion.html',cls:'half',d:'Tu WhatsApp responde solo, 24/7.'},
- {k:'cuenta',n:'06',t:'Mi cuenta',c:'#ff6b6b',go:'cuenta',cls:'half',d:'Sigue el avance de tus proyectos activos.'}
+ {k:'servicios',n:'01',t:'Servicios y precios',c:'#5b8def',go:'servicios',cls:'wide',d:'Qué hacemos y cuánto cuesta. Precio cerrado, sin sorpresas.'},
+ {k:'automat',n:'02',t:'WhatsApp automático',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
+ {k:'muestras',n:'03',t:'Ejemplos',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
+ {k:'cotizar',n:'04',t:'Pedir cotización',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea. Respondemos en 48 horas.'},
+ {k:'estudio',n:'05',t:'Nosotros',c:'#e6c877',go:'estudio',cls:'half',d:'Quiénes somos y cómo trabajamos.'},
+ {k:'cuenta',n:'06',t:'Mi cuenta',c:'#ff6b6b',go:'cuenta',cls:'half',d:'Mira el avance de tus proyectos.'}
 ];
 document.getElementById('grid').innerHTML=AREAS.map(a=>{
  const attr=a.href?`href="${a.href}"`:`data-go="${a.go}"`;
@@ -535,19 +679,24 @@ document.getElementById('proc').innerHTML=[
  ['03','Producción','Trabajamos por entregas parciales: ves avances y ajustas sobre la marcha.'],
  ['04','Lanzamiento','Publicamos, capacitamos a tu equipo y medimos qué está funcionando.']
 ].map(([n,t,d])=>`<div class="card"><div class="un">${n}</div><h3>${t}</h3><p>${d}</p></div>`).join('');
-document.getElementById('demos').innerHTML=[
- ['Empresas','Identidad + web + bot','Genera una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
- ['Express','Piezas y precios','Galería de piezas reales y un configurador que calcula tu pedido al instante.','mundos/express-muestras.html','#39c07a'],
- ['Productora','Rodaje y formatos','Reel simulado, antes/después de foto producto y la misma pieza en 4 formatos.','mundos/productora-muestras.html','#3fc6d6'],
- ['Mercury & foma','Joyería y merch','Configura tu pieza o previsualiza tu merch y cotiza el lote en segundos.','mundos/marcas-muestras.html','#d98aa6'],
- ['Automatización','Chatbot funcional','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
- ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras incluidos.','mundos/productora-calculadora.html','#e6c877']
-].map(([tag,t,d,u,c])=>`<a class="card" href="${u}" style="display:block">
- <span class="tagd" style="color:${c}">${tag}</span><h3>${t}</h3><p>${d}</p>
- <div class="un" style="margin-top:14px;color:${c}">Ver la muestra →</div></a>`).join('');
+const DEMOS=[
+ ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
+ ['Diseño rápido','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#39c07a'],
+ ['Video y foto','Rodaje y formatos','Reel de ejemplo, antes/después de foto de producto y la pieza en 4 formatos.','mundos/productora-muestras.html','#3fc6d6'],
+ ['Joyería y ropa','Joyas y merch','Configura tu joya o previsualiza tu merch y cotiza el lote en segundos.','mundos/marcas-muestras.html','#d98aa6'],
+ ['WhatsApp','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
+ ['Video y foto','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
+ ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5'],
+ ['Restaurantes','Menú digital','Cómo queda la carta de un restaurante en el celular.','https://motta-bit.github.io/vitanova/','#e0614a'],
+ ['Hoteles','Plataforma de hotel','Reservas, check-in con QR y llave digital.','https://motta-bit.github.io/Vita-Nova/','#2fb8a3']
+];
+document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
+ `<div class="card" data-demo="${u}" data-titulo="${tag} · ${t}" style="cursor:pointer">
+  <span class="tagd" style="color:${c}">${tag}</span><h3>${t}</h3><p>${d}</p>
+  <div class="un" style="margin-top:14px;color:${c}">Abrir →</div></div>`).join('');
 
 /* ═══ router ═══ */
-const VIEWS=['inicio','estudio','servicios','muestras','cotizar','cuenta'];
+const VIEWS=['inicio','estudio','servicios','muestras','whatsapp','cotizar','cuenta'];
 function go(v,push=true){
  if(!VIEWS.includes(v))v='inicio';
  if(v==='cuenta'&&!sesion){abrirAuth();return;}
@@ -558,6 +707,7 @@ function go(v,push=true){
  window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
  armar();
  if(v==='servicios')cargarPaquetes();
+ if(v==='whatsapp')animarWA();
  if(v==='cuenta')cargarPortal();
 }
 document.addEventListener('click',e=>{
@@ -802,6 +952,77 @@ function verPromo(){
   g.fillStyle=vg;g.fillRect(0,H*.45,W,H*.55);
   requestAnimationFrame(lp);})();
 })();
+
+/* ═══ visor interno ═══ */
+const visor=document.getElementById('visor');
+function abrirDemo(url,titulo){
+ document.getElementById('visorT').textContent=titulo||'Muestra';
+ document.getElementById('visorAbrir').href=url;
+ visor.classList.add('on');document.body.style.overflow='hidden';
+ const f=document.getElementById('visorF');
+ // mostrar primero y cargar después: así las animaciones de la muestra sí arrancan
+ requestAnimationFrame(()=>{f.src=url;});
+ f.onload=()=>{
+  try{
+   const d=f.contentDocument;if(!d)return;
+   // red de seguridad: si algo quedó oculto esperando el scroll, se revela
+   setTimeout(()=>{d.querySelectorAll('.rv:not(.in)').forEach(el=>el.classList.add('in'));
+    f.contentWindow.dispatchEvent(new Event('resize'));
+    f.contentWindow.dispatchEvent(new Event('scroll'));},350);
+  }catch(e){}
+ };
+}
+function cerrarDemo(){visor.classList.remove('on');document.getElementById('visorF').src='about:blank';document.body.style.overflow='';}
+document.getElementById('visorX').onclick=cerrarDemo;
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-demo]');if(!el)return;
+ e.preventDefault();abrirDemo(el.dataset.demo,el.dataset.titulo);
+});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&visor.classList.contains('on'))cerrarDemo();});
+
+/* ═══ contenido WhatsApp ═══ */
+document.getElementById('fases').innerHTML=[
+ ['1','Entendemos tu negocio','Miramos qué te preguntan siempre los clientes y qué respuestas repites todos los días.','Semana 1'],
+ ['2','Armamos las respuestas','Escribimos los mensajes y el recorrido: qué contesta el bot y cuándo pasa a una persona.','Semana 1-2'],
+ ['3','Conectamos tu número','Damos de alta tu WhatsApp en el sistema oficial y probamos con casos reales.','Semana 2-3'],
+ ['4','Te lo entregamos andando','Capacitamos a tu equipo y quedamos pendientes el primer mes por si hay ajustes.','Semana 3']
+].map(([n,t,d,dur])=>`<div class="fase rv"><div class="fn">${n}</div><h4>${t}</h4><p>${d}</p><div class="dur">${dur}</div></div>`).join('');
+document.getElementById('waCaps').innerHTML=[
+ ['Preguntar precios','Ver tu catálogo o tu carta sin que nadie tenga que mandarla.'],
+ ['Reservar o pedir','Dejar su pedido o reserva con fecha y datos, confirmado al momento.'],
+ ['Saber cómo va','Consultar el estado de su pedido cuando quiera, sin llamar.'],
+ ['Agendar una cita','Elegir día y hora de una agenda que tú controlas.'],
+ ['Ubicación y horarios','Recibir la dirección, el mapa y a qué hora abren.'],
+ ['Hablar con alguien','Pasar a una persona real cuando el caso lo amerita.']
+].map(([t,d])=>`<div class="card rv"><h3>${t}</h3><p>${d}</p></div>`).join('');
+document.getElementById('waPlanes').innerHTML=[
+ ['Básico','Negocios que solo necesitan contestar rápido.',780000,'montaje',['Respuestas automáticas','Menú de opciones','Horarios y ubicación','Paso a persona real'],false],
+ ['Negocio','Tomas pedidos o reservas por WhatsApp.',1450000,'montaje',['Todo lo del Básico','Catálogo o carta en el chat','Pedidos y reservas','Confirmaciones automáticas','Aviso a tu equipo'],true],
+ ['Multicanal','Además de WhatsApp, atiendes por redes.',2100000,'montaje',['Todo lo del Negocio','Instagram y Facebook','Respuesta a comentarios','Recordatorios programados','Reporte mensual'],false]
+].map(([n,d,p,u,inc,dest])=>`<div class="card rv" ${dest?'style="border-color:var(--gold)"':''}>
+ ${dest?'<span class="tagd" style="color:var(--gold)">Más pedido</span>':''}
+ <h3>${n}</h3><p>${d}</p><div class="pz">${fmt(p)}</div><div class="un">${u} · + $180.000 al mes</div>
+ <ul>${inc.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('');
+let waTimer=null,waPaso=0;
+function animarWA(){
+ const el=document.getElementById('waChat');if(!el)return;
+ clearTimeout(waTimer);el.innerHTML='';waPaso=0;
+ const SEQ=[['b','Hola 👋 Soy el asistente de tu negocio. ¿En qué te ayudo?'],
+  ['q','Quiero reservar para el viernes'],['b','Perfecto. ¿Para cuántas personas?'],['u','4 personas'],
+  ['b','Listo ✅ Mesa para 4 el viernes a las 8:00 p.m. Te llega la confirmación en un minuto.'],
+  ['q','¿Dónde quedan?'],['b','Estamos en Laureles, Medellín 📍 Te paso la ubicación.']];
+ (function paso(){
+  if(waPaso>=SEQ.length){waTimer=setTimeout(()=>{el.innerHTML='';waPaso=0;paso();},3600);return;}
+  const [k,t]=SEQ[waPaso++];
+  const d=document.createElement('div');
+  d.style.cssText='max-width:82%;padding:10px 13px;border-radius:15px;font-size:.85rem;line-height:1.45;animation:vin .45s'+
+   (k==='b'?';align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid var(--line);border-bottom-left-radius:5px'
+    :k==='u'?';align-self:flex-end;background:linear-gradient(135deg,#4ade80,#35b46a);color:#06120c;font-weight:600;border-bottom-right-radius:5px'
+    :';align-self:flex-end;background:none;border:1px solid rgba(74,222,128,.55);color:#a7f3c4;font-weight:700');
+  d.textContent=t;el.appendChild(d);
+  waTimer=setTimeout(paso,k==='b'?1500:1000);
+ })();
+}
 
 /* ═══ reveals / nav ═══ */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -6% 0px'});
