@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de rodaje · Productora — LQS</title>
+<meta name="description" content="Calcula en vivo el presupuesto de tu rodaje en Colombia: tipo de proyecto, duración, ubicación, equipo, extras y post. Estimado en COP con desglose por rubro.">
+<meta name="theme-color" content="#06070f">
+<meta property="og:title" content="Calculadora de rodaje · Productora — LQS">
+<meta property="og:description" content="Estimador de presupuesto audiovisual: duración, ubicación, equipo, extras y postproducción. Desglose claro en pesos colombianos.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070f; --bg2:#090b16; --ink:#f2efe8; --dim:#9aa0b8; --faint:#5f6480;
+  --gold:#e6c877; --line:rgba(210,215,240,.11); --line2:rgba(210,215,240,.22);
+  --disp:'Bebas Neue',Impact,sans-serif;
+  --sport:'Anton',Impact,sans-serif;
+  --tech:'Chakra Petch',ui-monospace,monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+  --pad:clamp(18px,5vw,56px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+svg{display:block;max-width:100%}
+::selection{background:var(--gold);color:#0a0810}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(58% 44% at 78% 4%,rgba(120,96,200,.20),transparent 62%),
+             radial-gradient(52% 40% at 6% 68%,rgba(190,120,90,.13),transparent 62%)}
+.grainy{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:3;max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:60;background:rgba(6,7,15,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1200px;margin:0 auto;padding:12px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:9px}
+.brand b{color:var(--ink);font-weight:700}
+.navlinks{display:flex;gap:8px;align-items:center}
+.nlink{font-family:var(--tech);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:9px 15px;transition:.22s;white-space:nowrap}
+.nlink:hover{color:var(--gold);border-color:var(--line2);background:rgba(230,200,119,.06)}
+/* ---------- hero ---------- */
+.hero{padding:clamp(38px,7vw,78px) 0 clamp(24px,4vw,44px);display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(22px,4vw,52px);align-items:center}
+.kick{font-family:var(--tech);font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.kick::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent);max-width:180px}
+h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.92;
+  font-size:clamp(3.1rem,11vw,6.6rem);margin-bottom:18px}
+h1 em{font-style:normal;color:var(--gold)}
+.lead{font-size:clamp(1rem,1.7vw,1.14rem);color:var(--dim);max-width:50ch;margin-bottom:22px}
+.lead b{color:var(--ink);font-weight:700}
+.metas{display:flex;flex-wrap:wrap;gap:10px}
+.meta{font-family:var(--tech);font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:rgba(255,255,255,.03)}
+.meta i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-right:8px;vertical-align:middle;box-shadow:0 0 10px var(--gold)}
+.artbox{position:relative;border:1px solid var(--line);border-radius:26px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));padding:clamp(10px,2vw,20px);overflow:hidden}
+.artbox::after{content:'RIG · 01';position:absolute;right:16px;bottom:12px;font-family:var(--tech);font-size:.6rem;letter-spacing:.2em;color:var(--faint)}
+/* ---------- secciones ---------- */
+section{padding:clamp(30px,5vw,56px) 0;position:relative;z-index:3}
+h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.92;font-size:clamp(2rem,5.4vw,3.4rem);margin-bottom:12px}
+.sec-intro{color:var(--dim);max-width:62ch;margin-bottom:26px}
+/* ---------- calculadora ---------- */
+.calc{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(18px,2.4vw,30px);align-items:start}
+.controls{display:flex;flex-direction:column;gap:16px;min-width:0}
+.block{border:1px solid var(--line);border-radius:20px;background:linear-gradient(168deg,rgba(255,255,255,.045),rgba(255,255,255,.012));padding:clamp(16px,2.4vw,22px)}
+.blabel{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.blabel span{color:var(--faint);font-weight:400;letter-spacing:.1em}
+.bhint{font-size:.82rem;color:var(--dim);margin-bottom:14px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
+.opts.two{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+.opt{position:relative;display:block;cursor:pointer}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt .face{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02);padding:12px 14px;transition:.2s;height:100%;display:flex;flex-direction:column;gap:3px}
+.opt .face b{font-size:.92rem;font-weight:700;line-height:1.25}
+.opt .face small{font-family:var(--tech);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.opt:hover .face{border-color:var(--line2);background:rgba(255,255,255,.045)}
+.opt input:checked+.face{border-color:var(--gold);background:linear-gradient(150deg,rgba(230,200,119,.15),rgba(230,200,119,.03));box-shadow:0 10px 30px -20px var(--gold)}
+.opt input:checked+.face small{color:var(--gold)}
+.opt input:focus-visible+.face{outline:2px solid var(--gold);outline-offset:3px}
+/* rangos */
+.rangerow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.bignum{font-family:var(--sport);font-size:clamp(2.4rem,7vw,3.2rem);line-height:.9;color:var(--ink);min-width:1.6ch;text-align:center}
+.bignum small{display:block;font-family:var(--tech);font-size:.58rem;letter-spacing:.16em;color:var(--faint);margin-top:6px;text-transform:uppercase}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:150px;height:4px;border-radius:99px;background:linear-gradient(90deg,var(--gold) var(--fill,50%),rgba(210,215,240,.16) var(--fill,50%));outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff6dd,var(--gold) 62%,#8a6c20);border:none;cursor:pointer;box-shadow:0 4px 14px rgba(230,200,119,.45)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff6dd,var(--gold) 62%,#8a6c20);border:none;cursor:pointer}
+/* extras */
+.exlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:9px}
+.ex{position:relative;display:block;cursor:pointer}
+.ex input{position:absolute;opacity:0;width:0;height:0}
+.ex .face{display:flex;align-items:flex-start;gap:11px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02);padding:12px 14px;transition:.2s;height:100%}
+.ex .box{flex:none;width:19px;height:19px;border-radius:6px;border:1px solid var(--line2);margin-top:2px;position:relative;transition:.2s}
+.ex .box::after{content:'';position:absolute;inset:0;background:no-repeat center/11px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23100d05' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4 10-10'/%3E%3C/svg%3E");opacity:0;transition:.2s}
+.ex .txt{min-width:0}
+.ex .txt b{display:block;font-size:.88rem;font-weight:700;line-height:1.3}
+.ex .txt small{font-family:var(--tech);font-size:.66rem;letter-spacing:.08em;color:var(--dim)}
+.ex:hover .face{border-color:var(--line2);background:rgba(255,255,255,.045)}
+.ex input:checked+.face{border-color:rgba(230,200,119,.55);background:linear-gradient(150deg,rgba(230,200,119,.12),rgba(230,200,119,.02))}
+.ex input:checked+.face .box{background:var(--gold);border-color:var(--gold)}
+.ex input:checked+.face .box::after{opacity:1}
+.ex input:checked+.face .txt small{color:var(--gold)}
+.ex input:focus-visible+.face{outline:2px solid var(--gold);outline-offset:3px}
+/* ---------- panel resumen ---------- */
+.summary{position:sticky;top:76px;border:1px solid var(--line2);border-radius:24px;
+  background:linear-gradient(170deg,rgba(255,255,255,.07),rgba(255,255,255,.015));
+  padding:clamp(18px,2.5vw,26px);overflow:hidden}
+.summary::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(70% 40% at 50% 0%,rgba(230,200,119,.13),transparent 70%)}
+.sum-head{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.sum-head h3{font-family:var(--disp);font-weight:400;font-size:1.9rem;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.sum-head span{font-family:var(--tech);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.lines{position:relative;list-style:none;margin:14px 0 0;display:flex;flex-direction:column;gap:1px}
+.lines li{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(210,215,240,.09);font-size:.9rem}
+.lines li:last-child{border-bottom:none}
+.lines .nm{color:var(--ink);min-width:0}
+.lines .nm em{display:block;font-style:normal;font-family:var(--tech);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+.lines .vl{font-family:var(--sport);font-size:1rem;letter-spacing:.01em;white-space:nowrap;color:var(--ink)}
+.lines li.sub{padding:5px 0 5px 14px;border-bottom:none;opacity:.82}
+.lines li.sub .nm{font-size:.82rem;color:var(--dim)}
+.lines li.sub .vl{font-family:var(--sans);font-weight:600;font-size:.84rem;color:var(--dim)}
+.lines li.zero{opacity:.42}
+.total{position:relative;margin-top:16px;padding-top:16px;border-top:1px solid var(--line2)}
+.total .cap{font-family:var(--tech);font-size:.63rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.total .amount{font-family:var(--sport);font-size:clamp(2.3rem,6.4vw,3.1rem);line-height:1.02;letter-spacing:-.005em;margin:4px 0 2px;
+  background:linear-gradient(100deg,#fff6e0,var(--gold) 58%,#c49b3e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.total .cur{font-family:var(--tech);font-size:.66rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+.disclaimer{position:relative;margin-top:14px;font-size:.79rem;line-height:1.55;color:var(--dim);border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025);padding:11px 13px}
+.disclaimer b{color:var(--gold);font-weight:700}
+.wa{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:14px;
+  font-family:var(--sans);font-size:.95rem;font-weight:800;color:#0a0810;cursor:pointer;
+  background:linear-gradient(100deg,#fff1cf,var(--gold) 62%,#d0a844);border:none;border-radius:15px;padding:15px 20px;
+  transition:.22s;box-shadow:0 18px 40px -22px var(--gold)}
+.wa:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.wa svg{width:19px;height:19px;fill:#0a0810}
+.copyhint{position:relative;text-align:center;font-family:var(--tech);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+/* ---------- acordeón ---------- */
+.faq{display:grid;gap:10px}
+details{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);overflow:hidden}
+details[open]{border-color:var(--line2);background:rgba(255,255,255,.045)}
+summary{cursor:pointer;list-style:none;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  font-family:var(--tech);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+summary::-webkit-details-marker{display:none}
+summary .pl{flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);position:relative;transition:.25s}
+summary .pl::before,summary .pl::after{content:'';position:absolute;inset:50% 5px auto;height:1px;background:var(--gold);transform:translateY(-50%)}
+summary .pl::after{transform:translateY(-50%) rotate(90deg);transition:.25s}
+details[open] summary .pl{transform:rotate(180deg);background:rgba(230,200,119,.12)}
+details[open] summary .pl::after{opacity:0}
+.dbody{padding:0 18px 18px;display:grid;gap:11px}
+.dbody div{border-left:1px solid var(--line2);padding-left:14px}
+.dbody b{display:block;font-size:.92rem;font-weight:700;margin-bottom:2px}
+.dbody p{font-size:.87rem;color:var(--dim);line-height:1.6}
+/* ---------- barra móvil ---------- */
+.mbar{display:none}
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:26px 0 42px;position:relative;z-index:3;margin-top:22px}
+footer .in{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between;font-size:.82rem;color:var(--dim)}
+footer a:hover{color:var(--gold)}
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(20px)}
+.rv.on{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.75,.3,1)}
+/* ---------- responsive ---------- */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;gap:26px}
+  .artbox{order:-1}
+  .calc{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media(max-width:640px){
+  body{padding-bottom:84px}
+  .navlinks .nlink.sec{display:none}
+  .brand{font-size:.62rem}
+  .opts{grid-template-columns:1fr 1fr}
+  .exlist{grid-template-columns:1fr}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;align-items:center;justify-content:space-between;gap:12px;
+    padding:11px 16px calc(11px + env(safe-area-inset-bottom));background:rgba(9,11,22,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line2)}
+  .mbar .mt{min-width:0}
+  .mbar .mt em{display:block;font-style:normal;font-family:var(--tech);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .mbar .mt b{font-family:var(--sport);font-size:1.35rem;font-weight:400;color:var(--gold);letter-spacing:.01em}
+  .mbar button{flex:none;font-family:var(--sans);font-weight:800;font-size:.82rem;color:#0a0810;background:linear-gradient(100deg,#fff1cf,var(--gold));border:none;border-radius:12px;padding:12px 16px;cursor:pointer}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="aura"></div><div class="grainy"></div>
+
+<nav><div class="in">
+  <div class="brand">🎬 LQS <b>· Calculadora de rodaje</b></div>
+  <div class="navlinks">
+    <a class="nlink" href="productora.html">← Productora</a>
+    <a class="nlink sec" href="../index.html">Sitio</a>
+  </div>
+</div></nav>
+
+<div class="wrap"><header class="hero">
+  <div>
+    <div class="kick">Estimador de presupuesto · Medellín</div>
+    <h1>Calculadora<br><em>de rodaje</em></h1>
+    <p class="lead">Arma tu producción pieza por pieza y mira cómo se mueve el presupuesto <b>en tiempo real</b>. Los mismos rubros que usamos internamente para cotizar: producción, equipo, transporte, viáticos, extras y post.</p>
+    <div class="metas">
+      <span class="meta"><i></i>Precios reales 2026</span>
+      <span class="meta">Desglose por rubro</span>
+      <span class="meta">Cotización firme en 48h</span>
+    </div>
+  </div>
+  <div class="artbox rv">
+    <svg viewBox="0 0 560 420" role="img" aria-label="Ilustración de un set de rodaje: cámara sobre trípode, luz con softbox y claqueta">
+      <defs>
+        <linearGradient id="mtl" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d425c"/><stop offset=".45" stop-color="#242938"/><stop offset="1" stop-color="#12151f"/>
+        </linearGradient>
+        <linearGradient id="mtl2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4a5070"/><stop offset=".5" stop-color="#2a2f42"/><stop offset="1" stop-color="#171a26"/>
+        </linearGradient>
+        <linearGradient id="gld" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff3d4"/><stop offset=".5" stop-color="#e6c877"/><stop offset="1" stop-color="#9c7a2c"/>
+        </linearGradient>
+        <radialGradient id="lens" cx=".38" cy=".33" r=".78">
+          <stop offset="0" stop-color="#6f7ea8"/><stop offset=".32" stop-color="#252c3e"/><stop offset=".78" stop-color="#0d101a"/><stop offset="1" stop-color="#05070d"/>
+        </radialGradient>
+        <radialGradient id="beam" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#fff4d8" stop-opacity=".55"/><stop offset=".55" stop-color="#e6c877" stop-opacity=".16"/><stop offset="1" stop-color="#e6c877" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="sbx" x1=".1" y1="0" x2=".9" y2="1">
+          <stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#f0dfb4"/><stop offset="1" stop-color="#b99e63"/>
+        </linearGradient>
+        <linearGradient id="flr" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d2d7f0" stop-opacity=".16"/><stop offset="1" stop-color="#d2d7f0" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- piso / horizonte -->
+      <ellipse cx="280" cy="386" rx="252" ry="26" fill="url(#flr)"/>
+      <path d="M28 386h504" stroke="rgba(210,215,240,.16)" stroke-width="1"/>
+      <g stroke="rgba(210,215,240,.06)" stroke-width="1">
+        <path d="M96 386 44 418M204 386l-38 32M356 386l38 32M462 386l52 32"/>
+      </g>
+
+      <!-- halo de luz -->
+      <ellipse cx="446" cy="176" rx="150" ry="150" fill="url(#beam)"/>
+      <path d="M404 190 214 268l0 26 190-70z" fill="#e6c877" opacity=".05"/>
+
+      <!-- ===== LUZ CON SOFTBOX (derecha) ===== -->
+      <g>
+        <!-- patas -->
+        <path d="M446 300 412 384M446 300l34 84M446 300v82" stroke="url(#mtl2)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M446 300 412 384M446 300l34 84" stroke="rgba(255,255,255,.14)" stroke-width="1"/>
+        <circle cx="412" cy="384" r="4" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <circle cx="480" cy="384" r="4" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <circle cx="446" cy="382" r="4" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <!-- columna -->
+        <rect x="440" y="196" width="12" height="112" rx="4" fill="url(#mtl2)"/>
+        <rect x="443" y="196" width="3" height="112" fill="rgba(255,255,255,.12)"/>
+        <rect x="436" y="252" width="20" height="9" rx="4" fill="#333a52" stroke="rgba(210,215,240,.2)"/>
+        <circle cx="446" cy="256" r="3" fill="url(#gld)"/>
+        <!-- brazo pivote -->
+        <circle cx="446" cy="200" r="8" fill="#333a52" stroke="rgba(210,215,240,.22)"/>
+        <circle cx="446" cy="200" r="3" fill="url(#gld)"/>
+        <!-- softbox octagonal -->
+        <g transform="translate(446 148) rotate(-12)">
+          <polygon points="-70,-22 -34,-58 34,-58 70,-22 70,22 34,58 -34,58 -70,22" fill="#1b1f2d" stroke="rgba(210,215,240,.2)"/>
+          <polygon points="-62,-19 -30,-51 30,-51 62,-19 62,19 30,51 -30,51 -62,19" fill="url(#sbx)"/>
+          <g stroke="rgba(120,105,70,.35)" stroke-width="1" fill="none">
+            <path d="M-62-19 62 19M62-19-62 19M0-51V51M-62 0H62"/>
+            <polygon points="-31,-9 -15,-25 15,-25 31,-9 31,9 15,25 -15,25 -31,9"/>
+          </g>
+          <polygon points="-62,-19 -30,-51 30,-51 62,-19 0,0" fill="#fff" opacity=".3"/>
+          <polygon points="-62,-19 -34,-58 34,-58 70,-22 62,-19 30,-51 -30,-51z" fill="#fff" opacity=".08"/>
+        </g>
+        <!-- cuerpo de la luz detrás -->
+        <rect x="424" y="176" width="44" height="26" rx="7" fill="url(#mtl)" stroke="rgba(210,215,240,.18)"/>
+        <rect x="430" y="182" width="32" height="4" rx="2" fill="rgba(255,255,255,.14)"/>
+        <path d="M430 194h10M444 194h10" stroke="rgba(230,200,119,.5)" stroke-width="2" stroke-linecap="round"/>
+      </g>
+
+      <!-- ===== CÁMARA SOBRE TRÍPODE (centro-izq) ===== -->
+      <g>
+        <!-- patas del trípode -->
+        <path d="M206 232 148 380M206 232l58 148M206 232l-8 142" stroke="url(#mtl2)" stroke-width="9" stroke-linecap="round"/>
+        <path d="M206 240 152 378M206 240l54 138" stroke="rgba(255,255,255,.16)" stroke-width="1.2"/>
+        <path d="M173 302 206 290l33 12" stroke="rgba(210,215,240,.3)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <path d="M197 322h18" stroke="rgba(210,215,240,.18)" stroke-width="2"/>
+        <ellipse cx="148" cy="380" rx="7" ry="3.5" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <ellipse cx="264" cy="380" rx="7" ry="3.5" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <ellipse cx="198" cy="374" rx="7" ry="3.5" fill="#1a1e2c" stroke="rgba(210,215,240,.25)"/>
+        <!-- cabezal fluido -->
+        <path d="M186 228h40l-6 14h-28z" fill="url(#mtl)" stroke="rgba(210,215,240,.2)"/>
+        <rect x="180" y="214" width="52" height="16" rx="5" fill="url(#mtl2)" stroke="rgba(210,215,240,.2)"/>
+        <path d="M232 220c22 6 34 16 44 30" stroke="url(#mtl2)" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <circle cx="276" cy="250" r="5" fill="#333a52" stroke="rgba(210,215,240,.25)"/>
+        <!-- cuerpo de cámara -->
+        <g>
+          <rect x="158" y="150" width="118" height="66" rx="12" fill="url(#mtl)" stroke="rgba(210,215,240,.22)"/>
+          <rect x="164" y="156" width="106" height="20" rx="7" fill="rgba(255,255,255,.07)"/>
+          <path d="M158 196h118" stroke="rgba(0,0,0,.35)" stroke-width="1"/>
+          <path d="M158 197h118" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+          <!-- rejilla de ventilación -->
+          <g stroke="rgba(210,215,240,.22)" stroke-width="1.4" stroke-linecap="round">
+            <path d="M170 204h30M170 208h30"/>
+          </g>
+          <!-- asa superior -->
+          <path d="M176 150v-12h74v12" fill="none" stroke="url(#mtl2)" stroke-width="8" stroke-linejoin="round"/>
+          <path d="M178 140h70" stroke="rgba(255,255,255,.18)" stroke-width="1.4"/>
+          <rect x="196" y="126" width="34" height="12" rx="4" fill="#2a3044" stroke="rgba(210,215,240,.2)"/>
+          <!-- micro -->
+          <rect x="236" y="128" width="52" height="9" rx="4.5" fill="url(#mtl2)" stroke="rgba(210,215,240,.18)" transform="rotate(-6 236 128)"/>
+          <g stroke="rgba(210,215,240,.3)" stroke-width="1" transform="rotate(-6 236 128)">
+            <path d="M246 130v5M254 129v6M262 128v6M270 128v6"/>
+          </g>
+          <!-- monitor abatible -->
+          <g transform="rotate(-8 152 168)">
+            <rect x="112" y="152" width="48" height="36" rx="6" fill="#232838" stroke="rgba(210,215,240,.25)"/>
+            <rect x="117" y="157" width="38" height="26" rx="3" fill="#0c1018"/>
+            <path d="M117 176l10-9 8 7 7-9 13 14z" fill="rgba(230,200,119,.35)"/>
+            <circle cx="132" cy="163" r="3.4" fill="rgba(230,200,119,.55)"/>
+            <path d="M117 157h38" stroke="rgba(255,255,255,.12)"/>
+          </g>
+          <!-- visor -->
+          <path d="M270 158h22l8 8v10l-8 8h-22z" fill="url(#mtl2)" stroke="rgba(210,215,240,.2)"/>
+          <circle cx="292" cy="171" r="5" fill="#0e121c" stroke="rgba(210,215,240,.3)"/>
+          <!-- luz REC -->
+          <circle cx="264" cy="160" r="4" fill="#ff5d5d"><animate attributeName="opacity" values="1;.25;1" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle cx="264" cy="160" r="7.5" fill="none" stroke="#ff5d5d" stroke-opacity=".35"/>
+          <!-- lente -->
+          <rect x="276" y="164" width="0" height="0"/>
+          <g transform="translate(0 0)">
+            <path d="M138 166h22v34h-22z" fill="none"/>
+            <rect x="96" y="162" width="64" height="42" rx="9" fill="url(#mtl2)" stroke="rgba(210,215,240,.22)"/>
+            <g stroke="rgba(210,215,240,.25)" stroke-width="1">
+              <path d="M108 162v42M122 162v42M136 162v42M150 162v42"/>
+            </g>
+            <rect x="92" y="158" width="12" height="50" rx="5" fill="#2b3142" stroke="rgba(210,215,240,.25)"/>
+            <ellipse cx="94" cy="183" rx="9" ry="24" fill="url(#lens)"/>
+            <ellipse cx="94" cy="183" rx="5.5" ry="16" fill="#080b13"/>
+            <ellipse cx="92" cy="175" rx="2.2" ry="5" fill="rgba(230,200,119,.55)"/>
+            <ellipse cx="96" cy="192" rx="1.4" ry="3" fill="rgba(160,190,255,.4)"/>
+          </g>
+          <!-- matte box -->
+          <path d="M84 150h18l6 8v50l-6 8H84z" fill="#1a1f2d" stroke="rgba(210,215,240,.2)"/>
+          <path d="M84 150h18v66H84z" fill="rgba(255,255,255,.04)"/>
+          <path d="M84 150 62 140v88l22-12z" fill="#161b28" stroke="rgba(210,215,240,.18)"/>
+          <path d="M62 140v88" stroke="rgba(255,255,255,.1)"/>
+          <!-- placa lateral / detalles -->
+          <rect x="186" y="182" width="30" height="10" rx="3" fill="#171b28" stroke="rgba(210,215,240,.16)"/>
+          <text x="190" y="190" font-family="'Chakra Petch',monospace" font-size="7" fill="#e6c877" letter-spacing="1.5">4K</text>
+          <circle cx="232" cy="187" r="7" fill="#1c2130" stroke="rgba(210,215,240,.25)"/>
+          <path d="M232 182v5l3 3" stroke="rgba(230,200,119,.7)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <circle cx="252" cy="187" r="4" fill="#1c2130" stroke="rgba(210,215,240,.25)"/>
+          <!-- brillo superior -->
+          <path d="M170 150h96a12 12 0 0 1 10 6H160a12 12 0 0 1 10-6z" fill="rgba(255,255,255,.1)"/>
+        </g>
+      </g>
+
+      <!-- ===== CLAQUETA (frente izq) ===== -->
+      <g transform="translate(52 292) rotate(-9)">
+        <rect x="0" y="18" width="150" height="86" rx="8" fill="#161a26" stroke="rgba(210,215,240,.22)"/>
+        <rect x="0" y="18" width="150" height="86" rx="8" fill="url(#mtl)" opacity=".7"/>
+        <g stroke="rgba(210,215,240,.16)" stroke-width="1">
+          <path d="M8 44h134M8 62h134M8 80h134"/>
+          <path d="M52 30v72"/>
+        </g>
+        <text x="10" y="40" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">PROD.</text>
+        <text x="58" y="40" font-family="'Chakra Petch',monospace" font-size="9" fill="#e6c877" letter-spacing="1.2">LQS</text>
+        <text x="10" y="58" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">ESC.</text>
+        <text x="58" y="58" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">04</text>
+        <text x="10" y="76" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">TOMA</text>
+        <text x="58" y="76" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">01</text>
+        <text x="10" y="95" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">DIR.</text>
+        <text x="58" y="95" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">MEDELLÍN</text>
+        <!-- barra superior articulada -->
+        <g transform="rotate(-14 6 18)">
+          <rect x="0" y="-4" width="150" height="22" rx="5" fill="#0f131d" stroke="rgba(210,215,240,.25)"/>
+          <g fill="#f2efe8">
+            <path d="M6-4l16 0-12 22H0z"/><path d="M38-4l16 0-12 22H26z"/><path d="M70-4l16 0-12 22H58z"/><path d="M102-4l16 0-12 22H90z"/><path d="M134-4l14 0-12 22h-14z"/>
+          </g>
+          <rect x="0" y="-4" width="150" height="22" rx="5" fill="none" stroke="rgba(210,215,240,.25)"/>
+          <rect x="0" y="-4" width="150" height="7" fill="rgba(255,255,255,.08)"/>
+        </g>
+        <circle cx="6" cy="18" r="4.5" fill="#333a52" stroke="rgba(210,215,240,.35)"/>
+        <circle cx="6" cy="18" r="1.6" fill="url(#gld)"/>
+      </g>
+    </svg>
+  </div>
+</header></div>
+
+<div class="wrap"><section id="calculadora">
+  <div class="calc">
+    <!-- ============ CONTROLES ============ -->
+    <form class="controls" id="form" autocomplete="off">
+      <div class="block rv">
+        <div class="blabel">01 · Tipo de proyecto</div>
+        <p class="bhint">Define la base de producción, el ritmo de rodaje y la carga de postproducción.</p>
+        <div class="opts" id="tipo">
+          <label class="opt"><input type="radio" name="tipo" value="foto" checked><span class="face"><b>Foto de producto</b><small>Catálogo · carta</small></span></label>
+          <label class="opt"><input type="radio" name="tipo" value="reel"><span class="face"><b>Reel</b><small>Vertical · redes</small></span></label>
+          <label class="opt"><input type="radio" name="tipo" value="inst"><span class="face"><b>Video institucional</b><small>Marca · corporativo</small></span></label>
+          <label class="opt"><input type="radio" name="tipo" value="evento"><span class="face"><b>Cobertura de evento</b><small>Foto + video</small></span></label>
+          <label class="opt"><input type="radio" name="tipo" value="spot"><span class="face"><b>Spot publicitario</b><small>Pauta · alto acabado</small></span></label>
+        </div>
+      </div>
+
+      <div class="block rv">
+        <div class="blabel">02 · Duración del rodaje</div>
+        <p class="bhint">Cuántas jornadas de cámara necesitas en set.</p>
+        <div class="opts two" id="dur">
+          <label class="opt"><input type="radio" name="dur" value="0.5"><span class="face"><b>Medio día</b><small>4 horas</small></span></label>
+          <label class="opt"><input type="radio" name="dur" value="1" checked><span class="face"><b>Día completo</b><small>8 horas</small></span></label>
+          <label class="opt"><input type="radio" name="dur" value="2"><span class="face"><b>2 días</b><small>16 horas</small></span></label>
+          <label class="opt"><input type="radio" name="dur" value="3"><span class="face"><b>3+ días</b><small>Rodaje extendido</small></span></label>
+        </div>
+      </div>
+
+      <div class="block rv">
+        <div class="blabel">03 · Ubicación <span>transporte y viáticos</span></div>
+        <p class="bhint">Fuera de Medellín se suman desplazamiento del equipo y viáticos por persona y por día.</p>
+        <div class="opts two" id="loc">
+          <label class="opt"><input type="radio" name="loc" value="ciudad" checked><span class="face"><b>Medellín ciudad</b><small>Transporte $0</small></span></label>
+          <label class="opt"><input type="radio" name="loc" value="metro"><span class="face"><b>Área metropolitana</b><small>+ $90.000 / día</small></span></label>
+          <label class="opt"><input type="radio" name="loc" value="oriente"><span class="face"><b>Oriente antioqueño</b><small>+ $220.000 / día</small></span></label>
+          <label class="opt"><input type="radio" name="loc" value="otra"><span class="face"><b>Otra ciudad</b><small>+ $650.000 + viáticos</small></span></label>
+        </div>
+      </div>
+
+      <div class="block rv">
+        <div class="blabel">04 · Equipo humano</div>
+        <p class="bhint">Personas de LQS en set: dirección, cámara, luces, asistencia y producción.</p>
+        <div class="rangerow">
+          <div class="bignum" id="eqOut">2<small>personas</small></div>
+          <input type="range" id="eq" min="1" max="6" step="1" value="2" aria-label="Número de personas del equipo">
+        </div>
+      </div>
+
+      <div class="block rv">
+        <div class="blabel">05 · Extras de producción</div>
+        <p class="bhint">Suma solo lo que tu proyecto necesita. Los marcados por jornada se multiplican por los días de rodaje.</p>
+        <div class="exlist" id="extras"></div>
+      </div>
+
+      <div class="block rv">
+        <div class="blabel">06 · Entregables y versiones</div>
+        <p class="bhint">Cada entregable adicional suma montaje, color y adaptación de formatos.</p>
+        <div class="rangerow">
+          <div class="bignum" id="entOut">1<small>entregables</small></div>
+          <input type="range" id="ent" min="1" max="8" step="1" value="1" aria-label="Número de entregables o versiones">
+        </div>
+      </div>
+    </form>
+
+    <!-- ============ RESUMEN ============ -->
+    <aside class="summary rv" aria-live="polite">
+      <div class="sum-head"><h3>Desglose</h3><span>COP · 2026</span></div>
+      <ul class="lines" id="lines"></ul>
+      <div class="total">
+        <div class="cap">Total estimado</div>
+        <div class="amount" id="total">$0</div>
+        <div class="cur">Pesos colombianos · IVA no incluido</div>
+      </div>
+      <p class="disclaimer">Este valor es un <b>estimado automático</b>. Al enviarlo revisamos alcance, locación y agenda, y te confirmamos la <b>cotización final en 48 horas</b> con fecha de rodaje y entregables cerrados.</p>
+      <button type="button" class="wa" id="wa">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.16c-.25.69-1.45 1.32-1.99 1.36-.53.05-1.03.24-3.47-.72-2.92-1.15-4.77-4.13-4.91-4.32-.14-.19-1.17-1.55-1.17-2.96s.74-2.1 1-2.39c.25-.29.55-.36.74-.36h.53c.17 0 .4-.06.63.48.24.58.8 2 .87 2.15.07.14.12.31.02.5-.53 1.06-1.1 1.02-.81 1.51.98 1.68 1.96 2.27 3.45 3.01.25.13.4.11.55-.07.14-.19.63-.74.8-.99.17-.25.34-.21.57-.12.24.08 1.5.71 1.76.84.25.12.42.19.48.29.06.11.06.62-.19 1.31z"/></svg>
+        Enviar a WhatsApp
+      </button>
+      <p class="copyhint">Se envía con todo el desglose incluido</p>
+    </aside>
+  </div>
+</section></div>
+
+<div class="wrap"><section id="rubros">
+  <h2 class="rv">Letra chica,<br>sin letra chica</h2>
+  <p class="sec-intro rv">Cada línea del desglose corresponde a un costo real de producción. Así se compone.</p>
+  <div class="faq rv">
+    <details open>
+      <summary>¿Qué incluye cada rubro?<span class="pl"></span></summary>
+      <div class="dbody">
+        <div><b>Producción y dirección</b><p>Preproducción completa: reunión de arranque, concepto, guion o shot list, casting de locación, permisos básicos, plan de rodaje y dirección en set. Es la base que cambia según el tipo de proyecto.</p></div>
+        <div><b>Equipo humano</b><p>Honorarios del equipo LQS por persona y por jornada: dirección de fotografía, operación de cámara, luces, asistencia y producción de campo. Incluye el equipo técnico base (cuerpo, ópticas, trípode, audio y monitoreo).</p></div>
+        <div><b>Transporte</b><p>Desplazamiento del equipo y del equipamiento hasta la locación. En Medellín ciudad no se cobra. En área metropolitana y Oriente se cobra por jornada, porque el equipo va y vuelve cada día. Para otra ciudad de Colombia es un valor único de traslado de ida y regreso con carga.</p></div>
+        <div><b>Viáticos</b><p>Alimentación, hidratación y — cuando aplica — alojamiento del equipo fuera de Medellín. Se calcula por persona y por día de rodaje. En la ciudad no se cobra.</p></div>
+        <div><b>Extras</b><p>Todo lo que no viene en el paquete base: iluminación profesional con softbox y difusores, dron con piloto y permisos, locución, maquillaje y estilismo, segunda cámara con operador, teleprompter, y música con licencia comercial o músico en vivo.</p></div>
+        <div><b>Postproducción</b><p>Montaje, corrección de color, diseño sonoro, subtítulos, gráficos y exportación. El primer entregable se cobra completo; cada versión adicional cuesta un 60% porque reaprovecha el mismo material y la misma línea de edición.</p></div>
+        <div><b>Edición express 48h</b><p>Recargo del 35% sobre producción y post. Reorganiza la agenda del estudio para entregarte el master en 48 horas hábiles después del rodaje, con una ronda de ajustes en el mismo plazo.</p></div>
+      </div>
+    </details>
+    <details>
+      <summary>¿Qué pasa después de enviar el estimado?<span class="pl"></span></summary>
+      <div class="dbody">
+        <div><b>1 · Revisamos el alcance</b><p>Leemos tu desglose y te escribimos por WhatsApp con las preguntas justas: qué se graba, dónde, con quién y para qué canal.</p></div>
+        <div><b>2 · Cotización firme en 48h</b><p>Te enviamos la propuesta con precio cerrado, cronograma, entregables y fecha de rodaje reservada.</p></div>
+        <div><b>3 · Anticipo y agenda</b><p>Con el 50% de anticipo bloqueamos la fecha. El saldo va contra entrega del master aprobado.</p></div>
+        <div><b>Ajustes incluidos</b><p>Toda producción incluye una ronda de ajustes sobre el corte final. Rondas adicionales se cotizan aparte y siempre te avisamos antes.</p></div>
+      </div>
+    </details>
+    <details>
+      <summary>Precios, moneda e impuestos<span class="pl"></span></summary>
+      <div class="dbody">
+        <div><b>Moneda</b><p>Todos los valores están en pesos colombianos (COP) y corresponden a tarifas 2026 para producción en Medellín y Antioquia.</p></div>
+        <div><b>Impuestos</b><p>Los valores no incluyen IVA. Si tu empresa requiere factura electrónica, se agrega el impuesto correspondiente en la cotización formal.</p></div>
+        <div><b>Vigencia</b><p>El estimado tiene una vigencia de 30 días. Rodajes en temporada alta (noviembre y diciembre) pueden variar según disponibilidad de equipo.</p></div>
+      </div>
+    </details>
+  </div>
+</section></div>
+
+<footer><div class="wrap"><div class="in">
+  <span>LQS · Estudio creativo · Medellín, Colombia</span>
+  <span><a href="../servicios.html">Servicios</a> · <a href="productora.html">Productora</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html">Sitio</a></span>
+</div></div></footer>
+
+<div class="mbar"><div class="mt"><em>Total estimado</em><b id="mTotal">$0</b></div><button type="button" id="mWa">WhatsApp →</button></div>
+
+<script>
+(function(){
+"use strict";
+var COP=function(n){return '$'+Math.round(n).toLocaleString('es-CO');};
+
+var TIPOS={
+  foto:  {n:'Foto de producto',      base:260000, crew:180000, post:150000},
+  reel:  {n:'Reel',                  base:420000, crew:210000, post:290000},
+  inst:  {n:'Video institucional',   base:780000, crew:240000, post:520000},
+  evento:{n:'Cobertura de evento',   base:340000, crew:200000, post:230000},
+  spot:  {n:'Spot publicitario',     base:1250000,crew:290000, post:760000}
+};
+var DUR={'0.5':'Medio día (4h)','1':'Día completo (8h)','2':'2 días','3':'3+ días'};
+var LOC={
+  ciudad: {n:'Medellín ciudad',            transp:0,      porDia:false, viat:0},
+  metro:  {n:'Área metropolitana',         transp:90000,  porDia:true,  viat:38000},
+  oriente:{n:'Oriente antioqueño',         transp:220000, porDia:true,  viat:72000},
+  otra:   {n:'Otra ciudad de Colombia',    transp:650000, porDia:false, viat:185000}
+};
+var EXTRAS=[
+  {id:'luz',  n:'Iluminación profesional', d:'Set LED + softbox y difusores', p:240000, dia:true},
+  {id:'dron', n:'Dron',                    d:'Piloto certificado y permisos', p:380000},
+  {id:'loc',  n:'Locución',                d:'Voz profesional en estudio',    p:180000},
+  {id:'maq',  n:'Maquillaje y estilismo',  d:'Profesional en set',            p:220000, dia:true},
+  {id:'cam2', n:'Segunda cámara',          d:'Cuerpo extra + operador',       p:320000, dia:true},
+  {id:'tele', n:'Teleprompter',            d:'Equipo + operación',            p:90000},
+  {id:'mus',  n:'Músico o licencia musical',d:'Pista con licencia comercial', p:150000},
+  {id:'exp',  n:'Edición express 48h',     d:'Recargo del 35% sobre prod. y post', pct:.35}
+];
+
+/* --- pintar extras --- */
+var exWrap=document.getElementById('extras'),html='';
+EXTRAS.forEach(function(e){
+  var precio=e.pct?('+'+Math.round(e.pct*100)+'%'):(COP(e.p)+(e.dia?' / día':''));
+  html+='<label class="ex"><input type="checkbox" data-ex="'+e.id+'"><span class="face"><span class="box"></span>'+
+        '<span class="txt"><b>'+e.n+'</b><small>'+precio+' · '+e.d+'</small></span></span></label>';
+});
+exWrap.innerHTML=html;
+
+var form=document.getElementById('form'),
+    eq=document.getElementById('eq'), ent=document.getElementById('ent'),
+    eqOut=document.getElementById('eqOut'), entOut=document.getElementById('entOut'),
+    linesEl=document.getElementById('lines'), totalEl=document.getElementById('total'),
+    mTotalEl=document.getElementById('mTotal');
+var estado=null;
+
+function val(name){var el=form.querySelector('input[name="'+name+'"]:checked');return el?el.value:null;}
+function fill(r){var p=(r.value-r.min)/(r.max-r.min)*100;r.style.setProperty('--fill',p+'%');}
+
+function calcular(){
+  var t=TIPOS[val('tipo')], dias=parseFloat(val('dur')), L=LOC[val('loc')],
+      personas=parseInt(eq.value,10), entregables=parseInt(ent.value,10),
+      diasCobro=Math.ceil(dias);
+
+  var produccion=Math.round(t.base*(dias<=1?1:(1+(dias-1)*.35)));
+  var equipo=Math.round(t.crew*personas*dias);
+  var transporte=Math.round(L.transp*(L.porDia?diasCobro:1));
+  var viaticos=Math.round(L.viat*personas*diasCobro);
+  var post=Math.round(t.post*(1+(entregables-1)*.6));
+
+  var extrasSel=[],extrasTotal=0,express=null;
+  EXTRAS.forEach(function(e){
+    var cb=exWrap.querySelector('[data-ex="'+e.id+'"]');
+    if(!cb||!cb.checked)return;
+    if(e.pct){express=e;extrasSel.push({n:e.n,v:null});return;}
+    var v=Math.round(e.p*(e.dia?diasCobro:1));
+    extrasTotal+=v;
+    extrasSel.push({n:e.n+(e.dia&&diasCobro>1?' ×'+diasCobro+' días':''),v:v});
+  });
+  var recargo=express?Math.round((produccion+post)*express.pct):0;
+
+  var total=produccion+equipo+transporte+viaticos+post+extrasTotal+recargo;
+  total=Math.round(total/1000)*1000;
+
+  estado={
+    tipo:t.n,dur:DUR[val('dur')],loc:L.n,personas:personas,entregables:entregables,
+    produccion:produccion,equipo:equipo,transporte:transporte,viaticos:viaticos,post:post,
+    extras:extrasSel,recargo:recargo,total:total,diasCobro:diasCobro
+  };
+
+  /* --- render desglose --- */
+  var rows=[
+    {nm:'Producción y dirección', sub:t.n, v:produccion},
+    {nm:'Equipo humano', sub:personas+(personas>1?' personas':' persona')+' · '+DUR[val('dur')].toLowerCase(), v:equipo},
+    {nm:'Transporte', sub:L.n, v:transporte},
+    {nm:'Viáticos', sub:viaticos?personas+' × '+diasCobro+(diasCobro>1?' días':' día'):'No aplica en ciudad', v:viaticos}
+  ];
+  var out='';
+  rows.forEach(function(r){
+    out+='<li'+(r.v?'':' class="zero"')+'><span class="nm">'+r.nm+'<em>'+r.sub+'</em></span><span class="vl">'+COP(r.v)+'</span></li>';
+  });
+  out+='<li'+(extrasTotal||recargo?'':' class="zero"')+'><span class="nm">Extras<em>'+
+       (extrasSel.length?extrasSel.length+(extrasSel.length>1?' seleccionados':' seleccionado'):'Ninguno')+
+       '</em></span><span class="vl">'+COP(extrasTotal)+'</span></li>';
+  extrasSel.forEach(function(x){
+    if(x.v===null)return;
+    out+='<li class="sub"><span class="nm">'+x.n+'</span><span class="vl">'+COP(x.v)+'</span></li>';
+  });
+  out+='<li><span class="nm">Postproducción<em>'+entregables+(entregables>1?' entregables':' entregable')+'</em></span><span class="vl">'+COP(post)+'</span></li>';
+  if(recargo)out+='<li class="sub"><span class="nm">Edición express 48h (+35%)</span><span class="vl">'+COP(recargo)+'</span></li>';
+  linesEl.innerHTML=out;
+
+  totalEl.textContent=COP(total);
+  mTotalEl.textContent=COP(total);
+  eqOut.innerHTML=personas+'<small>'+(personas>1?'personas':'persona')+'</small>';
+  entOut.innerHTML=entregables+'<small>'+(entregables>1?'entregables':'entregable')+'</small>';
+  fill(eq);fill(ent);
+}
+
+function mensaje(){
+  var e=estado,L=['Hola LQS 🎬 quiero cotizar un rodaje. Este es mi estimado desde la calculadora:','',
+    '▸ Tipo de proyecto: '+e.tipo,
+    '▸ Duración: '+e.dur,
+    '▸ Ubicación: '+e.loc,
+    '▸ Equipo: '+e.personas+(e.personas>1?' personas':' persona'),
+    '▸ Entregables: '+e.entregables,
+    '▸ Extras: '+(e.extras.length?e.extras.map(function(x){return x.n;}).join(', '):'ninguno'),
+    '','— DESGLOSE —',
+    'Producción y dirección: '+COP(e.produccion),
+    'Equipo humano: '+COP(e.equipo),
+    'Transporte: '+COP(e.transporte),
+    'Viáticos: '+COP(e.viaticos)];
+  e.extras.forEach(function(x){if(x.v!==null)L.push('Extra · '+x.n+': '+COP(x.v));});
+  L.push('Postproducción: '+COP(e.post));
+  if(e.recargo)L.push('Edición express 48h (+35%): '+COP(e.recargo));
+  L.push('','TOTAL ESTIMADO: '+COP(e.total)+' COP','(Estimado automático, sin IVA. Quedo atento a la cotización final.)');
+  return L.join('\n');
+}
+function enviar(){
+  window.open('https://wa.me/573332791710?text='+encodeURIComponent(mensaje()),'_blank','noopener');
+}
+document.getElementById('wa').addEventListener('click',enviar);
+document.getElementById('mWa').addEventListener('click',enviar);
+
+form.addEventListener('change',calcular);
+form.addEventListener('input',calcular);
+exWrap.addEventListener('change',calcular);
+calcular();
+
+/* --- reveal --- */
+var R=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var els=document.querySelectorAll('.rv');
+if(R||!('IntersectionObserver' in window)){[].forEach.call(els,function(n){n.classList.add('on');});}
+else{
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x,i){if(x.isIntersecting){x.target.style.transitionDelay=(i%4)*70+'ms';x.target.classList.add('on');io.unobserve(x.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  [].forEach.call(els,function(n){io.observe(n);});
+}
+})();
+</script>
+</body>
+</html>
