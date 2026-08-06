@@ -7,14 +7,21 @@ funciona en GitHub Pages, local o cualquier hosting, sin build.
 ## Estructura
 
 ```
-index.html            ← Galaxia LQS (página madre: carrusel orbital, nave, mundos isométricos)
+index.html                    ← Sitio LQS (landing editorial: estudio, capacidades,
+                                 automatización, universos, muestras, precios, proceso)
+galaxia.html                  ← Experiencia inmersiva pixel art (los mundos isométricos)
+automatizacion-guia.html      ← Guía técnica interna de Meta Cloud API
+
 mundos/
-  mercury.html        ← 💎 Mercury · Joyería (marca propia)
-  foma.html           ← 👕 foma · Ropa (marca propia)
-  express.html        ← ⚡ Express · Diseño día a día (con cotizador WhatsApp)
-  creadores.html      ← 🎬 Creadores · Marca personal y contenido
-  empresas.html       ← 🏢 Empresas · Branding, web y automatización
-  productora.html     ← 🎥 Productora · Audiovisual
+  ├─ Servicios y paquetes
+  │   empresas.html · express.html · creadores.html
+  │   productora.html · mercury.html · foma.html
+  ├─ Muestras interactivas (demos funcionales)
+  │   empresas-muestras.html    generador de identidad, mockup web, chat
+  │   express-muestras.html     galería SVG + configurador de pedido
+  │   productora-muestras.html  reel simulado, antes/después, formatos
+  │   marcas-muestras.html      catálogo joyería + previsualizador de merch
+  └─ automatizacion.html        chatbot funcional + paquetes
 ```
 
 Mundos ya en vivo en repos propios:

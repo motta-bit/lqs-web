@@ -146,6 +146,47 @@ h2.disp{font-size:clamp(2.1rem,5.6vw,4.1rem);margin-bottom:22px}
 .pr h3{font-family:var(--ser);font-size:1.7rem}
 .pr p{font-size:.92rem;color:var(--dim)}
 @media(max-width:760px){.pr{grid-template-columns:60px 1fr;gap:14px}.pr p{grid-column:2}}
+
+/* ---------- banda automatización ---------- */
+.auto{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:900px){.auto{grid-template-columns:1fr;gap:32px}}
+.auto ul{list-style:none;margin:26px 0 30px;display:flex;flex-direction:column;gap:11px}
+.auto li{display:flex;gap:11px;align-items:flex-start;font-size:.95rem;color:var(--dim);line-height:1.5}
+.auto li i{flex:none;width:17px;height:17px;margin-top:4px;border-radius:6px;background:rgba(91,141,239,.18);border:1px solid rgba(91,141,239,.5);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4 10-10'/%3E%3C/svg%3E");background-size:12px;background-position:center;background-repeat:no-repeat}
+.phone{border:1px solid var(--line2);border-radius:30px;background:linear-gradient(170deg,#0e1220,#080a13);padding:15px 13px 19px;max-width:330px;margin:0 auto;box-shadow:0 34px 80px -30px #000}
+.phone .bar{display:flex;align-items:center;gap:9px;padding:4px 8px 13px;border-bottom:1px solid var(--line)}
+.phone .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#5b8def,#3fd0e6);display:grid;place-items:center;font-size:.9rem}
+.phone .who b{display:block;font-size:.84rem;font-weight:700;line-height:1.2}
+.phone .who span{font-size:.68rem;color:#4ade80}
+.chat{padding:15px 4px 0;display:flex;flex-direction:column;gap:9px;min-height:264px}
+.bub{max-width:82%;padding:10px 13px;border-radius:15px;font-size:.85rem;line-height:1.45;opacity:0;transform:translateY(8px);animation:bubIn .45s forwards}
+.bub.b{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid var(--line);border-bottom-left-radius:5px}
+.bub.u{align-self:flex-end;background:linear-gradient(135deg,#5b8def,#4a76cc);color:#fff;border-bottom-right-radius:5px}
+.bub.q{align-self:flex-end;background:none;border:1px solid rgba(91,141,239,.55);color:#a9c4f5;font-weight:700}
+@keyframes bubIn{to{opacity:1;transform:none}}
+/* ---------- muestras ---------- */
+.work{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:16px;margin-top:46px}
+.wk{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg2);transition:.4s cubic-bezier(.2,.7,.3,1);display:flex;flex-direction:column}
+.wk:hover{transform:translateY(-7px);border-color:var(--wc)}
+.wk .thumb{height:172px;position:relative;overflow:hidden;background:#080a13;border-bottom:1px solid var(--line)}
+.wk .thumb canvas{width:100%;height:100%}
+.wk .c{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+.wk .tag{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--wc);margin-bottom:10px}
+.wk h3{font-family:var(--ser);font-size:1.5rem;margin-bottom:8px;line-height:1.15}
+.wk p{font-size:.87rem;color:var(--dim);line-height:1.55;margin-bottom:18px}
+.wk .go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;color:var(--wc)}
+.wk .go svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;transition:.3s}
+.wk:hover .go svg{transform:translateX(5px)}
+/* ---------- precios ---------- */
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin-top:44px}
+.pc{background:var(--bg);padding:26px 22px;transition:.3s;display:block}
+.pc:hover{background:var(--bg2)}
+.pc .k{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:800;margin-bottom:12px}
+.pc b{display:block;font-family:var(--ser);font-size:1.72rem;line-height:1;margin-bottom:6px}
+.pc span{font-size:.79rem;color:var(--dim)}
+.pc .ar{margin-top:14px;font-size:.78rem;font-weight:700;color:var(--gold);opacity:0;transform:translateX(-4px);transition:.3s}
+.pc:hover .ar{opacity:1;transform:none}
 /* ---------- contacto ---------- */
 .cta-final{text-align:center;padding:clamp(84px,12vw,160px) 0}
 .cta-final h2{margin-bottom:20px}
@@ -171,6 +212,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 54px;position:relative;z-
     <a href="#estudio">Estudio</a>
     <a href="#capacidades">Capacidades</a>
     <a href="#universos">Universos</a>
+    <a href="#muestras">Muestras</a>
     <a href="#proceso">Proceso</a>
     <a href="mundos/automatizacion.html">Automatización</a>
     <a class="nbtn" href="#contacto">Hablemos</a>
@@ -219,6 +261,30 @@ footer{border-top:1px solid var(--line);padding:44px 0 54px;position:relative;z-
   <div class="caps" id="caps"></div>
 </div></section>
 
+
+<section class="sec sec-line" id="automatizacion"><div class="wrap auto">
+  <div class="rv">
+    <div class="lbl">AUTOMATIZACIÓN</div>
+    <h2 class="disp">Tu negocio atiende<br>mientras <span class="it">duermes</span>.</h2>
+    <p class="body-l">Conectamos tu WhatsApp, Instagram y Facebook a un sistema que responde, muestra el catálogo, toma reservas y avisa a tu equipo — con la API oficial de Meta.</p>
+    <ul>
+      <li><i></i>Respuestas inmediatas 24/7, también domingos y festivos</li>
+      <li><i></i>Catálogo, menú y reservas dentro del chat</li>
+      <li><i></i>Recordatorios automáticos y seguimiento</li>
+      <li><i></i>Deriva a una persona real cuando hace falta</li>
+    </ul>
+    <div class="hbtns">
+      <a class="btn p" href="mundos/automatizacion.html">Probar el chatbot <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn g" href="automatizacion-guia.html">Ver la guía técnica</a>
+    </div>
+  </div>
+  <div class="rv">
+    <div class="phone">
+      <div class="bar"><div class="av">🤖</div><div class="who"><b>Tu negocio</b><span>● en línea</span></div></div>
+      <div class="chat" id="chat"></div>
+    </div>
+  </div>
+</div></section>
 <section class="sec sec-line" id="universos"><div class="wrap">
   <div class="rv"><div class="lbl">LOS UNIVERSOS</div>
   <h2 class="disp">Ocho mundos.<br>Uno es el <span class="it">tuyo</span>.</h2>
@@ -226,6 +292,13 @@ footer{border-top:1px solid var(--line);padding:44px 0 54px;position:relative;z-
   <div class="uni" id="uni"></div>
 </div></section>
 
+
+<section class="sec sec-line" id="muestras"><div class="wrap">
+  <div class="rv"><div class="lbl">MUESTRAS</div>
+  <h2 class="disp">No lo contamos.<br>Te lo <span class="it">mostramos</span>.</h2>
+  <p class="body-l">Demos reales que puedes tocar: genera una identidad, configura un pedido, previsualiza tu merch o mira cómo rodamos. Todo funciona de verdad.</p></div>
+  <div class="work" id="work"></div>
+</div></section>
 <section class="sec sec-line"><div class="wrap rv">
   <div class="xp">
     <canvas id="gx"></canvas><div class="veil"></div>
@@ -238,6 +311,14 @@ footer{border-top:1px solid var(--line);padding:44px 0 54px;position:relative;z-
   </div>
 </div></section>
 
+
+<section class="sec sec-line" id="precios"><div class="wrap">
+  <div class="rv"><div class="lbl">INVERSIÓN</div>
+  <h2 class="disp">Precios claros,<br>desde el primer día.</h2>
+  <p class="body-l">Precio cerrado en pesos colombianos, sin costos ocultos y sin cotizaciones que tardan semanas. Estos son los puntos de partida de cada universo.</p></div>
+  <div class="pricing" id="pricing"></div>
+  <p style="margin-top:20px;font-size:.83rem;color:var(--faint);max-width:64ch">Pagos 50% al inicio y 50% contra entrega. Cada universo tiene sus paquetes detallados y extras a la carta.</p>
+</div></section>
 <section class="sec sec-line" id="proceso"><div class="wrap">
   <div class="rv"><div class="lbl">CÓMO TRABAJAMOS</div>
   <h2 class="disp">Un proceso sin sorpresas.</h2>
@@ -379,6 +460,90 @@ U.forEach((u,i)=>{
    g.globalAlpha=1;g.fillStyle=p.pal[1];g.beginPath();g.arc(px,py,rad,0,7);g.fill();
    g.fillStyle=p.pal[0];g.beginPath();g.arc(px-rad*.3,py-rad*.3,rad*.45,0,7);g.fill();});
   requestAnimationFrame(lp);})();})();
+
+/* ---------- muestras ---------- */
+const WORK=[
+ {t:'Identidad + web + bot',n:'Empresas',c:'#5b8def',u:'mundos/empresas-muestras.html',
+  d:'Genera una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.',k:'brand'},
+ {t:'Piezas y precios',n:'Express',c:'#39c07a',u:'mundos/express-muestras.html',
+  d:'Galería de piezas reales y un configurador que calcula tu pedido al instante.',k:'grid'},
+ {t:'Rodaje y formatos',n:'Productora',c:'#3fc6d6',u:'mundos/productora-muestras.html',
+  d:'Reel simulado, antes/después de foto producto y la misma pieza en 4 formatos.',k:'reel'},
+ {t:'Joyería y merch',n:'Mercury & foma',c:'#d98aa6',u:'mundos/marcas-muestras.html',
+  d:'Configura tu pieza o previsualiza tu merch y cotiza el lote en segundos.',k:'obj'}
+];
+document.getElementById('work').innerHTML=WORK.map((w,i)=>
+ `<a class="wk rv" href="${w.u}" style="--wc:${w.c}">
+   <div class="thumb"><canvas id="wc${i}"></canvas></div>
+   <div class="c"><div class="tag">${w.n}</div><h3>${w.t}</h3><p>${w.d}</p>
+   <span class="go">Ver la muestra <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+ </a>`).join('');
+WORK.forEach((w,i)=>{
+ const c=document.getElementById('wc'+i);if(!c)return;
+ const b=c.parentElement.getBoundingClientRect();c.width=Math.max(260,b.width|0);c.height=172;
+ const g=c.getContext('2d'),W=c.width,H=c.height;
+ g.fillStyle='#080a13';g.fillRect(0,0,W,H);
+ const gr=g.createRadialGradient(W*.5,H*.42,6,W*.5,H*.5,W*.62);
+ gr.addColorStop(0,w.c+'33');gr.addColorStop(1,'rgba(8,10,19,0)');g.fillStyle=gr;g.fillRect(0,0,W,H);
+ g.globalAlpha=1;
+ if(w.k==='brand'){
+  g.strokeStyle=w.c;g.lineWidth=2;g.strokeRect(W*.5-46,H*.5-38,92,58);
+  g.fillStyle=w.c;g.fillRect(W*.5-46,H*.5-38,92,9);
+  ['#5b8def','#d6e3ff','#1f3f7a','#f2efe8','#9aa0b8'].forEach((cc,j)=>{g.fillStyle=cc;g.fillRect(W*.5-46+j*19,H*.5+30,15,11);});
+  g.fillStyle='#f2efe8';g.font='600 15px Manrope,sans-serif';g.textAlign='center';g.fillText('Aa',W*.5,H*.5+2);
+ } else if(w.k==='grid'){
+  const cols=[[.24,.3,.2,.34],[.5,.24,.22,.46],[.78,.32,.18,.3],[.36,.72,.3,.2],[.7,.74,.24,.18]];
+  cols.forEach(([x,y,ww,hh],j)=>{g.fillStyle=j%2?w.c+'cc':'rgba(255,255,255,.14)';
+   g.fillRect(W*x-W*ww/2,H*y-H*hh/2,W*ww,H*hh);});
+ } else if(w.k==='reel'){
+  g.fillStyle='#05060c';g.fillRect(0,H*.16,W,H*.68);
+  g.strokeStyle=w.c;g.lineWidth=2;g.beginPath();g.arc(W*.5,H*.5,22,0,7);g.stroke();
+  g.fillStyle=w.c;g.beginPath();g.moveTo(W*.5-7,H*.5-11);g.lineTo(W*.5+13,H*.5);g.lineTo(W*.5-7,H*.5+11);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.2)';g.fillRect(W*.16,H*.78,W*.68,3);
+  g.fillStyle=w.c;g.fillRect(W*.16,H*.78,W*.34,3);
+ } else {
+  g.strokeStyle=w.c;g.lineWidth=3;g.beginPath();g.arc(W*.36,H*.54,24,0,7);g.stroke();
+  g.fillStyle=w.c;g.beginPath();g.moveTo(W*.36,H*.54-40);g.lineTo(W*.36+11,H*.54-27);g.lineTo(W*.36,H*.54-16);g.lineTo(W*.36-11,H*.54-27);g.closePath();g.fill();
+  g.fillStyle='rgba(255,255,255,.16)';
+  g.beginPath();g.moveTo(W*.63,H*.36);g.lineTo(W*.71,H*.32);g.lineTo(W*.79,H*.36);g.lineTo(W*.79,H*.72);g.lineTo(W*.63,H*.72);g.closePath();g.fill();
+ }
+});
+/* ---------- precios ---------- */
+const PRICE=[
+ ['Express','$45.000','pieza suelta','mundos/express.html'],
+ ['Empresas','$890.000','identidad esencial','mundos/empresas.html'],
+ ['Creadores','$450.000','kit de arranque','mundos/creadores.html'],
+ ['Productora','$320.000','foto de producto','mundos/productora.html'],
+ ['Automatización','$780.000','montaje del bot','mundos/automatizacion.html']
+];
+document.getElementById('pricing').innerHTML=PRICE.map(([k,p,d,u])=>
+ `<a class="pc rv" href="${u}"><div class="k">${k}</div><b>${p}</b><span>desde · ${d}</span><div class="ar">Ver paquetes →</div></a>`).join('');
+/* ---------- demo de chat ---------- */
+(function(){
+ const el=document.getElementById('chat');if(!el)return;
+ const SEQ=[
+  ['b','Hola 👋 Soy el asistente de tu negocio. ¿En qué te ayudo?'],
+  ['q','Quiero reservar'],
+  ['b','Perfecto. ¿Para qué día y cuántas personas?'],
+  ['u','Viernes, 4 personas'],
+  ['b','Listo ✅ Mesa para 4 el viernes 8:00 p.m. Te llega la confirmación en un minuto.'],
+  ['q','¿Dónde quedan?'],
+  ['b','Estamos en Laureles, Medellín. Te paso la ubicación 📍']
+ ];
+ let i=0,timer=null;
+ function step(){
+  if(i>=SEQ.length){timer=setTimeout(()=>{el.innerHTML='';i=0;step();},3400);return;}
+  const [k,t]=SEQ[i++];
+  const d=document.createElement('div');d.className='bub '+k;d.textContent=t;el.appendChild(d);
+  el.scrollTop=el.scrollHeight;
+  timer=setTimeout(step,k==='b'?1500:1000);
+ }
+ const io2=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){if(!timer&&i===0)step();}
+  else{clearTimeout(timer);timer=null;}
+ }),{threshold:.25});
+ io2.observe(el);
+})();
 /* ---------- scroll ---------- */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 function armar(){document.querySelectorAll('.rv:not(.in)').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*55)+'ms';io.observe(el);});}
