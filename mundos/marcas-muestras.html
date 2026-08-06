@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muestras · Mercury &amp; foma — LQS</title>
+<meta name="description" content="Catálogo visual de Mercury (joyería de autor) y foma (ropa y merch) de LQS. Configura tu pieza o tu lote de prendas y cotiza al instante.">
+<meta name="theme-color" content="#05060f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06070f;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.2);
+--mer:#d98aa6;--merl:#ffe1ec;--merd:#7a3b53;--fom:#b6ad98;--foml:#f3efe6;--fomd:#5a5346;
+--ser:'Instrument Serif',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--pix:'Press Start 2P',monospace;--pad:clamp(20px,5vw,58px)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.8}
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(56% 42% at 76% 6%,rgba(217,138,166,.16),transparent 60%),radial-gradient(52% 40% at 10% 74%,rgba(182,173,152,.12),transparent 60%)}
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 var(--pad)}
+nav{position:sticky;top:0;z-index:50;background:rgba(6,7,15,.84);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1180px;margin:0 auto;padding:14px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:var(--pix);font-size:.62rem;letter-spacing:.04em;color:var(--mer)}
+.nl{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.nl a{font-size:.8rem;font-weight:700;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:8px 15px;transition:.25s;white-space:nowrap}
+.nl a:hover{color:var(--ink);border-color:var(--line2)}
+section{position:relative;z-index:2;padding:clamp(56px,8vw,104px) 0}
+.lbl{font-family:var(--pix);font-size:.5rem;letter-spacing:.22em;margin-bottom:18px;display:flex;align-items:center;gap:11px}
+.lbl::before{content:'';width:22px;height:1px;background:currentColor;opacity:.6}
+h1,h2,h3{font-weight:400;letter-spacing:-.015em}
+.disp{font-family:var(--ser);line-height:1.08}
+h1.disp{font-size:clamp(2.4rem,7vw,4.6rem);margin-bottom:20px}
+h2.disp{font-size:clamp(1.9rem,4.6vw,3.2rem);margin-bottom:16px}
+.it{font-style:italic}
+.body-l{font-size:clamp(1rem,1.7vw,1.16rem);color:var(--dim);max-width:60ch}
+.hero{padding-top:clamp(48px,7vw,88px)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+.sec-line{border-top:1px solid var(--line)}
+/* catálogo */
+.cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:15px;margin-top:36px}
+.pz{border:1px solid var(--line);border-radius:20px;background:linear-gradient(170deg,rgba(255,255,255,.045),rgba(255,255,255,.012));padding:16px;cursor:pointer;transition:.35s;text-align:center}
+.pz:hover{transform:translateY(-6px);border-color:var(--mer);box-shadow:0 0 40px -12px var(--mer)}
+.pz svg{width:100%;height:118px;display:block;margin-bottom:12px}
+.pz b{display:block;font-size:.95rem;font-weight:700;margin-bottom:3px}
+.pz small{display:block;font-size:.76rem;color:var(--faint);margin-bottom:8px}
+.pz .p{font-size:.88rem;font-weight:800;color:var(--mer)}
+/* configurador */
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,48px);align-items:center;margin-top:36px}
+@media(max-width:820px){.cfg{grid-template-columns:1fr}}
+.stage{border:1px solid var(--line);border-radius:22px;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.055),rgba(255,255,255,.008));padding:26px;display:grid;place-items:center;min-height:300px}
+.stage svg{width:100%;max-width:290px;height:auto}
+.ctrl{display:flex;flex-direction:column;gap:19px}
+.fld label{display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:800;margin-bottom:9px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);color:var(--ink);padding:10px 15px;font-size:.85rem;font-weight:700;cursor:pointer;transition:.22s;font-family:inherit}
+.opt:hover{border-color:var(--line2)}
+.opt.on{border-color:var(--ac,var(--mer));color:var(--ac,var(--mer));background:rgba(255,255,255,.06)}
+.sw{width:34px;height:34px;border-radius:50%;padding:0;border:2px solid transparent}
+.sw.on{border-color:#fff;transform:scale(1.1)}
+.tot{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035);padding:19px 21px}
+.tot .r{display:flex;justify-content:space-between;font-size:.87rem;color:var(--dim);padding:5px 0}
+.tot .r.big{border-top:1px solid var(--line);margin-top:9px;padding-top:13px;color:var(--ink);font-size:1.28rem;font-weight:800}
+.tot .r.big span:last-child{color:var(--ac,var(--mer))}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.95rem;padding:15px 26px;border-radius:999px;transition:.3s;border:1px solid transparent;cursor:pointer;font-family:inherit;background:var(--ink);color:#06070f}
+.cta:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(242,239,232,.4)}
+.cta.g{background:none;border-color:var(--line2);color:var(--ink)}
+.cta.g:hover{border-color:var(--ac,var(--mer));color:var(--ac,var(--mer))}
+input[type=number]{width:110px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;color:var(--ink);padding:11px 14px;font-size:.95rem;font-family:inherit;font-weight:700}
+input[type=number]:focus{outline:none;border-color:var(--ac,var(--fom))}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:70;background:rgba(4,5,12,.94);backdrop-filter:blur(10px);display:grid;place-items:center;padding:24px;opacity:0;visibility:hidden;transition:.35s}
+.lb.on{opacity:1;visibility:visible}
+.lb .box{max-width:440px;width:100%;text-align:center}
+.lb svg{width:100%;height:auto;max-height:56vh;margin-bottom:20px}
+.lb h3{font-family:var(--ser);font-size:2rem;margin-bottom:6px}
+.lb p{color:var(--dim);font-size:.9rem}
+.lb .x{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--ink);font-size:1.3rem;cursor:pointer}
+footer{border-top:1px solid var(--line);padding:34px 0 46px;position:relative;z-index:2;font-size:.84rem;color:var(--faint)}
+footer .in{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:space-between}
+footer a:hover{color:var(--mer)}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style></head><body>
+<canvas id="sky"></canvas><div class="aura"></div>
+
+<nav><div class="in">
+  <div class="brand">💎 MERCURY &amp; foma</div>
+  <div class="nl"><a href="#mercury">Mercury</a><a href="#foma">foma</a><a href="../index.html">← Sitio</a></div>
+</div></nav>
+
+<div class="wrap"><header class="hero rv">
+  <div class="lbl" style="color:var(--mer)">MUESTRAS · MARCAS PROPIAS</div>
+  <h1 class="disp">Diseñamos objetos,<br>no solo <span class="it" style="color:var(--mer)">pantallas</span>.</h1>
+  <p class="body-l">Mercury (joyería) y foma (ropa) son marcas propias de LQS. También son el taller donde vestimos y obsequiamos a las marcas que acompañamos: uniformes para un restaurante, pines para una empresa, merch para un creador.</p>
+</header></div>
+
+<!-- ══════ MERCURY ══════ -->
+<section class="sec-line" id="mercury"><div class="wrap">
+  <div class="rv"><div class="lbl" style="color:var(--mer)">MERCURY · JOYERÍA</div>
+  <h2 class="disp">Piezas que se <span class="it" style="color:var(--mer)">conservan</span>.</h2>
+  <p class="body-l">Plata 925 y baño de oro, trabajadas a mano. Toca una pieza para verla en detalle.</p></div>
+  <div class="cat rv" id="cat"></div>
+</div></section>
+
+<section id="cfgjoya"><div class="wrap">
+  <div class="rv"><div class="lbl" style="color:var(--mer)">CONFIGURADOR</div>
+  <h2 class="disp">Arma tu encargo</h2>
+  <p class="body-l">Elige la pieza, el metal y si quieres grabado. El precio se calcula al instante.</p></div>
+  <div class="cfg rv" style="--ac:var(--mer)">
+    <div class="stage" id="jStage"></div>
+    <div class="ctrl">
+      <div class="fld"><label>Pieza</label><div class="opts" id="jTipo"></div></div>
+      <div class="fld"><label>Metal</label><div class="opts" id="jMetal"></div></div>
+      <div class="fld"><label>Grabado interior</label><div class="opts" id="jGrab"></div></div>
+      <div class="tot" id="jTot"></div>
+      <button class="cta" id="jGo">Cotizar por WhatsApp</button>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════ FOMA ══════ -->
+<section class="sec-line" id="foma"><div class="wrap">
+  <div class="rv"><div class="lbl" style="color:var(--fom)">FOMA · ROPA Y MERCH</div>
+  <h2 class="disp">Prendas que la gente<br>de verdad se <span class="it" style="color:var(--fom)">pone</span>.</h2>
+  <p class="body-l">Previsualiza tu merch: elige la prenda, el color y cómo aplicamos tu marca.</p></div>
+  <div class="cfg rv" style="--ac:var(--fom)">
+    <div class="stage" id="fStage"></div>
+    <div class="ctrl">
+      <div class="fld"><label>Prenda</label><div class="opts" id="fPrenda"></div></div>
+      <div class="fld"><label>Color</label><div class="opts" id="fColor"></div></div>
+      <div class="fld"><label>Aplicación de marca</label><div class="opts" id="fLogo"></div></div>
+      <div class="fld"><label>Cantidad (mínimo 20)</label><input type="number" id="fQty" min="20" step="5" value="30"></div>
+      <div class="tot" id="fTot"></div>
+      <button class="cta" id="fGo">Cotizar lote por WhatsApp</button>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec-line"><div class="wrap rv" style="text-align:center">
+  <h2 class="disp">¿Vestimos o marcamos tu proyecto?</h2>
+  <p class="body-l" style="margin:0 auto 30px">Si ya trabajas con otro universo de LQS, el diseño sale de tu mismo manual de marca — sin costo de diseño adicional.</p>
+  <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9C%A6%20vi%20las%20muestras%20de%20Mercury%20y%20foma." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+</div></section>
+
+<footer><div class="wrap in">
+  <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
+  <span><a href="mercury.html">Mercury</a> · <a href="foma.html">foma</a> · <a href="../index.html">Sitio</a></span>
+</div></footer>
+
+<div class="lb" id="lb"><button class="x" id="lbx">✕</button><div class="box"><div id="lbsvg"></div><h3 id="lbt"></h3><p id="lbp"></p></div></div>
+
+<script>
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const fmt=n=>'$'+n.toLocaleString('es-CO');
+/* ---------- SVG joyería ---------- */
+function metalDefs(id,a,b,c){return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="${a}"/><stop offset=".5" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>`;}
+const MET={plata:['#f4f6f9','#c3cbd6','#8b94a3'],oro:['#ffeeb8','#e6c877','#a8842f']};
+function joya(tipo,metal,grab,uid){
+  const m=MET[metal],g='g'+uid, S=`stroke="url(#${g})"`, F=`fill="url(#${g})"`;
+  const d=metalDefs(g,m[0],m[1],m[2]);
+  const eng=grab?`<text x="100" y="163" text-anchor="middle" font-family="Instrument Serif,serif" font-size="11" fill="${m[2]}" opacity=".95">— tu grabado —</text>`:'';
+  const P={
+   anillo:`${d}<ellipse cx="100" cy="112" rx="46" ry="46" fill="none" ${S} stroke-width="13"/>
+     <ellipse cx="100" cy="112" rx="46" ry="46" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+     <path d="M100 46 L114 64 L100 78 L86 64 Z" ${F}/><path d="M100 46 L114 64 L100 66 Z" fill="rgba(255,255,255,.5)"/>${eng}`,
+   dije:`${d}<path d="M100 34 v34" stroke="${m[2]}" stroke-width="3"/>
+     <path d="M60 60 h80 l-14 76 a26 26 0 0 1 -52 0 Z" ${F}/>
+     <path d="M60 60 h80 l-8 12 H68 Z" fill="rgba(255,255,255,.4)"/>
+     <circle cx="100" cy="104" r="13" fill="rgba(255,255,255,.28)"/>${eng}`,
+   aretes:`${d}<g><circle cx="66" cy="62" r="9" fill="none" ${S} stroke-width="4"/><path d="M66 71 l16 44 -32 0 Z" ${F}/></g>
+     <g><circle cx="134" cy="62" r="9" fill="none" ${S} stroke-width="4"/><path d="M134 71 l16 44 -32 0 Z" ${F}/></g>${eng}`,
+   pin:`${d}<circle cx="100" cy="100" r="42" ${F}/><circle cx="100" cy="100" r="42" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+     <text x="100" y="112" text-anchor="middle" font-family="Press Start 2P,monospace" font-size="19" fill="#2a2016">L</text>
+     <path d="M100 142 v22" stroke="${m[2]}" stroke-width="3"/>${eng}`,
+   pulsera:`${d}<ellipse cx="100" cy="106" rx="62" ry="40" fill="none" ${S} stroke-width="11"/>
+     <ellipse cx="100" cy="106" rx="62" ry="40" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+     <rect x="86" y="58" width="28" height="18" rx="5" ${F}/>${eng}`,
+   gemelos:`${d}<g><rect x="40" y="72" width="46" height="46" rx="9" ${F}/><rect x="46" y="78" width="34" height="12" rx="4" fill="rgba(255,255,255,.32)"/><path d="M63 118 v22" stroke="${m[2]}" stroke-width="3"/></g>
+     <g><rect x="114" y="72" width="46" height="46" rx="9" ${F}/><rect x="120" y="78" width="34" height="12" rx="4" fill="rgba(255,255,255,.32)"/><path d="M137 118 v22" stroke="${m[2]}" stroke-width="3"/></g>${eng}`
+  };
+  return `<svg viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">${P[tipo]||P.anillo}</svg>`;
+}
+const PZ=[
+ ['anillo','Anillo Órbita','Plata 925',180000],['dije','Dije Cometa','Plata 925',145000],
+ ['aretes','Aretes Eclipse','Baño de oro',126000],['pin','Pin corporativo','Metal esmaltado',38000],
+ ['pulsera','Pulsera Anillo','Plata 925',210000],['gemelos','Gemelos Nova','Baño de oro',168000]
+];
+document.getElementById('cat').innerHTML=PZ.map(([t,n,mat,p],i)=>
+ `<div class="pz" data-i="${i}">${joya(t,i%2?'oro':'plata',0,'c'+i)}<b>${n}</b><small>${mat}</small><span class="p">${fmt(p)}</span></div>`).join('');
+document.querySelectorAll('.pz').forEach(el=>el.addEventListener('click',()=>{
+ const [t,n,mat,p]=PZ[+el.dataset.i];
+ document.getElementById('lbsvg').innerHTML=joya(t,+el.dataset.i%2?'oro':'plata',1,'lb');
+ document.getElementById('lbt').textContent=n;
+ document.getElementById('lbp').textContent=mat+' · desde '+fmt(p)+' · incluye empaque de marca';
+ document.getElementById('lb').classList.add('on');
+}));
+document.getElementById('lbx').onclick=()=>document.getElementById('lb').classList.remove('on');
+document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb')e.currentTarget.classList.remove('on')});
+/* ---------- configurador joyería ---------- */
+const JT=[['anillo','Anillo',280000],['dije','Dije',210000],['aretes','Aretes',190000],['pin','Pin corporativo',38000],['pulsera','Pulsera',260000],['gemelos','Gemelos',240000]];
+const JM=[['plata','Plata 925',1],['oro','Baño de oro',1.28]];
+let jT=0,jM=0,jG=0;
+function ch(host,arr,cur,fn,cls){document.getElementById(host).innerHTML=arr.map((o,i)=>
+ `<button class="opt ${cls||''} ${i===cur?'on':''}" data-i="${i}"${o[3]?` style="background:${o[3]}"`:''}>${o[1]}</button>`).join('');
+ document.querySelectorAll('#'+host+' .opt').forEach(b=>b.onclick=()=>{fn(+b.dataset.i);});}
+function jRender(){
+ ch('jTipo',JT,jT,i=>{jT=i;jRender();});
+ ch('jMetal',JM,jM,i=>{jM=i;jRender();});
+ ch('jGrab',[['no','Sin grabado'],['si','Con grabado']],jG,i=>{jG=i;jRender();});
+ document.getElementById('jStage').innerHTML=joya(JT[jT][0],JM[jM][0],jG,'cfg'+jT+jM+jG);
+ const base=JT[jT][2],met=Math.round(base*JM[jM][2]),gr=jG?35000:0,tot=met+gr;
+ document.getElementById('jTot').innerHTML=
+  `<div class="r"><span>${JT[jT][1]} · ${JM[jM][1]}</span><span>${fmt(met)}</span></div>`+
+  (jG?`<div class="r"><span>Grabado personalizado</span><span>${fmt(gr)}</span></div>`:'')+
+  `<div class="r"><span>Empaque de marca</span><span>incluido</span></div>`+
+  `<div class="r big"><span>Estimado</span><span>${fmt(tot)}</span></div>`;
+ document.getElementById('jGo').onclick=()=>{
+  const m=`Hola LQS 💎 quiero cotizar en Mercury: ${JT[jT][1]} en ${JM[jM][1]}${jG?' con grabado':''}. Estimado ${fmt(tot)}.`;
+  window.open('https://wa.me/573332791710?text='+encodeURIComponent(m),'_blank');};
+}
+jRender();
+/* ---------- SVG prendas ---------- */
+function prenda(tipo,color,logo,uid){
+ const sombra='rgba(0,0,0,.22)';
+ const mark={
+  mono:`<circle cx="100" cy="104" r="17" fill="none" stroke="#1c1a17" stroke-width="3"/><text x="100" y="111" text-anchor="middle" font-family="Press Start 2P,monospace" font-size="11" fill="#1c1a17">L</text>`,
+  texto:`<text x="100" y="108" text-anchor="middle" font-family="Instrument Serif,serif" font-size="24" fill="#1c1a17">foma</text>`,
+  icono:`<path d="M100 86 l7 16 17 1 -13 11 4 17 -15 -9 -15 9 4 -17 -13 -11 17 -1 Z" fill="#1c1a17"/>`
+ }[logo]||'';
+ const P={
+  camiseta:`<path d="M66 48 L84 40 h32 l18 8 22 15 -13 20 -12 -7 v72 H69 v-72 l-12 7 -13 -20 Z" fill="${color}" stroke="${sombra}" stroke-width="2"/>
+   <path d="M84 40 a16 12 0 0 0 32 0" fill="none" stroke="${sombra}" stroke-width="2.4"/>${mark}`,
+  hoodie:`<path d="M64 52 L84 42 h32 l20 10 24 16 -14 21 -13 -8 v75 H67 v-75 l-13 8 -14 -21 Z" fill="${color}" stroke="${sombra}" stroke-width="2"/>
+   <path d="M82 42 q18 22 36 0" fill="${color}" stroke="${sombra}" stroke-width="2.4"/>
+   <path d="M92 60 v22 M108 60 v22" stroke="${sombra}" stroke-width="2"/>
+   <rect x="78" y="126" width="44" height="20" rx="7" fill="none" stroke="${sombra}" stroke-width="2"/>${mark}`,
+  gorra:`<path d="M46 128 a54 46 0 0 1 108 0 Z" fill="${color}" stroke="${sombra}" stroke-width="2"/>
+   <path d="M44 128 h118 a30 12 0 0 1 -28 16 H68 a30 12 0 0 1 -24 -16 Z" fill="${color}" stroke="${sombra}" stroke-width="2" opacity=".85"/>
+   <g transform="translate(0,-8) scale(1)">${mark}</g>`,
+  tote:`<rect x="60" y="66" width="80" height="94" rx="5" fill="${color}" stroke="${sombra}" stroke-width="2"/>
+   <path d="M78 66 v-14 a22 18 0 0 1 44 0 v14" fill="none" stroke="${color}" stroke-width="6"/>
+   <path d="M78 66 v-14 a22 18 0 0 1 44 0 v14" fill="none" stroke="${sombra}" stroke-width="1.6"/>
+   <g transform="translate(0,12)">${mark}</g>`,
+  delantal:`<path d="M78 48 h44 l10 18 12 10 v76 a8 8 0 0 1 -8 8 H74 a8 8 0 0 1 -8 -8 V76 l12 -10 Z" fill="${color}" stroke="${sombra}" stroke-width="2"/>
+   <path d="M78 48 q22 16 44 0" fill="none" stroke="${sombra}" stroke-width="2"/>
+   <rect x="80" y="112" width="40" height="26" rx="4" fill="none" stroke="${sombra}" stroke-width="2"/>${mark}`
+ };
+ return `<svg viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">${P[tipo]||P.camiseta}</svg>`;
+}
+const FP=[['camiseta','Camiseta',46000],['hoodie','Hoodie',98000],['gorra','Gorra',39000],['tote','Tote bag',26000],['delantal','Delantal',52000]];
+const FC=[['#f2efe8','Hueso','','#f2efe8'],['#1c1c22','Negro','','#1c1c22'],['#b6ad98','Arena','','#b6ad98'],['#2f4a44','Verde','','#2f4a44']];
+const FL=[['mono','Monograma'],['texto','Texto'],['icono','Ícono']];
+let fP=0,fC=0,fL=0;
+function fRender(){
+ ch('fPrenda',FP,fP,i=>{fP=i;fRender();});
+ document.getElementById('fColor').innerHTML=FC.map((o,i)=>
+  `<button class="opt sw ${i===fC?'on':''}" data-i="${i}" title="${o[1]}" style="background:${o[0]}"></button>`).join('');
+ document.querySelectorAll('#fColor .opt').forEach(b=>b.onclick=()=>{fC=+b.dataset.i;fRender();});
+ ch('fLogo',FL,fL,i=>{fL=i;fRender();});
+ document.getElementById('fStage').innerHTML=prenda(FP[fP][0],FC[fC][0],FL[fL][0],'f');
+ const q=Math.max(20,parseInt(document.getElementById('fQty').value||20,10));
+ const base=FP[fP][2];
+ const desc=q>=100?.19:(q>=50?.11:0);
+ const uni=Math.round(base*(1-desc)/500)*500, tot=uni*q;
+ document.getElementById('fTot').innerHTML=
+  `<div class="r"><span>${FP[fP][1]} · ${FC[fC][1]}</span><span>${fmt(base)} c/u</span></div>`+
+  (desc?`<div class="r"><span>Descuento por volumen (${Math.round(desc*100)}%)</span><span>−${fmt(base-uni)} c/u</span></div>`:'')+
+  `<div class="r"><span>Precio unitario</span><span>${fmt(uni)}</span></div>`+
+  `<div class="r"><span>Cantidad</span><span>${q} unidades</span></div>`+
+  `<div class="r big"><span>Total estimado</span><span>${fmt(tot)}</span></div>`;
+ document.getElementById('fGo').onclick=()=>{
+  const m=`Hola LQS 👕 quiero cotizar en foma: ${q} ${FP[fP][1].toLowerCase()}s color ${FC[fC][1]} con ${FL[fL][1].toLowerCase()}. Estimado ${fmt(tot)}.`;
+  window.open('https://wa.me/573332791710?text='+encodeURIComponent(m),'_blank');};
+}
+document.getElementById('fQty').addEventListener('input',fRender);
+fRender();
+/* ---------- cielo + reveals ---------- */
+(function(){const c=document.getElementById('sky'),x=c.getContext('2d');let S=[],t=0;
+ function rz(){c.width=innerWidth;c.height=innerHeight;S=[];const n=Math.min(150,Math.round(innerWidth*innerHeight/11000));
+  for(let i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
+ rz();addEventListener('resize',rz);
+ (function lp(){t+=1/60;x.clearRect(0,0,c.width,c.height);
+  for(const s of S){const tw=RM?.6:(.42+.58*Math.sin(t*1.4+s.p));x.globalAlpha=tw*s.z*.85;
+   x.fillStyle=s.z>.84?'#ffe1ec':'#c3cdf0';x.fillRect(s.x|0,s.y|0,s.z>.84?2:1,s.z>.84?2:1);}
+  x.globalAlpha=1;requestAnimationFrame(lp);})();})();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,5)*60)+'ms';io.observe(el);});
+</script></body></html>

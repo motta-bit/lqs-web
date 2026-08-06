@@ -25,7 +25,7 @@ nav .in{max-width:1120px;margin:0 auto;padding:12px clamp(18px,5vw,34px);display
 .back:hover{color:var(--acc);border-color:var(--acc)}
 section{padding:clamp(40px,6.4vw,76px) 0;position:relative;z-index:2}
 .eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:14px}
-h1{font-family:var(--pix);font-size:clamp(1.35rem,4.6vw,2.3rem);line-height:1.34;margin-bottom:20px}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.06;margin-bottom:20px}
 h2{font-size:clamp(1.35rem,3.2vw,2rem);font-weight:800;letter-spacing:-.02em;line-height:1.22;margin-bottom:12px}
 .intro{color:var(--mut);max-width:64ch;margin-bottom:30px;font-size:clamp(.95rem,1.5vw,1.03rem)}
 .hero{padding:clamp(46px,8vw,92px) 0 clamp(10px,2vw,20px);max-width:52rem}
@@ -48,7 +48,7 @@ h2{font-size:clamp(1.35rem,3.2vw,2rem);font-weight:800;letter-spacing:-.02em;lin
 .mini{font-family:inherit;font-size:.8rem;font-weight:700;color:var(--txt);background:none;border:1px solid var(--line);border-radius:12px;padding:11px 16px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px}
 .mini:hover{border-color:var(--acc);color:var(--acc)}
 /* generador */
-.gen{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(16px,2.4vw,26px)}
+.gen{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:clamp(16px,2.4vw,26px);align-items:start}
 .genbox{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.03);padding:18px}
 .genbox>h4{font-size:.7rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
 #logo{width:100%;height:auto;display:block;border-radius:14px;background:#fff}
@@ -163,13 +163,18 @@ footer .in{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-
 footer a:hover{color:var(--acc)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.2,.7,.3,1),transform .75s cubic-bezier(.2,.7,.3,1)}
 .rv.in{opacity:1;transform:none}
+.stg>*{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in .stg>*{opacity:1;transform:none}
+.rv.in .stg>*:nth-child(2){transition-delay:.09s}.rv.in .stg>*:nth-child(3){transition-delay:.18s}
+.rv.in .stg>*:nth-child(4){transition-delay:.27s}.rv.in .stg>*:nth-child(5){transition-delay:.36s}
+.rv.in .stg>*:nth-child(6){transition-delay:.45s}
 @media(max-width:900px){.gen{grid-template-columns:1fr}.chatwrap{grid-template-columns:1fr}}
 @media(max-width:620px){.brand{font-size:.54rem}.back{padding:7px 12px;font-size:.72rem}
 .ctrls{gap:14px}.seg button{padding:8px 11px;font-size:.78rem}
 .pal{grid-template-columns:repeat(5,1fr);gap:5px}.sw i{height:42px}.sw code{font-size:.5rem}
 .typo{grid-template-columns:1fr}.scards{grid-template-columns:1fr}.sform{grid-template-columns:1fr}
 .btns{flex-direction:column}.cta{width:100%}.browser.mob{max-width:290px}}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}.rv{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}.rv,.stg>*{opacity:1;transform:none}}
 </style></head><body>
 <div class="bgglow"></div>
 <nav><div class="in"><div class="brand">🏢 MUESTRAS</div><div class="navr"><a class="back" href="empresas.html">← Empresas</a><a class="back" href="../index.html">Galaxia</a></div></div></nav>
@@ -202,7 +207,7 @@ footer a:hover{color:var(--acc)}
       <div class="stack">
         <div class="genbox"><h4>Paleta</h4><div class="pal" id="pal"></div></div>
         <div class="genbox"><h4>Tipografías</h4><div class="typo" id="typo"></div></div>
-        <div class="genbox"><h4>Aplicación</h4><div class="apply" id="apply"><div class="dot" id="aDot">CR</div><p><b id="aTit">Casa Rúa</b><span id="aSub">Cocina de casa · Reservas por WhatsApp</span></p></div></div>
+        <div class="genbox"><h4>Aplicación</h4><div class="apply" id="apply"><div class="dot" id="aDot">CR</div><p><b id="aTit">Casa Rúa</b><span id="aSub">Cocina de casa · Atención por WhatsApp</span></p></div></div>
       </div>
     </div>
   </div>
@@ -262,7 +267,7 @@ footer a:hover{color:var(--acc)}
       </div>
       <div>
         <div class="tagline">QUÉ ESTÁ PASANDO DETRÁS</div>
-        <div class="flow" id="flow">
+        <div class="flow stg" id="flow">
           <div class="fstep" data-s="0"><span class="n">01</span><div><b>Entra el mensaje</b><p>El cliente escribe al número de la empresa a cualquier hora. El flujo se activa al instante.</p></div></div>
           <div class="fstep" data-s="1"><span class="n">02</span><div><b>Responde el menú</b><p>Botones en vez de texto libre: el cliente elige y el bot no se equivoca interpretando.</p></div></div>
           <div class="fstep" data-s="2"><span class="n">03</span><div><b>Recoge los datos</b><p>Hora, cantidad de personas y contacto quedan guardados en tu planilla o CRM.</p></div></div>
@@ -277,7 +282,7 @@ footer a:hover{color:var(--acc)}
   <div class="eyebrow">RESULTADOS</div>
   <h2>Lo que cambió para tres clientes</h2>
   <p class="intro">Cifras de proyectos entregados por LQS en Medellín, medidas a los tres meses del lanzamiento.</p>
-  <div class="cases">
+  <div class="cases stg">
     <div class="case"><div class="k">RESTAURANTE</div><div class="num"><span class="cnt" data-to="40" data-pre="+" data-suf="%">+0%</span></div><h3>Reservas directas</h3><p>El menú y las reservas por WhatsApp quitaron la dependencia de las plataformas con comisión.</p></div>
     <div class="case"><div class="k">CLÍNICA DENTAL</div><div class="num"><span class="cnt" data-to="30" data-suf=" seg">0 seg</span></div><h3>Tiempo de respuesta</h3><p>Pasaron de responder en cuatro horas promedio a contestar en menos de medio minuto, 24/7.</p></div>
     <div class="case"><div class="k">TIENDA DE MUEBLES</div><div class="num"><span class="cnt" data-to="12" data-suf="">0</span></div><h3>Piezas al mes</h3><p>Un sistema de plantillas de marca les permite publicar doce piezas mensuales sin rehacer diseño.</p></div>
@@ -300,8 +305,12 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 /* ---------- reveal ---------- */
 (function(){var els=[].slice.call(document.querySelectorAll('.rv'));
  if(RM||!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
- var i=0,io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){var d=(i++%3)*110;setTimeout(function(){e.target.classList.add('in')},d);io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
- els.forEach(function(e){io.observe(e)});})();
+ var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.02,rootMargin:'0px 0px -6% 0px'});
+ els.forEach(function(e){io.observe(e)});
+ var tick=false;function chk(){tick=false;for(var i=els.length-1;i>=0;i--){var e=els[i];
+  if(!e.classList.contains('in')&&e.getBoundingClientRect().top<innerHeight*.94){e.classList.add('in');io.unobserve(e)}}}
+ addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(chk)}},{passive:true});
+ addEventListener('resize',chk);})();
 
 /* ---------- generador de identidad ---------- */
 (function(){
@@ -313,7 +322,7 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
  var STY={
   mod:{sat:[62,54,40,22,14],lig:[62,46,30,88,13],rot:0,fam:[["Manrope","Inter"],["Poppins","Work Sans"],["Satoshi","Karla"]],ff:['600 74px Manrope, sans-serif','system'],lab:'Moderno'},
   cla:{sat:[38,32,26,16,10],lig:[52,38,26,90,12],rot:0,fam:[["Playfair Display","Lora"],["Cormorant Garamond","Source Serif"],["Libre Baskerville","Karla"]],ff:['400 76px Georgia, serif','serif'],lab:'Clásico'},
-  aud:{sat:[86,78,62,30,20],lig:[58,44,30,92,10],rot:-8,fam:[["Anton","Manrope"],["Archivo Black","Roboto"],["Bebas Neue","Inter"]],ff:['800 80px Manrope, sans-serif','system'],lab:'Audaz'}};
+  aud:{sat:[72,64,52,24,16],lig:[56,44,30,92,10],rot:-8,fam:[["Anton","Manrope"],["Archivo Black","Roboto"],["Bebas Neue","Inter"]],ff:['800 80px Manrope, sans-serif','system'],lab:'Audaz'}};
  var ind='rest',sty='mod',seed=7;
  function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
  function hsl(h,s,l){h=(h%360+360)%360;s/=100;l/=100;var a=s*Math.min(l,1-l),f=function(n){var k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(Math.min(k-3,9-k),1))};
@@ -344,8 +353,9 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
       '<rect x="-52" y="-52" width="128" height="26" fill="'+c2+'"/>'+
       '<text x="12" y="26" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="58" fill="'+bg+'" letter-spacing="-2">'+ini+'</text></g>';
   }
-  var ff=sty==='cla'?'Georgia,serif':'Manrope,sans-serif',ls=sty==='aud'?'1':'3';
-  g+='<text x="150" y="242" text-anchor="middle" font-family="'+ff+'" font-weight="'+(sty==='cla'?'400':'700')+'" font-size="26" fill="'+ink+'" letter-spacing="'+ls+'">'+nm[0].toUpperCase()+'</text>';
+  var ff=sty==='cla'?'Georgia,serif':'Manrope,sans-serif',wm=nm[0].toUpperCase(),n=wm.length,
+      ls=n>12?1.4:(sty==='aud'?1.8:3),fs=Math.max(12,Math.min(26,(252-n*ls)/(n*.66)));
+  g+='<text x="150" y="242" text-anchor="middle" font-family="'+ff+'" font-weight="'+(sty==='cla'?'400':'700')+'" font-size="'+fs.toFixed(1)+'" fill="'+ink+'" letter-spacing="'+ls+'">'+wm+'</text>';
   g+='<text x="150" y="266" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" fill="'+ink+'" opacity=".62" letter-spacing="3">'+I.lab.toUpperCase()+' · MEDELLÍN</text>';
   document.getElementById('logo').innerHTML=g;
   document.getElementById('bName').textContent=nm[0];
@@ -364,7 +374,7 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   ap.style.background='linear-gradient(135deg,'+cols[0]+'22,'+cols[1]+'0d)';ap.style.borderColor=cols[1]+'66';
   var dot=document.getElementById('aDot');dot.style.background='linear-gradient(140deg,'+cols[0]+','+cols[2]+')';dot.style.color=cols[3];dot.textContent=ini;
   document.getElementById('aTit').textContent=nm[0];
-  document.getElementById('aSub').textContent=nm[1]+' · Reservas por WhatsApp';
+  document.getElementById('aSub').textContent=nm[1]+' · Atención por WhatsApp';
  }
  function seg(id,set){var el=document.getElementById(id);el.addEventListener('click',function(e){
   var b=e.target.closest('button');if(!b)return;

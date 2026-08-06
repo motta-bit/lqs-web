@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía de implementación · Automatización LQS</title>
+<meta name="description" content="Documento técnico interno de LQS: cómo dar de alta WhatsApp Cloud API paso a paso, plantillas de mensaje listas para copiar, comparativa de plataformas, costos por mensaje en Colombia y límites reales de Instagram y Facebook.">
+<meta name="theme-color" content="#05060f">
+<meta name="robots" content="noindex,follow">
+<meta property="og:title" content="Guía de implementación · Automatización LQS">
+<meta property="og:description" content="Documento de trabajo interno: Cloud API, plantillas, plataformas, costos y checklist de lanzamiento.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05060f;--acc:#5b8def;--acc-l:#d6e3ff;--acc-d:#1f3f7a;
+  --txt:#e5ecfb;--mut:#9aabd0;--mut2:#7a8cb2;
+  --glass:rgba(255,255,255,.04);--line:rgba(255,255,255,.11);--line2:rgba(255,255,255,.065);
+  --pix:'Press Start 2P',monospace;--sans:'Manrope','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:78px;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.72;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16.5px}
+a{color:var(--acc-l);text-decoration:none;border-bottom:1px solid rgba(91,141,239,.35);transition:.18s}
+a:hover{color:#fff;border-color:var(--acc)}
+::selection{background:var(--acc);color:#04060e}
+
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(760px 520px at 88% -8%,rgba(91,141,239,.15),transparent 62%),
+             radial-gradient(680px 500px at -6% 42%,rgba(31,63,122,.22),transparent 62%)}
+
+nav{position:sticky;top:0;z-index:40;background:rgba(5,6,15,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line2)}
+nav .in{max-width:1180px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--pix);font-size:.62rem;color:var(--acc-l);display:flex;align-items:center;gap:9px;line-height:1.5}
+.navlinks{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+.back{font-size:.8rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:8px 15px;transition:.2s;white-space:nowrap;border-bottom:1px solid var(--line)}
+.back:hover{color:var(--acc-l);border-color:var(--acc);background:rgba(91,141,239,.08)}
+
+.shell{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,32px);
+  display:grid;grid-template-columns:236px minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.toc{position:sticky;top:76px;padding:34px 0 40px;font-size:.85rem;max-height:calc(100vh - 90px);overflow-y:auto}
+.toc h2{font-family:var(--pix);font-size:.5rem;letter-spacing:.2em;color:var(--acc);margin-bottom:16px;line-height:1.9}
+.toc ol{list-style:none;counter-reset:t;display:flex;flex-direction:column;gap:2px}
+.toc li{counter-increment:t}
+.toc a{display:block;padding:6px 11px;border-radius:9px;color:var(--mut);border:none;font-weight:600;line-height:1.45}
+.toc a::before{content:counter(t,decimal-leading-zero) ' ';color:var(--mut2);font-weight:800;font-size:.78em}
+.toc a:hover{background:rgba(91,141,239,.1);color:var(--acc-l)}
+.toc a.act{background:rgba(91,141,239,.15);color:#fff}
+.toc::-webkit-scrollbar{width:6px}.toc::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:9px}
+
+main{padding:clamp(28px,5vw,58px) 0 90px;max-width:74ch;min-width:0}
+.doc-head{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:12px}
+.kicker{font-family:var(--pix);font-size:.5rem;letter-spacing:.22em;color:var(--acc);margin-bottom:18px;line-height:1.9}
+h1{font-size:clamp(1.95rem,5.2vw,2.9rem);line-height:1.1;letter-spacing:-.032em;font-weight:800;margin-bottom:16px}
+.sub{color:var(--mut);font-size:1.03rem;max-width:66ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.meta span{font-size:.74rem;font-weight:700;color:var(--mut);border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:6px 13px}
+
+section{padding:clamp(38px,5vw,58px) 0 0;scroll-margin-top:80px}
+h2{font-size:clamp(1.35rem,3.2vw,1.78rem);line-height:1.2;letter-spacing:-.026em;font-weight:800;margin-bottom:8px;display:flex;gap:12px;align-items:baseline}
+h2 .num{font-family:var(--pix);font-size:.56rem;color:var(--acc);flex:none;letter-spacing:.1em}
+h3{font-size:1.06rem;font-weight:800;letter-spacing:-.014em;margin:30px 0 9px;color:#fff}
+h4{font-size:.94rem;font-weight:800;margin:20px 0 7px;color:var(--acc-l)}
+p{margin-bottom:15px;color:var(--mut)}
+p strong,li strong{color:var(--txt);font-weight:700}
+main ul,main ol{margin:0 0 17px 0;padding-left:22px;color:var(--mut)}
+main li{margin-bottom:8px}
+main li::marker{color:var(--acc)}
+.lead-p{font-size:1.02rem;color:var(--txt)}
+
+.card{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:22px 24px;margin:22px 0}
+.card>*:last-child{margin-bottom:0}
+.card h3{margin-top:0}
+.callout{border-left:3px solid var(--acc);border-radius:0 14px 14px 0;background:rgba(91,141,239,.075);padding:17px 20px;margin:22px 0}
+.callout>*:last-child{margin-bottom:0}
+.callout.warn{border-left-color:#e0a94a;background:rgba(224,169,74,.075)}
+.callout .lb{display:block;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:7px}
+.callout.warn .lb{color:#e0a94a}
+
+code{font-family:var(--mono);font-size:.86em;background:rgba(91,141,239,.14);border:1px solid rgba(91,141,239,.22);border-radius:6px;padding:1px 6px;color:var(--acc-l);word-break:break-word}
+pre{font-family:var(--mono);font-size:.8rem;line-height:1.65;background:rgba(0,0,0,.42);border:1px solid var(--line);border-radius:14px;padding:16px 18px;overflow-x:auto;color:#cfe0ff;margin:0}
+pre code{background:none;border:none;padding:0;font-size:1em;color:inherit}
+pre::-webkit-scrollbar{height:7px}pre::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:9px}
+
+.tpl{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.028);margin:16px 0;overflow:hidden}
+.tpl .th{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid var(--line2);background:rgba(255,255,255,.02)}
+.tpl .th b{font-size:.86rem;font-weight:800}
+.tpl .th .r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{font-size:.63rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:4px 10px;border:1px solid rgba(91,141,239,.42);color:var(--acc-l);background:rgba(91,141,239,.13);white-space:nowrap}
+.pill.u{border-color:rgba(95,207,134,.45);color:#a5e8bd;background:rgba(95,207,134,.12)}
+.pill.m{border-color:rgba(224,169,74,.45);color:#f0cd93;background:rgba(224,169,74,.12)}
+.cp{font-size:.7rem;font-weight:800;color:var(--mut);border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:8px;padding:5px 11px;cursor:pointer;transition:.18s;font-family:var(--sans);white-space:nowrap}
+.cp:hover,.cp:focus-visible{color:var(--acc-l);border-color:var(--acc)}
+.cp.ok{color:#8fe0ab;border-color:rgba(95,207,134,.5)}
+.tpl .tb{padding:15px}
+.tpl pre{background:rgba(0,0,0,.3);font-size:.83rem;white-space:pre-wrap;word-break:break-word;font-family:var(--sans);line-height:1.7;color:#dae6ff}
+.tpl .vars{font-size:.79rem;color:var(--mut2);padding:0 15px 14px;line-height:1.6}
+.tpl .vars b{color:var(--mut)}
+
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:16px;background:var(--glass);margin:22px 0}
+.scrollx::-webkit-scrollbar{height:8px}.scrollx::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:9px}
+table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:600px}
+th,td{padding:12px 15px;text-align:left;border-bottom:1px solid var(--line2);vertical-align:top;color:var(--mut)}
+th{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--mut2);font-weight:800;white-space:nowrap;background:rgba(255,255,255,.022)}
+tbody tr:last-child td{border-bottom:none}
+td b{color:var(--txt)}
+td.n{white-space:nowrap;color:var(--acc-l);font-weight:700}
+.tblnote{font-size:.79rem;color:var(--mut2);margin:-10px 0 22px}
+
+.steps{counter-reset:s;list-style:none;padding:0;margin:24px 0}
+.steps>li{counter-increment:s;position:relative;padding:0 0 24px 46px;border-left:1px solid var(--line);margin-left:13px}
+.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s);position:absolute;left:-14px;top:-3px;width:28px;height:28px;border-radius:50%;
+  background:rgba(91,141,239,.18);border:1px solid rgba(91,141,239,.5);color:var(--acc-l);
+  font-size:.76rem;font-weight:800;display:grid;place-items:center}
+.steps>li>b{display:block;color:#fff;font-size:1rem;font-weight:800;margin:-2px 0 6px;letter-spacing:-.012em}
+.steps>li p:last-child,.steps>li ul:last-child{margin-bottom:0}
+
+.chk{list-style:none;padding:0;margin:20px 0}
+.chk li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line2);font-size:.92rem;color:var(--mut);margin:0}
+.chk li:last-child{border-bottom:none}
+.chk li::before{content:'';flex:none;width:17px;height:17px;margin-top:4px;border-radius:5px;border:1px solid rgba(91,141,239,.5);background:rgba(91,141,239,.14)}
+.chk li b{color:var(--txt)}
+
+.srcs{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:11px}
+.srcs li{font-size:.85rem;color:var(--mut2);line-height:1.55;margin:0;padding-left:0}
+.srcs li a{display:block;font-weight:700;word-break:break-word}
+.srcs li span{display:block;font-size:.79rem}
+
+.endcta{border:1px solid var(--line);border-radius:22px;background:linear-gradient(165deg,rgba(91,141,239,.12),rgba(255,255,255,.012));padding:32px 30px;margin-top:48px;text-align:center}
+.endcta p{max-width:48ch;margin:0 auto 20px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.93rem;color:#050a16;
+  background:linear-gradient(120deg,var(--acc-l),var(--acc));border:none;border-radius:14px;padding:13px 24px;transition:.2s;box-shadow:0 18px 40px -22px rgba(91,141,239,.95)}
+.cta:hover{transform:translateY(-2px);filter:brightness(1.07);color:#050a16}
+
+footer{border-top:1px solid var(--line2);padding:26px 0 46px;position:relative;z-index:2;margin-top:20px}
+footer .in{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,32px);display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:space-between;font-size:.81rem;color:var(--mut2)}
+
+@media(max-width:1040px){
+  .shell{grid-template-columns:1fr;gap:0}
+  .toc{position:static;max-height:none;padding:30px 0 0;border-bottom:1px solid var(--line);padding-bottom:24px}
+  .toc ol{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 12px}
+  main{padding-top:14px}
+}
+@media(max-width:600px){
+  body{font-size:16px}
+  .brand{font-size:.52rem}
+  .back{font-size:.74rem;padding:7px 12px}
+  .card{padding:18px 17px}
+  .tpl .tb{padding:13px}
+  .steps>li{padding-left:38px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style></head><body>
+<div class="bgglow"></div>
+
+<nav><div class="in">
+  <div class="brand">📘 GUÍA LQS</div>
+  <div class="navlinks">
+    <a class="back" href="mundos/automatizacion.html">Ver el servicio</a>
+    <a class="back" href="index.html">← Galaxia</a>
+  </div>
+</div></nav>
+
+<div class="shell">
+
+<aside class="toc">
+  <h2>CONTENIDO</h2>
+  <ol>
+    <li><a href="#arquitectura">Arquitectura recomendada</a></li>
+    <li><a href="#altaapi">Alta de WhatsApp Cloud API</a></li>
+    <li><a href="#plantillas">Plantillas de mensaje</a></li>
+    <li><a href="#plataformas">Comparativa de plataformas</a></li>
+    <li><a href="#costos">Costos y cálculo mensual</a></li>
+    <li><a href="#meta">Instagram y Facebook</a></li>
+    <li><a href="#checklist">Checklist y errores</a></li>
+    <li><a href="#fuentes">Fuentes</a></li>
+  </ol>
+</aside>
+
+<main>
+  <header class="doc-head">
+    <div class="kicker">DOCUMENTO DE TRABAJO ·· LQS</div>
+    <h1>Guía de implementación de automatización</h1>
+    <p class="sub">Cómo montamos, de principio a fin, la atención automatizada de un cliente sobre la WhatsApp Business Platform de Meta, Instagram y Facebook. Escrito para que cualquiera del equipo pueda ejecutarlo sin adivinar, y para poder mostrárselo a un cliente que quiera entender qué está comprando.</p>
+    <div class="meta">
+      <span>Revisión: agosto de 2026</span>
+      <span>Ámbito: Colombia</span>
+      <span>Uso interno LQS</span>
+    </div>
+  </header>
+
+  <div class="callout warn">
+    <span class="lb">Leer antes de cotizar</span>
+    <p>Meta cambia tarifas y políticas varias veces al año. En julio de 2025 pasó de cobrar por conversación de 24 horas a cobrar <strong>por mensaje de plantilla entregado</strong>, y el <strong>1 de octubre de 2026</strong> vuelve a cobrar los mensajes de servicio que hoy son gratuitos. Antes de enviar una propuesta, verifica el <em>rate card</em> vigente en la documentación oficial (enlaces en la sección 8). Todas las cifras de este documento son de agosto de 2026.</p>
+  </div>
+
+  <!-- 1 -->
+  <section id="arquitectura">
+    <h2><span class="num">01</span> Arquitectura recomendada</h2>
+    <p class="lead-p">LQS todavía no tiene dominio propio. Eso condiciona una sola cosa —dónde vive el webhook— y no impide arrancar. Este es el camino que recomendamos.</p>
+
+    <h3>La restricción real</h3>
+    <p>La Cloud API de Meta entrega los mensajes entrantes por <strong>webhook</strong>: hace un <code>POST</code> a una URL pública tuya, con <strong>HTTPS obligatorio y certificado válido</strong>. No sirve una IP, no sirve <code>http://</code>, no sirve un archivo estático. Es el único componente que necesita infraestructura.</p>
+    <p>Lo importante: <strong>no necesitas un dominio propio para tener HTTPS válido</strong>. Cualquier plataforma que dé un subdominio gestionado sirve, y ese subdominio se puede cambiar después sin rehacer nada más que un campo en el panel de Meta.</p>
+
+    <h3>Fase 1 — hoy, sin dominio</h3>
+    <ul>
+      <li><strong>Sitio público</strong>: los HTML estáticos de LQS en GitHub Pages, Netlify o Vercel. Un subdominio del proveedor (<code>lqs.vercel.app</code>) es suficiente para presentarse y para el campo «sitio web» de la verificación de negocio.</li>
+      <li><strong>Webhook y lógica del bot</strong>: una función serverless en <strong>Cloudflare Workers</strong> (<code>*.workers.dev</code>) o <strong>Vercel Functions</strong> (<code>*.vercel.app</code>). Ambas dan HTTPS con certificado válido desde el primer despliegue, tienen plan gratuito suficiente para los volúmenes de un negocio local y responden en frío lo bastante rápido para que Meta no reintente.</li>
+      <li><strong>Orquestación visual</strong>: si el flujo es simple o el cliente quiere tocarlo, <strong>n8n</strong> (self-hosted en un VPS de 5 USD/mes o n8n Cloud) o <strong>Make</strong>. Ambos traen nodo nativo de WhatsApp Business Cloud y exponen su propia URL HTTPS de webhook.</li>
+      <li><strong>Datos</strong>: Google Sheets para catálogos y registros, Google Calendar para reservas, Airtable o Supabase cuando hay que consultar estado. Nada de bases de datos propias mientras no haga falta.</li>
+      <li><strong>Bandeja humana</strong>: si el cliente necesita que su equipo responda a mano, es más barato y rápido montar sobre un BSP con inbox incluido (WATI, 360dialog + inbox, ManyChat) que construirla.</li>
+    </ul>
+
+    <div class="callout">
+      <span class="lb">Regla de decisión</span>
+      <p>Si el cliente necesita <strong>bandeja compartida para su equipo</strong> → BSP con inbox. Si necesita <strong>lógica a medida o integraciones raras</strong> → Cloud API directa + serverless. Si necesita <strong>ambas</strong> → 360dialog (API limpia, sin markup) y la lógica aparte. Nunca se empieza construyendo un inbox desde cero.</p>
+    </div>
+
+    <h3>Fase 2 — cuando LQS tenga dominio</h3>
+    <p>La migración es cosmética, no estructural. En orden:</p>
+    <ol>
+      <li>Apuntar el dominio al sitio estático y a la función (<code>api.lqs.co</code> → Worker o Vercel Function).</li>
+      <li>Cambiar la <strong>Callback URL</strong> del webhook en el panel de Meta y volver a verificarla con el mismo <code>verify_token</code>. Meta hace un <code>GET</code> de validación; si responde el <code>hub.challenge</code>, queda listo.</li>
+      <li>Actualizar el sitio web declarado en el portafolio comercial y, si aplica, volver a enviar la verificación de negocio con el dominio propio: un dominio corporativo con correo propio acelera la revisión.</li>
+      <li>Correos en el dominio (<code>hola@…</code>) en lugar de Gmail. Esto sí pesa en la verificación.</li>
+    </ol>
+    <p>Ningún número, token ni plantilla se pierde en el proceso. Se cambia una URL.</p>
+
+    <h3>Esquema</h3>
+    <pre><code>Cliente en WhatsApp
+        │
+        ▼
+Meta Cloud API  ──POST webhook──►  Worker / n8n  ──►  Sheets · Calendar · CRM
+        ▲                               │
+        └────── POST /messages ─────────┘
+                (respuesta o plantilla)</code></pre>
+    <p class="tblnote">Todo el estado de la conversación vive en el orquestador, no en Meta. Meta solo transporta mensajes.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="altaapi">
+    <h2><span class="num">02</span> Alta de WhatsApp Cloud API, paso a paso</h2>
+    <p class="lead-p">Tiempo real de ejecución: entre 24 y 72 horas si el cliente tiene los documentos a mano. La verificación del negocio puede añadir de 1 a 3 días hábiles, y a veces más. No prometer fechas que dependen de Meta.</p>
+
+    <ol class="steps">
+      <li><b>Portafolio comercial en Meta</b>
+        <p>En <a href="https://business.facebook.com" target="_blank" rel="noopener">business.facebook.com</a>, crear o usar el portafolio comercial (antes Business Manager) <strong>del cliente</strong>, no el de LQS. Nosotros entramos como socio o administrador; la cuenta debe quedar a nombre de él. Datos que hay que tener listos: razón social, NIT, dirección fiscal, teléfono corporativo y sitio web.</p>
+      </li>
+      <li><b>Verificación del negocio</b>
+        <p>En <em>Configuración del negocio → Centro de seguridad → Verificación</em>. Se sube RUT o certificado de cámara de comercio y un documento que pruebe la dirección o el teléfono. <strong>Hacerla al principio, no al final</strong>: sin verificar el número queda con un límite de 250 conversaciones nuevas al día; verificado sube de inmediato a 2.000.</p>
+      </li>
+      <li><b>App en Meta for Developers</b>
+        <p>Crear una app de tipo <em>Business</em> en <a href="https://developers.facebook.com" target="_blank" rel="noopener">developers.facebook.com</a>, vincularla al portafolio del cliente y añadir el producto <strong>WhatsApp</strong>. Meta entrega un número de prueba y un token temporal de 24 horas — sirve para el primer «hola mundo», nada más.</p>
+      </li>
+      <li><b>Alta del número real</b>
+        <p>El número debe estar <strong>libre de cualquier cuenta de WhatsApp</strong>. Si ya está en WhatsApp normal o en Business App, hay que borrar esa cuenta desde la app (<em>Ajustes → Cuenta → Eliminar mi cuenta</em>) y esperar. Alternativa: activar <strong>Coexistence</strong>, que permite mantener la Business App y la API sobre el mismo número, con limitaciones sobre qué funciones quedan disponibles en cada lado.</p>
+        <p>Se añade el número en <em>WhatsApp Manager → Números de teléfono</em>, se define el <strong>nombre para mostrar</strong> (tiene que parecerse al nombre real del negocio o Meta lo rechaza) y se verifica por SMS o llamada.</p>
+      </li>
+      <li><b>Token permanente</b>
+        <p>Nunca usar el token de 24 horas en producción. En <em>Configuración del negocio → Usuarios → Usuarios del sistema</em>, crear un <strong>System User</strong> con rol de administrador, asignarle la app y la cuenta de WhatsApp, y generar un token con los permisos <code>whatsapp_business_messaging</code> y <code>whatsapp_business_management</code>. Ese token no expira. Se guarda como variable de entorno cifrada, jamás en el repositorio.</p>
+      </li>
+      <li><b>Webhook</b>
+        <p>En la app, <em>WhatsApp → Configuración → Webhooks</em>. Se registra la Callback URL HTTPS y un <code>verify_token</code> inventado por nosotros. Meta hace un <code>GET</code> con <code>hub.mode</code>, <code>hub.verify_token</code> y <code>hub.challenge</code>: hay que devolver el challenge en texto plano con estado 200. Luego suscribirse al campo <strong><code>messages</code></strong>.</p>
+        <div class="callout warn" style="margin:14px 0 0">
+          <span class="lb">Error clásico</span>
+          <p>El campo <code>messages</code> también entrega los <em>statuses</em> (<code>sent</code>, <code>delivered</code>, <code>read</code>) de tus propios mensajes. Si no los filtras, cada respuesta que envías dispara un webhook nuevo y el flujo entra en bucle infinito — en n8n o Make esto quema el cupo de tareas en horas. Filtrar siempre por <code>entry[0].changes[0].value.messages</code> antes de procesar.</p>
+        </div>
+      </li>
+      <li><b>Primer envío</b>
+        <p>Responder dentro de la ventana de servicio es un <code>POST</code> a <code>/{phone-number-id}/messages</code> con <code>type: "text"</code>. Fuera de la ventana solo se puede iniciar con una plantilla aprobada. Probar los dos casos antes de entregar.</p>
+      </li>
+      <li><b>Método de pago y límites</b>
+        <p>Añadir tarjeta en <em>WhatsApp Manager → Facturación</em>. Sin método de pago, los envíos fallan en cuanto se agota el crédito inicial. Revisar el <strong>límite de mensajería</strong> y la <strong>calificación de calidad</strong> del número en el panel: son las dos métricas que hay que vigilar el primer mes.</p>
+      </li>
+    </ol>
+
+    <h3>Límites de mensajería</h3>
+    <p>Los escalones son 250 → 2.000 → 10.000 → 100.000 → sin límite de <strong>conversaciones nuevas iniciadas por el negocio en 24 horas</strong>. Se sube de escalón cuando la calidad se mantiene media o alta y se ha usado alrededor del 50 % del límite en los últimos 7 días. Desde octubre de 2025 el límite aplica <strong>a nivel de portafolio</strong> y se comparte entre todos los números de la cuenta, no por número. Responder a quien te escribió no consume límite.</p>
+  </section>
+
+  <!-- 3 -->
+  <section id="plantillas">
+    <h2><span class="num">03</span> Plantillas de mensaje</h2>
+    <p class="lead-p">Toda conversación que inicia el negocio fuera de la ventana de 24 horas necesita una plantilla aprobada previamente por Meta. Es donde se pierde más tiempo en un proyecto mal planeado.</p>
+
+    <h3>Las reglas que importan</h3>
+    <ul>
+      <li><strong>Tres categorías</strong>: <em>marketing</em> (promoción, recuperación, novedades), <em>utility</em> (seguimiento de una acción del usuario: confirmaciones, recordatorios, estado de pedido) y <em>authentication</em> (códigos de un solo uso). El precio cambia radicalmente entre ellas.</li>
+      <li><strong>La causa número uno de rechazo es la categoría equivocada.</strong> Una plantilla <em>utility</em> no puede contener descuentos, ofertas, ventas cruzadas ni llamados a la acción persuasivos. Si los tiene, Meta la reclasifica sola a <em>marketing</em> y pagas 15 veces más por mensaje. Desde enero de 2026 la revisión de categoría es más estricta.</li>
+      <li><strong>Toda variable necesita un valor de ejemplo</strong> al enviarla a revisión. Enviar <code>{{1}}</code> sin muestra es rechazo automático.</li>
+      <li><strong>Nada de variables al principio ni al final</strong> del cuerpo, ni dos variables seguidas. Meta lo rechaza por riesgo de contenido arbitrario.</li>
+      <li><strong>Nombre en minúsculas y guion bajo</strong>: <code>confirmacion_reserva_es</code>. El idioma se declara aparte (<code>es</code> o <code>es_CO</code>).</li>
+      <li><strong>Calidad post-aprobación</strong>: cada plantilla recibe una calificación alta/media/baja según bloqueos y reportes. Si cae a baja se pausa; si sigue baja, se desactiva. Una plantilla desactivada mata el flujo que dependía de ella.</li>
+      <li>Aprobación típica: de minutos a 24 horas. Presupuestar un día.</li>
+    </ul>
+
+    <div class="callout">
+      <span class="lb">Truco de costo</span>
+      <p>Hasta el 1 de octubre de 2026, una plantilla <em>utility</em> enviada <strong>dentro</strong> de una ventana de servicio abierta no se cobra. Si puedes disparar la confirmación mientras el cliente aún está chateando, sale gratis. Después de esa fecha esa exención desaparece: replantear los flujos que dependan de ella.</p>
+    </div>
+
+    <h3>Plantillas listas para copiar</h3>
+    <p>Escritas para negocio colombiano, tono neutro, sin promesas que Meta pueda leer como promocionales en las de categoría <em>utility</em>. Copiar tal cual y reemplazar solo lo que va entre corchetes.</p>
+
+    <div class="tpl">
+      <div class="th"><b>bienvenida_negocio_es</b><div class="r"><span class="pill m">Marketing</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>¡Hola {{1}}! 👋 Gracias por escribir a [NOMBRE DEL NEGOCIO].
+
+Somos [QUÉ HACEN] en [CIUDAD]. Puedo mostrarte nuestro catálogo, tomar tu pedido o resolver tus dudas.
+
+Responde con una palabra y arrancamos.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre del cliente · <b>Ejemplo:</b> Camila · <b>Botones sugeridos:</b> «Ver catálogo», «Hablar con alguien» (respuesta rápida)</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>confirmacion_reserva_es</b><div class="r"><span class="pill u">Utility</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>Hola {{1}}, tu reserva en [NOMBRE DEL NEGOCIO] quedó confirmada.
+
+📅 Fecha: {{2}}
+🕒 Hora: {{3}}
+👥 Personas: {{4}}
+🔖 Código: {{5}}
+
+Si necesitas cambiarla o cancelarla, responde a este mensaje.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre · <b>{{2}}</b> fecha · <b>{{3}}</b> hora · <b>{{4}}</b> número de personas · <b>{{5}}</b> código · <b>Ejemplos:</b> Camila · viernes 22 de agosto · 7:30 p.m. · 4 · OR-4821</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>recordatorio_cita_es</b><div class="r"><span class="pill u">Utility</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>Hola {{1}}, te recordamos tu cita en [NOMBRE DEL NEGOCIO] mañana {{2}} a las {{3}}.
+
+Dirección: [DIRECCIÓN].
+
+Si no puedes asistir, responde CAMBIAR y te reagendamos sin costo.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre · <b>{{2}}</b> día · <b>{{3}}</b> hora · <b>Ejemplos:</b> Andrés · jueves 21 · 10:00 a.m. · <b>Ojo:</b> «sin costo» aquí es una condición del servicio, no una promoción; si añades un descuento, Meta la pasa a marketing.</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>estado_pedido_es</b><div class="r"><span class="pill u">Utility</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>Hola {{1}}, tu pedido {{2}} ya está {{3}}.
+
+Total: {{4}}
+Entrega estimada: {{5}}
+
+Cualquier novedad, responde por aquí.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre · <b>{{2}}</b> número de pedido · <b>{{3}}</b> estado · <b>{{4}}</b> total · <b>{{5}}</b> tiempo estimado · <b>Ejemplos:</b> Laura · #1042 · en camino · $48.000 · 25 minutos</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>carrito_abandonado_es</b><div class="r"><span class="pill m">Marketing</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>Hola {{1}}, dejaste {{2}} en tu carrito de [NOMBRE DEL NEGOCIO] y todavía te lo guardamos.
+
+Si quieres terminar la compra, aquí sigues donde ibas: {{3}}
+
+Si ya no te interesa, responde BAJA y no te volvemos a escribir.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre · <b>{{2}}</b> producto · <b>{{3}}</b> enlace · <b>Ejemplos:</b> Julián · una chaqueta Orión talla M · tienda.ejemplo.co/c/8812 · <b>Siempre</b> incluir salida de baja en marketing: reduce reportes y protege la calificación de calidad.</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>fuera_de_horario_es</b><div class="r"><span class="pill u">Utility</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>Hola {{1}}, gracias por escribirnos. En este momento estamos cerrados.
+
+Nuestro horario es {{2}} y te respondemos apenas abramos.
+
+Si es urgente, escribe URGENTE y le damos prioridad.</pre></div>
+      <div class="vars"><b>{{1}}</b> nombre · <b>{{2}}</b> horario · <b>Ejemplos:</b> Sara · lunes a sábado de 8:00 a.m. a 7:00 p.m. · <b>Nota:</b> dentro de la ventana de 24 h esto se puede enviar como mensaje libre, sin plantilla.</div>
+    </div>
+
+    <div class="tpl">
+      <div class="th"><b>codigo_verificacion_es</b><div class="r"><span class="pill">Authentication</span><button class="cp" type="button">Copiar</button></div></div>
+      <div class="tb"><pre>{{1}} es tu código de verificación. Por tu seguridad, no lo compartas.</pre></div>
+      <div class="vars"><b>{{1}}</b> código · <b>Ejemplo:</b> 481923 · <b>Ojo:</b> las plantillas de autenticación usan un formato cerrado que define Meta (cuerpo fijo + botón de copiar código) y <strong>se cobran siempre</strong>, incluso dentro de la ventana de 24 horas.</div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="plataformas">
+    <h2><span class="num">04</span> Comparativa de plataformas</h2>
+    <p class="lead-p">Todas terminan hablando con la misma API de Meta. Lo que cambia es cuánto código escribes, cuánto margen te cobran encima y qué tan atado quedas.</p>
+
+    <div class="scrollx"><table>
+      <thead><tr><th>Opción</th><th>Pros</th><th>Contras</th><th>Costo aprox.</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Cloud API directa</b><br><span style="font-size:.8em">Meta, sin intermediario</span></td>
+          <td>Cero markup: pagas solo la tarifa de Meta. Control total del flujo. Alojamiento gratis del lado de Meta.</td>
+          <td>Hay que programar todo: webhook, estado, reintentos, bandeja. Soporte de Meta prácticamente inexistente. Sin inbox para el equipo del cliente.</td>
+          <td class="n">Tarifa Meta + hosting<br>USD 0 – 10 / mes</td>
+        </tr>
+        <tr>
+          <td><b>360dialog</b><br><span style="font-size:.8em">BSP «API limpia»</span></td>
+          <td>Sin markup sobre los mensajes de Meta. Tarifa plana por número. Da acceso directo a la API, así que el código es casi idéntico al de la Cloud API. Facturación predecible.</td>
+          <td>No trae inbox por defecto (se compra aparte o se integra). Interfaz técnica, poco amable para el cliente final.</td>
+          <td class="n">Desde EUR 49<br>por número / mes</td>
+        </tr>
+        <tr>
+          <td><b>Twilio</b></td>
+          <td>Documentación excelente, SDK maduros, SMS y voz en la misma cuenta, fiabilidad alta. Pago por uso sin mínimo.</td>
+          <td>Markup por mensaje que escala mal: a volumen alto es la opción más cara. Su propia capa de conceptos encima de la de Meta.</td>
+          <td class="n">Tarifa Meta<br>+ ≈ USD 0,005 / mensaje</td>
+        </tr>
+        <tr>
+          <td><b>WATI</b><br><span style="font-size:.8em">no-code para pymes</span></td>
+          <td>Bandeja compartida, difusiones, constructor de flujos visual y gestión de plantillas sin tocar código. El cliente lo puede operar solo.</td>
+          <td>Markup de alrededor del 20 % sobre las tarifas de Meta. Personalización limitada; lógica compleja se queda corta.</td>
+          <td class="n">USD 49 / 99 / 299 al mes<br>+ ≈ 20 % sobre Meta</td>
+        </tr>
+        <tr>
+          <td><b>ManyChat</b><br><span style="font-size:.8em">multicanal social</span></td>
+          <td>Lo mejor para Instagram y Facebook: automatización de comentarios y DM en la misma herramienta que WhatsApp. Curva de aprendizaje muy baja.</td>
+          <td>Menos profundo en WhatsApp puro. Los datos viven en su plataforma. Cuesta sacar la lógica si te quieres ir.</td>
+          <td class="n">Desde ≈ USD 15 / mes<br>escala por contactos</td>
+        </tr>
+        <tr>
+          <td><b>n8n / Make</b><br><span style="font-size:.8em">orquestador</span></td>
+          <td>Conectan WhatsApp con todo lo demás (Sheets, Calendar, CRM, modelos de IA). n8n autoalojado sale casi gratis y no tiene tope de ejecuciones.</td>
+          <td>No son un BSP: siguen necesitando la Cloud API detrás. Requieren mantenimiento. En Make, el consumo de operaciones se dispara si no filtras los webhooks de estado.</td>
+          <td class="n">n8n self-host ≈ USD 5–30 / mes<br>Make desde ≈ USD 10 / mes</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="tblnote">Cifras de referencia de agosto de 2026; los planes cambian con frecuencia. Ninguna de estas opciones evita pagar la tarifa por mensaje de Meta: esa se paga siempre, directa o a través del proveedor.</p>
+
+    <div class="callout">
+      <span class="lb">Qué usa LQS por defecto</span>
+      <p><strong>Setup Básico y Plan Negocio:</strong> Cloud API directa + Cloudflare Worker o n8n. Máximo margen, cero markup, y el cliente es dueño de su cuenta.<br>
+      <strong>Plan Multicanal o cliente con equipo de atención:</strong> 360dialog cuando quiere API limpia con factura predecible, ManyChat cuando el peso está en Instagram.<br>
+      El número y el portafolio de Meta <strong>siempre quedan a nombre del cliente</strong>. Es su activo, no el nuestro; eso se dice en la propuesta.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="costos">
+    <h2><span class="num">05</span> Costos y cálculo mensual</h2>
+    <p class="lead-p">Desde el 1 de julio de 2025, Meta cobra por <strong>cada plantilla entregada</strong>, no por conversación. El precio depende de la categoría y del país de quien recibe — Colombia está entre los mercados más baratos de la región.</p>
+
+    <div class="scrollx"><table>
+      <thead><tr><th>Categoría</th><th>USD / mensaje entregado</th><th>≈ COP</th><th>Cuándo se cobra</th></tr></thead>
+      <tbody>
+        <tr><td><b>Marketing</b></td><td class="n">≈ 0,011 – 0,014</td><td class="n">≈ $45 – $56</td><td>Siempre. Sin descuentos por volumen.</td></tr>
+        <tr><td><b>Utility</b></td><td class="n">≈ 0,0008</td><td class="n">≈ $3</td><td>Fuera de la ventana de servicio. Dentro es gratis hasta oct/2026.</td></tr>
+        <tr><td><b>Authentication</b></td><td class="n">≈ 0,0008</td><td class="n">≈ $3</td><td>Siempre, aun dentro de la ventana.</td></tr>
+        <tr><td><b>Servicio</b> (texto libre)</td><td class="n">0 hoy</td><td class="n">$0 hoy</td><td>Gratis dentro de las 24 h. <b>Se empieza a cobrar el 1/oct/2026.</b></td></tr>
+      </tbody>
+    </table></div>
+    <p class="tblnote">Tarifas aproximadas de agosto de 2026, convertidas con TRM ≈ $4.000 COP/USD. Meta publica en dólares y actualiza el rate card varias veces al año; utility y authentication además tienen escalones por volumen mensual.</p>
+
+    <h3>Reglas que bajan la factura</h3>
+    <ul>
+      <li><strong>Ventana de servicio de 24 horas</strong>: cuando el cliente escribe, se abre una ventana de 24 h en la que puedes responder con texto libre sin costo. Todo lo que quepa ahí es gratis (hasta octubre de 2026).</li>
+      <li><strong>Punto de entrada gratuito</strong>: si la conversación nace de un anuncio de clic a WhatsApp o del botón de una página de Facebook, se abre una ventana de <strong>72 horas gratuitas</strong>. Es el mejor argumento para que el cliente pautee: le sale más barato que enviar plantillas de marketing.</li>
+      <li><strong>Utility antes que marketing</strong>: la diferencia es de unas 15 veces. Redactar bien la plantilla es, literalmente, un ahorro.</li>
+      <li><strong>Segmentar</strong>: mandar marketing a toda la base es caro y hunde la calificación de calidad, que a su vez baja el límite de mensajería.</li>
+    </ul>
+
+    <h3>Ejemplo de cálculo — restaurante mediano en Medellín</h3>
+    <div class="card">
+      <p style="margin-bottom:12px"><strong>Supuestos:</strong> 600 clientes escriben al mes; 320 reservas confirmadas; 320 recordatorios el día anterior; 1 campaña mensual a 800 contactos.</p>
+      <div class="scrollx" style="margin:0 0 14px"><table style="min-width:520px">
+        <thead><tr><th>Concepto</th><th>Cantidad</th><th>Tarifa</th><th>Total COP</th></tr></thead>
+        <tbody>
+          <tr><td>Respuestas del bot dentro de la ventana</td><td class="n">~4.000</td><td class="n">$0</td><td class="n">$0</td></tr>
+          <tr><td>Confirmaciones de reserva (utility, en ventana)</td><td class="n">320</td><td class="n">$0</td><td class="n">$0</td></tr>
+          <tr><td>Recordatorios día anterior (utility, fuera de ventana)</td><td class="n">320</td><td class="n">$3</td><td class="n">$960</td></tr>
+          <tr><td>Campaña mensual (marketing)</td><td class="n">800</td><td class="n">$50</td><td class="n">$40.000</td></tr>
+          <tr><td><b>Total mensual a Meta</b></td><td class="n">—</td><td class="n">—</td><td class="n"><b>≈ $41.000</b></td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-bottom:0"><strong>Lectura:</strong> el consumo de Meta es marginal frente a la mensualidad de LQS ($340.000 en Plan Negocio). El 97 % del gasto en Meta viene de <em>una sola</em> campaña de marketing. Si el cliente quiere reducirlo, se sustituye la campaña por anuncios de clic a WhatsApp: ahí la conversación entra por punto de entrada gratuito.</p>
+    </div>
+
+    <div class="callout warn">
+      <span class="lb">Escenario post 1 de octubre de 2026</span>
+      <p>Cuando se empiecen a cobrar los mensajes de servicio, esas ~4.000 respuestas del bot dejan de ser gratis. Con una tarifa de servicio en el orden de la de utility, el mismo restaurante pasaría de ≈$41.000 a ≈$53.000 COP al mes. Sigue siendo bajo, pero <strong>hay que avisarlo en la propuesta</strong> y diseñar flujos que resuelvan en pocos mensajes en vez de conversar de más. Meta cobra aparte, y por tokens, su propio agente de IA (Meta Business Agent) desde agosto de 2026: si el cliente lo activa, es otra línea en la factura.</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="meta">
+    <h2><span class="num">06</span> Automatización de Instagram y Facebook</h2>
+    <p class="lead-p">Se puede automatizar bastante, pero las reglas de Meta son más estrictas que en WhatsApp y casi todo el mundo las vende mal. Esto es lo que realmente permite la API.</p>
+
+    <h3>Qué sí se puede</h3>
+    <ul>
+      <li><strong>Responder DM entrantes</strong> en Instagram y Messenger, con lógica, botones y respuestas rápidas.</li>
+      <li><strong>Responder comentarios</strong>: cuando alguien comenta en una publicación o reel, se le puede enviar una <em>respuesta privada</em> por DM. Es la mecánica del clásico «comenta PRECIO y te escribo».</li>
+      <li><strong>Responder respuestas a historias</strong> y menciones.</li>
+      <li><strong>Llevar la conversación a WhatsApp</strong> con un enlace <code>wa.me</code>, que además abre la conversación como entrante y por tanto gratuita.</li>
+      <li><strong>Etiquetar y sincronizar</strong> con el CRM del cliente.</li>
+    </ul>
+
+    <h3>Qué no se puede (y los límites reales)</h3>
+    <ul>
+      <li><strong>No se puede escribir primero.</strong> Solo se responde a quien interactuó: comentario, respuesta a historia o DM entrante.</li>
+      <li><strong>Ventana de 24 horas</strong>: los mensajes automatizados solo se envían a usuarios que interactuaron en las últimas 24 h. Pasado ese tiempo, la conversación se cierra.</li>
+      <li><strong>Una sola respuesta privada por comentario.</strong> No se puede insistir sobre la misma acción del usuario.</li>
+      <li><strong>Respuesta privada solo dentro de los 7 días</strong> siguientes a la publicación del comentario.</li>
+      <li><strong>Límite de ritmo</strong>: del orden de 200 mensajes automatizados por hora y por cuenta. Un reel viral puede saturar la cola; hay que encolar y degradar con elegancia, no reintentar en bucle.</li>
+      <li><strong>No hay plantillas de pago</strong> como en WhatsApp: si la ventana se cerró, se acabó. Por eso el objetivo de todo flujo de Instagram debe ser <strong>mover al usuario a WhatsApp o al correo</strong> mientras la ventana está abierta.</li>
+      <li>La cuenta de Instagram debe ser <strong>profesional</strong> (empresa o creador) y estar vinculada a una página de Facebook.</li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="lb">Lo que hay que decirle al cliente</span>
+      <p>Cualquier herramienta que prometa DM masivos a seguidores, mensajes en frío o automatización sin ventana de 24 horas está usando métodos no oficiales (scraping o sesiones no autorizadas) y termina en cuenta restringida o cerrada. LQS no monta eso. Si el cliente lo pide, se explica el riesgo por escrito y se ofrece la alternativa legítima: anuncios de clic a WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="checklist">
+    <h2><span class="num">07</span> Checklist de lanzamiento y errores comunes</h2>
+
+    <h3>Antes de conectar</h3>
+    <ul class="chk">
+      <li>Portafolio comercial <b>a nombre del cliente</b>, con LQS como socio, no al revés.</li>
+      <li>Verificación de negocio <b>enviada</b> (no esperar al final del proyecto).</li>
+      <li>Número confirmado como libre de WhatsApp, o Coexistence activado a conciencia.</li>
+      <li>Nombre para mostrar coherente con el nombre legal o comercial real.</li>
+      <li>Árbol de conversación aprobado por el cliente <b>en papel</b>, antes de programar.</li>
+      <li>Textos, precios, horarios y direcciones confirmados por escrito.</li>
+    </ul>
+
+    <h3>Antes de lanzar</h3>
+    <ul class="chk">
+      <li>Token permanente de System User en variable de entorno, nunca en el repositorio.</li>
+      <li>Webhook filtrando <code>statuses</code> para no entrar en bucle.</li>
+      <li>Todas las plantillas aprobadas y probadas <b>con datos reales</b>, no con «prueba prueba».</li>
+      <li>Salida a humano funcionando, con notificación real al equipo del cliente.</li>
+      <li>Mensaje de fuera de horario configurado con el horario correcto y festivos colombianos.</li>
+      <li>Método de pago cargado en Meta y verificado con un envío real.</li>
+      <li>Fallback probado: qué dice el bot cuando no entiende (nunca inventar).</li>
+      <li>Prueba desde tres celulares distintos, incluido uno Android viejo.</li>
+      <li>Capacitación al equipo grabada y entregada.</li>
+      <li>Documento con accesos y responsables entregado al cliente.</li>
+    </ul>
+
+    <h3>Errores que ya nos costaron tiempo</h3>
+    <ol>
+      <li><strong>Usar el token de prueba de 24 horas en producción.</strong> Todo funciona el día de la demo y se cae al siguiente.</li>
+      <li><strong>Categorizar mal las plantillas.</strong> Rechazo, reproceso y, si pasa como marketing, factura 15 veces mayor.</li>
+      <li><strong>No filtrar los webhooks de estado.</strong> Bucle infinito y cupo de n8n o Make quemado en una tarde.</li>
+      <li><strong>Dejar el portafolio de Meta a nombre de LQS.</strong> Cuando el cliente se va, es un problema legal y humano. Siempre a su nombre.</li>
+      <li><strong>Prometer fechas que dependen de la verificación de Meta.</strong> Prometemos nuestra parte; la de Meta se comunica como estimado.</li>
+      <li><strong>Bot que intenta responderlo todo.</strong> Un bot que dice «esto no lo sé, te paso con alguien» genera más confianza que uno que improvisa.</li>
+      <li><strong>Olvidar el límite de 250 conversaciones diarias</strong> del primer mes y programar una campaña grande el día del lanzamiento.</li>
+      <li><strong>No vigilar la calificación de calidad</strong> las primeras semanas. Baja rápido con campañas mal segmentadas y arrastra el límite de mensajería.</li>
+    </ol>
+  </section>
+
+  <!-- 8 -->
+  <section id="fuentes">
+    <h2><span class="num">08</span> Fuentes</h2>
+    <p>Consultadas en agosto de 2026. Las dos primeras son la referencia oficial: ante cualquier duda, mandan ellas.</p>
+    <ul class="srcs">
+      <li><a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing" target="_blank" rel="noopener">Meta for Developers — Pricing on the WhatsApp Business Platform</a><span>Modelo de precios por mensaje, categorías y rate card por país.</span></li>
+      <li><a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/templates/template-categorization" target="_blank" rel="noopener">Meta for Developers — Template categorization</a><span>Reglas oficiales de categorización y reclasificación de plantillas.</span></li>
+      <li><a href="https://developers.facebook.com/docs/whatsapp/cloud-api/phone-numbers" target="_blank" rel="noopener">Meta for Developers — Cloud API: números de teléfono</a><span>Alta, verificación y nombre para mostrar del número.</span></li>
+      <li><a href="https://business.whatsapp.com/products/platform-pricing" target="_blank" rel="noopener">WhatsApp Business — Platform pricing</a><span>Página comercial de precios y ventanas gratuitas.</span></li>
+      <li><a href="https://www.ycloud.com/blog/whatsapp-service-messages-24-hour-window-pricing" target="_blank" rel="noopener">YCloud — WhatsApp service messages will be charged: 24-hour window cost guide</a><span>Detalle del cobro de mensajes de servicio desde octubre de 2026.</span></li>
+      <li><a href="https://www.unifyport.ai/blog/whatsapp-service-vs-utility-messages-october-2026/" target="_blank" rel="noopener">UnifyPort — Service vs utility messages: what gets charged after October 1, 2026</a><span>Comparación de qué se cobra antes y después del cambio.</span></li>
+      <li><a href="https://chakrahq.com/article/whatsapp-api-pricing-update-service-messages-october-2026/" target="_blank" rel="noopener">ChakraHQ — WhatsApp service message pricing update (Oct 2026)</a><span>Impacto operativo del cambio en flujos existentes.</span></li>
+      <li><a href="https://blueticks.co/blog/whatsapp-business-api-pricing-2026" target="_blank" rel="noopener">Blueticks — WhatsApp Business API pricing in 2026</a><span>Historia del cambio de conversaciones a mensajes y categorías.</span></li>
+      <li><a href="https://formbeep.com/whatsapp-api-pricing/" target="_blank" rel="noopener">FormBeep — Meta WhatsApp Business API pricing (2026), rates by country</a><span>Tabla de tarifas por país, incluida Colombia.</span></li>
+      <li><a href="https://www.simla.com/blog/precios-whatsapp-business-api" target="_blank" rel="noopener">Simla — Precios de WhatsApp Business API 2026 en México, Colombia y Perú</a><span>Tarifas y ejemplos en contexto latinoamericano.</span></li>
+      <li><a href="https://www.macsoft.com.co/whatsapp-business-api-colombia/" target="_blank" rel="noopener">MacSoft — WhatsApp Business API en Colombia (2026): costos, Coexistence y guía</a><span>Perspectiva local: costos en COP y coexistencia.</span></li>
+      <li><a href="https://chately.co/blog/whatsapp-business-api-en-colombia" target="_blank" rel="noopener">Chately — WhatsApp Business API en Colombia: guía completa para empresas 2026</a><span>Requisitos y proveedores con presencia en Colombia.</span></li>
+      <li><a href="https://ezcontact.ai/en/blog/whatsapp-bsp-comparison/" target="_blank" rel="noopener">EZContact — WhatsApp BSP comparison 2026: 360dialog vs Twilio vs WATI</a><span>Estructura de markup y tarifas de cada proveedor.</span></li>
+      <li><a href="https://www.wati.io/en/blog/whatsapp-api-rate-limits/" target="_blank" rel="noopener">WATI — WhatsApp API rate limits and messaging tiers</a><span>Escalones 250 → 2.000 → 10.000 → 100.000 y calidad.</span></li>
+      <li><a href="https://www.keyapi.ai/blog/instagram-messaging-api-policy/" target="_blank" rel="noopener">KeyAPI — Instagram Messaging API 24-hour window policy (2026)</a><span>Ventana de 24 h y condiciones de envío en Instagram.</span></li>
+      <li><a href="https://www.wati.io/en/blog/instagram-comment-automation/" target="_blank" rel="noopener">WATI — Instagram comment automation: the complete 2026 guide</a><span>Respuestas privadas a comentarios y la regla de 7 días.</span></li>
+      <li><a href="https://n8n.io/integrations/webhook/and/whatsapp-business-cloud/" target="_blank" rel="noopener">n8n — Webhook + WhatsApp Business Cloud</a><span>Nodo oficial y patrón de integración.</span></li>
+      <li><a href="https://whapi.cloud/blog/n8n-vs-make-vs-zapier-whatsapp-automation" target="_blank" rel="noopener">Whapi — n8n vs Make vs Zapier: WhatsApp automation in 2026</a><span>Costos comparados y el problema del bucle por webhooks de estado.</span></li>
+      <li><a href="https://zernio.com/blog/meta-business-agent-pricing" target="_blank" rel="noopener">Zernio — Meta Business Agent pricing</a><span>Cobro por tokens del agente de IA de Meta desde agosto de 2026.</span></li>
+      <li><a href="https://devdarren.com/blog/whatsapp-api-template-message-approval-tips" target="_blank" rel="noopener">DevDarren — WhatsApp utility template approval in 2026</a><span>Causas frecuentes de rechazo y cómo redactarlas.</span></li>
+    </ul>
+  </section>
+
+  <div class="endcta">
+    <h3 style="margin-top:0;font-size:1.15rem">¿Vas a cotizar un proyecto con esto?</h3>
+    <p>Revisa primero la página pública del servicio para no contradecir los precios que ya están publicados.</p>
+    <a class="cta" href="mundos/automatizacion.html">Ver la página de automatización →</a>
+  </div>
+</main>
+</div>
+
+<footer><div class="in">
+  <span>LQS · Ecosistema creativo · Medellín, Colombia · Documento interno</span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">+57 333 279 1710</a></span>
+</div></footer>
+
+<script>
+"use strict";
+/* copiar plantillas */
+document.querySelectorAll('.cp').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var box = btn.closest('.tpl'), pre = box && box.querySelector('pre');
+    if(!pre) return;
+    var txt = pre.textContent;
+    var done = function(){
+      var old = btn.textContent;
+      btn.textContent = '¡Copiado!'; btn.classList.add('ok');
+      setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok'); }, 1800);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly','');
+      ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+});
+
+/* índice activo */
+(function(){
+  var links = [].slice.call(document.querySelectorAll('.toc a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(!secs.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(!e.isIntersecting) return;
+      links.forEach(function(a){
+        a.classList.toggle('act', a.getAttribute('href') === '#' + e.target.id);
+      });
+    });
+  },{rootMargin:'-15% 0px -70% 0px',threshold:0});
+  secs.forEach(function(s){ io.observe(s); });
+})();
+</script>
+</body></html>

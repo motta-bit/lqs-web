@@ -38,16 +38,16 @@ h3{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
 .tg b{color:var(--acc-l);font-weight:800}
 .card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.014));backdrop-filter:blur(8px);transition:.3s var(--ez)}
 /* ---------- REEL ---------- */
-.player{border:1px solid var(--line);border-radius:24px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));padding:clamp(10px,1.4vw,16px);backdrop-filter:blur(8px);box-shadow:0 40px 90px -50px #000,0 0 0 1px rgba(255,255,255,.02) inset}
+.player{border:1px solid var(--line);border-radius:24px;background:linear-gradient(165deg,rgba(255,255,255,.06),rgba(255,255,255,.015));padding:clamp(10px,1.4vw,16px);box-shadow:0 40px 90px -50px #000,0 0 0 1px rgba(255,255,255,.02) inset}
 .screen{position:relative;border-radius:15px;overflow:hidden;background:#000;aspect-ratio:16/9}
 .screen canvas{width:100%;height:100%;display:block}
-.scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 78% 62% at 50% 46%,transparent 42%,rgba(0,0,0,.5) 100%);mix-blend-mode:multiply}
-.scan{position:absolute;inset:0;pointer-events:none;opacity:.16;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.09) 0 1px,transparent 1px 3px)}
+.scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 84% 68% at 50% 46%,rgba(0,0,0,0) 48%,rgba(2,6,12,.3) 100%)}
 .slug{position:absolute;left:14px;top:14px;font-family:var(--pix);font-size:.42rem;letter-spacing:.18em;color:#dff6fa;opacity:.72;text-shadow:0 1px 6px #000;pointer-events:none}
 .tcode{position:absolute;right:14px;top:14px;font-family:var(--pix);font-size:.42rem;letter-spacing:.12em;color:#dff6fa;opacity:.72;text-shadow:0 1px 6px #000;pointer-events:none}
-.bigplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(5,6,15,.42);cursor:pointer;opacity:0;transition:.28s var(--ez);backdrop-filter:blur(2px)}
+.bigplay{position:absolute;inset:0;display:grid;place-items:center;border:0;background:rgba(5,6,15,.5);cursor:pointer;opacity:0;transition:.28s var(--ez)}
+.bigplay[data-show="0"]{pointer-events:none}
 .bigplay[data-show="1"]{opacity:1}
-.bigplay span{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;backdrop-filter:blur(6px)}
+.bigplay span{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.45);display:grid;place-items:center}
 .bigplay svg{width:26px;height:26px;fill:#fff;margin-left:4px}
 .ctrls{display:flex;align-items:center;gap:13px;padding:13px 6px 4px}
 .pp{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--glass);color:var(--txt);cursor:pointer;display:grid;place-items:center;transition:.22s var(--ez)}
@@ -61,7 +61,7 @@ h3{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
 .shot{font-size:.7rem;font-weight:700;color:var(--mut);border:1px solid var(--line2);border-radius:9px;padding:6px 11px;transition:.25s var(--ez);background:rgba(255,255,255,.02)}
 .shot[data-on="1"]{color:#06171b;background:linear-gradient(135deg,var(--acc-l),var(--acc));border-color:transparent}
 /* ---------- COMPARADOR ---------- */
-.cmpwrap{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#0a0c16;aspect-ratio:600/420;touch-action:pan-y}
+.cmpwrap{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#0a0c16;aspect-ratio:600/420;max-width:800px;margin:0 auto;touch-action:pan-y;box-shadow:0 44px 90px -56px #000}
 .cmpwrap svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .cmpwrap .after{clip-path:inset(0 0 0 var(--x,50%))}
 .cmpwrap input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:none;z-index:5}
@@ -71,16 +71,16 @@ h3{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
 .handle b::before{content:'';width:16px;height:9px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 16' fill='none' stroke='%23cdf3f8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 3 5 8l6 5M21 3l6 5-6 5'/%3E%3C/svg%3E")}
 .pill{position:absolute;top:14px;z-index:4;font-family:var(--pix);font-size:.42rem;letter-spacing:.14em;padding:8px 11px;border-radius:9px;background:rgba(5,6,15,.66);border:1px solid var(--line);backdrop-filter:blur(6px);pointer-events:none}
 .pill.l{left:14px;color:#e3b8b8}.pill.r{right:14px;color:var(--acc-l)}
-.cmpnote{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:16px}
+.cmpnote{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px auto 0;max-width:800px}
 .cmpnote div{border:1px solid var(--line2);border-radius:15px;padding:14px 16px;background:var(--glass)}
 .cmpnote strong{display:block;font-size:.83rem;margin-bottom:4px}
 .cmpnote p{font-size:.82rem;color:var(--mut);line-height:1.5}
 /* ---------- FORMATOS ---------- */
-.fmt{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end}
-.fmt figure{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:12px;transition:.3s var(--ez)}
+.fmt{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:center;--fh:clamp(126px,17vw,208px)}
+.fmt figure{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:9px;transition:.3s var(--ez)}
 .fmt figure:hover{border-color:var(--acc);transform:translateY(-5px);box-shadow:0 30px 60px -40px var(--acc)}
-.fmt svg{width:100%;height:auto;display:block;border-radius:10px;background:#07101a}
-.fmt figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:11px}
+.fmt svg{height:var(--fh);width:auto;display:block;border-radius:9px;background:#07101a}
+.fmt figcaption{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;padding:0 2px}
 .fmt .fn{font-family:var(--pix);font-size:.45rem;letter-spacing:.1em;color:var(--acc)}
 .fmt .fu{font-size:.74rem;color:var(--mut);font-weight:600}
 /* ---------- STORYBOARD ---------- */
@@ -93,7 +93,9 @@ h3{font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
 .sb .n span{font-family:var(--pix);font-size:.4rem;color:var(--mut);letter-spacing:.08em}
 .sb button[data-on="1"] .n span{color:var(--acc)}
 .sb .n b{font-size:.72rem;font-weight:700;line-height:1.25}
-.sbinfo{margin-top:16px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(150deg,rgba(63,198,214,.09),rgba(255,255,255,.018));padding:clamp(18px,2.6vw,26px);display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;min-height:132px}
+.sbinfo{margin-top:16px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(150deg,rgba(63,198,214,.09),rgba(255,255,255,.018));padding:clamp(18px,2.6vw,26px);display:grid;grid-template-columns:auto 1fr minmax(0,300px);gap:clamp(14px,2vw,24px);align-items:start;min-height:132px}
+.sbprev{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#060d15;align-self:center}
+.sbprev svg{width:100%;height:auto;display:block}
 .sbinfo .no{font-family:var(--pix);font-size:1.5rem;color:var(--acc);opacity:.55;line-height:1}
 .sbinfo h3{font-size:1.14rem;margin-bottom:6px;letter-spacing:-.02em}
 .sbinfo p{color:var(--mut);font-size:.93rem;max-width:60ch}
@@ -113,9 +115,8 @@ footer .in{display:flex;flex-wrap:wrap;gap:9px;justify-content:space-between;fon
 footer a:hover{color:var(--acc)}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ez),transform .8s var(--ez)}
 .rv.in{opacity:1;transform:none}
-@media(max-width:880px){.fmt{grid-template-columns:repeat(2,1fr)}.sb{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.sb{grid-template-columns:repeat(2,1fr)}.sbinfo{grid-template-columns:1fr;gap:10px}.ctrls{gap:10px}.tm{font-size:.4rem}}
-@media(max-width:400px){.fmt{grid-template-columns:1fr 1fr;gap:10px}}
+@media(max-width:880px){.sb{grid-template-columns:repeat(3,1fr)}.sbinfo{grid-template-columns:auto 1fr}.sbprev{display:none}}
+@media(max-width:560px){.sb{grid-template-columns:repeat(2,1fr)}.sbinfo{grid-template-columns:1fr;gap:10px}.ctrls{gap:10px}.tm{font-size:.4rem}.fmt{gap:10px;--fh:clamp(112px,30vw,150px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
 </style></head><body>
 <div class="bgglow"></div><div class="grain"></div>
@@ -139,7 +140,7 @@ footer a:hover{color:var(--acc)}
   <div class="player rv">
     <div class="screen">
       <canvas id="reel" width="960" height="540" aria-label="Reel simulado de la productora LQS"></canvas>
-      <div class="scrim"></div><div class="scan"></div>
+      <div class="scrim"></div>
       <span class="slug">LQS · REEL 2026</span><span class="tcode" id="tc">00:00:00</span>
       <button class="bigplay" id="big" aria-label="Reproducir reel"><span><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></span></button>
     </div>
@@ -166,11 +167,14 @@ footer a:hover{color:var(--acc)}
       <rect width="600" height="420" fill="url(#pfl)"/>
       <path d="M0 268 L600 244 L600 420 L0 420Z" fill="#4a4c40"/>
       <path d="M0 268 L600 244 L600 258 L0 282Z" fill="#2f312a" opacity=".7"/>
-      <rect x="18" y="292" width="120" height="46" rx="6" fill="#6a6252" opacity=".85" transform="rotate(-5 78 315)"/>
-      <path d="M470 300c22-16 60-10 70 12s-16 42-44 36-44-32-26-48z" fill="#575a4b" opacity=".9"/>
-      <rect x="0" y="0" width="600" height="120" fill="#6d7160" opacity=".5"/>
-      <rect x="352" y="118" width="16" height="150" fill="#3d4036" opacity=".55"/>
+      <rect x="18" y="292" width="120" height="46" rx="6" fill="#7d7461" opacity=".95" transform="rotate(-5 78 315)"/>
+      <rect x="26" y="300" width="70" height="7" rx="3" fill="#3a382e" opacity=".7" transform="rotate(-5 78 315)"/>
+      <path d="M470 300c22-16 60-10 70 12s-16 42-44 36-44-32-26-48z" fill="#3f4438" opacity=".95"/>
+      <rect x="0" y="0" width="600" height="120" fill="#7b7f6b" opacity=".55"/>
+      <rect x="352" y="118" width="16" height="150" fill="#2c2f27" opacity=".7"/>
+      <rect x="86" y="132" width="58" height="96" rx="4" fill="#6b6f5c" opacity=".6"/>
       <g transform="rotate(-4 300 250)">
+        <path d="M338 322 L470 336 L470 352 L316 340Z" fill="#191b16" opacity=".72"/>
         <ellipse cx="300" cy="330" rx="86" ry="13" fill="#22241d" opacity=".75"/>
         <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="#8a9a94"/>
         <rect x="278" y="120" width="44" height="30" rx="5" fill="#6f7d78"/>
@@ -179,27 +183,33 @@ footer a:hover{color:var(--acc)}
         <rect x="276" y="228" width="40" height="5" rx="2" fill="#7d7a6c"/><rect x="276" y="240" width="28" height="5" rx="2" fill="#8d8a7c"/>
         <rect x="256" y="150" width="92" height="176" fill="#fff" opacity=".1"/>
       </g>
-      <ellipse cx="300" cy="96" rx="128" ry="86" fill="url(#pfsh)" filter="url(#pbl)"/>
-      <rect width="600" height="420" fill="#9bff7a" opacity=".05"/>
+      <ellipse cx="300" cy="118" rx="96" ry="72" fill="url(#pfsh)" filter="url(#pbl)"/>
+      <ellipse cx="296" cy="188" rx="30" ry="20" fill="#ffffff" opacity=".5" filter="url(#pbl)"/>
+      <rect width="600" height="420" fill="#9bff7a" opacity=".055"/>
       <g fill="#fff" opacity=".05"><rect x="60" y="80" width="2" height="2"/><rect x="140" y="200" width="2" height="2"/><rect x="420" y="120" width="2" height="2"/><rect x="500" y="330" width="2" height="2"/><rect x="220" y="380" width="2" height="2"/><rect x="360" y="60" width="2" height="2"/></g>
     </svg>
     <svg class="after" viewBox="0 0 600 420" role="img" aria-label="Foto de producto hecha por LQS"><defs>
       <linearGradient id="lbg" x1=".2" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#16323a"/><stop offset=".55" stop-color="#0a1820"/><stop offset="1" stop-color="#05090f"/></linearGradient>
-      <radialGradient id="lkey" cx=".38" cy=".2" r=".7"><stop offset="0" stop-color="#bfeef6" stop-opacity=".5"/><stop offset="1" stop-color="#bfeef6" stop-opacity="0"/></radialGradient>
+      <radialGradient id="lkey" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#cdf3f8" stop-opacity=".4"/><stop offset=".5" stop-color="#9fdfe9" stop-opacity=".16"/><stop offset="1" stop-color="#9fdfe9" stop-opacity="0"/></radialGradient>
       <linearGradient id="lbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f2f38"/><stop offset=".22" stop-color="#3d8b99"/><stop offset=".5" stop-color="#9fdfe9"/><stop offset=".78" stop-color="#2c6b78"/><stop offset="1" stop-color="#0a2027"/></linearGradient>
-      <linearGradient id="lref" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdfe9" stop-opacity=".3"/><stop offset="1" stop-color="#9fdfe9" stop-opacity="0"/></linearGradient>
+      <radialGradient id="lref" cx=".5" cy=".1" r=".85"><stop offset="0" stop-color="#a5e3ec" stop-opacity=".38"/><stop offset="1" stop-color="#a5e3ec" stop-opacity="0"/></radialGradient>
+      <radialGradient id="lrim" cx=".92" cy=".54" r=".5"><stop offset="0" stop-color="#ffcf9a" stop-opacity=".34"/><stop offset="1" stop-color="#ffcf9a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="lflr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123540"/><stop offset="1" stop-color="#050a10"/></linearGradient>
       <filter id="lsh"><feGaussianBlur stdDeviation="9"/></filter>
       <filter id="lgl"><feGaussianBlur stdDeviation="14"/></filter></defs>
       <rect width="600" height="420" fill="url(#lbg)"/>
-      <ellipse cx="228" cy="86" rx="230" ry="170" fill="url(#lkey)"/>
-      <path d="M0 300h600v120H0z" fill="#050b10" opacity=".55"/>
+      <ellipse cx="292" cy="168" rx="270" ry="215" fill="url(#lkey)"/>
+      <ellipse cx="556" cy="236" rx="200" ry="190" fill="url(#lrim)"/>
+      <ellipse cx="126" cy="120" rx="150" ry="130" fill="#3fc6d6" opacity=".12" filter="url(#lgl)"/>
+      <path d="M0 300h600v120H0z" fill="url(#lflr)"/>
+      <path d="M0 300h600v1.6H0z" fill="#7fd3e0" opacity=".22"/>
       <ellipse cx="300" cy="302" rx="150" ry="26" fill="#00131a" opacity=".85" filter="url(#lsh)"/>
       <ellipse cx="358" cy="300" rx="98" ry="15" fill="#000" opacity=".55" filter="url(#lsh)"/>
       <g opacity=".26" transform="translate(0 604) scale(1 -1)">
         <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="url(#lbody)"/>
         <rect x="278" y="118" width="44" height="32" rx="6" fill="#2a5f6b"/>
       </g>
-      <rect x="230" y="300" width="140" height="90" fill="url(#lref)" opacity=".5"/>
+      <ellipse cx="300" cy="322" rx="86" ry="42" fill="url(#lref)" opacity=".55" filter="url(#lsh)"/>
       <ellipse cx="300" cy="196" rx="120" ry="120" fill="#3fc6d6" opacity=".1" filter="url(#lgl)"/>
       <path d="M262 148h76v18l14 20v128a16 16 0 0 1-16 16h-72a16 16 0 0 1-16-16V186l14-20z" fill="url(#lbody)"/>
       <rect x="278" y="118" width="44" height="32" rx="6" fill="#2a5f6b"/>
@@ -207,7 +217,7 @@ footer a:hover{color:var(--acc)}
       <rect x="272" y="212" width="56" height="56" rx="6" fill="#f2fbfd" opacity=".95"/>
       <rect x="281" y="230" width="38" height="5" rx="2.5" fill="#155e6b"/><rect x="281" y="243" width="24" height="5" rx="2.5" fill="#3fc6d6"/>
       <path d="M270 158h9v168a10 10 0 0 1-9-10z" fill="#fff" opacity=".5"/>
-      <path d="M334 168h6v150h-6z" fill="#cdf3f8" opacity=".55"/>
+      <path d="M341 200h5v108h-5z" fill="#cdf3f8" opacity=".6"/>
       <path d="M285 122h30v6h-30z" fill="#fff" opacity=".5"/>
       <ellipse cx="300" cy="140" rx="66" ry="30" fill="#cdf3f8" opacity=".09" filter="url(#lgl)"/>
     </svg>
@@ -237,7 +247,7 @@ footer a:hover{color:var(--acc)}
       <path d="M240 62l5 8h-10z" fill="#cdf3f8"/><circle cx="240" cy="66" r="4" fill="#cdf3f8"/>
       <text x="32" y="82" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="17" font-weight="800" letter-spacing="3">MERCURY</text>
       <text x="32" y="100" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="9" letter-spacing="1.4">Colección Aura · plata 925</text>
-      <rect x="32" y="112" width="52" height="16" rx="8" fill="#3fc6d6"/><text x="43" y="123" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
+      <rect x="32" y="112" width="64" height="17" rx="8.5" fill="#3fc6d6"/><text x="64" y="123.5" text-anchor="middle" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
       <text x="286" y="168" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="7" font-weight="800">LQS</text>
     </svg><figcaption><span class="fn">16:9</span><span class="fu">Web / YouTube</span></figcaption></figure>
 
@@ -250,7 +260,7 @@ footer a:hover{color:var(--acc)}
       <path d="M90 80l6 10H84z" fill="#cdf3f8"/><circle cx="90" cy="85" r="5.5" fill="#cdf3f8"/>
       <text x="24" y="216" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="19" font-weight="800" letter-spacing="3">MERCURY</text>
       <text x="24" y="236" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.2">Colección Aura</text>
-      <rect x="24" y="250" width="94" height="22" rx="11" fill="#3fc6d6"/><text x="38" y="265" fill="#06171b" font-family="Manrope,sans-serif" font-size="9" font-weight="800">VER PIEZAS</text>
+      <rect x="24" y="250" width="94" height="22" rx="11" fill="#3fc6d6"/><text x="71" y="265" text-anchor="middle" fill="#06171b" font-family="Manrope,sans-serif" font-size="9" font-weight="800">VER PIEZAS</text>
       <rect x="24" y="26" width="44" height="4" rx="2" fill="#cdf3f8" opacity=".8"/><rect x="72" y="26" width="84" height="4" rx="2" fill="#ffffff" opacity=".22"/>
       <text x="24" y="300" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="8" font-weight="800">LQS</text>
     </svg><figcaption><span class="fn">9:16</span><span class="fu">Reel / Story</span></figcaption></figure>
@@ -276,7 +286,7 @@ footer a:hover{color:var(--acc)}
       <path d="M100 71l6 10H94z" fill="#cdf3f8"/><circle cx="100" cy="76" r="5.2" fill="#cdf3f8"/>
       <text x="22" y="192" fill="#e9f6f8" font-family="Manrope,sans-serif" font-size="16" font-weight="800" letter-spacing="2.6">MERCURY</text>
       <text x="22" y="208" fill="#8fb2b9" font-family="Manrope,sans-serif" font-size="8.5" letter-spacing="1.1">Colección Aura</text>
-      <rect x="22" y="218" width="60" height="17" rx="8.5" fill="#3fc6d6"/><text x="33" y="230" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
+      <rect x="22" y="218" width="64" height="17" rx="8.5" fill="#3fc6d6"/><text x="54" y="229.5" text-anchor="middle" fill="#06171b" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">VER PIEZAS</text>
       <text x="176" y="230" fill="#3fc6d6" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800">LQS</text>
     </svg><figcaption><span class="fn">4:5</span><span class="fu">Post / pauta</span></figcaption></figure>
   </div>
@@ -293,7 +303,7 @@ footer a:hover{color:var(--acc)}
     <button data-i="3"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0a1b28"/><path d="M0 0h160v40H0z" fill="#123a4a" opacity=".7"/><path d="M18 90 62 8h36l44 82z" fill="#0d2733"/><path d="M62 8 80 0l18 8-18 10z" fill="#3fc6d6" opacity=".6"/><ellipse cx="80" cy="30" rx="12" ry="14" fill="#d9b48f"/><path d="M52 90c0-20 12-32 28-32s28 12 28 32z" fill="#3fc6d6" opacity=".62"/><path d="M0 6h160" stroke="#ffd9a8" stroke-width="2" opacity=".35"/></svg><span class="n"><b>Contrapicado</b><span>04</span></span></button>
     <button data-i="4"><svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#04080e"/><circle cx="80" cy="42" r="26" fill="none" stroke="#3fc6d6" stroke-width="2" opacity=".55"/><text x="80" y="49" text-anchor="middle" fill="#cdf3f8" font-family="Manrope,sans-serif" font-size="19" font-weight="800" letter-spacing="2">LQS</text><rect x="52" y="70" width="56" height="3" rx="1.5" fill="#3fc6d6" opacity=".5"/><rect x="0" y="0" width="160" height="90" fill="#000" opacity=".2"/></svg><span class="n"><b>Cierre</b><span>05</span></span></button>
   </div>
-  <div class="sbinfo rv" id="sbi"><span class="no" id="sbn">01</span><div><h3 id="sbt"></h3><p id="sbd"></p><div class="kit" id="sbk"></div></div></div>
+  <div class="sbinfo rv" id="sbi"><span class="no" id="sbn">01</span><div><h3 id="sbt"></h3><p id="sbd"></p><div class="kit" id="sbk"></div></div><div class="sbprev" id="sbp" aria-hidden="true"></div></div>
 </section></div>
 
 <div class="wrap"><section><div class="final rv">
@@ -330,18 +340,21 @@ var PLAY='M7 4l13 8-13 8z',PAUSE='M6 4h4v16H6zM14 4h4v16h-4z';
 function ease(x){return 1-Math.pow(1-Math.min(1,Math.max(0,x)),3)}
 function bg(a,b){var lg=g.createLinearGradient(0,CT,W,CB);lg.addColorStop(0,a);lg.addColorStop(1,b);g.fillStyle=lg;g.fillRect(0,CT,W,CH)}
 
-function s0(p){bg('#06202b','#0a343d');
- for(var i=0;i<40;i++){var sd=i*97.7,bx=((sd*11)%W+Math.sin(t*.3+i*1.7)*46+W)%W,
-  by=CB+40-(((t*30*(.35+(i%5)/5.5)+i*83)%(CH+120))),r=7+(i%8)*8,a=.09+.2*((i%4)/3),
-  col=i%4===0?'255,222,178':(i%4===1?'160,236,246':'205,243,248');
+function s0(p){bg('#0d3d4a','#1a6577');
+ var kg=g.createRadialGradient(W*.42,CT+CH*.42,20,W*.42,CT+CH*.42,520);
+ kg.addColorStop(0,'rgba(190,244,252,.3)');kg.addColorStop(1,'rgba(190,244,252,0)');g.fillStyle=kg;g.fillRect(0,CT,W,CH);
+ for(var i=0;i<42;i++){var sd=i*97.7,bx=((sd*11)%W+Math.sin(t*.3+i*1.7)*46+W)%W,
+  by=CB+50-(((t*30*(.35+(i%5)/5.5)+i*83)%(CH+140))),r=10+(i%8)*11,a=.4+.45*((i%4)/3),
+  col=i%4===0?'255,232,196':(i%4===1?'196,244,252':'238,253,255');
   var rg=g.createRadialGradient(bx,by,0,bx,by,r);
-  rg.addColorStop(0,'rgba('+col+','+(a*1.5)+')');rg.addColorStop(.66,'rgba('+col+','+(a*.6)+')');rg.addColorStop(1,'rgba('+col+',0)');
+  rg.addColorStop(0,'rgba('+col+','+a+')');rg.addColorStop(.6,'rgba('+col+','+(a*.7)+')');rg.addColorStop(.9,'rgba('+col+','+(a*.28)+')');rg.addColorStop(1,'rgba('+col+',0)');
   g.fillStyle=rg;g.beginPath();g.arc(bx,by,r,0,7);g.fill();
-  if(i%9===0){g.strokeStyle='rgba('+col+',.14)';g.lineWidth=1.6;g.beginPath();g.arc(bx,by,r*.82,0,7);g.stroke();}}
- var st=g.createLinearGradient(0,CT,W,CB);st.addColorStop(0,'rgba(205,243,248,0)');st.addColorStop(.5,'rgba(205,243,248,.13)');st.addColorStop(1,'rgba(205,243,248,0)');
+  if(i%5===0){g.strokeStyle='rgba('+col+',.3)';g.lineWidth=2;g.beginPath();g.arc(bx,by,r*.86,0,7);g.stroke();}}
+ var st=g.createLinearGradient(0,CT,W,CB);st.addColorStop(0,'rgba(233,250,253,0)');st.addColorStop(.5,'rgba(233,250,253,.22)');st.addColorStop(1,'rgba(233,250,253,0)');
  g.save();g.translate(W*.5,CT+CH*.5);g.rotate(-.36);g.fillStyle=st;g.fillRect(-700,-26+Math.sin(t)*30,1400,52);g.restore();
- var o=ease(p*2.2);g.globalAlpha=.5*(1-Math.min(1,p*1.6));g.fillStyle='#000';g.fillRect(0,CT,W,CH);g.globalAlpha=1;
- g.fillStyle='rgba(233,246,248,'+(.9*o)+')';g.font='600 21px Manrope,sans-serif';g.fillText('Luz antes que palabras.',86,CB-74);}
+ var o=ease(p*2.2);g.globalAlpha=.55*(1-Math.min(1,p*1.5));g.fillStyle='#000';g.fillRect(0,CT,W,CH);g.globalAlpha=1;
+ g.fillStyle='rgba(255,255,255,'+(.94*o)+')';g.font='600 22px Manrope,sans-serif';
+ g.shadowColor='rgba(0,0,0,.8)';g.shadowBlur=12;g.fillText('Luz antes que palabras.',86,CB-74);g.shadowBlur=0;}
 
 function s1(p){bg('#08202a','#04101a');
  var cam=-46+p*92,zoom=1+p*.09;
@@ -372,20 +385,22 @@ function s1(p){bg('#08202a','#04101a');
 function s2(p){bg('#04121a','#071e26');
  var kg=g.createRadialGradient(W/2,CT+CH*.42,20,W/2,CT+CH*.42,470);
  kg.addColorStop(0,'rgba(63,198,214,.24)');kg.addColorStop(1,'rgba(63,198,214,0)');g.fillStyle=kg;g.fillRect(0,CT,W,CH);
- var word='MERCURY',fs=88;g.font='800 '+fs+'px Manrope,sans-serif';
- var ws=0,i,wd=[];for(i=0;i<word.length;i++){wd.push(g.measureText(word[i]).width+9);ws+=wd[i];}
+ var word='MERCURY',fs=88,i,ws,wd;
+ for(var pass=0;pass<4;pass++){g.font='800 '+fs+'px Manrope,sans-serif';ws=0;wd=[];
+  for(i=0;i<word.length;i++){wd.push(g.measureText(word[i]).width+fs*.1);ws+=wd[i];}
+  if(ws<=W*.74)break;fs=Math.floor(fs*(W*.72)/ws);}
  var x=(W-ws)/2,base=CT+CH*.5;
  for(i=0;i<word.length;i++){
-  var lp=ease((p*1.75)-i*.075),dy=(1-lp)*74;
+  var lp=ease((p*1.75)-i*.075),dy=(1-lp)*fs*.84;
   g.globalAlpha=Math.min(1,lp*1.4);
   g.fillStyle='#e9f6f8';g.fillText(word[i],x,base+dy);
   g.globalAlpha=Math.min(1,lp)*.35;g.fillStyle='#3fc6d6';g.fillText(word[i],x+3,base+dy+3);
   x+=wd[i];}
  g.globalAlpha=1;
  var bp=ease((p-.32)*2.6);
- g.fillStyle='#3fc6d6';g.fillRect(W/2-150*bp,base+26,300*bp,3);
- g.globalAlpha=ease((p-.42)*2.6);g.fillStyle='#8fb2b9';g.font='600 21px Manrope,sans-serif';
- var sub='JOYERÍA DE AUTOR · MEDELLÍN',sw=g.measureText(sub).width;g.fillText(sub,(W-sw)/2,base+66);g.globalAlpha=1;
+ g.fillStyle='#3fc6d6';g.fillRect(W/2-150*bp,base+fs*.3,300*bp,3);
+ g.globalAlpha=ease((p-.42)*2.6);g.fillStyle='#a6c6cc';g.font='600 20px Manrope,sans-serif';
+ var sub='JOYERÍA DE AUTOR · MEDELLÍN',sw=g.measureText(sub).width;g.fillText(sub,(W-sw)/2,base+fs*.78);g.globalAlpha=1;
  g.globalAlpha=.16;g.fillStyle='#cdf3f8';g.fillRect(0,base+CH*.24-((p*260)%CH),W,2);g.globalAlpha=1;}
 
 function s3(p){bg('#04080f','#050d14');
@@ -404,12 +419,13 @@ function grade(){g.save();g.beginPath();g.rect(0,CT,W,CH);g.clip();
  g.globalCompositeOperation='soft-light';
  var lg=g.createLinearGradient(0,CT,W,CB);lg.addColorStop(0,'#0e6474');lg.addColorStop(.52,'#8b95a0');lg.addColorStop(1,'#e8b184');
  g.fillStyle=lg;g.fillRect(0,CT,W,CH);
- g.globalCompositeOperation='multiply';
- var vg=g.createRadialGradient(W/2,CT+CH/2,W*.16,W/2,CT+CH/2,W*.63);
- vg.addColorStop(0,'#ffffff');vg.addColorStop(1,'#6d7c88');g.fillStyle=vg;g.fillRect(0,CT,W,CH);
  g.globalCompositeOperation='source-over';
+ var vg=g.createRadialGradient(W/2,CT+CH/2,W*.2,W/2,CT+CH/2,W*.68);
+ vg.addColorStop(0,'rgba(3,7,14,0)');vg.addColorStop(1,'rgba(3,7,14,.5)');g.fillStyle=vg;g.fillRect(0,CT,W,CH);
  g.fillStyle='rgba(255,255,255,.055)';
  for(var i=0;i<130;i++)g.fillRect(Math.random()*W|0,CT+Math.random()*CH|0,1,1);
+ g.fillStyle='rgba(255,255,255,.028)';
+ for(var y=CT;y<CB;y+=3)g.fillRect(0,y,W,1);
  g.restore();}
 
 function frame(){
@@ -452,11 +468,12 @@ setPlay(!RM);frame();requestAnimationFrame(loop);
  ['Plano detalle','El macro que vende la textura: el brillo del metal, la costura de la tela, la gota en el vaso. Va siempre con luz rasante y foco muy corto.',['90 mm macro','2 s','Foco manual']],
  ['Contrapicado','Cámara abajo mirando arriba. Da autoridad y tamaño; lo usamos para producto premium y para retratos de marca con actitud.',['24 mm','2 s','Low mode']],
  ['Cierre de marca','El logo aparece sobre el último gesto de la escena y se sostiene lo justo para que quede grabado. Cierre con silencio, no con música cortada.',['50 mm','1,5 s','Fade a negro']]];
- var no=document.getElementById('sbn'),ti=document.getElementById('sbt'),de=document.getElementById('sbd'),ki=document.getElementById('sbk');
+ var no=document.getElementById('sbn'),ti=document.getElementById('sbt'),de=document.getElementById('sbd'),ki=document.getElementById('sbk'),pv=document.getElementById('sbp');
  var btns=[].slice.call(sb.querySelectorAll('button'));
  function sel(i){for(var k=0;k<btns.length;k++)btns[k].dataset.on=(k===i)?'1':'0';
   no.textContent='0'+(i+1);ti.textContent=D[i][0];de.textContent=D[i][1];
-  ki.innerHTML='';D[i][2].forEach(function(x){var s=document.createElement('span');s.textContent=x;ki.appendChild(s);});}
+  ki.innerHTML='';D[i][2].forEach(function(x){var s=document.createElement('span');s.textContent=x;ki.appendChild(s);});
+  if(pv)pv.innerHTML=btns[i].querySelector('svg').outerHTML;}
  btns.forEach(function(b,i){b.addEventListener('click',function(){sel(i)});b.addEventListener('mouseenter',function(){sel(i)});b.addEventListener('focus',function(){sel(i)});});
  sel(0);window.__sbSel=sel;})();
 </script></body></html>
