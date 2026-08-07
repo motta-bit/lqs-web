@@ -219,15 +219,42 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease;cursor:pointer}
 @media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
 .tira a.soon{opacity:.5}
-.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
-.area{position:relative;display:flex;flex-direction:column;overflow:hidden;
- border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:24px;transition:transform var(--dur-ui) var(--ease-out),border-color var(--dur-ui) ease}
-@media (hover:hover) and (pointer:fine){.area:hover{border-color:var(--line2);transform:translateY(-3px)}}
+.areas{display:flex;flex-direction:column;gap:0}
+/* cada área se queda fija y la siguiente se le monta encima: el catálogo
+   deja de ser una lista y pasa a ser un recorrido. El estado por defecto es
+   el VISIBLE — si el navegador no soporta líneas de tiempo por scroll, esto
+   se queda como una pila normal en vez de salir en blanco. */
+.area{position:sticky;top:clamp(88px,12vh,132px);display:grid;
+ grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(20px,4vw,54px);align-items:center;
+ min-height:min(46vh,380px);margin-bottom:clamp(22px,4vh,44px);overflow:hidden;
+ border:1px solid var(--line);border-radius:26px;padding:clamp(26px,3.4vw,48px);
+ background:linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%);
+ box-shadow:0 34px 90px -50px #000;transform-origin:50% 0}
+.area::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:26px;
+ background:radial-gradient(120% 90% at 88% 12%,color-mix(in oklab,var(--ac) 42%,transparent),transparent 62%);opacity:.5}
+.area>*{position:relative;z-index:2}
+@supports (animation-timeline:view()){
+ .area{animation:apilar linear both;animation-timeline:view();animation-range:exit 0% exit 90%}
+ @keyframes apilar{to{transform:scale(.93) translateY(-16px);filter:brightness(.62) saturate(.7)}}
+}
+@media(max-width:820px){.area{grid-template-columns:1fr;min-height:0;align-items:start;gap:16px}}
+@media(prefers-reduced-motion:reduce){.area{animation:none;position:relative;top:auto}}
 .area .tagd{color:var(--faint)}
-.area h3{font-family:var(--sport);font-size:clamp(1.3rem,.7vw + .95rem,1.65rem);line-height:.95;letter-spacing:-.015em;text-transform:uppercase;color:var(--ac);margin-bottom:9px;hyphens:auto;overflow-wrap:break-word}
-.area p{font-size:.87rem;color:var(--dim);line-height:1.55;flex:1}
+.area h3{font-family:var(--sport);font-size:clamp(2.4rem,6.2vw,4.6rem);line-height:.88;letter-spacing:-.035em;text-transform:uppercase;color:var(--ink);margin:6px 0 14px;hyphens:auto;overflow-wrap:break-word}
+.area .tagd{border-color:var(--ac);color:var(--ac);align-self:flex-start}
+.area .a-txt{display:flex;flex-direction:column;justify-content:center}
+.area .a-lado{position:relative;align-self:stretch;min-height:150px;border-radius:18px;overflow:hidden;
+ border:1px solid color-mix(in oklab,var(--ac) 34%,transparent);
+ background:repeating-linear-gradient(128deg,color-mix(in oklab,var(--ac) 30%,transparent) 0 3px,transparent 3px 16px),
+  radial-gradient(130% 120% at 22% 18%,color-mix(in oklab,var(--ac) 55%,transparent),transparent 64%),var(--bg3)}
+.area .a-lado .ini{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--sport);
+ font-size:clamp(5rem,13vw,10rem);line-height:1;color:color-mix(in oklab,var(--ac) 82%,var(--ink));opacity:.9;
+ mix-blend-mode:overlay;letter-spacing:-.05em}
+.area .lks{margin-top:20px}
+@media(max-width:820px){.area .a-lado{min-height:104px}}
+.area p{font-size:clamp(.92rem,1.2vw,1.06rem);color:var(--dim);line-height:1.6;max-width:34ch}
 .area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
-.area .lk{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+.area .lk{font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
  border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease;white-space:nowrap}
 .area .lk.pri{border-color:var(--ac);color:var(--ac)}
 @media (hover:hover) and (pointer:fine){
@@ -888,16 +915,17 @@ const FICHAS=[
  ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3'],
  ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6']
 ];
-document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c])=>
- `<div class="area${ficha?'':' pend'}" style="--ac:${c}">
-   <span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
+document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c],n)=>
+ `<div class="area${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}">
+  <div class="a-txt"><span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
    <div class="lks">${ficha?
     `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
      ${muestra?`<a class="lk" href="${muestra}" data-demo="${muestra}" data-titulo="${t} · muestra">Probar muestra</a>`:''}
      <a class="lk" href="${ficha}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva">↗</a>`
     :`<span class="lk mudo">Ficha en camino</span>
       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
-   </div></div>`).join('');
+   </div></div>
+  <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('');
 document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>ficha
  ? `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`
  : `<a style="--ac:${c}" class="soon" data-go="servicios">${t}</a>`).join('');
