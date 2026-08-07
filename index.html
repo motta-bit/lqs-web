@@ -18,7 +18,7 @@
  --bg:#06070f;--bg2:#0a0c17;--bg3:#0e1120;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;
  --gold:#e6c877;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.22);
  --ok:#4ade80;--warn:#f0b34a;--err:#ff6b6b;
- --grain:.055;--atm:.38;--velo:rgba(6,7,15,.55);
+ --grain:.055;--atm:.38;
  /* una grotesca variable que se deja apretar y engordar según el sitio */
  --disp:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
  --sport:'Anton','Arial Narrow',Impact,sans-serif;
@@ -34,7 +34,7 @@
 :root[data-tema="claro"]{
  --bg:#efece4;--bg2:#f6f4ee;--bg3:#e6e2d8;--ink:#0c0e18;--dim:#54596e;--faint:#8a8fa3;
  --gold:#9a6b12;--line:rgba(12,14,24,.13);--line2:rgba(12,14,24,.26);
- --grain:.028;--atm:.17;--velo:rgba(239,236,228,.5);
+ --grain:.028;--atm:.17;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -112,12 +112,18 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 
 /* ═══ atmósfera: el degradé no es un fondo, es el clima de la sección ═══ */
 .atmos{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg);pointer-events:none}
-.atmos b{position:absolute;width:62vmax;height:62vmax;border-radius:50%;filter:blur(90px);opacity:var(--atm);
- mix-blend-mode:screen;will-change:transform;transition:background 900ms var(--ease-out)}
+/* cada masa lleva dos hojas de color superpuestas: al cambiar de vista se
+   cruzan por opacidad en 300ms. Animar `background` sobre tres discos de
+   62vmax desenfocados repinta la pantalla entera en cada cuadro. */
+.atmos b{position:absolute;width:62vmax;height:62vmax;filter:blur(90px);opacity:var(--atm);
+ mix-blend-mode:screen;will-change:transform}
+.atmos b i{position:absolute;inset:0;border-radius:50%;opacity:0;
+ transition:opacity var(--dur-panel) var(--ease-out)}
+.atmos b i.on{opacity:1}
 :root[data-tema="claro"] .atmos b{mix-blend-mode:normal;filter:blur(120px) saturate(1.5) brightness(2.1)}
-.atmos b:nth-child(1){background:var(--c1);left:-16vmax;top:-20vmax;animation:deriva1 27s ease-in-out infinite alternate}
-.atmos b:nth-child(2){background:var(--c2);right:-20vmax;top:-8vmax;animation:deriva2 33s ease-in-out infinite alternate}
-.atmos b:nth-child(3){background:var(--c3);left:22vmax;bottom:-30vmax;animation:deriva3 39s ease-in-out infinite alternate}
+.atmos b:nth-child(1){left:-16vmax;top:-20vmax;animation:deriva1 27s ease-in-out infinite alternate}
+.atmos b:nth-child(2){right:-20vmax;top:-8vmax;animation:deriva2 33s ease-in-out infinite alternate}
+.atmos b:nth-child(3){left:22vmax;bottom:-30vmax;animation:deriva3 39s ease-in-out infinite alternate}
 @keyframes deriva1{to{transform:translate3d(26vmax,18vmax,0) scale(1.25)}}
 @keyframes deriva2{to{transform:translate3d(-22vmax,26vmax,0) scale(.8)}}
 @keyframes deriva3{to{transform:translate3d(18vmax,-22vmax,0) scale(1.15)}}
@@ -149,7 +155,9 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 :root[data-tema="claro"] .luz .sol{display:block}
 :root[data-tema="claro"] .luz .luna{display:none}
 @media(prefers-reduced-motion:reduce){
- .atmos b{animation:none}
+ /* con la misma especificidad que las tres reglas de arriba: si no, `:nth-child`
+    gana y las masas siguen derivando pese a la petición */
+ .atmos b:nth-child(1),.atmos b:nth-child(2),.atmos b:nth-child(3){animation:none}
 }
 /* hero */
 #hero{position:relative;min-height:88svh;display:flex;align-items:center;padding:96px 0 80px;overflow:hidden;margin-top:-78px}
@@ -170,13 +178,34 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @keyframes up{to{transform:none}}
 .tagline{font-size:clamp(1rem,1.6vw,1.18rem);color:var(--dim);max-width:50ch;margin:24px 0 30px}
 .tagline b{color:var(--ink);font-weight:600}
-/* ticker */
-.tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;background:var(--velo);backdrop-filter:blur(6px)}
-.tick .tr{display:flex;gap:42px;width:max-content;animation:mv 32s linear infinite}
-.tick:hover .tr{animation-play-state:paused}
-.tick span{font-family:var(--disp);font-size:1.65rem;letter-spacing:.05em;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:42px;text-transform:uppercase}
-.tick span::after{content:'✦';font-size:.6rem;color:var(--gold)}
-@keyframes mv{to{transform:translateX(-50%)}}
+/* ═══ remate del hero: el clima se posa ═══
+   Donde había un marquee girando solo va ahora un borde que no es borde: el
+   clima del hero se derrama en dos curvas y se decanta en las tres familias.
+   Ni una recta, ni un rectángulo, y no se mueve si nadie lo toca — el
+   movimiento del encuadre ya lo ponen las letras. */
+.remate{position:relative;padding:clamp(34px,6vh,62px) 0 clamp(30px,5vh,52px);overflow:hidden}
+.remate .onda{position:absolute;left:-3%;top:0;width:106%;height:100%;z-index:0;pointer-events:none}
+.remate .in{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 var(--pad);
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2.6vw,38px)}
+@media(max-width:800px){.remate .in{grid-template-columns:1fr;gap:16px}}
+.fam{display:flex;align-items:center;gap:clamp(11px,1.4vw,16px);text-align:left;cursor:pointer;
+ background:none;border:0;padding:0;color:inherit;font:inherit;min-width:0}
+.fam .sem{flex:none;width:clamp(40px,4.6vw,56px);height:clamp(40px,4.6vw,56px);
+ transition:transform var(--dur-panel) var(--ease-out)}
+.fam .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 24%,transparent);stroke:var(--ac);stroke-width:1.5;
+ transition:fill var(--dur-ui) var(--ease-out)}
+.fam .sem .veta{fill:none;stroke:var(--ac);stroke-width:1.5;stroke-linecap:round;opacity:.72}
+.fam .tx{display:block;min-width:0}
+.fam b{display:block;font-family:var(--disp);font-size:clamp(1.3rem,2.3vw,1.85rem);line-height:.96;
+ text-transform:uppercase;letter-spacing:.02em;color:var(--ink);transition:color var(--dur-ui) var(--ease-out)}
+.fam em{display:block;font-family:var(--edit);font-style:italic;font-size:clamp(.88rem,1.3vw,1.04rem);
+ line-height:1.2;color:var(--dim);margin-top:4px}
+@media (hover:hover) and (pointer:fine){
+ .fam:hover .sem{transform:rotate(-8deg) scale(1.07)}
+ .fam:hover .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 46%,transparent)}
+ .fam:hover b{color:var(--ac)}
+}
+.fam:active .sem{transform:scale(.95);transition:transform 180ms var(--ease-out)}
 /* portales */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
 .pt{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg2);
@@ -209,7 +238,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
 .tira a.soon{opacity:.5}
 .acto{position:relative;z-index:20;min-height:56vh;display:grid;place-items:center;text-align:center;
- padding:clamp(40px,8vh,90px) 0;margin:clamp(30px,6vh,70px) 0}
+ padding:clamp(40px,8vh,90px) 0;margin:clamp(30px,6vh,70px) 0;scroll-margin-top:96px}
 .acto h3{font-family:var(--sport);font-size:clamp(3.2rem,12vw,9rem);line-height:.82;letter-spacing:-.045em;
  text-transform:uppercase;color:var(--ink)}
 .acto-gan{font-family:var(--edit);font-style:italic;font-size:clamp(1.2rem,3.4vw,2.2rem);color:var(--gold);
@@ -432,8 +461,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  .modal{transition:opacity var(--dur-ui) var(--ease-out)}
  .modal.on{transform:translate(-50%,-50%) scale(1)}
  #visor{transform:none}
+ .fam:hover .sem,.fam:active .sem{transform:none}
  /* los bucles infinitos se detienen, no se aceleran */
- .tick .tr{animation:none}
  .load{animation-duration:1.6s}
 }
 </style>
@@ -455,7 +484,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <button class="burger" id="bg" aria-label="Menú"><span></span></button>
 </div></nav>
 
-<div class="atmos" aria-hidden="true"><b></b><b></b><b></b></div>
+<div class="atmos" aria-hidden="true"><b><i></i><i></i></b><b><i></i><i></i></b><b><i></i><i></i></b></div>
 <div class="grano" aria-hidden="true"></div>
 <div id="top">
 
@@ -475,7 +504,26 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       </div>
     </div></div>
   </header>
-  <div class="tick"><div class="tr" id="tr"></div></div>
+  <!-- remate del hero: dos curvas del mismo clima y las tres familias -->
+  <div class="remate">
+    <svg class="onda" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="ondaA" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color:var(--c1);stop-opacity:.22"/>
+          <stop offset="1" style="stop-color:var(--c1);stop-opacity:0"/>
+        </linearGradient>
+        <linearGradient id="ondaB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color:var(--c3);stop-opacity:.18"/>
+          <stop offset="1" style="stop-color:var(--c3);stop-opacity:0"/>
+        </linearGradient>
+      </defs>
+      <path d="M0 62C168 8 302 96 470 78 654 58 762 4 942 26c126 16 196 58 258 34V200H0Z" fill="url(#ondaA)"/>
+      <path d="M0 112C148 68 336 148 524 124 706 101 846 46 1016 74c98 16 146 44 184 30V200H0Z" fill="url(#ondaB)"/>
+      <path d="M0 62C168 8 302 96 470 78 654 58 762 4 942 26c126 16 196 58 258 34" fill="none"
+            style="stroke:var(--c2);opacity:.5" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="in" id="remate"></div>
+  </div>
   <section class="sec"><div class="wrap">
     <div class="head rv">
       <div>      <h2 class="disp">Cada área,<br>su <span class="gold">propio espacio</span>.</h2></div>
@@ -766,6 +814,18 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <script>
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ═══ un solo lector de scroll ═══
+   El navegador dispara `scroll` muchas veces por cuadro. Aquí se apunta una
+   sola vez por cuadro de pintado: los suscriptores reciben la posición ya
+   consolidada y nadie escribe fuera del ritmo del compositor. */
+const SUS=[];let scrollPend=false;
+function alScroll(f){SUS.push(f);f(scrollY);}
+addEventListener('scroll',()=>{
+ if(scrollPend)return;scrollPend=true;
+ requestAnimationFrame(()=>{scrollPend=false;const y=scrollY;for(let i=0;i<SUS.length;i++)SUS[i](y);});
+},{passive:true});
+
 document.getElementById('yr').textContent=new Date().getFullYear();
 const fmt=n=>'$'+Number(n||0).toLocaleString('es-CO');
 
@@ -889,8 +949,6 @@ document.getElementById('grid').innerHTML=AREAS.map(a=>{
   <div class="art">${ART[a.k](a.c)}</div><div class="veil"></div>
   <div class="tp"><h3>${a.t}</h3><p>${a.d}</p>
   <span class="go">Entrar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a>`;}).join('');
-const TK=['Marca','Sitios web','Automatización','Audiovisual','Contenido','Joyería','Textil','Estrategia','Fotografía'];
-document.getElementById('tr').innerHTML=TK.concat(TK).map(w=>`<span>${w}</span>`).join('');
 document.getElementById('proc').innerHTML=[
  ['01','Diagnóstico','Una conversación de 40 minutos para entender el negocio y a dónde quieres llegar.'],
  ['02','Propuesta','En 48 horas tienes alcance, precio cerrado y cronograma. Sin letra pequeña.'],
@@ -914,10 +972,12 @@ const FICHAS=[
  ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3','presencia'],
  ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6','produccion']
 ];
+/* quinto campo: el color de la familia. Se usa en el remate del hero;
+   la agrupación por el séptimo campo de FICHAS no cambia. */
 const FAMILIAS=[
- ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.'],
- ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.'],
- ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.']];
+ ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.','#5b8def'],
+ ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.','#3fd0e6'],
+ ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.','#e6c877']];
 document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
  `<div class="acto" data-fam="${k}"><div class="acto-in">
    <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
@@ -932,6 +992,30 @@ document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
    </div></div>
   <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('')).join('');
+/* ═══ remate del hero ═══
+   Tres semillas de contorno irregular — ninguna igual a otra, ninguna un
+   círculo perfecto — y la promesa de cada familia. Quietas: sólo responden a
+   quien las toca, y llevan al tramo del catálogo que les corresponde. */
+const SEM=[
+ ['M32 3c14 2 25 13 26 27 1 15-11 30-26 31C17 60 5 47 5 31 5 15 18 1 32 3Z','M15 42c5-14 16-23 31-25'],
+ ['M32 8c18-1 29 9 29 24 0 16-13 26-30 26C15 58 3 46 4 31 5 17 16 9 32 8Z','M11 28c11-7 24-6 36 4'],
+ ['M32 2c15 0 24 12 25 27 1 16-9 33-25 33S6 46 6 30 17 2 32 2Z','M20 52c-3-16 2-28 15-36']
+];
+document.getElementById('remate').innerHTML=FAMILIAS.map(([k,tit,gan,des,col],i)=>
+ `<button class="fam" type="button" data-fam-go="${k}" style="--ac:${col}">
+   <svg class="sem" viewBox="0 0 64 64" aria-hidden="true">
+    <path class="cuerpo" d="${SEM[i][0]}"/><path class="veta" d="${SEM[i][1]}"/></svg>
+   <span class="tx"><b>${tit}</b><em>${gan}</em></span>
+  </button>`).join('');
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-fam-go]');if(!el)return;
+ const k=el.dataset.famGo;
+ go('servicios');
+ setTimeout(()=>{
+  const d=document.querySelector('#areas [data-fam="'+k+'"]');
+  if(d)d.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
+ },RM?0:340);
+});
 document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>ficha
  ? `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`
  : `<a style="--ac:${c}" class="soon" data-go="servicios">${t}</a>`).join('');
@@ -1087,7 +1171,19 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
   {k:'Q',x:143,y:20,w:150,h:161,rot:-3.4,hondo:1},
   {k:'S',x:301,y:10,w:120,h:140,rot:2.2, hondo:.8}
  ];
- GL.forEach((g,i)=>{g.ua=mundoDe[i];g.ub=mundoDe[i];g.mix=1;g.t=0;});
+ /* ═══ el pulso propio de cada letra ═══
+    Tres relojes que no comparten múltiplo: periodos primos entre sí y fases
+    distintas, así que las tres nunca vuelven a coincidir dentro de una visita.
+    `res` respira (escala), `fx`/`fy` derivan (±3px) y `lerp` decide cuánto
+    tarda la letra en obedecer al puntero: la Q pesa y llega tarde, la S es la
+    primera en moverse. El paralaje es de cada letra, no del lienzo entero. */
+ const VIDA=[
+  {res:5.9,fx:7.4,fy:6.1,f0:0,  f1:2.3,f2:4.1,lerp:.085},
+  {res:8.3,fx:9.7,fy:8.9,f0:1.7,f1:5.2,f2:0.6,lerp:.040},
+  {res:4.7,fx:5.3,fy:4.1,f0:3.4,f1:1.1,f2:5.7,lerp:.130}
+ ];
+ GL.forEach((g,i)=>{g.ua=mundoDe[i];g.ub=mundoDe[i];g.mix=1;g.t=0;
+  g.v=VIDA[i];g.mx=0;g.my=0;g.sp=0;g.pulso=0;});
 
  function lienzo(w,h){const c=document.createElement('canvas');c.width=Math.max(1,w|0);c.height=Math.max(1,h|0);return c;}
  function rgba(hex,a){
@@ -1186,8 +1282,10 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
   return true;
  }
 
- /* puntero y scroll: la ventana se mueve, el mundo de adentro va más lento */
- let mx=0,my=0,dmx=0,dmy=0,sp=0;
+ /* puntero y scroll: sólo se guarda el destino. Cada letra lo persigue a su
+    propio ritmo dentro del bucle, y por eso no se lee como un lienzo que se
+    inclina sino como tres cuerpos que reaccionan. */
+ let dmx=0,dmy=0,dsp=0;
  if(!RM){
   addEventListener('pointermove',e=>{
    const r=cv.getBoundingClientRect();
@@ -1195,8 +1293,9 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
    dmx=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2));
    dmy=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height-.5)*2));
   },{passive:true});
-  addEventListener('scroll',()=>{sp=Math.min(1,Math.max(0,scrollY/Math.max(1,innerHeight)));},{passive:true});
+  alScroll(y=>{dsp=Math.min(1,Math.max(0,y/Math.max(1,innerHeight)));});
  }
+ const TAU=6.2831853;
 
  function pinta(x,u,t,w,h){UNIV[u].p(x,t,w,h);}
 
@@ -1210,11 +1309,17 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
    const p=Math.max(0,Math.min(1,(t-i*.11-.12)/.95));
    const ent=1-Math.pow(1-p,3);
    const q=p-1,back=p>=1?1:1+2.7*q*q*q+1.7*q*q;
-   const esc=.84+.16*back;
+   /* respiración: el cuerpo del glifo también vive. Casi no se ve — y sin
+      ella la letra se lee como una calcomanía pegada sobre el universo. */
+   const v=g.v;
+   const resp=RM?0:.5+.5*Math.sin(t*TAU/v.res+v.f0);
+   const drx=RM?0:Math.sin(t*TAU/v.fx+v.f1)*3;
+   const dry=RM?0:Math.sin(t*TAU/v.fy+v.f2)*3;
+   /* y al mudarse de universo da un tirón mínimo, que se apaga solo */
+   const esc=(.84+.16*back)*(1+.012*resp+.006*g.pulso);
    /* la letra se mueve poco; el universo de adentro, al revés y más */
-   const bob=RM?0:Math.sin(t*.55+i*2.1)*3.1;
-   const ox=(mx*7*g.hondo)*S,oy=((1-ent)*46+bob+my*5*g.hondo-sp*26*g.hondo)*S;
-   const ux=(-mx*15*g.hondo-sp*8)*S,uy=(-my*11*g.hondo)*S;
+   const ox=(g.mx*7*g.hondo+drx)*S,oy=((1-ent)*46+dry+g.my*5*g.hondo-g.sp*26*g.hondo)*S;
+   const ux=(-g.mx*15*g.hondo-g.sp*8)*S,uy=(-g.my*11*g.hondo)*S;
    const tl=t+i*3.1;               /* cada letra vive su universo en otra fase */
 
    /* el universo, a resolución reducida: se pinta desbordado para que el
@@ -1249,15 +1354,17 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
   }
  }
 
- /* la mudanza: una letra a la vez, y nunca a un universo ya ocupado */
- let turno=0;
+ /* la mudanza: una letra a la vez, y nunca a un universo ya ocupado.
+    El intervalo es distinto cada vez (2,8–5,2 s): un metrónomo se oye, una
+    respiración no. */
+ let turno=0,prox=0;
+ function esperaMudanza(){return 2.8+Math.random()*2.4;}
  function mudar(){
-  if(RM||document.hidden||!visible)return;
   const i=turno%3;turno++;
   const libres=UNIV.map((_,k)=>k).filter(k=>mundoDe.indexOf(k)<0);
   if(!libres.length)return;
   const u=libres[Math.floor(Math.random()*libres.length)];
-  GL[i].ua=GL[i].ub;GL[i].ub=u;GL[i].mix=0;mundoDe[i]=u;
+  GL[i].ua=GL[i].ub;GL[i].ub=u;GL[i].mix=0;GL[i].pulso=1;mundoDe[i]=u;
  }
 
  let visible=true,t0=0,prev=0,acum=0,cont=0,bajado=false,corriendo=false;
@@ -1269,7 +1376,14 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
   if(!t0)t0=prev=now;
   const dt=Math.min(50,now-prev);prev=now;
   const t=(now-t0)/1000;
-  mx+=(dmx-mx)*.09;my+=(dmy-my)*.09;
+  /* cada letra persigue el puntero con su propio retardo, normalizado por dt
+     para que un cuadro perdido no la teletransporte */
+  for(let i=0;i<3;i++){
+   const g=GL[i],k=1-Math.pow(1-g.v.lerp,dt/16.667);
+   g.mx+=(dmx-g.mx)*k;g.my+=(dmy-g.my)*k;g.sp+=(dsp-g.sp)*k;
+   if(g.pulso>0)g.pulso=g.pulso<.002?0:g.pulso*Math.pow(.93,dt/16.667);
+  }
+  if(t>=prox){mudar();prox=t+esperaMudanza();}
   /* al cerrar la mezcla el destino pasa a ser el de base: si no, la letra se
      devolvía a su universo anterior y dos letras podían coincidir */
   for(let i=0;i<3;i++)if(GL[i].mix<1){
@@ -1287,8 +1401,8 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
  function arranca(){
   if(!construir())return;
   if(RM){cuadro(3.4,1);return;}
+  prox=esperaMudanza();
   corriendo=true;requestAnimationFrame(bucle);
-  setInterval(mudar,3400);
  }
 
  let ro;
@@ -1318,9 +1432,19 @@ const CLIMA={
  estudio:['#e6c877','#d98aa6','#7c5cff'], cotizar:['#4ade80','#3fd0e6','#e6c877'],
  cuenta:['#ff6b6b','#e6c877','#5b8def']
 };
+const MASAS=[].slice.call(document.querySelectorAll('.atmos b'));
+let capaClima=1;
 function clima(v){
  const c=CLIMA[v]||CLIMA.inicio,r=document.documentElement;
  r.style.setProperty('--c1',c[0]);r.style.setProperty('--c2',c[1]);r.style.setProperty('--c3',c[2]);
+ /* el color no se transiciona: se cruzan dos capas por opacidad */
+ capaClima^=1;
+ MASAS.forEach((b,i)=>{
+  const entra=b.children[capaClima],sale=b.children[capaClima^1];
+  if(!entra)return;
+  entra.style.background=c[i];entra.classList.add('on');
+  if(sale)sale.classList.remove('on');
+ });
 }
 clima('inicio');
 
@@ -1581,7 +1705,7 @@ function verPromo(){
   {x:.52,y:.16,s:.75,k:'chat',col:'#2fb8a3'},{x:.66,y:.86,s:.8,k:'pen',col:'#e6c877'}];
  function rz(){const b=c.getBoundingClientRect();W=c.width=b.width;H=c.height=b.height;
   stars=Array.from({length:Math.min(140,Math.round(W*H/9500))},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.8+.2,p:Math.random()*6}));}
- rz();addEventListener('resize',rz);
+ rz();addEventListener('resize',()=>{rz();if(RM)lp();});
  function shape(k,col){g.lineWidth=2;g.strokeStyle=col;g.fillStyle='rgba(12,16,30,.72)';
   if(k==='screen'){g.beginPath();g.roundRect(-30,-22,60,44,4);g.fill();g.stroke();
    g.globalAlpha*=.6;g.beginPath();g.moveTo(-20,-8);g.lineTo(10,-8);g.moveTo(-20,0);g.lineTo(4,0);g.moveTo(-20,8);g.lineTo(14,8);g.stroke();g.globalAlpha/=.6;
@@ -1597,8 +1721,10 @@ function verPromo(){
    g.beginPath();g.moveTo(-10,14);g.lineTo(-2,24);g.lineTo(2,14);g.closePath();g.fill();g.stroke();
    g.globalAlpha*=.7;g.fillStyle=col;g.beginPath();g.arc(-12,-3,2.6,0,7);g.arc(0,-3,2.6,0,7);g.arc(12,-3,2.6,0,7);g.fill();g.globalAlpha/=.7;}
   else{g.beginPath();g.moveTo(-4,-26);g.lineTo(4,-26);g.lineTo(4,16);g.lineTo(0,26);g.lineTo(-4,16);g.closePath();g.fill();g.stroke();}}
- addEventListener('scroll',()=>{tgt=Math.min(1,Math.max(0,scrollY/innerHeight));},{passive:true});
- (function lp(){t+=1/60;prog+=(tgt-prog)*.08;g.clearRect(0,0,W,H);
+ if(!RM)alScroll(y=>{tgt=Math.min(1,Math.max(0,y/Math.max(1,innerHeight)));});
+ /* con movimiento reducido esto pinta UN cuadro y se calla: nada de un rAF
+    perpetuo rotando objetos a espaldas de quien pidió que nada se moviera */
+ function lp(){t+=1/60;prog+=(tgt-prog)*.08;g.clearRect(0,0,W,H);
   const gr=g.createRadialGradient(W*.62,H*.3,20,W*.5,H*.5,Math.max(W,H)*.82);
   gr.addColorStop(0,'rgba(74,58,150,.3)');gr.addColorStop(.55,'rgba(120,60,100,.1)');gr.addColorStop(1,'rgba(6,7,15,0)');
   g.fillStyle=gr;g.fillRect(0,0,W,H);
@@ -1607,12 +1733,13 @@ function verPromo(){
   g.globalAlpha=1;
   OBJ.forEach((o,i)=>{const drift=RM?0:Math.sin(t*.5+i*1.7)*7,push=prog*(90+i*26);
    const S=(Math.min(W,H)/760+.62)*o.s;
-   g.save();g.translate(W*o.x,H*o.y+drift+push);g.rotate(Math.sin(t*.3+i)*.07+prog*.22);g.scale(S,S);
+   g.save();g.translate(W*o.x,H*o.y+drift+push);g.rotate((RM?0:Math.sin(t*.3+i)*.07)+prog*.22);g.scale(S,S);
    g.globalAlpha=Math.max(0,(.2-prog*.22));shape(o.k,o.col);g.restore();});
   g.globalAlpha=1;
   const vg=g.createLinearGradient(0,H*.45,0,H);vg.addColorStop(0,'rgba(6,7,15,0)');vg.addColorStop(1,'rgba(6,7,15,.92)');
   g.fillStyle=vg;g.fillRect(0,H*.45,W,H*.55);
-  requestAnimationFrame(lp);})();
+  if(!RM)requestAnimationFrame(lp);}
+ lp();
 })();
 
 /* ═══ visor interno ═══ */
@@ -1706,7 +1833,7 @@ function animarWA(){
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -6% 0px'});
 function armar(){document.querySelectorAll('.view.on .rv:not(.in)').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*60)+'ms';io.observe(el);});}
 const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
+alScroll(y=>nav.classList.toggle('solid',y>40));
 document.getElementById('bg').onclick=()=>document.body.classList.toggle('menu');
 
 /* ═══ arranque ═══ */
