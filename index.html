@@ -219,6 +219,18 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease;cursor:pointer}
 @media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
 .tira a.soon{opacity:.5}
+.acto{position:relative;z-index:20;min-height:56vh;display:grid;place-items:center;text-align:center;
+ padding:clamp(40px,8vh,90px) 0;margin:clamp(30px,6vh,70px) 0}
+.acto h3{font-family:var(--sport);font-size:clamp(3.2rem,12vw,9rem);line-height:.82;letter-spacing:-.045em;
+ text-transform:uppercase;color:var(--ink)}
+.acto-gan{font-family:var(--edit);font-style:italic;font-size:clamp(1.2rem,3.4vw,2.2rem);color:var(--gold);
+ margin:6px 0 14px;line-height:1.15}
+.acto-des{font-size:clamp(.92rem,1.4vw,1.05rem);color:var(--dim);max-width:44ch;margin:0 auto}
+@supports (animation-timeline:view()){
+ .acto-in{animation:actoEntra linear both;animation-timeline:view();animation-range:entry 10% cover 42%}
+ @keyframes actoEntra{from{opacity:0;transform:translateY(30px) scale(.96)}}
+}
+@media(prefers-reduced-motion:reduce){.acto-in{animation:none}}
 .areas{display:flex;flex-direction:column;gap:0}
 /* cada área se queda fija y la siguiente se le monta encima: el catálogo
    deja de ser una lista y pasa a ser un recorrido. El estado por defecto es
@@ -901,21 +913,28 @@ document.getElementById('proc').innerHTML=[
 /* ═══ las áreas y su ficha propia ═══
    cada una es un enlace real: si el visor interno falla, el href sigue funcionando */
 const FICHAS=[
- ['Empresas','Marca completa','Identidad, sitio web y atención automática para negocios que necesitan verse serios desde el primer día.','mundos/empresas.html','mundos/empresas-muestras.html','#5b8def'],
- ['Express','Diseño día a día','Piezas sueltas y combos con precio cerrado, listos en 48–72 horas. Sin reuniones, sin cotización previa.','mundos/express.html','mundos/express-muestras.html','#39c07a'],
- ['Productora','Video y foto','Reels, foto de producto y contenido para redes. Incluye calculadora de rodaje con transporte y viáticos.','mundos/productora.html','mundos/productora-muestras.html','#3fc6d6'],
- ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','','#a97bd6'],
- ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98'],
- ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','','#3fd0e6'],
+ ['Empresas','Marca completa','Identidad, sitio web y atención automática para negocios que necesitan verse serios desde el primer día.','mundos/empresas.html','mundos/empresas-muestras.html','#5b8def','marca'],
+ ['Express','Diseño día a día','Piezas sueltas y combos con precio cerrado, listos en 48–72 horas. Sin reuniones, sin cotización previa.','mundos/express.html','mundos/express-muestras.html','#39c07a','produccion'],
+ ['Productora','Video y foto','Reels, foto de producto y contenido para redes. Incluye calculadora de rodaje con transporte y viáticos.','mundos/productora.html','mundos/productora-muestras.html','#3fc6d6','produccion'],
+ ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','','#a97bd6','marca'],
+ ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98','marca'],
+ ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','','#3fd0e6','presencia'],
  /* ↓ Restaurantes y Hoteles quedan sin página a propósito.
     Cuando tengas la definitiva, pon la ruta en el 4º campo (ficha) y,
     si hay demo, en el 5º (muestra). Ejemplo: 'mundos/carta.html'.
     Mientras estén vacíos la tarjeta se muestra igual, pero sin enlaces. */
- ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular, con la carta siempre al día.','','','#e0614a'],
- ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3'],
- ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6']
+ ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular, con la carta siempre al día.','','','#e0614a','presencia'],
+ ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3','presencia'],
+ ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6','produccion']
 ];
-document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c],n)=>
+const FAMILIAS=[
+ ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.'],
+ ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.'],
+ ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.']];
+document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
+ `<div class="acto" data-fam="${k}"><div class="acto-in">
+   <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
+  </div></div>`+FICHAS.filter(f=>f[6]===k).map(([t,sub,d,ficha,muestra,c],n)=>
  `<div class="area${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}">
   <div class="a-txt"><span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
    <div class="lks">${ficha?
@@ -925,7 +944,7 @@ document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c]
     :`<span class="lk mudo">Ficha en camino</span>
       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
    </div></div>
-  <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('');
+  <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('')).join('');
 document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>ficha
  ? `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`
  : `<a style="--ac:${c}" class="soon" data-go="servicios">${t}</a>`).join('');
