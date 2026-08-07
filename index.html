@@ -29,12 +29,28 @@
  --ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1);
  --ease-drawer:cubic-bezier(0.32,0.72,0,1);
  --dur-fast:160ms;--dur-ui:200ms;--dur-panel:300ms;
+ /* temperamento de forma: cuánto se desvía una curva de su versión circular.
+    Lo fija el universo de la sección, nunca la pieza. */
+ --curva:1;--u1:#7c5cff;--u2:#00d4ff;--u3:#ff3d7f;
+ --velo:6,7,15;
 }
+/* que --curva se pueda interpolar: sin esto una sección se convierte en la
+   siguiente de golpe, y el recorrido se lee como siete láminas sueltas */
+@property --curva{syntax:'<number>';inherits:true;initial-value:1}
+:root{transition:--curva 900ms var(--ease-out)}
+/* los cinco universos. Uno nunca se mezcla con otro dentro del mismo elemento:
+   conviven en el encuadre, no en la forma. */
+[data-universo="flujo"]{--curva:1;  --u1:#7c5cff;--u2:#00d4ff;--u3:#ff3d7f}
+[data-universo="brasa"]{--curva:.82;--u1:#ff8a3d;--u2:#ffd166;--u3:#e0264a}
+[data-universo="trama"]{--curva:.34;--u1:#4ade80;--u2:#2fb8a3;--u3:#0f5132}
+[data-universo="hielo"]{--curva:.20;--u1:#dff6ff;--u2:#5b8def;--u3:#1b3fb8}
+[data-universo="pulso"]{--curva:.64;--u1:#e6c877;--u2:#d98aa6;--u3:#8b5cf6}
 /* el mismo mundo con la luz encendida: no es un filtro, es otra paleta */
 :root[data-tema="claro"]{
  --bg:#efece4;--bg2:#f6f4ee;--bg3:#e6e2d8;--ink:#0c0e18;--dim:#54596e;--faint:#8a8fa3;
  --gold:#9a6b12;--line:rgba(12,14,24,.13);--line2:rgba(12,14,24,.26);
  --grain:.028;--atm:.17;
+ --velo:246,244,238;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -95,13 +111,13 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .btn.p{background:var(--ink);color:#06070f}
 /* el movimiento de hover solo donde hay mouse: en táctil se queda pegado */
 @media (hover:hover) and (pointer:fine){
- .btn.p:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(242,239,232,.42)}
+ .btn.p:hover{box-shadow:0 16px 38px -14px rgba(242,239,232,.42)}
 }
 .btn.g{border-color:var(--line2);color:var(--ink);background:none}
 .btn.g:hover{border-color:var(--gold);color:var(--gold)}
 .btn.gold{background:var(--gold);color:#1a1408}
-.btn.gold:hover{filter:brightness(1.07);transform:translateY(-2px)}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.gold:hover{filter:brightness(1.07)}
+.btn:disabled{opacity:.5;cursor:not-allowed;translate:none;scale:none}
 .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
 .hbtns{display:flex;flex-wrap:wrap;gap:11px}
 /* vistas */
@@ -128,7 +144,9 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @keyframes deriva2{to{transform:translate3d(-22vmax,26vmax,0) scale(.8)}}
 @keyframes deriva3{to{transform:translate3d(18vmax,-22vmax,0) scale(1.15)}}
 /* grano: rompe la perfección digital, da tacto de papel */
-.grano{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--grain);
+/* el grano se desborda 160px por lado: se desplaza con el paralaje de la capa 4
+   y nunca deja ver su propio borde */
+.grano{position:fixed;inset:-160px;z-index:-1;pointer-events:none;opacity:var(--grain);
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ═══ LQS: tres ventanas a universos incompatibles ═══
@@ -208,26 +226,45 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .fam:active .sem{transform:scale(.95);transition:transform 180ms var(--ease-out)}
 /* portales */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.pt{position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--bg2);
- display:flex;flex-direction:column;justify-content:flex-end;min-height:272px;padding:24px;transition:transform var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out);cursor:pointer}
-.pt.wide{grid-column:span 6}.pt.half{grid-column:span 4}
-@media(max-width:960px){.pt.wide{grid-column:span 12}.pt.half{grid-column:span 6}}
-@media(max-width:640px){.pt.half{grid-column:span 12}.pt{min-height:240px}}
-.pt::after{content:'';position:absolute;inset:0;border-radius:24px;pointer-events:none;opacity:0;
- box-shadow:inset 0 0 0 1px var(--pc),0 0 56px -14px var(--pc);transition:opacity var(--dur-ui) var(--ease-out)}
+/* la Losa: pieza apaisada, borde izquierdo casi vertical (su ancla) y la
+   esquina inferior derecha desbordada. El recorte va sobre el elemento porque
+   aquí el contenido ES la imagen; el texto se aparta con padding desigual. */
+.pt{position:relative;border:0;overflow:hidden;background:none;clip-path:url(#f-losa);
+ display:flex;flex-direction:column;justify-content:flex-end;min-height:288px;
+ padding:clamp(30px,3.4vw,40px) clamp(32px,3.6vw,44px) clamp(40px,4.6vw,54px) clamp(34px,3.8vw,46px);
+ transition:translate var(--dur-ui) var(--ease-out);cursor:pointer}
+.pt.wide{grid-column:span 7}.pt.half{grid-column:span 5}
+.pt.half:nth-of-type(3){margin-top:clamp(20px,3.4vw,52px)}
+.pt.half:nth-of-type(5){margin-top:clamp(-52px,-3.4vw,-20px)}
+@media(max-width:960px){.pt.wide{grid-column:span 12}.pt.half{grid-column:span 6}
+ .pt.half:nth-of-type(3),.pt.half:nth-of-type(5){margin-top:0}}
+@media(max-width:640px){.pt.half{grid-column:span 12}.pt{min-height:250px}}
+/* una pieza recortada no puede llevar borde: el filo se lo da una sombra que
+   sigue la silueta. Con la luz encendida es lo único que la separa del papel. */
+.pt{filter:drop-shadow(0 20px 34px rgba(0,0,0,.34))}
+:root[data-tema="claro"] .pt{filter:drop-shadow(0 16px 30px rgba(12,14,24,.16))}
+:root[data-tema="claro"] .pt .art{opacity:.4}
+/* el cuerpo y el tinte del universo, dentro del recorte */
+.pt::before{content:'';position:absolute;inset:0;z-index:0;
+ background:linear-gradient(152deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
+.pt::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;z-index:2;
+ background:radial-gradient(112% 88% at 84% 14%,color-mix(in oklab,var(--pc) 34%,transparent),transparent 64%);
+ transition:opacity var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
- .pt:hover{transform:translateY(-7px);border-color:transparent;background:#0d1020}
+ .pt:hover{translate:0 -7px}
  .pt:hover::after{opacity:1}
 }
 .pt .art{position:absolute;inset:0;pointer-events:none;opacity:.82;transition:opacity var(--dur-ui) var(--ease-out),transform var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){.pt:hover .art{opacity:1;transform:scale(1.045)}}
 .pt .art svg{width:100%;height:100%}
-.pt .veil{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(6,7,15,0) 32%,rgba(6,7,15,.74) 60%,rgba(6,7,15,.95) 100%)}
+/* el velo cae del color del papel, no de un negro fijo: con la luz encendida
+   un degradé oscuro dejaba el titular ilegible sobre su propia tarjeta */
+.pt .veil{position:absolute;inset:0;pointer-events:none;z-index:1;
+ background:linear-gradient(180deg,rgba(var(--velo),0) 32%,rgba(var(--velo),.78) 58%,rgba(var(--velo),.96) 100%)}
 .pt .no{font-family:var(--tech);font-size:.64rem;letter-spacing:.2em;color:var(--faint);margin-bottom:auto;position:relative;z-index:3}
 .pt .tp{position:relative;z-index:3}
 .pt h3{font-family:var(--disp);font-size:clamp(1.8rem,3.2vw,2.5rem);line-height:.94;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .pt p{font-size:.86rem;color:var(--dim);line-height:1.5;max-width:34ch;margin-bottom:14px}
-.pt::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:var(--pc);opacity:.55;z-index:2}
 .pt .go{display:inline-flex;align-items:center;gap:8px;font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pc)}
 .pt .go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){.pt:hover .go svg{transform:translateX(6px)}}
@@ -239,6 +276,14 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .tira a.soon{opacity:.5}
 .acto{position:relative;z-index:20;min-height:56vh;display:grid;place-items:center;text-align:center;
  padding:clamp(40px,8vh,90px) 0;margin:clamp(30px,6vh,70px) 0;scroll-margin-top:96px}
+/* Cresta: la masa de fondo del acto. No lleva contenido, lleva color — es lo
+   que hace que el acto se sienta como un estrato y no como un div. */
+.acto .cresta{position:absolute;left:-18vw;right:-18vw;top:8%;height:84%;z-index:0;pointer-events:none;
+ clip-path:url(#f-cresta);
+ background:radial-gradient(54% 62% at 40% 74%,color-mix(in oklab,var(--u1) 34%,transparent),transparent 72%);
+ opacity:.5}
+/* nunca dos Crestas seguidas con la onda en el mismo sentido */
+.tramo:nth-of-type(even) .cresta{scale:-1 1}
 .acto h3{font-family:var(--sport);font-size:clamp(3.2rem,12vw,9rem);line-height:.82;letter-spacing:-.045em;
  text-transform:uppercase;color:var(--ink)}
 .acto-gan{font-family:var(--edit);font-style:italic;font-size:clamp(1.2rem,3.4vw,2.2rem);color:var(--gold);
@@ -254,29 +299,56 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    deja de ser una lista y pasa a ser un recorrido. El estado por defecto es
    el VISIBLE — si el navegador no soporta líneas de tiempo por scroll, esto
    se queda como una pila normal en vez de salir en blanco. */
+/* la Cuña: el contenedor que reemplaza a la tarjeta. La máscara NO va sobre el
+   panel sino sobre una capa de fondo — así el copy no se puede recortar por
+   accidente, y de paso se gana un filo de universo de 1,4px que ninguna caja
+   rectangular puede tener. Reparto 60·27·13: texto dominante, pieza
+   subordinada, guijarro de acento. Nada de empate a 50/50. */
 .area{position:sticky;top:clamp(88px,12vh,132px);display:grid;
- grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(20px,4vw,54px);align-items:center;
- min-height:min(46vh,380px);margin-bottom:clamp(22px,4vh,44px);overflow:hidden;
- border:1px solid var(--line);border-radius:26px;padding:clamp(26px,3.4vw,48px);
- background:linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%);
- box-shadow:0 34px 90px -50px #000;transform-origin:50% 0}
-.area::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:26px;
- background:radial-gradient(120% 90% at 88% 12%,color-mix(in oklab,var(--ac) 42%,transparent),transparent 62%);opacity:.5}
+ grid-template-columns:minmax(0,1.62fr) minmax(0,.86fr);gap:clamp(20px,4vw,54px);align-items:center;
+ min-height:min(46vh,380px);margin-bottom:clamp(22px,4vh,44px);
+ border:0;padding:clamp(30px,3.6vw,52px) clamp(44px,6vw,96px) clamp(38px,4.4vw,60px) clamp(28px,3.4vw,46px);
+ isolation:isolate;transform-origin:50% 0}
+.area::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:radial-gradient(118% 88% at 86% 14%,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%),
+  linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%)}
+/* el filo: 1,4px del universo, nunca un borde de color grueso al costado */
+.area::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,color-mix(in oklab,var(--ac) 52%,transparent),transparent 62%)}
+/* la Cuña del medio va volteada: dos siluetas idénticas seguidas se leen como
+   una plantilla, no como una composición */
+.area.espejo::before,.area.espejo::after{scale:-1 1}
 .area>*{position:relative;z-index:2}
 @supports (animation-timeline:view()){
- .area{animation:apilar linear both;animation-timeline:view();animation-range:exit 0% exit 90%}
+ .area{animation:apilar linear both,aparece linear both;
+  animation-timeline:view(),view();animation-range:exit 0% exit 90%,entry 4% entry 96%}
  @keyframes apilar{to{transform:scale(.93) translateY(-16px);filter:brightness(.62) saturate(.7)}}
+ @keyframes aparece{from{opacity:0}}
 }
-@media(max-width:820px){.area{grid-template-columns:1fr;min-height:0;align-items:start;gap:16px}}
+/* en una columna el apilado se come renglones de lectura: en pantalla chica
+   los paneles se sueltan y el recorrido se queda para el escritorio */
+@media(max-width:820px){.area{grid-template-columns:1fr;min-height:0;align-items:start;gap:16px;
+ position:relative;top:auto;animation:none;filter:none;margin-bottom:clamp(30px,5vh,48px);
+ padding:clamp(26px,5vw,38px) clamp(30px,7vw,46px) clamp(34px,7vw,44px) clamp(22px,5vw,32px)}
+ /* en una columna la pieza queda apaisada: una Gota estirada a 3:1 deja de ser
+    una Gota. A esa proporción la forma que corresponde es la Losa. */
+ .area.p1 .a-lado,.area.p2 .a-lado,.area.p3 .a-lado{clip-path:url(#f-losa);min-height:120px}}
 @media(prefers-reduced-motion:reduce){.area{animation:none;position:relative;top:auto}}
 .area .tagd{color:var(--faint)}
 .area h3{font-family:var(--sport);font-size:clamp(2.4rem,6.2vw,4.6rem);line-height:.88;letter-spacing:-.035em;text-transform:uppercase;color:var(--ink);margin:6px 0 14px;hyphens:auto;overflow-wrap:break-word}
 .area .tagd{border-color:var(--ac);color:var(--ac);align-self:flex-start}
 .area .a-txt{display:flex;flex-direction:column;justify-content:center}
-.area .a-lado{position:relative;align-self:stretch;min-height:150px;border-radius:18px;overflow:hidden;
- border:1px solid color-mix(in oklab,var(--ac) 34%,transparent);
+/* la pieza subordinada. Cada una toma una forma distinta del léxico según su
+   sitio en el acto: Losa para la dominante, Gota para la segunda, Hoja para el
+   acento. Ninguna hace el oficio de la vecina. */
+.area .a-lado{position:relative;align-self:stretch;min-height:150px;border:0;overflow:hidden;
  background:repeating-linear-gradient(128deg,color-mix(in oklab,var(--ac) 30%,transparent) 0 3px,transparent 3px 16px),
-  radial-gradient(130% 120% at 22% 18%,color-mix(in oklab,var(--ac) 55%,transparent),transparent 64%),var(--bg3)}
+  radial-gradient(130% 120% at 22% 18%,color-mix(in oklab,var(--ac) 55%,transparent),transparent 64%),var(--bg3);
+ transition:scale 640ms var(--ease-out)}
+.area.p1 .a-lado{clip-path:url(#f-losa)}
+.area.p2 .a-lado{clip-path:url(#f-gota)}
+.area.p3 .a-lado{clip-path:url(#f-hoja)}
+.area.p3 .a-lado .ini{margin-top:6%}
 .area .a-lado .ini{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--sport);
  font-size:clamp(5rem,13vw,10rem);line-height:1;color:color-mix(in oklab,var(--ac) 82%,var(--ink));opacity:.9;
  mix-blend-mode:overlay;letter-spacing:-.05em}
@@ -296,9 +368,14 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lk.mudo{border-style:dashed;color:var(--faint);cursor:default}
 .area .lk.mudo:hover{border-color:var(--line2);color:var(--faint)}
 /* los precios no golpean de entrada: se piden */
-.todo{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
- margin-top:56px;padding:28px 30px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);scroll-margin-top:92px}
-@media(max-width:640px){.todo{padding:24px 22px}#btnPrecios{width:100%;justify-content:center}}
+.todo{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+ margin-top:56px;padding:clamp(30px,3.2vw,38px) clamp(38px,4.4vw,58px) clamp(34px,3.6vw,44px) clamp(28px,3vw,36px);
+ border:0;background:none;scroll-margin-top:92px}
+.todo::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:linear-gradient(148deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
+.todo::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,color-mix(in oklab,var(--u2) 46%,transparent),transparent 62%)}
+@media(max-width:640px){.todo{padding:26px 34px 32px 24px}#btnPrecios{width:100%;justify-content:center}}
 #btnPrecios svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform var(--dur-ui) var(--ease-out)}
 #btnPrecios.abierto svg{transform:rotate(180deg)}
 #precios{display:grid;grid-template-rows:0fr;opacity:0;
@@ -306,17 +383,38 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 #precios .precios-in{overflow:hidden;min-height:0}
 #precios.on{grid-template-rows:1fr;opacity:1}
 /* franja datos */
-.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.014)}
-.band .in{max-width:1280px;margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:repeat(4,1fr)}
-.bi{padding:30px 16px;border-right:1px solid var(--line);text-align:center}
-.bi:last-child{border-right:none}
-.bi b{display:block;font-family:var(--sport);font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1;margin-bottom:6px}
+/* la franja de datos deja de ser una tabla de celdas con filete: el corte
+   entre secciones lo hace una Cresta, y cada cifra se apoya en un Guijarro */
+.band{position:relative;border:0;background:none;overflow-x:clip;padding:clamp(18px,3vh,34px) 0}
+.band::before{content:'';position:absolute;left:-14vw;right:-14vw;top:0;bottom:0;z-index:0;pointer-events:none;
+ clip-path:url(#f-cresta);background:rgba(255,255,255,.026)}
+.band .in{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:repeat(4,1fr)}
+.bi{position:relative;padding:30px 16px;text-align:center}
+.bi::before{content:'';position:absolute;left:50%;top:16%;width:clamp(54px,5vw,74px);height:clamp(54px,5vw,74px);
+ translate:-50% 0;z-index:-1;pointer-events:none;opacity:.34;background:var(--u2);
+ border-radius:calc(50% + 24% * var(--curva)) calc(50% - 24% * var(--curva))
+  calc(50% + 9% * var(--curva)) calc(50% - 9% * var(--curva)) /
+  calc(50% + 11% * var(--curva)) calc(50% - 5% * var(--curva))
+  calc(50% + 5% * var(--curva)) calc(50% - 11% * var(--curva));
+ animation:respira 15s var(--ease-in-out) infinite alternate}
+.bi:nth-child(2)::before{background:var(--u1);animation-duration:19s}
+.bi:nth-child(3)::before{background:var(--u3);animation-duration:13s}
+.bi:nth-child(4)::before{background:var(--u2);animation-duration:17s}
+.bi b{display:block;position:relative;font-family:var(--sport);font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1;margin-bottom:6px}
 .bi span{font-family:var(--tech);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
-@media(max-width:700px){.band .in{grid-template-columns:repeat(2,1fr)}.bi:nth-child(2){border-right:none}.bi:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:700px){.band .in{grid-template-columns:repeat(2,1fr)}}
 /* tarjetas genéricas */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:22px;transition:transform var(--dur-ui) var(--ease-out),border-color var(--dur-ui) ease}
-@media (hover:hover) and (pointer:fine){.card:hover{border-color:var(--line2);transform:translateY(-3px)}}
+.card{position:relative;isolation:isolate;border:0;background:none;
+ padding:clamp(24px,2.6vw,30px) clamp(30px,3.4vw,42px) clamp(30px,3vw,36px) clamp(22px,2.4vw,28px);
+ transition:translate var(--dur-ui) var(--ease-out)}
+.card::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:linear-gradient(148deg,rgba(255,255,255,.085),rgba(255,255,255,.016) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
+.card::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,color-mix(in oklab,var(--u1) 42%,transparent),transparent 62%);
+ opacity:.75;transition:opacity var(--dur-ui) var(--ease-out)}
+.cards>.card:nth-child(even)::before,.cards>.card:nth-child(even)::after{scale:-1 1}
+@media (hover:hover) and (pointer:fine){.card:hover{translate:0 -3px}.card:hover::after{opacity:1}}
 .card h3{font-family:var(--disp);font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .card p{font-size:.87rem;color:var(--dim);line-height:1.55}
 .card .pz{font-family:var(--sport);font-size:1.5rem;margin:12px 0 4px}
@@ -341,8 +439,15 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .msg.er{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);color:#ffb3b3}
 /* portal */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
-.proj{border:1px solid var(--line);border-radius:20px;background:var(--bg2);padding:24px;transition:border-color var(--dur-ui) ease}
-.proj:hover{border-color:var(--line2)}
+.proj{position:relative;isolation:isolate;border:0;background:none;
+ padding:clamp(26px,2.8vw,32px) clamp(32px,3.6vw,44px) clamp(30px,3vw,38px) clamp(24px,2.6vw,30px)}
+.proj::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:linear-gradient(148deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
+.proj::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,color-mix(in oklab,var(--u2) 40%,transparent),transparent 62%);
+ opacity:.7;transition:opacity var(--dur-ui) var(--ease-out)}
+.pgrid>.proj:nth-child(even)::before,.pgrid>.proj:nth-child(even)::after{scale:-1 1}
+@media (hover:hover) and (pointer:fine){.proj:hover::after{opacity:1}}
 .proj .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
 .proj h3{font-family:var(--disp);font-size:1.7rem;letter-spacing:.02em;text-transform:uppercase;line-height:1}
 .st{font-family:var(--tech);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:999px;white-space:nowrap}
@@ -361,7 +466,11 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .hit li.listo i{background:var(--ok);border-color:var(--ok)}
 .hit li.en_curso i{background:var(--warn);border-color:var(--warn)}
 .hit li.listo{color:var(--ink);text-decoration:line-through;text-decoration-color:var(--faint)}
-.empty{border:1px dashed var(--line2);border-radius:20px;padding:44px 26px;text-align:center;color:var(--dim)}
+.empty{position:relative;isolation:isolate;padding:48px 34px 52px 30px;text-align:center;color:var(--dim)}
+.empty::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:color-mix(in oklab,var(--bg2) 62%,transparent)}
+.empty::after{content:'';position:absolute;inset:-1.2px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,var(--line2),transparent 68%)}
 /* banner suscripción */
 #promo{position:fixed;right:18px;bottom:18px;z-index:75;width:min(340px,calc(100vw - 36px));
  background:linear-gradient(165deg,#141829,#0a0c17);border:1px solid var(--line2);border-radius:20px;padding:22px;
@@ -417,7 +526,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .wa-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,58px);align-items:center;margin-bottom:56px}
 @media(max-width:900px){.wa-hero{grid-template-columns:1fr}}
 .fases{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;position:relative}
-.fase{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:22px;position:relative}
+.fase{position:relative;isolation:isolate;border:0;background:none;
+ padding:clamp(24px,2.6vw,30px) clamp(30px,3.4vw,42px) clamp(30px,3vw,36px) clamp(22px,2.4vw,28px);
+ transition:translate var(--dur-ui) var(--ease-out)}
+.fase::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ background:linear-gradient(148deg,rgba(255,255,255,.075),rgba(255,255,255,.014) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
+.fase::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ background:linear-gradient(148deg,color-mix(in oklab,var(--u1) 44%,transparent),transparent 62%);opacity:.72}
+.fases>.fase:nth-child(even)::before,.fases>.fase:nth-child(even)::after{scale:-1 1}
+@media (hover:hover) and (pointer:fine){.fase:hover{translate:0 -3px}}
 .fase .fn{font-family:var(--sport);font-size:2rem;line-height:1;color:var(--gold);opacity:.5;margin-bottom:10px}
 .fase h4{font-family:var(--disp);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .fase p{font-size:.85rem;color:var(--dim);line-height:1.5}
@@ -440,12 +557,136 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .tbl td{color:var(--dim)}
 .scrollx{overflow-x:auto}
 /* respuesta al pulsar: en táctil no hay hover, esto es todo el feedback */
-.btn:active{transform:scale(.97);transition:transform 180ms var(--ease-out)}
-.pt:active{transform:scale(.99)}
-.card:active,.area:active{transform:scale(.99)}
 .area .lk:active,.tira a:active,.chip:active{transform:scale(.96);transition:transform 180ms var(--ease-out)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
 .rv.in{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PIEL ORGÁNICA
+   El esqueleto no se toca: cambia la piel. Siete formas propias, cinco capas
+   de profundidad y un solo requestAnimationFrame. El sistema completo está
+   en docs/direccion-organica.md; aquí sólo se aplica.
+
+   Por qué máscaras SVG en objectBoundingBox y no clip-path:path(): path()
+   lleva coordenadas en píxeles fijos, así que la forma no acompaña al
+   contenedor. objectBoundingBox dibuja entre 0 y 1 y el navegador lo estira:
+   una definición sirve para una tarjeta de 320px y para una de 900px.
+   ═══════════════════════════════════════════════════════════════════════ */
+.f-gota{clip-path:url(#f-gota)}
+.f-losa{clip-path:url(#f-losa)}
+.f-hoja{clip-path:url(#f-hoja)}
+.f-cresta{clip-path:url(#f-cresta)}
+.f-astilla{clip-path:url(#f-astilla)}
+
+/* Guijarro: la única forma animable del léxico, y por eso vive en un
+   border-radius de ocho valores y no en una máscara. Nunca lleva contenido:
+   es peso visual puro. --curva lo tempera — a 1 (flujo) queda francamente
+   lopsidado, a 0,2 (hielo) es casi un círculo. */
+.guijarro{position:absolute;pointer-events:none;z-index:0;
+ border-radius:
+  calc(50% + 24% * var(--curva)) calc(50% - 24% * var(--curva))
+  calc(50% + 9%  * var(--curva)) calc(50% - 9%  * var(--curva)) /
+  calc(50% + 11% * var(--curva)) calc(50% - 5%  * var(--curva))
+  calc(50% + 5%  * var(--curva)) calc(50% - 11% * var(--curva));
+ animation:respira 15s var(--ease-in-out) infinite alternate}
+@keyframes respira{
+ to{border-radius:
+  calc(50% - 20% * var(--curva)) calc(50% + 20% * var(--curva))
+  calc(50% - 13% * var(--curva)) calc(50% + 13% * var(--curva)) /
+  calc(50% - 8%  * var(--curva)) calc(50% + 14% * var(--curva))
+  calc(50% - 14% * var(--curva)) calc(50% + 8%  * var(--curva))}}
+
+/* Astilla: el filamento de la capa más cercana. Siempre cortada por el borde
+   de la pantalla — una Astilla entera se lee como un logo perdido. */
+.astilla{position:absolute;pointer-events:none;z-index:0;clip-path:url(#f-astilla)}
+/* Estrato: campo de color de la capa 1. No lleva contenido, lleva atmósfera.
+   Nunca pasa de .34 de opacidad: las capas lejanas pierden contraste con la
+   distancia — la perspectiva aérea de un pintor, aplicada a un div. Va colgado
+   de la sección, no del .wrap: dentro del wrap dejaba un canto recto a la vista. */
+.estrato{position:absolute;pointer-events:none;z-index:0;opacity:.34}
+/* con la luz encendida los acentos pierden fuerza sobre papel claro: el
+   factor --fo los sube sin tocar el peso relativo que tiene cada uno */
+:root{--fo:1}
+:root[data-tema="claro"]{--fo:1.5}
+:root[data-tema="claro"] .estrato{opacity:.5}
+.guijarro,.astilla{opacity:calc(var(--o,.3) * var(--fo))}
+
+/* las cinco capas del sistema de profundidad: 0,15 · 0,42 · 1,00 · 1,16 · 1,34.
+   El salto entre vecinas se mantiene entre 0,16 y 0,42: por debajo de 0,15 no
+   se percibe y por encima de 0,7 marea. */
+[data-vel]{will-change:transform}
+.sec,#hero,.remate,.view>section{overflow-x:clip}
+
+/* cada acto hereda su universo; los paneles de adentro sólo leen --curva */
+.tramo{position:relative;display:block}
+.tramo .guijarro,.tramo .estrato,.tramo .astilla{z-index:0}
+
+/* ── botón orgánico ─────────────────────────────────────────────────────
+   El radio no es decorativo: al pasar el puntero la forma se reacomoda, que
+   es la manera de que un control se sienta vivo sin desplazarse. */
+.btn{border-radius:
+ calc(14px + 16px * var(--curva)) calc(24px - 5px * var(--curva))
+ calc(12px + 14px * var(--curva)) calc(22px - 7px * var(--curva));
+ transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
+  border-radius 520ms var(--ease-out),translate 90ms var(--ease-out),scale 90ms var(--ease-out),
+  box-shadow var(--dur-fast) var(--ease-out)}
+.nbtn{border-radius:calc(10px + 14px * var(--curva)) calc(20px - 5px * var(--curva))
+ calc(9px + 12px * var(--curva)) calc(18px - 6px * var(--curva));
+ transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
+  border-radius 480ms var(--ease-out)}
+.luz,.burger{border-radius:
+ calc(38% + 16% * var(--curva)) calc(54% - 12% * var(--curva))
+ calc(42% + 10% * var(--curva)) calc(50% - 8% * var(--curva)) /
+ calc(50% + 8% * var(--curva)) calc(40% + 12% * var(--curva))
+ calc(52% - 10% * var(--curva)) calc(44% + 6% * var(--curva));
+ transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,border-radius 520ms var(--ease-out)}
+.inp{border-radius:calc(8px + 9px * var(--curva)) calc(15px - 5px * var(--curva))
+ calc(7px + 8px * var(--curva)) calc(14px - 5px * var(--curva))}
+.tabs{border-radius:16px 10px 16px 10px}
+.tabs button{border-radius:12px 7px 12px 7px}
+.ficha{border-radius:calc(12px + 14px * var(--curva)) calc(26px - 8px * var(--curva))
+ calc(14px + 12px * var(--curva)) calc(24px - 7px * var(--curva));border-color:var(--line)}
+.modal{border-radius:calc(16px + 18px * var(--curva)) calc(32px - 9px * var(--curva))
+ calc(18px + 16px * var(--curva)) calc(30px - 8px * var(--curva))}
+#promo{border-radius:calc(14px + 16px * var(--curva)) calc(28px - 8px * var(--curva))
+ calc(16px + 14px * var(--curva)) calc(26px - 7px * var(--curva))}
+.hit i{border-radius:60% 40% 52% 48% / 55% 50% 50% 45%}
+.card li::before{border-radius:58% 42% 50% 50% / 52% 48% 52% 48%}
+.area .a-lado .ini{mix-blend-mode:overlay}
+
+/* ── coreografía por scroll, con líneas de tiempo nativas ────────────────
+   El estado por defecto es el VISIBLE: si el navegador no las soporta, la
+   página se ve entera. La animación se suma encima, nunca al revés. */
+@supports (animation-timeline:view()){
+ @media not (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none;
+   animation:brota linear both;animation-timeline:view();animation-range:entry 2% cover 32%}
+  .card,.proj,.acto-in,.todo,.fam,.wa-hero>*{
+   animation:brota linear both;animation-timeline:view();animation-range:entry 4% cover 34%}
+  .head,.ficha{animation:brotaLat linear both;animation-timeline:view();animation-range:entry 4% cover 30%}
+  @keyframes brota{from{opacity:.06;transform:translate3d(0,42px,0) scale(.966)}}
+  @keyframes brotaLat{from{opacity:.06;transform:translate3d(-34px,0,0)}}
+ }
+}
+
+/* ── microinteracciones, sólo donde hay puntero fino ─────────────────────
+   Se mueven con `translate`/`scale`, no con `transform`: así el hover y la
+   coreografía de scroll no se pisan la misma propiedad. */
+@media (hover:hover) and (pointer:fine){
+ .btn:hover{border-radius:
+  calc(24px - 6px * var(--curva)) calc(14px + 16px * var(--curva))
+  calc(22px - 8px * var(--curva)) calc(12px + 15px * var(--curva))}
+ .btn.p:hover,.btn.gold:hover{translate:0 -2px}
+ .nbtn:hover{border-radius:calc(20px - 6px * var(--curva)) calc(10px + 14px * var(--curva))
+  calc(18px - 5px * var(--curva)) calc(9px + 13px * var(--curva))}
+ .luz:hover{border-radius:54% 40% 46% 52% / 42% 52% 44% 56%}
+ .area:hover .a-lado{scale:1.035}
+ .pt:hover .go svg{transform:translateX(6px)}
+}
+/* respuesta al pulsar: en táctil es el único feedback que existe */
+.btn:active{translate:0 1px;scale:.97}
+.pt:active{scale:.99}
+.card:active,.area:active,.fase:active{scale:.99}
 .load{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){
@@ -456,6 +697,18 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  .pt:hover,.card:hover,.area:hover,.btn.p:hover{transform:none}
  .pt:hover .art{transform:none}
  .btn:active,.pt:active,.card:active,.area:active,.area .lk:active,.tira a:active,.chip:active{transform:none}
+ /* piel orgánica: se apaga el desplazamiento, nunca el color ni la forma.
+    Las reglas van con la misma especificidad que las que animan — si no,
+    `:nth-child` gana y el bucle sigue corriendo pese a la petición. */
+ .guijarro,.bi::before,.bi:nth-child(2)::before,.bi:nth-child(3)::before,.bi:nth-child(4)::before{animation:none}
+ :root{transition:none}
+ .area,.acto-in,.card,.proj,.todo,.fam,.head,.ficha,.wa-hero>*,.rv{animation:none;opacity:1;transform:none}
+ .area{position:relative;top:auto;filter:none}
+ .pt:hover,.card:hover,.fase:hover,.btn.p:hover,.btn.gold:hover{translate:none}
+ .area:hover .a-lado{scale:none}
+ .btn:active,.pt:active,.card:active,.area:active,.fase:active{translate:none;scale:none}
+ /* el paralaje no se apaga con !important: el lazo ni siquiera lo escribe */
+ [data-vel]{will-change:auto}
  #promo{transform:none;opacity:0;pointer-events:none;transition:opacity var(--dur-ui) var(--ease-out)}
  #promo.on{transform:none;opacity:1;pointer-events:auto}
  .modal{transition:opacity var(--dur-ui) var(--ease-out)}
@@ -468,6 +721,35 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </style>
 </head>
 <body>
+
+<!-- ═══ el léxico de formas ═══
+     clipPathUnits="objectBoundingBox": el trazo vive entre 0 y 1 y el navegador
+     lo estira al tamaño real del elemento. Una sola definición sirve para una
+     pieza de 320px en móvil y una de 900px en escritorio, sin JavaScript.
+     Siete formas con oficio declarado — ninguna se llama "blob". -->
+<svg class="formas" aria-hidden="true" focusable="false" width="0" height="0"
+     style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <clipPath id="f-gota" clipPathUnits="objectBoundingBox">
+      <path d="M.4 0C.73 0 1 .19 1 .46C1 .73 .93 .9 .78 1L.26 1C.09 .92 0 .74 0 .48C0 .18 .13 0 .4 0Z"/>
+    </clipPath>
+    <clipPath id="f-losa" clipPathUnits="objectBoundingBox">
+      <path d="M0 .16C.16 0 .44 .13 .64 .06C.86 0 1 .12 1 .4C1 .68 .96 .87 .86 .95C.74 1 .48 .92 .26 .97C.08 1 0 .9 0 .66Z"/>
+    </clipPath>
+    <clipPath id="f-hoja" clipPathUnits="objectBoundingBox">
+      <path d="M1 0C1 .4 .8 .74 .5 .92C.3 1 .08 .94 .03 .78C0 .58 .16 .34 .44 .16C.66 .03 .86 0 1 0Z"/>
+    </clipPath>
+    <clipPath id="f-cresta" clipPathUnits="objectBoundingBox">
+      <path d="M0 .26C.16 .08 .34 .2 .52 .14C.7 .08 .85 0 1 .05L1 1L0 1Z"/>
+    </clipPath>
+    <clipPath id="f-cuna" clipPathUnits="objectBoundingBox">
+      <path d="M0 .06C.3 0 .62 .02 .82 .07C.96 .1 1 .22 .99 .4C.98 .62 .94 .83 .86 .94C.77 1 .3 1 .12 .98C.02 .96 0 .88 0 .76Z"/>
+    </clipPath>
+    <clipPath id="f-astilla" clipPathUnits="objectBoundingBox">
+      <path d="M.02 .4C.2 .12 .58 0 .92 .04C.99 .05 1 .12 .95 .15C.62 .13 .28 .26 .13 .48C.07 .58 .11 .76 .21 .88C.24 .93 .17 .97 .12 .92C0 .78 0 .56 .02 .4Z"/>
+    </clipPath>
+  </defs>
+</svg>
 
 <nav id="nav"><div class="in">
   <div class="logo" data-go="inicio"><span class="l">L</span><span class="q">Q</span><span class="s">S</span></div>
@@ -484,14 +766,29 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <button class="burger" id="bg" aria-label="Menú"><span></span></button>
 </div></nav>
 
-<div class="atmos" aria-hidden="true"><b><i></i><i></i></b><b><i></i><i></i></b><b><i></i><i></i></b></div>
-<div class="grano" aria-hidden="true"></div>
+<!-- capa 0 · el clima, a 0,15 del scroll. Lo lejano casi no se mueve: es lo que
+     hace que la pantalla se sienta con fondo y no con papel tapiz. -->
+<div class="atmos" aria-hidden="true" data-vel=".15" data-fija><b><i></i><i></i></b><b><i></i><i></i></b><b><i></i><i></i></b></div>
+<!-- capa 4 · la piel. El grano corre a 1,34, adelantándose al contenido. -->
+<div class="grano" aria-hidden="true" data-vel="1.34" data-fija></div>
 <div id="top">
 
 <!-- ═══════ INICIO ═══════ -->
 <div class="view on" id="v-inicio">
-  <header id="hero">
+  <header id="hero" data-universo="flujo">
     <canvas id="heroCv"></canvas>
+    <!-- capa 1 · estrato, 0,42 — capa 3 · guijarros, 1,16 — capa 4 · astilla, 1,34.
+         El cuadrante de silencio del hero es el de abajo a la izquierda: ahí no
+         entra ninguna pieza. -->
+    <div class="estrato" data-vel=".42" aria-hidden="true"
+         style="left:-16vw;right:-16vw;bottom:-18%;height:88%;z-index:1;
+                background:radial-gradient(56% 60% at 30% 76%,color-mix(in oklab,var(--u1) 30%,transparent),transparent 70%)"></div>
+    <div class="guijarro" data-vel="1.16" aria-hidden="true"
+         style="right:7%;top:16%;width:9vw;height:9vw;max-width:118px;max-height:118px;background:var(--u3);--o:.34;z-index:1"></div>
+    <div class="guijarro" data-vel="1.24" aria-hidden="true"
+         style="right:21%;top:29%;width:4.4vw;height:4.4vw;max-width:56px;max-height:56px;background:var(--u2);--o:.4;z-index:1"></div>
+    <div class="astilla" data-vel="1.34" aria-hidden="true"
+         style="left:-9vw;bottom:8%;width:30vw;height:20vw;background:var(--u2);--o:.16;z-index:1"></div>
     <div class="wrap"><div class="hero-in">
       <h1 class="lqs" id="lqs" aria-label="LQS">
         <canvas id="lqsCv" width="900" height="408">LQS</canvas>
@@ -524,7 +821,13 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     </svg>
     <div class="in" id="remate"></div>
   </div>
-  <section class="sec"><div class="wrap">
+  <section class="sec" data-universo="flujo">
+    <div class="estrato" data-vel=".42" aria-hidden="true"
+         style="right:-14vw;top:2%;width:60vw;height:60vw;max-height:760px;
+                background:radial-gradient(circle at 46% 44%,color-mix(in oklab,var(--u2) 26%,transparent),transparent 66%)"></div>
+    <div class="guijarro" data-vel="1.18" aria-hidden="true"
+         style="left:4%;top:6%;width:6vw;height:6vw;max-width:76px;max-height:76px;background:var(--u3);--o:.3"></div>
+   <div class="wrap">
     <div class="head rv">
       <div>      <h2 class="disp">Cada área,<br>su <span class="gold">propio espacio</span>.</h2></div>
       <p class="body-l" style="max-width:36ch">Nada de scroll infinito. Entra directo a lo que necesitas.</p>
@@ -543,7 +846,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div>
 
 <!-- ═══════ ESTUDIO ═══════ -->
-<div class="view" id="v-estudio"><section class="sec"><div class="wrap">
+<div class="view" id="v-estudio"><section class="sec" data-universo="flujo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-12vw;top:10%;width:54vw;height:54vw;max-height:700px;
+              background:radial-gradient(circle at 50% 50%,color-mix(in oklab,var(--u1) 26%,transparent),transparent 64%)"></div>
+  <div class="guijarro" data-vel="1.2" aria-hidden="true"
+       style="right:5%;top:8%;width:7vw;height:7vw;max-width:92px;max-height:92px;background:var(--u3);--o:.3"></div>
+  <div class="astilla" data-vel="1.34" aria-hidden="true"
+       style="right:-8vw;top:44%;width:26vw;height:17vw;background:var(--u2);--o:.14;scale:-1 1"></div>
+<div class="wrap">
   <h2 class="disp" style="max-width:16ch">No somos una agencia.<br>Somos un <span class="gold">taller</span>.</h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);margin-top:44px" class="two">
     <div>
@@ -565,7 +876,13 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div></section></div>
 
 <!-- ═══════ SERVICIOS ═══════ -->
-<div class="view" id="v-servicios"><section class="sec"><div class="wrap">
+<div class="view" id="v-servicios"><section class="sec" data-universo="trama">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="right:-14vw;top:0;width:62vw;height:62vw;max-height:820px;
+              background:radial-gradient(circle at 42% 42%,color-mix(in oklab,var(--u2) 30%,transparent),transparent 66%)"></div>
+  <div class="astilla" data-vel="1.34" aria-hidden="true"
+       style="right:-8vw;top:6%;width:26vw;height:17vw;background:var(--u1);--o:.18;scale:-1 1"></div>
+<div class="wrap">
   <h2 class="disp">Todo lo que hacemos,<br>en <span class="gold">nueve mundos</span>.</h2>
   <p class="body-l" style="margin:16px 0 30px">Entra al que se parezca a lo tuyo: adentro está cómo trabajamos, qué entregamos y una muestra que puedes tocar. Los precios están al final, cuando quieras verlos.</p>
   <div class="areas" id="areas"></div>
@@ -588,7 +905,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div></section></div>
 
 <!-- ═══════ MUESTRAS ═══════ -->
-<div class="view" id="v-muestras"><section class="sec"><div class="wrap">
+<div class="view" id="v-muestras"><section class="sec" data-universo="pulso">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-14vw;top:4%;width:58vw;height:58vw;max-height:760px;
+              background:radial-gradient(circle at 54% 46%,color-mix(in oklab,var(--u3) 28%,transparent),transparent 66%)"></div>
+  <div class="guijarro" data-vel="1.16" aria-hidden="true"
+       style="right:6%;top:5%;width:8vw;height:8vw;max-width:104px;max-height:104px;background:var(--u1);--o:.32"></div>
+  <div class="guijarro" data-vel="1.26" aria-hidden="true"
+       style="right:20%;top:15%;width:4vw;height:4vw;max-width:50px;max-height:50px;background:var(--u2);--o:.4"></div>
+<div class="wrap">
   <h2 class="disp">Pruébalo antes<br>de <span class="gold">contratar</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot. Si prefieres verlo en pestaña aparte, usa el enlace ↗ de cada tarjeta.</p>
   <div class="cards" id="demos"></div>
@@ -596,7 +921,13 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div></section></div>
 
 <!-- ═══════ COTIZAR ═══════ -->
-<div class="view" id="v-cotizar"><section class="sec"><div class="wrap">
+<div class="view" id="v-cotizar"><section class="sec" data-universo="trama">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="right:-16vw;top:6%;width:56vw;height:56vw;max-height:720px;
+              background:radial-gradient(circle at 44% 48%,color-mix(in oklab,var(--u1) 28%,transparent),transparent 66%)"></div>
+  <div class="guijarro" data-vel="1.18" aria-hidden="true"
+       style="right:9%;top:22%;width:6.5vw;height:6.5vw;max-width:84px;max-height:84px;background:var(--u2);--o:.3"></div>
+<div class="wrap">
   <h2 class="disp">Cotiza tu <span class="gold">proyecto</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Respondemos con un plan concreto en 48 horas. Sin compromiso.</p>
   <form class="form" id="fSol">
@@ -625,7 +956,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div></section></div>
 
 <!-- ═══════ MI CUENTA ═══════ -->
-<div class="view" id="v-cuenta"><section class="sec"><div class="wrap">
+<div class="view" id="v-cuenta"><section class="sec" data-universo="hielo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-12vw;top:8%;width:52vw;height:52vw;max-height:680px;
+              background:radial-gradient(circle at 50% 50%,color-mix(in oklab,var(--u2) 26%,transparent),transparent 64%)"></div>
+<div class="wrap">
   <div class="head">
     <div><h2 class="disp" id="hola">Tus proyectos</h2></div>
     <button class="btn g" id="salir">Cerrar sesión</button>
@@ -635,7 +970,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 
 <!-- ═══════ WHATSAPP AUTOMÁTICO ═══════ -->
-<div class="view" id="v-whatsapp"><section class="sec"><div class="wrap">
+<div class="view" id="v-whatsapp"><section class="sec" data-universo="hielo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="right:-15vw;top:2%;width:60vw;height:60vw;max-height:780px;
+              background:radial-gradient(circle at 44% 44%,color-mix(in oklab,var(--u2) 30%,transparent),transparent 66%)"></div>
+  <div class="astilla" data-vel="1.34" aria-hidden="true"
+       style="left:-9vw;top:32%;width:28vw;height:18vw;background:var(--u1);--o:.15"></div>
+  <div class="guijarro" data-vel="1.2" aria-hidden="true"
+       style="right:7%;top:56%;width:7vw;height:7vw;max-width:92px;max-height:92px;background:var(--u2);--o:.34"></div>
+<div class="wrap">
   <h2 class="disp">Tu negocio responde,<br>aunque tú <span class="gold">no estés</span>.</h2>
   <div class="wa-hero" style="margin-top:34px">
     <div>
@@ -978,11 +1321,20 @@ const FAMILIAS=[
  ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.','#5b8def'],
  ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.','#3fd0e6'],
  ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.','#e6c877']];
+/* cada acto es un tramo con su propio universo: la sección hereda el universo,
+   la pieza sólo lee --curva, --u1/2/3. Por eso dos universos no se pueden
+   mezclar dentro de la misma forma. */
+const UNI_ACTO={marca:'pulso',presencia:'hielo',produccion:'brasa'};
 document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
- `<div class="acto" data-fam="${k}"><div class="acto-in">
-   <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
-  </div></div>`+FICHAS.filter(f=>f[6]===k).map(([t,sub,d,ficha,muestra,c],n)=>
- `<div class="area${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}">
+ `<div class="tramo" data-universo="${UNI_ACTO[k]||'flujo'}">
+  <div class="acto" data-fam="${k}">
+   <div class="cresta" data-vel=".42" aria-hidden="true"></div>
+   <div class="acto-in">
+    <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
+   </div></div>`+FICHAS.filter(f=>f[6]===k).map(([t,sub,d,ficha,muestra,c],n)=>
+ /* el trío: dominante, subordinada, acento. Cada panel toma una forma distinta
+    del léxico según su sitio, y el del medio va volteado. */
+ `<div class="area p${n+1}${n===1?' espejo':''}${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}">
   <div class="a-txt"><span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
    <div class="lks">${ficha?
     `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
@@ -991,7 +1343,12 @@ document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
     :`<span class="lk mudo">Ficha en camino</span>
       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
    </div></div>
-  <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('')).join('');
+  <div class="a-lado" aria-hidden="true"><span class="ini">${t.charAt(0)}</span></div></div>`).join('')
+ +`<div class="guijarro" data-vel="1.16" aria-hidden="true"
+     style="right:4%;top:18%;width:7vw;height:7vw;max-width:92px;max-height:92px;background:var(--u2);--o:.44"></div>
+   <div class="guijarro" data-vel="1.26" aria-hidden="true"
+     style="left:6%;bottom:12%;width:4.2vw;height:4.2vw;max-width:52px;max-height:52px;background:var(--u1);--o:.58"></div>
+  </div>`).join('');
 /* ═══ remate del hero ═══
    Tres semillas de contorno irregular — ninguna igual a otra, ninguna un
    círculo perfecto — y la promesa de cada familia. Quietas: sólo responden a
@@ -1432,11 +1789,21 @@ const CLIMA={
  estudio:['#e6c877','#d98aa6','#7c5cff'], cotizar:['#4ade80','#3fd0e6','#e6c877'],
  cuenta:['#ff6b6b','#e6c877','#5b8def']
 };
+/* el clima también trae temperamento de forma: cada vista hereda el universo
+   que le corresponde, y con él cuánto se curvan sus piezas.
+   flujo 1,00 · brasa 0,82 · pulso 0,64 · trama 0,34 · hielo 0,20 */
+const UNIVISTA={
+ inicio:'flujo', servicios:'trama', muestras:'pulso', whatsapp:'hielo',
+ estudio:'flujo', cotizar:'trama', cuenta:'hielo'
+};
 const MASAS=[].slice.call(document.querySelectorAll('.atmos b'));
 let capaClima=1;
 function clima(v){
  const c=CLIMA[v]||CLIMA.inicio,r=document.documentElement;
  r.style.setProperty('--c1',c[0]);r.style.setProperty('--c2',c[1]);r.style.setProperty('--c3',c[2]);
+ /* --curva y los tres colores del universo se interpolan (ver @property):
+    una sección se convierte en la siguiente, no se cambia de golpe */
+ r.setAttribute('data-universo',UNIVISTA[v]||'flujo');
  /* el color no se transiciona: se cruzan dos capas por opacidad */
  capaClima^=1;
  MASAS.forEach((b,i)=>{
@@ -1831,10 +2198,142 @@ function animarWA(){
 
 /* ═══ reveals / nav ═══ */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -6% 0px'});
-function armar(){document.querySelectorAll('.view.on .rv:not(.in)').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*60)+'ms';io.observe(el);});}
+function armar(){
+ document.querySelectorAll('.view.on .rv:not(.in)').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i,6)*60)+'ms';io.observe(el);});
+ /* la vista cambió: las capas de profundidad se vuelven a medir */
+ if(window.ORG)ORG.medir();
+}
 const nav=document.getElementById('nav');
 alScroll(y=>nav.classList.toggle('solid',y>40));
 document.getElementById('bg').onclick=()=>document.body.classList.toggle('menu');
+
+/* ═══ la vida: un solo cuadro para el scroll suave y las cinco capas ═══
+   Un requestAnimationFrame, no un listener por capa. Dentro pasan dos cosas:
+
+   1· El scroll suave propio. El documento scrollea de verdad — no hay un
+      contenedor fijo que se desplace — porque `position:sticky`, las líneas de
+      tiempo de scroll y el IntersectionObserver de los reveals dejan de
+      funcionar dentro de un `position:fixed` transformado. Lo que se amortigua
+      es el destino: la rueda alimenta un objetivo y el lazo lo persigue con
+      0,11 por cuadro, que a 60fps se asienta en unos 400ms. Por debajo de 0,07
+      el sitio se siente pegajoso; por encima de 0,2 el suavizado no se nota.
+
+      Y sólo escribe mientras hay algo pendiente. Cuando el amortiguador se
+      asienta se calla y vuelve a seguir al documento — por eso `go()` y los
+      `scrollIntoView` del router pueden hacer su propio scroll suave nativo sin
+      que nadie les pelee el volante.
+
+   2· El paralaje de cinco capas: 0,15 · 0,42 · 1,00 · 1,16 · 1,34. La distancia
+      se mide desde el centro de la pantalla, así el desfase queda acotado y no
+      se dispara con el largo del documento.
+
+   En táctil el scroll del sistema ya tiene su propia inercia y pelear contra
+   ella se siente roto: ahí el amortiguador ni se enciende. */
+const ORG=(function(){
+ const finoQ=matchMedia('(hover:hover) and (pointer:fine)');
+ const AMORTIGUA=.11;
+ let suave=finoQ.matches&&!RM;
+ let objetivo=0,actual=0,vh=innerHeight,maxY=0,ultY=-1;
+ const capas=[];
+
+ function topDoc(el){let y=0;for(let n=el;n;n=n.offsetParent)y+=n.offsetTop;return y;}
+ function techo(){return Math.max(0,document.documentElement.scrollHeight-innerHeight);}
+
+ function medir(){
+  vh=innerHeight;maxY=techo();ultY=-1;
+  capas.length=0;
+  if(RM)return;                                  /* con movimiento reducido no se mide ni se escribe */
+  document.querySelectorAll('[data-vel]').forEach(el=>{
+   const v=el.closest('.view');
+   if(v&&!v.classList.contains('on')){el.style.transform='';return;}
+   const fija=el.hasAttribute('data-fija');
+   capas.push({el:el,vel:parseFloat(el.getAttribute('data-vel'))||1,fija:fija,
+    top:fija?0:topDoc(el),alto:fija?0:el.offsetHeight,ult:''});
+  });
+ }
+
+ function pintar(y){
+  for(let i=0;i<capas.length;i++){
+   const c=capas[i];let d;
+   if(c.fija){
+    /* una capa fija no se mueve con el contenido: para que corra a su
+       velocidad hay que desplazarla a mano. El clima satura a 200px — más
+       allá se saldría del encuadre; el grano se mueve en módulo 140, que es
+       el lado de su baldosa, así que su recorrido no tiene fin ni costura. */
+    d=c.vel<1 ? -Math.min(y*c.vel,200) : -((y*c.vel)%140);
+   }else{
+    const rel=(y+vh*.5)-(c.top+c.alto*.5);
+    if(rel<-(vh+c.alto)||rel>(vh+c.alto))continue;
+    d=rel*(1-c.vel);
+   }
+   const t='translate3d(0,'+d.toFixed(2)+'px,0)';
+   if(t!==c.ult){c.el.style.transform=t;c.ult=t;}
+  }
+ }
+
+ let prev=0,aplicado=-1;
+ function cuadro(now){
+  requestAnimationFrame(cuadro);
+  if(document.hidden){prev=0;return;}
+  /* ¿movió la página alguien que no fuimos nosotros? Un `go()`, un
+     `scrollIntoView`, la barra de scroll, el teclado. Entonces el
+     amortiguador suelta el volante y se pone a seguirlo: nadie forcejea. */
+  if(aplicado>=0&&Math.abs(scrollY-aplicado)>2){objetivo=actual=scrollY;aplicado=-1;}
+  /* 0,11 es por cuadro a 60fps. Normalizado por dt para que una pantalla de
+     120Hz no lo vuelva el doble de rápido ni un cuadro perdido teletransporte
+     la página — el mismo truco que usan las tres letras del hero. */
+  const dt=prev?Math.min(50,now-prev):16.667;prev=now;
+  if(suave&&objetivo!==actual){
+   actual+=(objetivo-actual)*(1-Math.pow(1-AMORTIGUA,dt/16.667));
+   if(Math.abs(objetivo-actual)<.4)actual=objetivo;
+   scrollTo(0,actual);
+   aplicado=scrollY;
+  }else{objetivo=actual=scrollY;aplicado=-1;}
+  const y=scrollY;
+  if(y===ultY)return;
+  ultY=y;pintar(y);
+ }
+
+ /* no se secuestra la rueda sobre algo que ya tiene su propio scroll:
+    el visor, el modal, una tabla ancha */
+ function enScroller(t){
+  for(let el=t;el&&el!==document.body;el=el.parentElement){
+   if(el.nodeType!==1)continue;
+   if(el.id==='visor'||el.id==='modal')return true;
+   const s=getComputedStyle(el);
+   if(/auto|scroll/.test(s.overflowY)&&el.scrollHeight>el.clientHeight+2)return true;
+   if(/auto|scroll/.test(s.overflowX)&&el.scrollWidth>el.clientWidth+2)return true;
+  }
+  return false;
+ }
+ addEventListener('wheel',function(e){
+  if(!suave||e.ctrlKey||e.defaultPrevented)return;
+  if(document.body.style.overflow==='hidden'||document.body.classList.contains('menu'))return;
+  if(enScroller(e.target))return;
+  maxY=techo();
+  const paso=e.deltaMode===1?16:e.deltaMode===2?innerHeight:1;
+  if(objetivo===actual)objetivo=actual=scrollY;
+  objetivo=Math.max(0,Math.min(maxY,objetivo+e.deltaY*paso));
+  e.preventDefault();
+ },{passive:false});
+
+ /* si cambia la preferencia a mitad de sesión, el amortiguador se apaga solo */
+ function recalibra(){
+  suave=finoQ.matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!suave)objetivo=actual=scrollY;
+  medir();
+ }
+ if(finoQ.addEventListener)finoQ.addEventListener('change',recalibra);
+ addEventListener('resize',medir,{passive:true});
+ addEventListener('load',medir);
+ if(window.ResizeObserver){
+  let t=0;
+  new ResizeObserver(function(){clearTimeout(t);t=setTimeout(medir,120);}).observe(document.getElementById('top'));
+ }
+ medir();
+ requestAnimationFrame(cuadro);
+ return {medir:medir};
+})();
 
 /* ═══ arranque ═══ */
 (async function init(){
