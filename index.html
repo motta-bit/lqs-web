@@ -125,24 +125,15 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .grano{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--grain);
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-/* ═══ LQS: tres letras que se niegan a pertenecer al mismo sistema ═══ */
-.lqs{display:flex;align-items:baseline;justify-content:center;gap:clamp(2px,1vw,16px);line-height:.78;
- margin:0 auto clamp(20px,3vw,34px);width:fit-content}
-.gl{position:relative;display:block;font-family:var(--sport);font-size:clamp(5.5rem,29vw,19rem);
- letter-spacing:-.055em;isolation:isolate}
-.gl:nth-child(2){transform:translateY(.055em) rotate(-3deg)}
-.gl:nth-child(3){transform:translateY(-.03em)}
-.gl::before{content:attr(data-l);display:block;color:transparent}
-.gl i{display:block;font-style:normal;-webkit-background-clip:text;background-clip:text;color:transparent;
- background-size:220% 220%;animation:vagar 17s ease-in-out infinite alternate}
-.gl i.z{position:absolute;inset:0;opacity:0;transition:opacity 1s var(--ease-out)}
-.gl i.z.on{opacity:1}
-@keyframes vagar{to{background-position:100% 100%}}
-.gl::after{content:'';position:absolute;left:0;right:0;bottom:-.06em;height:2px;background:currentColor;opacity:0}
-.lqs.listo .gl{animation:brotar 1s var(--ease-out) both}
-.lqs.listo .gl:nth-child(2){animation-delay:.09s}
-.lqs.listo .gl:nth-child(3){animation-delay:.18s}
-@keyframes brotar{from{opacity:0;transform:translateY(.14em) scale(.94)}}
+/* ═══ LQS: tres ventanas a universos incompatibles ═══
+   Las letras no son una fuente pintada: son trazo propio, dibujado en el lienzo.
+   Cada una recorta un universo que está corriendo de verdad detrás, y el bisel
+   más la extrusión les dan cuerpo. Toda la geometría vive en el bloque LQS del
+   script; aquí sólo se decide cuánto sitio ocupan. */
+.lqs{display:flex;justify-content:center;width:100%;line-height:0;
+ margin:0 auto clamp(18px,2.6vw,30px)}
+#lqsCv{display:block;width:min(92vw,900px);max-width:calc(48svh * 2.16);height:auto;
+ aspect-ratio:433/200;touch-action:pan-y}
 .hero-in{max-width:1000px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
 .hero-in .tagline{margin:0 auto clamp(26px,3vw,34px);max-width:56ch;text-wrap:balance}
 .hero-in .hbtns{justify-content:center}
@@ -159,8 +150,6 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 :root[data-tema="claro"] .luz .luna{display:none}
 @media(prefers-reduced-motion:reduce){
  .atmos b{animation:none}
- .gl i{animation:none}
- .lqs.listo .gl{animation:none}
 }
 /* hero */
 #hero{position:relative;min-height:88svh;display:flex;align-items:center;padding:96px 0 80px;overflow:hidden;margin-top:-78px}
@@ -464,9 +453,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <canvas id="heroCv"></canvas>
     <div class="wrap"><div class="hero-in">
       <h1 class="lqs" id="lqs" aria-label="LQS">
-        <span class="gl" data-l="L"><i class="z on">L</i><i class="z">L</i></span>
-        <span class="gl" data-l="Q"><i class="z on">Q</i><i class="z">Q</i></span>
-        <span class="gl" data-l="S"><i class="z on">S</i><i class="z">S</i></span>
+        <canvas id="lqsCv" width="900" height="408">LQS</canvas>
       </h1>
       <p class="firma">Creamos lo que sea. <em>Resolvemos</em> lo que venga.</p>
       <p class="tagline">Estudio creativo en Medellín. Marca, sitio web, automatización, audiovisual y producto. <b>Un solo taller detrás de todo</b> — desde un flyer de $45.000 hasta la marca completa de un hotel.</p>
@@ -952,43 +939,356 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
 /* ═══ los universos ═══
    cinco mundos incompatibles entre sí. Cada letra habita uno y se muda cada
    pocos segundos; la regla es que nunca coincidan. Eso es el caos organizado:
-   tres sistemas que no combinan, sostenidos en un solo encuadre. */
+   tres sistemas que no combinan, sostenidos en un solo encuadre.
+
+   Ya no son degradés: cada universo es una escena que se pinta entera, cuadro a
+   cuadro, dentro del recorte de su letra. La letra es la ventana. */
+function azar(n){const s=Math.sin(n*12.9898)*43758.5453;return s-Math.floor(s);}
+
+function uFlujo(x,t,w,h){
+ const g=x.createLinearGradient(0,0,w*.35,h);
+ g.addColorStop(0,'#4a1fb0');g.addColorStop(1,'#120832');
+ x.fillStyle=g;x.fillRect(0,0,w,h);
+ x.globalCompositeOperation='lighter';
+ const R=Math.max(w,h),bl=[[.24,.20,'#8b6bff',.62],[.80,.34,'#00d4ff',.50],[.48,.92,'#ff3d7f',.58]];
+ for(let i=0;i<3;i++){
+  const b=bl[i],cx=(b[0]+Math.sin(t*.42+i*2.1)*.17)*w,cy=(b[1]+Math.cos(t*.35+i*1.4)*.15)*h;
+  const rr=R*b[3]*(.85+.15*Math.sin(t*.6+i));
+  const rg=x.createRadialGradient(cx,cy,0,cx,cy,rr);
+  rg.addColorStop(0,b[2]);rg.addColorStop(1,'rgba(0,0,0,0)');
+  x.globalAlpha=.85;x.fillStyle=rg;x.fillRect(0,0,w,h);
+ }
+ x.globalAlpha=1;x.globalCompositeOperation='source-over';
+}
+function uBrasa(x,t,w,h){
+ const g=x.createLinearGradient(0,h,0,0);
+ g.addColorStop(0,'#ff9440');g.addColorStop(.42,'#c2172f');g.addColorStop(1,'#3a0710');
+ x.fillStyle=g;x.fillRect(0,0,w,h);
+ x.globalCompositeOperation='lighter';
+ const u=Math.min(w,h);
+ for(let i=0;i<30;i++){
+  const sx=azar(i*7.13),sp=.26+azar(i*3.7)*.46,vida=(t*sp+azar(i*11.9))%1;
+  x.globalAlpha=Math.sin(vida*Math.PI)*.8;
+  x.fillStyle=i%3?'#ffd166':'#ff8a3d';
+  x.beginPath();
+  x.arc((sx+Math.sin(t*.9+i)*.05)*w,h*(1.02-vida*1.04),u*(.014+azar(i*5.3)*.022)*(.5+vida),0,6.2832);
+  x.fill();
+ }
+ const rg=x.createRadialGradient(w*.5,h*1.04,0,w*.5,h*1.04,Math.max(w,h)*.85);
+ rg.addColorStop(0,'rgba(255,222,140,'+(.46+.13*Math.sin(t*1.7)).toFixed(3)+')');
+ rg.addColorStop(1,'rgba(0,0,0,0)');
+ x.globalAlpha=1;x.fillStyle=rg;x.fillRect(0,0,w,h);
+ x.globalCompositeOperation='source-over';
+}
+function uTrama(x,t,w,h){
+ const g=x.createLinearGradient(0,0,w,h);
+ g.addColorStop(0,'#12603c');g.addColorStop(1,'#03130b');
+ x.fillStyle=g;x.fillRect(0,0,w,h);
+ const C=Math.max(7,Math.min(w,h)/8),off=(t*C*.5)%C;
+ const cols=Math.ceil(w/C)+2,rows=Math.ceil(h/C)+2;
+ for(let cy=0;cy<rows;cy++)for(let cx=0;cx<cols;cx++){
+  const k=cx*17+cy*31,a=Math.sin(t*1.5+azar(k)*6.283);
+  if(a<.55)continue;
+  x.globalAlpha=(a-.55)/.45*.85;
+  x.fillStyle=azar(k+3)>.6?'#7bf5a8':'#25c977';
+  x.fillRect(cx*C-C,cy*C-C+off,C*.84,C*.84);
+ }
+ x.globalAlpha=1;
+ x.strokeStyle='rgba(123,245,168,.3)';x.lineWidth=Math.max(1,C*.055);x.beginPath();
+ for(let i=-1;i<cols;i++){x.moveTo(i*C,0);x.lineTo(i*C,h);}
+ for(let j=-1;j<rows;j++){const yy=j*C+off;x.moveTo(0,yy);x.lineTo(w,yy);}
+ x.stroke();
+ const sy=((t*.34)%1)*h*1.4-h*.2;
+ const sg=x.createLinearGradient(0,sy-h*.16,0,sy+h*.16);
+ sg.addColorStop(0,'rgba(123,245,168,0)');sg.addColorStop(.5,'rgba(123,245,168,.36)');sg.addColorStop(1,'rgba(123,245,168,0)');
+ x.fillStyle=sg;x.fillRect(0,sy-h*.16,w,h*.32);
+}
+function uHielo(x,t,w,h){
+ const g=x.createLinearGradient(0,0,w*.6,h);
+ g.addColorStop(0,'#c9f2ff');g.addColorStop(.45,'#5b8def');g.addColorStop(1,'#0b1650');
+ x.fillStyle=g;x.fillRect(0,0,w,h);
+ const D=Math.max(w,h)*1.8,paso=Math.max(11,Math.min(w,h)/6.5),off=(t*paso*.55)%(paso*2);
+ x.save();x.translate(w/2,h/2);x.rotate(-1.02);x.translate(-D/2,-D/2);
+ for(let i=-2;i*paso<D+paso*2;i++){
+  x.globalAlpha=i%3===0?.55:(i%2?.2:.34);
+  x.fillStyle=i%3===0?'#ffffff':'#dff6ff';
+  x.fillRect(i*paso+off,0,paso*(i%2?.3:.16),D);
+ }
+ x.restore();x.globalAlpha=1;
+ const sx=((t*.27)%1)*w*1.5-w*.25;
+ const sg=x.createLinearGradient(sx-w*.16,0,sx+w*.16,h);
+ sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,.5)');sg.addColorStop(1,'rgba(255,255,255,0)');
+ x.fillStyle=sg;x.fillRect(0,0,w,h);
+}
+function uPulso(x,t,w,h){
+ x.fillStyle='#3a2058';x.fillRect(0,0,w,h);
+ const cx=w*.44,cy=h*.5,R=Math.hypot(w,h)*.72,N=9,banda=R/N;
+ x.lineWidth=banda*.42;
+ for(let i=0;i<N;i++){
+  const r=(((i/N)+t*.11)%1)*R;
+  x.globalAlpha=.26+.5*(1-r/R);
+  x.strokeStyle=i%2?'#e6c877':'#d98aa6';
+  x.beginPath();x.arc(cx,cy,r+1,0,6.2832);x.stroke();
+ }
+ x.globalAlpha=1;
+ const ang=t*.85;
+ const wg=x.createLinearGradient(cx,cy,cx+Math.cos(ang)*R,cy+Math.sin(ang)*R);
+ wg.addColorStop(0,'rgba(255,233,168,.6)');wg.addColorStop(1,'rgba(139,92,246,0)');
+ x.fillStyle=wg;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,R,ang-.55,ang+.05);x.closePath();x.fill();
+ const rg=x.createRadialGradient(cx,cy,0,cx,cy,R*.42);
+ rg.addColorStop(0,'rgba(255,233,168,.8)');rg.addColorStop(1,'rgba(255,233,168,0)');
+ x.fillStyle=rg;x.fillRect(0,0,w,h);
+}
 const UNIV=[
- {n:'flujo', c:['#7c5cff','#00d4ff','#ff3d7f'],
-  bg:"radial-gradient(120% 150% at 18% 12%,#8b6bff 0%,transparent 55%),radial-gradient(110% 130% at 88% 26%,#00d4ff 0%,transparent 52%),radial-gradient(140% 140% at 52% 98%,#ff3d7f 0%,transparent 58%),linear-gradient(150deg,#5b2fd0,#1b1040)"},
- {n:'brasa', c:['#ff8a3d','#ffd166','#e0264a'],
-  bg:"radial-gradient(120% 140% at 25% 90%,#ffd166 0%,transparent 50%),radial-gradient(120% 130% at 70% 15%,#e0264a 0%,transparent 55%),linear-gradient(200deg,#ff8a3d,#7a1220)"},
- {n:'trama', c:['#4ade80','#2fb8a3','#0f5132'],
-  bg:"repeating-linear-gradient(90deg,#7bf5a8 0 5px,transparent 5px 11px),repeating-linear-gradient(0deg,#25c977 0 5px,transparent 5px 11px),linear-gradient(160deg,#0f5132,#04160d)"},
- {n:'hielo', c:['#dff6ff','#5b8def','#1b3fb8'],
-  bg:"repeating-linear-gradient(118deg,rgba(255,255,255,.9) 0 2px,transparent 2px 15px),linear-gradient(155deg,#9fe8ff,#1b3fb8 60%,#0a1338)"},
- {n:'pulso', c:['#e6c877','#d98aa6','#8b5cf6'],
-  bg:"repeating-radial-gradient(circle at 42% 46%,#ffe9a8 0 7px,#b06a8f 7px 15px,#4a2a6b 15px 23px)"}
+ {n:'flujo', c:['#7c5cff','#00d4ff','#ff3d7f'], p:uFlujo},
+ {n:'brasa', c:['#ff8a3d','#ffd166','#e0264a'], p:uBrasa},
+ {n:'trama', c:['#4ade80','#2fb8a3','#0f5132'], p:uTrama},
+ {n:'hielo', c:['#dff6ff','#5b8def','#1b3fb8'], p:uHielo},
+ {n:'pulso', c:['#e6c877','#d98aa6','#8b5cf6'], p:uPulso}
 ];
-const glifos=[...document.querySelectorAll('#lqs .gl')];
 let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
-function vestir(i,u,inmediato){
- const g=glifos[i];if(!g)return;
- const capas=g.querySelectorAll('i');
- const viejo=g.querySelector('i.on')||capas[0];
- const nuevo=viejo===capas[0]?capas[1]:capas[0];
- nuevo.style.backgroundImage=UNIV[u].bg;
- nuevo.style.animationDelay=(-i*3.1)+'s';
- if(inmediato){viejo.classList.remove('on');nuevo.classList.add('on');return;}
- requestAnimationFrame(()=>{nuevo.classList.add('on');viejo.classList.remove('on');});
- mundoDe[i]=u;
-}
-glifos.forEach((g,i)=>vestir(i,mundoDe[i],true));
-if(glifos.length)requestAnimationFrame(()=>document.getElementById('lqs').classList.add('listo'));
-/* la mudanza: una letra a la vez, y nunca a un universo ya ocupado */
-let turno=0;
-function mudar(){
- if(RM||document.hidden)return;
- const i=turno%3;turno++;
- const libres=UNIV.map((_,k)=>k).filter(k=>!mundoDe.includes(k));
- vestir(i,libres[Math.floor(Math.random()*libres.length)]);
-}
-if(glifos.length&&!RM)setInterval(mudar,3400);
+
+/* ═══ las tres letras ═══
+   Trazo monolineal propio de 34 unidades sobre una altura de mayúscula de 140:
+   ninguna fuente interviene. La L lleva su terminal cortado en diagonal, la Q
+   sale de la caja con la cola y la S se traza con seis curvas. */
+(function(){
+ const cv=document.getElementById('lqsCv');
+ if(!cv||!cv.getContext)return;
+ const cx=cv.getContext('2d');
+ if(!cx)return;
+
+ const DW=433,DH=200,GRUESO=34,PAD=22,BISEL=2.4,CAPAS=12,EXX=.9,EXY=1.05;
+ /* el recorte va a resolución plena; el universo se pinta a 0,72 y se estira.
+    Son escenas blandas: nadie nota el estirón y el relleno cae a la mitad. */
+ const Q=.72;
+ /* apretadas como un logotipo, no separadas como tres objetos sueltos */
+ const GL=[
+  {k:'L',x:14, y:14,w:118,h:140,rot:0,   hondo:.62},
+  {k:'Q',x:143,y:20,w:150,h:161,rot:-3.4,hondo:1},
+  {k:'S',x:301,y:10,w:120,h:140,rot:2.2, hondo:.8}
+ ];
+ GL.forEach((g,i)=>{g.ua=mundoDe[i];g.ub=mundoDe[i];g.mix=1;g.t=0;});
+
+ function lienzo(w,h){const c=document.createElement('canvas');c.width=Math.max(1,w|0);c.height=Math.max(1,h|0);return c;}
+ function rgba(hex,a){
+  const n=parseInt(hex.slice(1),16);
+  return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';
+ }
+ /* el trazo de cada letra, en unidades de diseño escaladas por s */
+ function trazo(x,k,s){
+  x.lineWidth=GRUESO*s;x.lineJoin='miter';x.lineCap='butt';x.miterLimit=6;
+  if(k==='L'){
+   x.beginPath();x.moveTo(17*s,0);x.lineTo(17*s,123*s);x.lineTo(100*s,123*s);x.stroke();
+  }else if(k==='Q'){
+   x.beginPath();x.arc(70*s,70*s,53*s,0,6.2832);x.stroke();
+   x.beginPath();x.moveTo(92*s,92*s);x.lineTo(136*s,150*s);x.stroke();
+  }else{
+   x.beginPath();x.moveTo(98*s,42*s);
+   x.bezierCurveTo(98*s,24*s,82*s,17*s,60*s,17*s);
+   x.bezierCurveTo(37*s,17*s,19*s,27*s,19*s,45*s);
+   x.bezierCurveTo(19*s,61*s,33*s,67*s,60*s,70*s);
+   x.bezierCurveTo(87*s,73*s,101*s,80*s,101*s,96*s);
+   x.bezierCurveTo(101*s,114*s,83*s,123*s,60*s,123*s);
+   x.bezierCurveTo(38*s,123*s,21*s,116*s,21*s,98*s);
+   x.stroke();
+  }
+  if(k==='L'){                     /* el corte diagonal del pie: eso es diseño, no fuente */
+   x.globalCompositeOperation='destination-out';
+   x.beginPath();x.moveTo(93*s,142*s);x.lineTo(116*s,104*s);x.lineTo(162*s,104*s);x.lineTo(162*s,152*s);x.closePath();x.fill();
+   x.globalCompositeOperation='source-over';
+  }
+ }
+ function tallar(x,g,s,color){
+  x.save();
+  x.translate(PAD*s,PAD*s);
+  if(g.rot){x.translate(g.w*s/2,g.h*s/2);x.rotate(g.rot*Math.PI/180);x.translate(-g.w*s/2,-g.h*s/2);}
+  x.strokeStyle=color;x.fillStyle=color;
+  trazo(x,g.k,s);
+  x.restore();
+ }
+
+ let S=1,W=0,H=0,calidad=1,listo=false;
+ const MK=[],BEV=[],EX=[],SC=[],UB=[];
+ let TMP=null;
+
+ function construir(){
+  const r=cv.getBoundingClientRect();
+  if(!r.width||!r.height)return false;
+  const dpr=Math.min(window.devicePixelRatio||1,r.width>640?1.4:2)*calidad;
+  W=Math.round(r.width*dpr);H=Math.round(r.height*dpr);
+  cv.width=W;cv.height=H;S=W/DW;
+  const claro=document.documentElement.getAttribute('data-tema')==='claro';
+  let maxW=0,maxH=0;
+  for(let i=0;i<3;i++){
+   const g=GL[i],bw=Math.ceil((g.w+PAD*2)*S),bh=Math.ceil((g.h+PAD*2)*S);
+   /* 1· la silueta, que hace de recorte */
+   const mk=lienzo(bw,bh);tallar(mk.getContext('2d'),g,S,'#fff');
+   MK[i]=mk;SC[i]=lienzo(bw,bh);
+   UB[i]=lienzo(Math.ceil(bw*Q),Math.ceil(bh*Q));
+   maxW=Math.max(maxW,UB[i].width);maxH=Math.max(maxH,UB[i].height);
+   /* 2· el bisel: banda clara arriba-izquierda, banda oscura abajo-derecha */
+   const bev=lienzo(bw,bh),bc=bev.getContext('2d');
+   const banda=(dx,dy,col)=>{
+    const c=lienzo(bw,bh),k=c.getContext('2d');
+    k.drawImage(mk,0,0);
+    k.globalCompositeOperation='destination-out';k.drawImage(mk,dx,dy);
+    k.globalCompositeOperation='source-in';k.fillStyle=col;k.fillRect(0,0,bw,bh);
+    return c;
+   };
+   const B=BISEL*S;
+   bc.drawImage(banda(B,B,'rgba(255,255,255,.4)'),0,0);
+   bc.drawImage(banda(-B,-B,claro?'rgba(30,24,14,.34)':'rgba(3,4,12,.4)'),0,0);
+   BEV[i]=bev;
+   /* 3· la extrusión: catorce copias apiladas hacia el fondo, más su sombra */
+   const ex=lienzo(bw,bh),ec=ex.getContext('2d');
+   const pila=lienzo(bw,bh),pc=pila.getContext('2d');
+   for(let k=CAPAS;k>=1;k--)pc.drawImage(mk,k*EXX*S,k*EXY*S);
+   pc.globalCompositeOperation='destination-out';pc.drawImage(mk,0,0);
+   pc.globalCompositeOperation='source-in';
+   const pg=pc.createLinearGradient(0,0,bw*.4,bh);
+   if(claro){pg.addColorStop(0,'#6b6252');pg.addColorStop(1,'#241f18');}
+   else{pg.addColorStop(0,'#2b2e52');pg.addColorStop(1,'#05060f');}
+   pc.fillStyle=pg;pc.fillRect(0,0,bw,bh);
+   if(typeof ec.filter==='string'){
+    ec.filter='blur('+(6*S).toFixed(2)+'px)';
+    ec.globalAlpha=claro?.4:.55;
+    ec.drawImage(mk,9*S,13*S);
+    ec.filter='none';ec.globalAlpha=1;
+    ec.globalCompositeOperation='source-in';
+    ec.fillStyle=claro?'rgba(40,34,24,1)':'rgba(0,0,0,1)';ec.fillRect(0,0,bw,bh);
+    ec.globalCompositeOperation='source-over';
+   }
+   ec.drawImage(pila,0,0);
+   EX[i]=ex;
+  }
+  TMP=lienzo(maxW,maxH);
+  listo=true;
+  return true;
+ }
+
+ /* puntero y scroll: la ventana se mueve, el mundo de adentro va más lento */
+ let mx=0,my=0,dmx=0,dmy=0,sp=0;
+ if(!RM){
+  addEventListener('pointermove',e=>{
+   const r=cv.getBoundingClientRect();
+   if(!r.width)return;
+   dmx=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2));
+   dmy=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height-.5)*2));
+  },{passive:true});
+  addEventListener('scroll',()=>{sp=Math.min(1,Math.max(0,scrollY/Math.max(1,innerHeight)));},{passive:true});
+ }
+
+ function pinta(x,u,t,w,h){UNIV[u].p(x,t,w,h);}
+
+ function cuadro(t,ap){
+  cx.setTransform(1,0,0,1,0,0);
+  cx.globalAlpha=1;cx.globalCompositeOperation='source-over';
+  cx.clearRect(0,0,W,H);
+  for(let i=0;i<3;i++){
+   const g=GL[i],sc=SC[i],bw=sc.width,bh=sc.height;
+   const X=(g.x-PAD)*S,Y=(g.y-PAD)*S;
+   const p=Math.max(0,Math.min(1,(t-i*.11-.12)/.95));
+   const ent=1-Math.pow(1-p,3);
+   const q=p-1,back=p>=1?1:1+2.7*q*q*q+1.7*q*q;
+   const esc=.84+.16*back;
+   /* la letra se mueve poco; el universo de adentro, al revés y más */
+   const bob=RM?0:Math.sin(t*.55+i*2.1)*3.1;
+   const ox=(mx*7*g.hondo)*S,oy=((1-ent)*46+bob+my*5*g.hondo-sp*26*g.hondo)*S;
+   const ux=(-mx*15*g.hondo-sp*8)*S,uy=(-my*11*g.hondo)*S;
+   const tl=t+i*3.1;               /* cada letra vive su universo en otra fase */
+
+   /* el universo, a resolución reducida: se pinta desbordado para que el
+      desplazamiento del paralaje nunca deje esquina vacía */
+   const ub=UB[i],uw=ub.width,uh=ub.height,M=uw*.05;
+   const u2=ub.getContext('2d');
+   u2.setTransform(1,0,0,1,0,0);u2.globalAlpha=1;u2.globalCompositeOperation='source-over';
+   u2.save();u2.translate(-M+ux*Q,-M+uy*Q);pinta(u2,g.ua,tl,uw+M*2,uh+M*2);u2.restore();
+   if(g.mix<1){
+    const t2=TMP.getContext('2d');
+    t2.setTransform(1,0,0,1,0,0);t2.globalAlpha=1;t2.globalCompositeOperation='source-over';
+    t2.save();t2.translate(-M+ux*Q,-M+uy*Q);pinta(t2,g.ub,tl,uw+M*2,uh+M*2);t2.restore();
+    u2.globalAlpha=g.mix;u2.drawImage(TMP,0,0,uw,uh,0,0,uw,uh);u2.globalAlpha=1;
+   }
+   /* se estira sobre el recorte: la letra es la ventana */
+   const s2=sc.getContext('2d');
+   s2.setTransform(1,0,0,1,0,0);s2.globalAlpha=1;s2.globalCompositeOperation='source-over';
+   s2.drawImage(ub,0,0,uw,uh,0,0,bw,bh);
+   s2.globalCompositeOperation='destination-in';s2.drawImage(MK[i],0,0);
+   s2.globalCompositeOperation='source-over';
+
+   const cxx=X+bw/2,cyy=Y+bh*.62;
+   cx.save();
+   cx.translate(cxx,cyy);cx.scale(esc,esc);cx.translate(-cxx,-cyy);
+   cx.globalAlpha=ent*ap;
+   cx.drawImage(EX[i],X+ox,Y+oy);
+   cx.shadowColor=rgba(UNIV[g.ub].c[0],.55);cx.shadowBlur=Math.min(38,13*S);
+   cx.drawImage(sc,X+ox,Y+oy);
+   cx.shadowBlur=0;cx.shadowColor='rgba(0,0,0,0)';
+   cx.drawImage(BEV[i],X+ox,Y+oy);
+   cx.restore();
+  }
+ }
+
+ /* la mudanza: una letra a la vez, y nunca a un universo ya ocupado */
+ let turno=0;
+ function mudar(){
+  if(RM||document.hidden||!visible)return;
+  const i=turno%3;turno++;
+  const libres=UNIV.map((_,k)=>k).filter(k=>mundoDe.indexOf(k)<0);
+  if(!libres.length)return;
+  const u=libres[Math.floor(Math.random()*libres.length)];
+  GL[i].ua=GL[i].ub;GL[i].ub=u;GL[i].mix=0;mundoDe[i]=u;
+ }
+
+ let visible=true,t0=0,prev=0,acum=0,cont=0,bajado=false,corriendo=false;
+
+ function bucle(now){
+  if(!corriendo)return;
+  requestAnimationFrame(bucle);
+  if(!visible||document.hidden||!listo)return;
+  if(!t0)t0=prev=now;
+  const dt=Math.min(50,now-prev);prev=now;
+  const t=(now-t0)/1000;
+  mx+=(dmx-mx)*.09;my+=(dmy-my)*.09;
+  /* al cerrar la mezcla el destino pasa a ser el de base: si no, la letra se
+     devolvía a su universo anterior y dos letras podían coincidir */
+  for(let i=0;i<3;i++)if(GL[i].mix<1){
+   GL[i].mix=Math.min(1,GL[i].mix+dt/1100);
+   if(GL[i].mix>=1)GL[i].ua=GL[i].ub;
+  }
+  cuadro(t,1);
+  acum+=dt;cont++;
+  if(cont===70){
+   if(acum/70>22&&!bajado){bajado=true;calidad=.7;construir();}
+   acum=0;cont=0;
+  }
+ }
+
+ function arranca(){
+  if(!construir())return;
+  if(RM){cuadro(3.4,1);return;}
+  corriendo=true;requestAnimationFrame(bucle);
+  setInterval(mudar,3400);
+ }
+
+ let ro;
+ const rehacer=()=>{if(construir()&&RM)cuadro(3.4,1);};
+ if('ResizeObserver'in window){
+  let w0=0,h0=0;
+  ro=new ResizeObserver(es=>{
+   const r=es[0].contentRect;
+   if(Math.abs(r.width-w0)<1&&Math.abs(r.height-h0)<1)return;
+   w0=r.width;h0=r.height;rehacer();
+  });
+  ro.observe(cv);
+ }else addEventListener('resize',rehacer);
+ if('IntersectionObserver'in window)
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting;},{threshold:0}).observe(cv);
+ new MutationObserver(rehacer).observe(document.documentElement,{attributes:true,attributeFilter:['data-tema']});
+
+ arranca();
+})();
 
 /* ═══ el clima de cada sección ═══
    el fondo toma los colores del sitio donde estás. No es decoración:
