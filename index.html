@@ -18,7 +18,7 @@
  --bg:#06070f;--bg2:#0a0c17;--bg3:#0e1120;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;
  --gold:#e6c877;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.22);
  --ok:#4ade80;--warn:#f0b34a;--err:#ff6b6b;
- --disp:'Bebas Neue',Impact,sans-serif;--sport:'Anton',Impact,sans-serif;
+ --disp:'Bebas Neue',Impact,sans-serif;--sport:'Anton','Arial Narrow',Impact,sans-serif;
  --tech:'Chakra Petch',ui-monospace,monospace;--sans:'Manrope',system-ui,sans-serif;
  --pad:clamp(20px,5vw,62px);
  /* movimiento */
@@ -32,6 +32,14 @@ a{color:inherit;text-decoration:none}
 canvas,svg{display:block;max-width:100%}
 button,input,select,textarea{font-family:inherit}
 ::selection{background:var(--gold);color:#0a0810}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+html{scrollbar-color:var(--line2) var(--bg);scrollbar-width:thin}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#242a42;border:3px solid var(--bg);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+input,textarea{caret-color:var(--gold)}
+.pz,.tbl td,.meta b{font-variant-numeric:tabular-nums}
 /* nav */
 nav{position:fixed;top:0;left:0;right:0;z-index:80;transition:background var(--dur-panel) var(--ease-out),border-color var(--dur-panel) var(--ease-out)}
 nav.solid{background:rgba(6,7,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
@@ -63,8 +71,6 @@ body.menu .burger span::after{top:0;transform:rotate(-45deg)}
 }
 /* layout */
 .wrap{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 var(--pad)}
-.kick{font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:11px;margin-bottom:16px}
-.kick::before{content:'';width:24px;height:1px;background:var(--gold);opacity:.65}
 h1,h2,h3{font-weight:400}
 .disp{font-family:var(--disp);line-height:.9;letter-spacing:.012em;text-transform:uppercase}
 h1.disp{font-size:clamp(3.2rem,11vw,9rem)}
@@ -97,16 +103,23 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 #hero{position:relative;min-height:88svh;display:flex;align-items:center;padding:96px 0 80px;overflow:hidden;margin-top:-78px}
 #heroCv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 #hero .wrap{z-index:3}
-.eyeb{font-family:var(--tech);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:20px}
+/* el titular rompe la retícula: masa, desplazamiento, masa, desplazamiento */
+#hero .tit{text-transform:uppercase;line-height:.84;margin-bottom:clamp(26px,3vw,38px)}
 #hero h1 .ln{display:block;overflow:hidden}
 #hero h1 .ln i{display:block;font-style:normal;transform:translateY(105%);animation:up .95s var(--ease-out) forwards}
-#hero h1 .ln:nth-child(2) i{animation-delay:.1s}
+#hero h1 .ln.b i{animation-delay:.07s}#hero h1 .ln.c i{animation-delay:.14s}#hero h1 .ln.d i{animation-delay:.21s}
+.tit .a,.tit .c{font-family:var(--sport);font-size:clamp(3rem,10.5vw,6.6rem);letter-spacing:-.03em}
+.tit .c{color:var(--gold)}
+.tit .b,.tit .d{font-family:var(--disp);font-size:clamp(1.7rem,5vw,3.5rem);letter-spacing:.015em;color:var(--dim)}
+.tit .b{margin-left:clamp(0px,15vw,232px)}
+.tit .d{margin-left:clamp(0px,8vw,124px)}
 @keyframes up{to{transform:none}}
 .tagline{font-size:clamp(1rem,1.6vw,1.18rem);color:var(--dim);max-width:50ch;margin:24px 0 30px}
 .tagline b{color:var(--ink);font-weight:600}
 /* ticker */
 .tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.015)}
 .tick .tr{display:flex;gap:42px;width:max-content;animation:mv 32s linear infinite}
+.tick:hover .tr,.tick:focus-within .tr{animation-play-state:paused}
 .tick span{font-family:var(--disp);font-size:1.65rem;letter-spacing:.05em;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:42px;text-transform:uppercase}
 .tick span::after{content:'✦';font-size:.6rem;color:var(--gold)}
 @keyframes mv{to{transform:translateX(-50%)}}
@@ -130,6 +143,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .pt .tp{position:relative;z-index:3}
 .pt h3{font-family:var(--disp);font-size:clamp(1.8rem,3.2vw,2.5rem);line-height:.94;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .pt p{font-size:.86rem;color:var(--dim);line-height:1.5;max-width:34ch;margin-bottom:14px}
+.pt::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:var(--pc);opacity:.55;z-index:2}
 .pt .go{display:inline-flex;align-items:center;gap:8px;font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pc)}
 .pt .go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){.pt:hover .go svg{transform:translateX(6px)}}
@@ -141,11 +155,10 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .tira a.soon{opacity:.5}
 .areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
 .area{position:relative;display:flex;flex-direction:column;overflow:hidden;
- border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:22px 22px 20px 25px;transition:transform var(--dur-ui) var(--ease-out),border-color var(--dur-ui) ease}
-.area::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);opacity:.75}
+ border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:24px;transition:transform var(--dur-ui) var(--ease-out),border-color var(--dur-ui) ease}
 @media (hover:hover) and (pointer:fine){.area:hover{border-color:var(--line2);transform:translateY(-3px)}}
-.area .tagd{color:var(--ac)}
-.area h3{font-family:var(--disp);font-size:1.55rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
+.area .tagd{color:var(--faint)}
+.area h3{font-family:var(--sport);font-size:clamp(1.3rem,.7vw + .95rem,1.65rem);line-height:.95;letter-spacing:-.015em;text-transform:uppercase;color:var(--ac);margin-bottom:9px;hyphens:auto;overflow-wrap:break-word}
 .area p{font-size:.87rem;color:var(--dim);line-height:1.55;flex:1}
 .area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
 .area .lk{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
@@ -155,8 +168,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lk.pri:hover{background:var(--ac);color:#06070f}
 /* área sin página todavía: se ve, pero no promete lo que no hay */
 .area.pend{background:rgba(255,255,255,.015)}
-.area.pend::before{opacity:.3}
-.area.pend h3,.area.pend .tagd{opacity:.72}
+.area.pend h3,.area.pend .tagd{opacity:.55}
 .area .lk.mudo{border-style:dashed;color:var(--faint);cursor:default}
 .area .lk.mudo:hover{border-color:var(--line2);color:var(--faint)}
 /* los precios no golpean de entrada: se piden */
@@ -165,10 +177,10 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @media(max-width:640px){.todo{padding:24px 22px}#btnPrecios{width:100%;justify-content:center}}
 #btnPrecios svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform var(--dur-ui) var(--ease-out)}
 #btnPrecios.abierto svg{transform:rotate(180deg)}
-#precios{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
- transition:grid-template-rows var(--dur-panel) var(--ease-out),opacity var(--dur-panel) var(--ease-out),margin-top var(--dur-panel) var(--ease-out)}
-#precios .precios-in{overflow:hidden;min-height:0}
-#precios.on{grid-template-rows:1fr;opacity:1;margin-top:34px}
+#precios{display:grid;grid-template-rows:0fr;opacity:0;
+ transition:grid-template-rows var(--dur-panel) var(--ease-out),opacity var(--dur-panel) var(--ease-out)}
+#precios .precios-in{overflow:hidden;min-height:0;padding-top:34px}
+#precios.on{grid-template-rows:1fr;opacity:1}
 /* franja datos */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.014)}
 .band .in{max-width:1280px;margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:repeat(4,1fr)}
@@ -354,9 +366,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <header id="hero">
     <canvas id="heroCv"></canvas>
     <div class="wrap"><div style="max-width:1000px">
-      <div class="eyeb">Estudio creativo · Medellín, Colombia</div>
-      <h1 class="disp"><span class="ln"><i>Gente que</i></span><span class="ln"><i class="gold">resuelve.</i></span></h1>
-      <p class="tagline">Marca, sitio web, automatización, audiovisual y producto. <b>Un solo taller detrás de todo</b> — desde un flyer de $45.000 hasta la marca completa de un hotel.</p>
+      <h1 class="tit"><span class="ln a"><i>Creamos</i></span><span class="ln b"><i>lo que sea.</i></span><span class="ln c"><i>Resolvemos</i></span><span class="ln d"><i>lo que venga.</i></span></h1>
+      <p class="tagline">Estudio creativo en Medellín. Marca, sitio web, automatización, audiovisual y producto. <b>Un solo taller detrás de todo</b> — desde un flyer de $45.000 hasta la marca completa de un hotel.</p>
       <div class="hbtns">
         <a class="btn gold" data-go="cotizar">Cotizar mi proyecto <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn g" data-go="servicios">Ver servicios</a>
@@ -366,13 +377,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <div class="tick"><div class="tr" id="tr"></div></div>
   <section class="sec"><div class="wrap">
     <div class="head rv">
-      <div><div class="kick">Elige tu entrada</div>
-      <h2 class="disp">Cada área,<br>su <span class="gold">propio espacio</span>.</h2></div>
+      <div>      <h2 class="disp">Cada área,<br>su <span class="gold">propio espacio</span>.</h2></div>
       <p class="body-l" style="max-width:36ch">Nada de scroll infinito. Entra directo a lo que necesitas.</p>
     </div>
     <div class="grid" id="grid"></div>
     <div style="margin-top:44px">
-      <div class="kick">Las áreas, una por una</div>
       <div class="tira" id="tira"></div>
     </div>
   </div></section>
@@ -386,7 +395,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ ESTUDIO ═══════ -->
 <div class="view" id="v-estudio"><section class="sec"><div class="wrap">
-  <div class="kick">Nosotros</div>
   <h2 class="disp" style="max-width:16ch">No somos una agencia.<br>Somos un <span class="gold">taller</span>.</h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);margin-top:44px" class="two">
     <div>
@@ -402,7 +410,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     </div>
   </div>
   <div style="margin-top:64px">
-    <div class="kick">Cómo trabajamos</div>
     <h3 class="disp" style="margin-bottom:26px">Un proceso sin sorpresas</h3>
     <div class="cards" id="proc"></div>
   </div>
@@ -410,14 +417,12 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ SERVICIOS ═══════ -->
 <div class="view" id="v-servicios"><section class="sec"><div class="wrap">
-  <div class="kick">Nuestras áreas</div>
   <h2 class="disp">Todo lo que hacemos,<br>en <span class="gold">nueve mundos</span>.</h2>
   <p class="body-l" style="margin:16px 0 30px">Entra al que se parezca a lo tuyo: adentro está cómo trabajamos, qué entregamos y una muestra que puedes tocar. Los precios están al final, cuando quieras verlos.</p>
   <div class="areas" id="areas"></div>
 
   <div class="todo" id="todo">
     <div>
-      <div class="kick" style="margin-bottom:10px">¿Ya sabes qué necesitas?</div>
       <h3 class="disp" style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px">Mira la lista completa <span class="gold">con precios</span>.</h3>
       <p style="color:var(--dim);font-size:.92rem;max-width:44ch">Todos los paquetes con precio cerrado en pesos colombianos, sin costos ocultos.</p>
     </div>
@@ -435,7 +440,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ MUESTRAS ═══════ -->
 <div class="view" id="v-muestras"><section class="sec"><div class="wrap">
-  <div class="kick">Muestras</div>
   <h2 class="disp">Pruébalo antes<br>de <span class="gold">contratar</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot. Si prefieres verlo en pestaña aparte, usa el enlace ↗ de cada tarjeta.</p>
   <div class="cards" id="demos"></div>
@@ -444,7 +448,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ COTIZAR ═══════ -->
 <div class="view" id="v-cotizar"><section class="sec"><div class="wrap">
-  <div class="kick">Pedir cotización</div>
   <h2 class="disp">Cotiza tu <span class="gold">proyecto</span>.</h2>
   <p class="body-l" style="margin:16px 0 34px">Respondemos con un plan concreto en 48 horas. Sin compromiso.</p>
   <form class="form" id="fSol">
@@ -475,7 +478,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 <!-- ═══════ MI CUENTA ═══════ -->
 <div class="view" id="v-cuenta"><section class="sec"><div class="wrap">
   <div class="head">
-    <div><div class="kick">Mi cuenta</div><h2 class="disp" id="hola">Tus proyectos</h2></div>
+    <div><h2 class="disp" id="hola">Tus proyectos</h2></div>
     <button class="btn g" id="salir">Cerrar sesión</button>
   </div>
   <div id="portal"><div class="empty"><span class="load"></span></div></div>
@@ -484,7 +487,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ WHATSAPP AUTOMÁTICO ═══════ -->
 <div class="view" id="v-whatsapp"><section class="sec"><div class="wrap">
-  <div class="kick">Automatización</div>
   <h2 class="disp">Tu negocio responde,<br>aunque tú <span class="gold">no estés</span>.</h2>
   <div class="wa-hero" style="margin-top:34px">
     <div>
@@ -505,18 +507,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     </div>
   </div>
 
-  <div class="kick">Qué hacemos, paso a paso</div>
   <h3 class="disp" style="margin-bottom:24px">El plan en cuatro fases</h3>
   <div class="fases" id="fases"></div>
 
   <div style="margin-top:56px">
-    <div class="kick">Qué queda funcionando</div>
     <h3 class="disp" style="margin-bottom:24px">Lo que tu cliente podrá hacer solo</h3>
     <div class="cards" id="waCaps"></div>
   </div>
 
   <div style="margin-top:56px">
-    <div class="kick">Inversión</div>
     <h3 class="disp" style="margin-bottom:10px">Precios del montaje</h3>
     <p class="body-l" style="margin-bottom:24px">El montaje se paga una vez. La mensualidad cubre el mantenimiento, los ajustes y el costo que cobra Meta por conversación.</p>
     <div class="cards" id="waPlanes"></div>
@@ -776,18 +775,18 @@ const ART={
   <path d="M322 196 l6 6 12-14" stroke="${c}" stroke-width="2.4" fill="none"/></svg>`
 };
 const AREAS=[
- {k:'servicios',n:'01',t:'Nuestras áreas',c:'#5b8def',go:'servicios',cls:'wide',d:'Nueve mundos. Entra al que se parezca a lo tuyo y mira cómo trabajamos.'},
- {k:'automat',n:'02',t:'Automatización',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
- {k:'muestras',n:'03',t:'Muestras',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
- {k:'cotizar',n:'04',t:'Pedir cotización',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea. Respondemos en 48 horas.'},
- {k:'estudio',n:'05',t:'Nosotros',c:'#e6c877',go:'estudio',cls:'half',d:'Quiénes somos y cómo trabajamos.'},
- {k:'cuenta',n:'06',t:'Mi cuenta',c:'#ff6b6b',go:'cuenta',cls:'half',d:'Mira el avance de tus proyectos.'}
+ {k:'servicios',t:'Nuestras áreas',c:'#5b8def',go:'servicios',cls:'wide',d:'Nueve mundos. Entra al que se parezca a lo tuyo y mira cómo trabajamos.'},
+ {k:'automat',t:'Automatización',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
+ {k:'muestras',t:'Muestras',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
+ {k:'cotizar',t:'Pedir cotización',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea. Respondemos en 48 horas.'},
+ {k:'estudio',t:'Nosotros',c:'#e6c877',go:'estudio',cls:'half',d:'Quiénes somos y cómo trabajamos.'},
+ {k:'cuenta',t:'Mi cuenta',c:'#ff6b6b',go:'cuenta',cls:'half',d:'Mira el avance de tus proyectos.'}
 ];
 document.getElementById('grid').innerHTML=AREAS.map(a=>{
  const attr=a.href?`href="${a.href}"`:`data-go="${a.go}"`;
  return `<a class="pt rv ${a.cls}" ${attr} style="--pc:${a.c}">
   <div class="art">${ART[a.k](a.c)}</div><div class="veil"></div>
-  <div class="no">${a.n}</div><div class="tp"><h3>${a.t}</h3><p>${a.d}</p>
+  <div class="tp"><h3>${a.t}</h3><p>${a.d}</p>
   <span class="go">Entrar <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a>`;}).join('');
 const TK=['Marca','Sitios web','Automatización','Audiovisual','Contenido','Joyería','Textil','Estrategia','Fotografía'];
 document.getElementById('tr').innerHTML=TK.concat(TK).map(w=>`<span>${w}</span>`).join('');
@@ -1032,7 +1031,7 @@ async function cargarPortal(){
    <button class="btn gold" data-go="cotizar">Cotizar un proyecto</button></div>`;
  }
  if(sols.length){
-  html+=`<div style="margin-top:44px"><div class="kick">Tus solicitudes</div><div class="pgrid">`+
+  html+=`<div style="margin-top:44px"><h3 class="disp" style="font-size:1.7rem;margin-bottom:16px">Tus solicitudes</h3><div class="pgrid">`+
   sols.map(s=>`<div class="proj"><div class="top"><h3 style="font-size:1.3rem">${(UNIS.find(u=>u.id===s.universo_id)||{}).nombre||'Solicitud'}</h3>
    <span class="st ${s.estado==='nueva'?'propuesta':'en_curso'}">${s.estado}</span></div>
    <p style="font-size:.87rem;color:var(--dim)">${(s.detalle||'').slice(0,140)}${(s.detalle||'').length>140?'…':''}</p>
@@ -1077,7 +1076,7 @@ document.getElementById('fSus').onsubmit=async e=>{
 function verPromo(){
  let last=0;try{last=Number(localStorage.getItem(PKEY)||0);}catch(e){}
  if(Date.now()-last < 7*24*3600*1000)return;
- setTimeout(()=>document.getElementById('promo').classList.add('on'),9000);
+ setTimeout(()=>{const b=document.getElementById('promo');if(b)b.classList.add('on');},9000);
 }
 
 /* ═══ hero con scroll ═══ */
