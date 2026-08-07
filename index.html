@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
  --bg:#06070f;--bg2:#0a0c17;--bg3:#0e1120;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;
@@ -124,6 +124,26 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .pt .go{display:inline-flex;align-items:center;gap:8px;font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pc)}
 .pt .go svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;transition:.3s}
 .pt:hover .go svg{transform:translateX(6px)}
+/* áreas: cada una con su ficha propia */
+.tira{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.tira a{font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+ border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:.25s;cursor:pointer}
+.tira a:hover{border-color:var(--ac);color:var(--ac)}
+.tira a.soon{opacity:.5}
+.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
+.area{position:relative;display:flex;flex-direction:column;overflow:hidden;
+ border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:22px 22px 20px 25px;transition:.3s}
+.area::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);opacity:.75}
+.area:hover{border-color:var(--line2);transform:translateY(-3px)}
+.area .tagd{color:var(--ac)}
+.area h3{font-family:var(--disp);font-size:1.55rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
+.area p{font-size:.87rem;color:var(--dim);line-height:1.55;flex:1}
+.area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.area .lk{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+ border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:.25s;white-space:nowrap}
+.area .lk:hover{border-color:var(--ac);color:var(--ac)}
+.area .lk.pri{border-color:var(--ac);color:var(--ac)}
+.area .lk.pri:hover{background:var(--ac);color:#06070f}
 /* franja datos */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.014)}
 .band .in{max-width:1280px;margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:repeat(4,1fr)}
@@ -223,7 +243,13 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 #visor .vtop{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px var(--pad);
  border-bottom:1px solid var(--line);background:rgba(6,7,15,.94);backdrop-filter:blur(12px)}
 #visor .vt{font-family:var(--tech);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+#visor .vbody{flex:1;position:relative;display:flex}
 #visor iframe{flex:1;width:100%;border:0;background:var(--bg)}
+#visorFall{display:none;position:absolute;inset:0;z-index:2;background:var(--bg);
+ flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:32px}
+#visorFall.on{display:flex}
+#visorFall h3{font-size:1.9rem;letter-spacing:.02em;text-transform:uppercase}
+#visorFall p{color:var(--dim);max-width:46ch;font-size:.92rem}
 /* WhatsApp: resumen para decisores, ficha abajo */
 .wa-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,58px);align-items:center;margin-bottom:56px}
 @media(max-width:900px){.wa-hero{grid-template-columns:1fr}}
@@ -297,6 +323,10 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <p class="body-l" style="max-width:36ch">Nada de scroll infinito. Entra directo a lo que necesitas.</p>
     </div>
     <div class="grid" id="grid"></div>
+    <div style="margin-top:44px">
+      <div class="kick">Las áreas, una por una</div>
+      <div class="tira" id="tira"></div>
+    </div>
   </div></section>
   <div class="band"><div class="in">
     <div class="bi rv"><b>8</b><span>áreas activas</span></div>
@@ -334,17 +364,24 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 <div class="view" id="v-servicios"><section class="sec"><div class="wrap">
   <div class="kick">Servicios y precios</div>
   <h2 class="disp">Todo lo que hacemos,<br>con <span class="gold">precio claro</span>.</h2>
-  <p class="body-l" style="margin:16px 0 30px">Precio cerrado en pesos colombianos, sin costos ocultos. Elige un área para ver sus paquetes.</p>
-  <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px"></div>
-  <div class="cards" id="paks"><div class="empty"><span class="load"></span></div></div>
+  <p class="body-l" style="margin:16px 0 30px">Precio cerrado en pesos colombianos, sin costos ocultos. Cada área tiene su ficha completa — ábrela aquí mismo o en una pestaña aparte.</p>
+  <div class="areas" id="areas"></div>
+
+  <div style="margin-top:64px">
+    <div class="kick">Paquetes y precios</div>
+    <h3 class="disp" style="margin-bottom:8px">Elige un área para ver <span class="gold">sus paquetes</span>.</h3>
+    <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 34px"></div>
+    <div class="cards" id="paks"><div class="empty"><span class="load"></span></div></div>
+  </div>
 </div></section></div>
 
 <!-- ═══════ MUESTRAS ═══════ -->
 <div class="view" id="v-muestras"><section class="sec"><div class="wrap">
   <div class="kick">Muestras</div>
   <h2 class="disp">Pruébalo antes<br>de <span class="gold">contratar</span>.</h2>
-  <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot.</p>
+  <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot. Si prefieres verlo en pestaña aparte, usa el enlace ↗ de cada tarjeta.</p>
   <div class="cards" id="demos"></div>
+  <p class="body-l" style="margin-top:30px;font-size:.9rem">¿Buscabas las fichas de cada área con sus precios? Están en <a data-go="servicios" style="color:var(--gold);cursor:pointer;text-decoration:underline">Servicios</a>.</p>
 </div></section></div>
 
 <!-- ═══════ COTIZAR ═══════ -->
@@ -522,7 +559,14 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <a class="btn g" id="visorAbrir" target="_blank" rel="noopener" style="padding:9px 16px;font-size:.7rem">Abrir aparte</a>
       <button class="btn p" id="visorX" style="padding:9px 16px;font-size:.7rem">✕ Cerrar</button>
     </div></div>
-  <iframe id="visorF" title="Muestra"></iframe>
+  <div class="vbody">
+    <iframe id="visorF" title="Muestra"></iframe>
+    <div id="visorFall">
+      <h3 class="disp">Esta muestra no cargó aquí dentro</h3>
+      <p>Suele pasar cuando el sitio se abre con doble clic en lugar de servirse por internet, o cuando el navegador bloquea contenido incrustado.</p>
+      <a class="btn gold" target="_blank" rel="noopener">Abrirla en una pestaña nueva</a>
+    </div>
+  </div>
 </div>
 
 <!-- banner de suscripción -->
@@ -695,6 +739,30 @@ document.getElementById('proc').innerHTML=[
  ['03','Producción','Trabajamos por entregas parciales: ves avances y ajustas sobre la marcha.'],
  ['04','Lanzamiento','Publicamos, capacitamos a tu equipo y medimos qué está funcionando.']
 ].map(([n,t,d])=>`<div class="card"><div class="un">${n}</div><h3>${t}</h3><p>${d}</p></div>`).join('');
+/* ═══ las áreas y su ficha propia ═══
+   cada una es un enlace real: si el visor interno falla, el href sigue funcionando */
+const FICHAS=[
+ ['Empresas','Marca completa','Identidad, sitio web y atención automática para negocios que necesitan verse serios desde el primer día.','mundos/empresas.html','mundos/empresas-muestras.html','#5b8def'],
+ ['Express','Diseño día a día','Piezas sueltas y combos con precio cerrado, listos en 48–72 horas. Sin reuniones, sin cotización previa.','mundos/express.html','mundos/express-muestras.html','#39c07a'],
+ ['Productora','Video y foto','Reels, foto de producto y contenido para redes. Incluye calculadora de rodaje con transporte y viáticos.','mundos/productora.html','mundos/productora-muestras.html','#3fc6d6'],
+ ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','','#a97bd6'],
+ ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98'],
+ ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','','#3fd0e6'],
+ ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular. Puedes navegar un restaurante real.','https://motta-bit.github.io/vitanova/','','#e0614a'],
+ ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','https://motta-bit.github.io/Vita-Nova/','','#2fb8a3'],
+ ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6']
+];
+document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c])=>
+ `<div class="area" style="--ac:${c}">
+   <span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
+   <div class="lks">
+    <a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
+    ${muestra?`<a class="lk" href="${muestra}" data-demo="${muestra}" data-titulo="${t} · muestra">Probar muestra</a>`:''}
+    <a class="lk" href="${ficha}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva">↗</a>
+   </div></div>`).join('');
+document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>
+ `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`).join('');
+
 const DEMOS=[
  ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
  ['Express','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#39c07a'],
@@ -709,7 +777,9 @@ const DEMOS=[
 document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
  `<div class="card" data-demo="${u}" data-titulo="${tag} · ${t}" style="cursor:pointer">
   <span class="tagd" style="color:${c}">${tag}</span><h3>${t}</h3><p>${d}</p>
-  <div class="un" style="margin-top:14px;color:${c}">Abrir →</div></div>`).join('');
+  <div class="un" style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;color:${c}">Abrir →
+   <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" style="color:inherit;padding:2px 8px;border:1px solid var(--line2);border-radius:999px">↗</a>
+  </div></div>`).join('');
 
 /* ═══ router ═══ */
 const VIEWS=['inicio','estudio','servicios','muestras','whatsapp','cotizar','cuenta'];
@@ -981,8 +1051,21 @@ function abrirDemo(url,titulo){
  visor.classList.add('on');document.body.style.overflow='hidden';
  const f=document.getElementById('visorF');
  // mostrar primero y cargar después: así las animaciones de la muestra sí arrancan
+ const fb=document.getElementById('visorFall');
+ fb.classList.remove('on');fb.querySelector('a').href=url;
+ let ok=false;
  requestAnimationFrame(()=>{f.src=url;});
+ // si el visor no logra cargar (abierto con doble clic, bloqueo del navegador),
+ // no dejamos pantalla en negro: mostramos el enlace directo.
+ // ojo: una muestra lenta no es una muestra rota — solo avisamos si no llegó nada.
+ clearTimeout(abrirDemo._t);
+ abrirDemo._t=setTimeout(()=>{
+  if(ok)return;
+  let vacio=true;
+  try{const d=f.contentDocument;vacio=!d||!d.body||d.body.children.length===0;}catch(e){vacio=false;}
+  if(vacio)fb.classList.add('on');},5000);
  f.onload=()=>{
+  ok=true;fb.classList.remove('on');
   try{
    const d=f.contentDocument;if(!d)return;
    // red de seguridad: si algo quedó oculto esperando el scroll, se revela
@@ -992,10 +1075,13 @@ function abrirDemo(url,titulo){
   }catch(e){}
  };
 }
-function cerrarDemo(){visor.classList.remove('on');document.getElementById('visorF').src='about:blank';document.body.style.overflow='';}
+function cerrarDemo(){clearTimeout(abrirDemo._t);document.getElementById('visorFall').classList.remove('on');
+ visor.classList.remove('on');document.getElementById('visorF').src='about:blank';document.body.style.overflow='';}
 document.getElementById('visorX').onclick=cerrarDemo;
 document.addEventListener('click',e=>{
  const el=e.target.closest('[data-demo]');if(!el)return;
+ // ctrl/cmd/shift o clic en el ↗: que el navegador haga lo suyo (pestaña nueva)
+ if(e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;
  e.preventDefault();abrirDemo(el.dataset.demo,el.dataset.titulo);
 });
 addEventListener('keydown',e=>{if(e.key==='Escape'&&visor.classList.contains('on'))cerrarDemo();});
