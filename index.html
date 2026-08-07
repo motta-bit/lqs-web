@@ -12,19 +12,29 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Serif:ital@0;1&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Serif:ital@0;1&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
  --bg:#06070f;--bg2:#0a0c17;--bg3:#0e1120;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;
  --gold:#e6c877;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.22);
  --ok:#4ade80;--warn:#f0b34a;--err:#ff6b6b;
- --disp:'Bebas Neue',Impact,sans-serif;--sport:'Anton','Arial Narrow',Impact,sans-serif;
+ --grain:.055;--atm:.38;--velo:rgba(6,7,15,.55);
+ /* una grotesca variable que se deja apretar y engordar según el sitio */
+ --disp:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
+ --sport:'Anton','Arial Narrow',Impact,sans-serif;
+ --edit:'Instrument Serif',Georgia,serif;
  --tech:'Chakra Petch',ui-monospace,monospace;--sans:'Manrope',system-ui,sans-serif;
  --pad:clamp(20px,5vw,62px);
  /* movimiento */
  --ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1);
  --ease-drawer:cubic-bezier(0.32,0.72,0,1);
  --dur-fast:160ms;--dur-ui:200ms;--dur-panel:300ms;
+}
+/* el mismo mundo con la luz encendida: no es un filtro, es otra paleta */
+:root[data-tema="claro"]{
+ --bg:#efece4;--bg2:#f6f4ee;--bg3:#e6e2d8;--ink:#0c0e18;--dim:#54596e;--faint:#8a8fa3;
+ --gold:#9a6b12;--line:rgba(12,14,24,.13);--line2:rgba(12,14,24,.26);
+ --grain:.028;--atm:.17;--velo:rgba(239,236,228,.5);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -99,9 +109,64 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .view.on{display:block;animation:vin var(--dur-ui) var(--ease-out)}
 @keyframes vin{from{opacity:0}}
 #top{padding-top:78px}
+
+/* ═══ atmósfera: el degradé no es un fondo, es el clima de la sección ═══ */
+.atmos{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--bg);pointer-events:none}
+.atmos b{position:absolute;width:62vmax;height:62vmax;border-radius:50%;filter:blur(90px);opacity:var(--atm);
+ mix-blend-mode:screen;will-change:transform;transition:background 900ms var(--ease-out)}
+:root[data-tema="claro"] .atmos b{mix-blend-mode:normal;filter:blur(120px) saturate(1.5) brightness(2.1)}
+.atmos b:nth-child(1){background:var(--c1);left:-16vmax;top:-20vmax;animation:deriva1 27s ease-in-out infinite alternate}
+.atmos b:nth-child(2){background:var(--c2);right:-20vmax;top:-8vmax;animation:deriva2 33s ease-in-out infinite alternate}
+.atmos b:nth-child(3){background:var(--c3);left:22vmax;bottom:-30vmax;animation:deriva3 39s ease-in-out infinite alternate}
+@keyframes deriva1{to{transform:translate3d(26vmax,18vmax,0) scale(1.25)}}
+@keyframes deriva2{to{transform:translate3d(-22vmax,26vmax,0) scale(.8)}}
+@keyframes deriva3{to{transform:translate3d(18vmax,-22vmax,0) scale(1.15)}}
+/* grano: rompe la perfección digital, da tacto de papel */
+.grano{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:var(--grain);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ═══ LQS: tres letras que se niegan a pertenecer al mismo sistema ═══ */
+.lqs{display:flex;align-items:baseline;justify-content:center;gap:clamp(2px,1vw,16px);line-height:.78;
+ margin:0 auto clamp(20px,3vw,34px);width:fit-content}
+.gl{position:relative;display:block;font-family:var(--sport);font-size:clamp(5.5rem,29vw,19rem);
+ letter-spacing:-.055em;isolation:isolate}
+.gl:nth-child(2){transform:translateY(.055em) rotate(-3deg)}
+.gl:nth-child(3){transform:translateY(-.03em)}
+.gl::before{content:attr(data-l);display:block;color:transparent}
+.gl i{display:block;font-style:normal;-webkit-background-clip:text;background-clip:text;color:transparent;
+ background-size:220% 220%;animation:vagar 17s ease-in-out infinite alternate}
+.gl i.z{position:absolute;inset:0;opacity:0;transition:opacity 1s var(--ease-out)}
+.gl i.z.on{opacity:1}
+@keyframes vagar{to{background-position:100% 100%}}
+.gl::after{content:'';position:absolute;left:0;right:0;bottom:-.06em;height:2px;background:currentColor;opacity:0}
+.lqs.listo .gl{animation:brotar 1s var(--ease-out) both}
+.lqs.listo .gl:nth-child(2){animation-delay:.09s}
+.lqs.listo .gl:nth-child(3){animation-delay:.18s}
+@keyframes brotar{from{opacity:0;transform:translateY(.14em) scale(.94)}}
+.hero-in{max-width:1000px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+.hero-in .tagline{margin:0 auto clamp(26px,3vw,34px);max-width:56ch;text-wrap:balance}
+.hero-in .hbtns{justify-content:center}
+.firma{font-family:var(--tech);font-size:clamp(.6rem,1.4vw,.74rem);font-weight:700;letter-spacing:.42em;
+ text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:clamp(26px,4vw,44px)}
+.firma em{font-family:var(--edit);font-style:italic;letter-spacing:0;text-transform:none;font-size:1.5em;color:var(--ink)}
+/* interruptor de luz */
+.luz{width:38px;height:38px;border:1px solid var(--line2);border-radius:999px;background:none;color:var(--dim);
+ cursor:pointer;display:grid;place-items:center;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease}
+.luz:hover{color:var(--ink);border-color:var(--line2)}
+.luz svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
+.luz .sol{display:none}
+:root[data-tema="claro"] .luz .sol{display:block}
+:root[data-tema="claro"] .luz .luna{display:none}
+@media(prefers-reduced-motion:reduce){
+ .atmos b{animation:none}
+ .gl i{animation:none}
+ .lqs.listo .gl{animation:none}
+}
 /* hero */
 #hero{position:relative;min-height:88svh;display:flex;align-items:center;padding:96px 0 80px;overflow:hidden;margin-top:-78px}
 #heroCv{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+/* el lienzo pinta espacio oscuro: con la luz encendida se invierte, no se apaga */
+:root[data-tema="claro"] #heroCv{filter:invert(1) hue-rotate(180deg);opacity:.42}
 #hero .wrap{z-index:3}
 /* el titular rompe la retícula: masa, desplazamiento, masa, desplazamiento */
 #hero .tit{text-transform:uppercase;line-height:.84;margin-bottom:clamp(26px,3vw,38px)}
@@ -117,7 +182,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .tagline{font-size:clamp(1rem,1.6vw,1.18rem);color:var(--dim);max-width:50ch;margin:24px 0 30px}
 .tagline b{color:var(--ink);font-weight:600}
 /* ticker */
-.tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.015)}
+.tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;background:var(--velo);backdrop-filter:blur(6px)}
 .tick .tr{display:flex;gap:42px;width:max-content;animation:mv 32s linear infinite}
 .tick:hover .tr{animation-play-state:paused}
 .tick span{font-family:var(--disp);font-size:1.65rem;letter-spacing:.05em;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:42px;text-transform:uppercase}
@@ -358,17 +423,25 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <a data-go="cotizar">Cotizar</a>
     <a class="nbtn" id="authBtn">Ingresar</a>
   </div>
-  <button class="burger" id="bg" aria-label="Menú"><span></span></button>
+  <button class="luz" aria-label="Cambiar entre claro y oscuro" title="Claro / oscuro"><svg class="luna" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><svg class="sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2M12 19.6v2M2.4 12h2M19.6 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg></button>
+      <button class="burger" id="bg" aria-label="Menú"><span></span></button>
 </div></nav>
 
+<div class="atmos" aria-hidden="true"><b></b><b></b><b></b></div>
+<div class="grano" aria-hidden="true"></div>
 <div id="top">
 
 <!-- ═══════ INICIO ═══════ -->
 <div class="view on" id="v-inicio">
   <header id="hero">
     <canvas id="heroCv"></canvas>
-    <div class="wrap"><div style="max-width:1000px">
-      <h1 class="tit"><span class="ln a"><i>Creamos</i></span><span class="ln b"><i>lo que sea.</i></span><span class="ln c"><i>Resolvemos</i></span><span class="ln d"><i>lo que venga.</i></span></h1>
+    <div class="wrap"><div class="hero-in">
+      <h1 class="lqs" id="lqs" aria-label="LQS">
+        <span class="gl" data-l="L"><i class="z on">L</i><i class="z">L</i></span>
+        <span class="gl" data-l="Q"><i class="z on">Q</i><i class="z">Q</i></span>
+        <span class="gl" data-l="S"><i class="z on">S</i><i class="z">S</i></span>
+      </h1>
+      <p class="firma">Creamos lo que sea. <em>Resolvemos</em> lo que venga.</p>
       <p class="tagline">Estudio creativo en Medellín. Marca, sitio web, automatización, audiovisual y producto. <b>Un solo taller detrás de todo</b> — desde un flyer de $45.000 hasta la marca completa de un hotel.</p>
       <div class="hbtns">
         <a class="btn gold" data-go="cotizar">Cotizar mi proyecto <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -847,6 +920,77 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
    <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" style="color:inherit;padding:2px 8px;border:1px solid var(--line2);border-radius:999px">↗</a>
   </div></div>`).join('');
 
+
+/* ═══ los universos ═══
+   cinco mundos incompatibles entre sí. Cada letra habita uno y se muda cada
+   pocos segundos; la regla es que nunca coincidan. Eso es el caos organizado:
+   tres sistemas que no combinan, sostenidos en un solo encuadre. */
+const UNIV=[
+ {n:'flujo', c:['#7c5cff','#00d4ff','#ff3d7f'],
+  bg:"radial-gradient(120% 150% at 18% 12%,#8b6bff 0%,transparent 55%),radial-gradient(110% 130% at 88% 26%,#00d4ff 0%,transparent 52%),radial-gradient(140% 140% at 52% 98%,#ff3d7f 0%,transparent 58%),linear-gradient(150deg,#5b2fd0,#1b1040)"},
+ {n:'brasa', c:['#ff8a3d','#ffd166','#e0264a'],
+  bg:"radial-gradient(120% 140% at 25% 90%,#ffd166 0%,transparent 50%),radial-gradient(120% 130% at 70% 15%,#e0264a 0%,transparent 55%),linear-gradient(200deg,#ff8a3d,#7a1220)"},
+ {n:'trama', c:['#4ade80','#2fb8a3','#0f5132'],
+  bg:"repeating-linear-gradient(90deg,#7bf5a8 0 5px,transparent 5px 11px),repeating-linear-gradient(0deg,#25c977 0 5px,transparent 5px 11px),linear-gradient(160deg,#0f5132,#04160d)"},
+ {n:'hielo', c:['#dff6ff','#5b8def','#1b3fb8'],
+  bg:"repeating-linear-gradient(118deg,rgba(255,255,255,.9) 0 2px,transparent 2px 15px),linear-gradient(155deg,#9fe8ff,#1b3fb8 60%,#0a1338)"},
+ {n:'pulso', c:['#e6c877','#d98aa6','#8b5cf6'],
+  bg:"repeating-radial-gradient(circle at 42% 46%,#ffe9a8 0 7px,#b06a8f 7px 15px,#4a2a6b 15px 23px)"}
+];
+const glifos=[...document.querySelectorAll('#lqs .gl')];
+let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
+function vestir(i,u,inmediato){
+ const g=glifos[i];if(!g)return;
+ const capas=g.querySelectorAll('i');
+ const viejo=g.querySelector('i.on')||capas[0];
+ const nuevo=viejo===capas[0]?capas[1]:capas[0];
+ nuevo.style.backgroundImage=UNIV[u].bg;
+ nuevo.style.animationDelay=(-i*3.1)+'s';
+ if(inmediato){viejo.classList.remove('on');nuevo.classList.add('on');return;}
+ requestAnimationFrame(()=>{nuevo.classList.add('on');viejo.classList.remove('on');});
+ mundoDe[i]=u;
+}
+glifos.forEach((g,i)=>vestir(i,mundoDe[i],true));
+if(glifos.length)requestAnimationFrame(()=>document.getElementById('lqs').classList.add('listo'));
+/* la mudanza: una letra a la vez, y nunca a un universo ya ocupado */
+let turno=0;
+function mudar(){
+ if(RM||document.hidden)return;
+ const i=turno%3;turno++;
+ const libres=UNIV.map((_,k)=>k).filter(k=>!mundoDe.includes(k));
+ vestir(i,libres[Math.floor(Math.random()*libres.length)]);
+}
+if(glifos.length&&!RM)setInterval(mudar,3400);
+
+/* ═══ el clima de cada sección ═══
+   el fondo toma los colores del sitio donde estás. No es decoración:
+   es cómo sabes que cambiaste de mundo sin que nadie te lo diga. */
+const CLIMA={
+ inicio:['#7c5cff','#00d4ff','#ff3d7f'], servicios:['#5b8def','#39c07a','#3fc6d6'],
+ muestras:['#a97bd6','#e6c877','#5b8def'], whatsapp:['#3fd0e6','#4ade80','#2fb8a3'],
+ estudio:['#e6c877','#d98aa6','#7c5cff'], cotizar:['#4ade80','#3fd0e6','#e6c877'],
+ cuenta:['#ff6b6b','#e6c877','#5b8def']
+};
+function clima(v){
+ const c=CLIMA[v]||CLIMA.inicio,r=document.documentElement;
+ r.style.setProperty('--c1',c[0]);r.style.setProperty('--c2',c[1]);r.style.setProperty('--c3',c[2]);
+}
+clima('inicio');
+
+/* ═══ luz ═══ */
+const TEMAKEY='lqs_tema';
+function tema(t,guardar){
+ document.documentElement.setAttribute('data-tema',t);
+ document.querySelector('meta[name=theme-color]').setAttribute('content',t==='claro'?'#efece4':'#06070f');
+ if(guardar)try{localStorage.setItem(TEMAKEY,t);}catch(e){}
+}
+tema('oscuro',false);
+try{const g=localStorage.getItem(TEMAKEY);if(g)tema(g,false);}catch(e){}
+document.addEventListener('click',e=>{
+ if(!e.target.closest('.luz'))return;
+ tema(document.documentElement.getAttribute('data-tema')==='claro'?'oscuro':'claro',true);
+});
+
 /* ═══ router ═══ */
 const VIEWS=['inicio','estudio','servicios','muestras','whatsapp','cotizar','cuenta'];
 function go(v,push=true){
@@ -859,7 +1003,7 @@ function go(v,push=true){
  document.body.classList.remove('menu');
  if(push&&location.hash!=='#'+v)history.pushState({},'','#'+v);
  window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
- armar();
+ armar();clima(v);
  if(v==='servicios'){cargarPaquetes();verPrecios(directo?true:false,!directo);}
  if(v==='whatsapp')animarWA();
  if(v==='cuenta')cargarPortal();
@@ -1117,7 +1261,7 @@ function verPromo(){
   OBJ.forEach((o,i)=>{const drift=RM?0:Math.sin(t*.5+i*1.7)*7,push=prog*(90+i*26);
    const S=(Math.min(W,H)/760+.62)*o.s;
    g.save();g.translate(W*o.x,H*o.y+drift+push);g.rotate(Math.sin(t*.3+i)*.07+prog*.22);g.scale(S,S);
-   g.globalAlpha=Math.max(0,(.5-prog*.55));shape(o.k,o.col);g.restore();});
+   g.globalAlpha=Math.max(0,(.2-prog*.22));shape(o.k,o.col);g.restore();});
   g.globalAlpha=1;
   const vg=g.createLinearGradient(0,H*.45,0,H);vg.addColorStop(0,'rgba(6,7,15,0)');vg.addColorStop(1,'rgba(6,7,15,.92)');
   g.fillStyle=vg;g.fillRect(0,H*.45,W,H*.55);
