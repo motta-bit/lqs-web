@@ -1,6 +1,6 @@
 # 002 — Rehacer `prefers-reduced-motion`: menos movimiento, no cero
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: HIGH
 - **Category**: 6 — Accesibilidad

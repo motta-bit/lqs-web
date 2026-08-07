@@ -1,6 +1,6 @@
 # 003 — Quitar `transition: all` y bajar las duraciones de hover al presupuesto
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: HIGH
 - **Category**: 5 — Rendimiento · 2 — Curvas y duración

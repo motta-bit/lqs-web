@@ -1,6 +1,6 @@
 # 007 — Aligerar el cambio de vista y sacar las barras de progreso del layout
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: MEDIUM
 - **Category**: 1 — Propósito y frecuencia · 4 — Interrumpibilidad · 5 — Rendimiento

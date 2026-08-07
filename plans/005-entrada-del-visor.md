@@ -1,6 +1,6 @@
 # 005 — Dar entrada y salida al visor de muestras
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: MEDIUM
 - **Category**: 8 — Oportunidades perdidas · 7 — Cohesión

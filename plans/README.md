@@ -18,13 +18,13 @@ reducido está resuelto con un martillazo que produce un spinner estroboscópico
 
 | # | Plan | Severidad | Estado |
 | --- | --- | --- | --- |
-| 001 | [Consolidar las curvas en tokens](001-tokens-de-movimiento.md) | MEDIA | TODO |
-| 002 | [Rehacer `prefers-reduced-motion`](002-movimiento-reducido.md) | **ALTA** | TODO |
-| 003 | [Quitar `transition: all` y bajar duraciones de hover](003-transiciones-y-duraciones.md) | **ALTA** | TODO |
-| 004 | [Que la lista de precios también se cierre](004-precios-abrir-y-cerrar.md) | MEDIA | TODO |
-| 005 | [Dar entrada y salida al visor](005-entrada-del-visor.md) | MEDIA | TODO |
-| 006 | [Feedback al pulsar y hovers que no se peguen](006-feedback-tactil.md) | MEDIA | TODO |
-| 007 | [Aligerar el cambio de vista y las barras](007-cambio-de-vista-y-barras.md) | MEDIA | TODO |
+| 001 | [Consolidar las curvas en tokens](001-tokens-de-movimiento.md) | MEDIA | HECHO |
+| 002 | [Rehacer `prefers-reduced-motion`](002-movimiento-reducido.md) | **ALTA** | HECHO |
+| 003 | [Quitar `transition: all` y bajar duraciones de hover](003-transiciones-y-duraciones.md) | **ALTA** | HECHO |
+| 004 | [Que la lista de precios también se cierre](004-precios-abrir-y-cerrar.md) | MEDIA | HECHO |
+| 005 | [Dar entrada y salida al visor](005-entrada-del-visor.md) | MEDIA | HECHO |
+| 006 | [Feedback al pulsar y hovers que no se peguen](006-feedback-tactil.md) | MEDIA | HECHO |
+| 007 | [Aligerar el cambio de vista y las barras](007-cambio-de-vista-y-barras.md) | MEDIA | HECHO |
 
 ## Orden de ejecución
 

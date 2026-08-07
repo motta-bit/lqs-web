@@ -1,6 +1,6 @@
 # 006 — Feedback al pulsar, y hovers que no se peguen en móvil
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: MEDIUM
 - **Category**: 6 — Accesibilidad · 3 — Fisicidad

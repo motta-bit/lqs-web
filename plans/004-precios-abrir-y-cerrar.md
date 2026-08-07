@@ -1,6 +1,6 @@
 # 004 — Que la lista de precios también se cierre, y sea interrumpible
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: MEDIUM
 - **Category**: 4 — Interrumpibilidad · 8 — Oportunidades perdidas

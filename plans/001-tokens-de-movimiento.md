@@ -1,6 +1,6 @@
 # 001 — Consolidar las curvas de animación en tokens
 
-- **Status**: TODO
+- **Status**: HECHO
 - **Commit**: 2bf2c37
 - **Severity**: MEDIUM
 - **Category**: 7 — Cohesión y tokens
