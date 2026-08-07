@@ -144,6 +144,15 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lk:hover{border-color:var(--ac);color:var(--ac)}
 .area .lk.pri{border-color:var(--ac);color:var(--ac)}
 .area .lk.pri:hover{background:var(--ac);color:#06070f}
+/* los precios no golpean de entrada: se piden */
+.todo{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+ margin-top:56px;padding:28px 30px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);scroll-margin-top:92px}
+@media(max-width:640px){.todo{padding:24px 22px}#btnPrecios{width:100%;justify-content:center}}
+#btnPrecios svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform .3s}
+#btnPrecios.abierto svg{transform:rotate(180deg)}
+#precios{display:none;margin-top:34px}
+#precios.on{display:block;animation:baja .45s cubic-bezier(.2,.75,.3,1) both}
+@keyframes baja{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 /* franja datos */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.014)}
 .band .in{max-width:1280px;margin:0 auto;padding:0 var(--pad);display:grid;grid-template-columns:repeat(4,1fr)}
@@ -362,16 +371,24 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- ═══════ SERVICIOS ═══════ -->
 <div class="view" id="v-servicios"><section class="sec"><div class="wrap">
-  <div class="kick">Servicios y precios</div>
-  <h2 class="disp">Todo lo que hacemos,<br>con <span class="gold">precio claro</span>.</h2>
-  <p class="body-l" style="margin:16px 0 30px">Precio cerrado en pesos colombianos, sin costos ocultos. Cada área tiene su ficha completa — ábrela aquí mismo o en una pestaña aparte.</p>
+  <div class="kick">Nuestras áreas</div>
+  <h2 class="disp">Todo lo que hacemos,<br>en <span class="gold">nueve mundos</span>.</h2>
+  <p class="body-l" style="margin:16px 0 30px">Entra al que se parezca a lo tuyo: adentro está cómo trabajamos, qué entregamos y una muestra que puedes tocar. Los precios están al final, cuando quieras verlos.</p>
   <div class="areas" id="areas"></div>
 
-  <div style="margin-top:64px">
-    <div class="kick">Paquetes y precios</div>
-    <h3 class="disp" style="margin-bottom:8px">Elige un área para ver <span class="gold">sus paquetes</span>.</h3>
-    <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 34px"></div>
+  <div class="todo" id="todo">
+    <div>
+      <div class="kick" style="margin-bottom:10px">¿Ya sabes qué necesitas?</div>
+      <h3 class="disp" style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px">Mira la lista completa <span class="gold">con precios</span>.</h3>
+      <p style="color:var(--dim);font-size:.92rem;max-width:44ch">Todos los paquetes con precio cerrado en pesos colombianos, sin costos ocultos.</p>
+    </div>
+    <button class="btn g" id="btnPrecios">Ver todos los servicios <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+  </div>
+
+  <div id="precios">
+    <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px"></div>
     <div class="cards" id="paks"><div class="empty"><span class="load"></span></div></div>
+    <p style="color:var(--faint);font-size:.84rem;margin-top:26px">¿No encaja ninguno? Casi todo se puede armar a la medida — <a data-go="cotizar" style="color:var(--gold);cursor:pointer;text-decoration:underline">cuéntanos qué necesitas</a>.</p>
   </div>
 </div></section></div>
 
@@ -718,7 +735,7 @@ const ART={
   <path d="M322 196 l6 6 12-14" stroke="${c}" stroke-width="2.4" fill="none"/></svg>`
 };
 const AREAS=[
- {k:'servicios',n:'01',t:'Servicios y precios',c:'#5b8def',go:'servicios',cls:'wide',d:'Qué hacemos y cuánto cuesta. Precio cerrado, sin sorpresas.'},
+ {k:'servicios',n:'01',t:'Nuestras áreas',c:'#5b8def',go:'servicios',cls:'wide',d:'Nueve mundos. Entra al que se parezca a lo tuyo y mira cómo trabajamos.'},
  {k:'automat',n:'02',t:'Automatización',c:'#3fd0e6',go:'whatsapp',cls:'half',d:'Tu negocio contesta solo, todos los días.'},
  {k:'muestras',n:'03',t:'Muestras',c:'#a97bd6',go:'muestras',cls:'half',d:'Pruébalo tú mismo antes de contratar.'},
  {k:'cotizar',n:'04',t:'Pedir cotización',c:'#4ade80',go:'cotizar',cls:'half',d:'Cuéntanos tu idea. Respondemos en 48 horas.'},
@@ -784,6 +801,8 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
 /* ═══ router ═══ */
 const VIEWS=['inicio','estudio','servicios','muestras','whatsapp','cotizar','cuenta'];
 function go(v,push=true){
+ // #precios entra a servicios con la lista ya desplegada
+ const directo=(v==='precios');if(directo)v='servicios';
  if(!VIEWS.includes(v))v='inicio';
  if(v==='cuenta'&&!sesion){abrirAuth();return;}
  VIEWS.forEach(x=>document.getElementById('v-'+x).classList.toggle('on',x===v));
@@ -792,7 +811,7 @@ function go(v,push=true){
  if(push&&location.hash!=='#'+v)history.pushState({},'','#'+v);
  window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
  armar();
- if(v==='servicios')cargarPaquetes();
+ if(v==='servicios'){cargarPaquetes();verPrecios(directo?true:false,!directo);}
  if(v==='whatsapp')animarWA();
  if(v==='cuenta')cargarPortal();
 }
@@ -863,6 +882,19 @@ function cargarPaquetes(){
    f.detalle.value=`Me interesa el paquete "${p.nombre}" (${fmt(p.precio_cop)} · ${p.unidad}).\n\n`;
    f.detalle.focus();},420);});
 }
+
+/* la lista de precios se despliega solo si la piden */
+function verPrecios(abrir,sinScroll){
+ const box=document.getElementById('precios'),b=document.getElementById('btnPrecios');
+ box.classList.toggle('on',abrir);b.classList.toggle('abierto',abrir);
+ b.firstChild.nodeValue=abrir?'Ocultar precios ':'Ver todos los servicios ';
+ if(!abrir)return;
+ cargarPaquetes();
+ if(sinScroll)return;
+ setTimeout(()=>document.getElementById('todo').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'}),RM?0:460);
+}
+document.getElementById('btnPrecios').onclick=()=>
+ verPrecios(!document.getElementById('precios').classList.contains('on'));
 
 /* ═══ sesión ═══ */
 let sesion=null,perfil=null,modo='in';
