@@ -1,4 +1,4 @@
-# 🛸 Galaxia LQS — Super matriz del ecosistema
+# ✦ LQS — Sitio y plataforma
 
 Sitio y plataforma del **estudio creativo LQS** (Medellín, Colombia). Una sola aplicación
 que reúne servicios, ejemplos interactivos, WhatsApp automático, cotizaciones y el
@@ -8,14 +8,17 @@ portal del cliente. HTML estático + Supabase, sin build.
 
 ```
 index.html    ← LA APLICACIÓN. Todo se navega aquí dentro:
-                 Inicio · Servicios · Ejemplos · WhatsApp · Nosotros · Cotizar · Mi cuenta
+                 Inicio · Servicios · Muestras · Automatización · Nosotros · Cotizar · Mi cuenta
                  Las muestras se abren en un visor interno, sin salir del sitio.
 
 mundos/       ← Fichas y demos que el visor carga
   empresas · express · creadores · productora · mercury · foma
   *-muestras · marcas-muestras · automatizacion · productora-calculadora
 
+legal.html                 ← Políticas, aviso de privacidad y términos
 automatizacion-guia.html   ← Guía técnica de Meta Cloud API
+PRODUCCION-3-DIAS.md       ← Brief de producción para el equipo
+CONTENIDO-PENDIENTE.md     ← Inventario de material gráfico
 ```
 
 ## Base de datos (Supabase · proyecto `lqs`)

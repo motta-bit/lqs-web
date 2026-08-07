@@ -366,6 +366,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
         <option value="6000000">Más de $4.000.000</option></select></div>
     </div>
     <div class="fld"><label>Cuéntanos tu idea *</label><textarea class="inp" name="detalle" required maxlength="1200" placeholder="Qué necesitas, para cuándo, y cualquier detalle que nos sirva…"></textarea></div>
+    <label style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--dim);cursor:pointer;line-height:1.5">
+      <input type="checkbox" name="acepta" required style="margin-top:4px;width:17px;height:17px;accent-color:var(--gold);flex:none">
+      <span>Autorizo el tratamiento de mis datos personales conforme a la
+      <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a> de LQS.</span>
+    </label>
     <div class="msg" id="mSol"></div>
     <div class="hbtns"><button class="btn gold" type="submit" id="bSol">Enviar solicitud</button>
     <a class="btn g" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Prefiero WhatsApp</a></div>
@@ -501,6 +506,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <div class="fc"><h4>Contacto</h4>
       <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a>
       <a href="mailto:cdparravargas@gmail.com">Correo</a></div>
+    <div class="fc"><h4>Legal</h4>
+      <a href="legal.html#politica">Política de datos</a>
+      <a href="legal.html#privacidad">Aviso de privacidad</a>
+      <a href="legal.html#terminos">Términos y condiciones</a>
+      <a href="legal.html#derechos">Ejercer mis derechos</a></div>
   </div>
   <div class="fb"><span>© <span id="yr"></span> LQS · Medellín</span><span>Hecho en casa, con criterio</span></div>
 </div></footer>
@@ -525,6 +535,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <input class="inp" type="email" name="email" required placeholder="tucorreo@ejemplo.com">
     <button class="btn gold" type="submit">Sí</button>
   </form>
+  <p style="font-size:.7rem;color:var(--faint);margin-top:9px;line-height:1.45">Al suscribirte aceptas nuestra
+  <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a>.</p>
   <div class="msg" id="mSus" style="margin-top:10px"></div>
 </div>
 
@@ -540,6 +552,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <div class="fld" id="wTel" style="display:none"><label>WhatsApp</label><input class="inp" name="telefono" maxlength="30" placeholder="300 000 0000"></div>
     <div class="fld"><label>Correo</label><input class="inp" type="email" name="email" required placeholder="tucorreo@ejemplo.com"></div>
     <div class="fld"><label>Contraseña</label><input class="inp" type="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres"></div>
+    <label id="wLegal" style="display:none;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--dim);cursor:pointer;line-height:1.5">
+      <input type="checkbox" name="acepta" style="margin-top:3px;width:16px;height:16px;accent-color:var(--gold);flex:none">
+      <span>Acepto los <a href="legal.html#terminos" target="_blank" rel="noopener" style="color:var(--gold)">términos</a>
+      y la <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a>.</span>
+    </label>
     <div class="msg" id="mAuth"></div>
     <button class="btn gold" type="submit" id="bAuth" style="width:100%">Ingresar</button>
   </form>
@@ -794,6 +811,8 @@ function setModo(m){
  document.getElementById('tUp').classList.toggle('on',m==='up');
  document.getElementById('wNombre').style.display=m==='up'?'block':'none';
  document.getElementById('wTel').style.display=m==='up'?'block':'none';
+ const wl=document.getElementById('wLegal');wl.style.display=m==='up'?'flex':'none';
+ wl.querySelector('input').required=(m==='up');
  document.getElementById('mTit').textContent=m==='in'?'Ingresar':'Crear cuenta';
  document.getElementById('mSub').textContent=m==='in'?'Entra para seguir tus proyectos con nosotros.':'Crea tu cuenta y sigue el avance de todo lo que hagamos juntos.';
  document.getElementById('bAuth').textContent=m==='in'?'Ingresar':'Crear mi cuenta';
