@@ -144,6 +144,12 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lk:hover{border-color:var(--ac);color:var(--ac)}
 .area .lk.pri{border-color:var(--ac);color:var(--ac)}
 .area .lk.pri:hover{background:var(--ac);color:#06070f}
+/* área sin página todavía: se ve, pero no promete lo que no hay */
+.area.pend{background:rgba(255,255,255,.015)}
+.area.pend::before{opacity:.3}
+.area.pend h3,.area.pend .tagd{opacity:.72}
+.area .lk.mudo{border-style:dashed;color:var(--faint);cursor:default}
+.area .lk.mudo:hover{border-color:var(--line2);color:var(--faint)}
 /* los precios no golpean de entrada: se piden */
 .todo{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
  margin-top:56px;padding:28px 30px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);scroll-margin-top:92px}
@@ -765,20 +771,27 @@ const FICHAS=[
  ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','','#a97bd6'],
  ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98'],
  ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','','#3fd0e6'],
- ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular. Puedes navegar un restaurante real.','https://motta-bit.github.io/vitanova/','','#e0614a'],
- ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','https://motta-bit.github.io/Vita-Nova/','','#2fb8a3'],
+ /* ↓ Restaurantes y Hoteles quedan sin página a propósito.
+    Cuando tengas la definitiva, pon la ruta en el 4º campo (ficha) y,
+    si hay demo, en el 5º (muestra). Ejemplo: 'mundos/carta.html'.
+    Mientras estén vacíos la tarjeta se muestra igual, pero sin enlaces. */
+ ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular, con la carta siempre al día.','','','#e0614a'],
+ ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3'],
  ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6']
 ];
 document.getElementById('areas').innerHTML=FICHAS.map(([t,sub,d,ficha,muestra,c])=>
- `<div class="area" style="--ac:${c}">
+ `<div class="area${ficha?'':' pend'}" style="--ac:${c}">
    <span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
-   <div class="lks">
-    <a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
-    ${muestra?`<a class="lk" href="${muestra}" data-demo="${muestra}" data-titulo="${t} · muestra">Probar muestra</a>`:''}
-    <a class="lk" href="${ficha}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva">↗</a>
+   <div class="lks">${ficha?
+    `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
+     ${muestra?`<a class="lk" href="${muestra}" data-demo="${muestra}" data-titulo="${t} · muestra">Probar muestra</a>`:''}
+     <a class="lk" href="${ficha}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva">↗</a>`
+    :`<span class="lk mudo">Ficha en camino</span>
+      <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
    </div></div>`).join('');
-document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>
- `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`).join('');
+document.getElementById('tira').innerHTML=FICHAS.map(([t,sub,d,ficha,m,c])=>ficha
+ ? `<a style="--ac:${c}" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}"${t==='Joyería'?' class="soon"':''}>${t}</a>`
+ : `<a style="--ac:${c}" class="soon" data-go="servicios">${t}</a>`).join('');
 
 const DEMOS=[
  ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
@@ -787,9 +800,9 @@ const DEMOS=[
  ['Ropa y merch','Merch y uniformes','Previsualiza tu merch, elige color y aplicación, y cotiza el lote en segundos.','mundos/marcas-muestras.html','#b6ad98'],
  ['Automatización','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
  ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
- ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5'],
- ['Restaurantes','Menú digital','Cómo queda la carta de un restaurante en el celular.','https://motta-bit.github.io/vitanova/','#e0614a'],
- ['Hoteles','Plataforma de hotel','Reservas, check-in con QR y llave digital.','https://motta-bit.github.io/Vita-Nova/','#2fb8a3']
+ ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5']
+ /* Restaurantes y Hoteles: cuando tengas la muestra, agrégala con este formato →
+    ['Restaurantes','Menú digital','Cómo queda la carta en el celular.','mundos/carta-muestras.html','#e0614a'], */
 ];
 document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
  `<div class="card" data-demo="${u}" data-titulo="${tag} · ${t}" style="cursor:pointer">

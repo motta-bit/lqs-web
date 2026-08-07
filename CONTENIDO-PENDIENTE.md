@@ -38,6 +38,16 @@ MP4 para video · Todo lo horizontal a 1600px de ancho mínimo.
 
 ---
 
+### 4b. Fichas de Restaurantes y Hoteles
+- **Dónde va:** sección **Servicios**, tarjetas *Restaurantes* y *Hoteles*
+- **Hoy tiene:** la tarjeta se ve, pero sin enlaces — dice "Ficha en camino"
+- **Qué necesito:** decidir qué mostramos ahí. Puede ser una ficha propia como las
+  otras seis (`mundos/carta.html`, `mundos/aloja.html`) o la demo que ya tienes.
+- **Cómo se conecta:** en `index.html`, en la lista `FICHAS`, ponle la ruta al 4º campo
+  de esa fila. Con eso vuelven los tres botones solos. Está comentado en el código.
+
+---
+
 ## 🟠 PRIORIDAD 2 — Convierte visitantes en clientes
 
 ### 5. Portafolio real (lo más importante para vender)
