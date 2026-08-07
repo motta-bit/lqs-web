@@ -81,7 +81,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .sec{padding:clamp(64px,8vw,110px) 0;position:relative;z-index:2}
 .head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-end;margin-bottom:40px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--tech);font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;
- padding:15px 25px;border-radius:999px;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);border:1px solid transparent;cursor:pointer}
+ padding:15px 25px;border-radius:999px;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,transform 90ms var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);border:1px solid transparent;cursor:pointer}
 .btn.p{background:var(--ink);color:#06070f}
 /* el movimiento de hover solo donde hay mouse: en táctil se queda pegado */
 @media (hover:hover) and (pointer:fine){
@@ -119,7 +119,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 /* ticker */
 .tick{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;background:rgba(255,255,255,.015)}
 .tick .tr{display:flex;gap:42px;width:max-content;animation:mv 32s linear infinite}
-.tick:hover .tr,.tick:focus-within .tr{animation-play-state:paused}
+.tick:hover .tr{animation-play-state:paused}
 .tick span{font-family:var(--disp);font-size:1.65rem;letter-spacing:.05em;color:var(--faint);white-space:nowrap;display:flex;align-items:center;gap:42px;text-transform:uppercase}
 .tick span::after{content:'✦';font-size:.6rem;color:var(--gold)}
 @keyframes mv{to{transform:translateX(-50%)}}
@@ -130,10 +130,11 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .pt.wide{grid-column:span 6}.pt.half{grid-column:span 4}
 @media(max-width:960px){.pt.wide{grid-column:span 12}.pt.half{grid-column:span 6}}
 @media(max-width:640px){.pt.half{grid-column:span 12}.pt{min-height:240px}}
-.pt::after{content:'';position:absolute;inset:0;border-radius:24px;pointer-events:none;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow var(--dur-ui) var(--ease-out)}
+.pt::after{content:'';position:absolute;inset:0;border-radius:24px;pointer-events:none;opacity:0;
+ box-shadow:inset 0 0 0 1px var(--pc),0 0 56px -14px var(--pc);transition:opacity var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
  .pt:hover{transform:translateY(-7px);border-color:transparent;background:#0d1020}
- .pt:hover::after{box-shadow:inset 0 0 0 1px var(--pc),0 0 56px -14px var(--pc)}
+ .pt:hover::after{opacity:1}
 }
 .pt .art{position:absolute;inset:0;pointer-events:none;opacity:.82;transition:opacity var(--dur-ui) var(--ease-out),transform var(--dur-ui) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){.pt:hover .art{opacity:1;transform:scale(1.045)}}
@@ -151,7 +152,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .tira{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
 .tira a{font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
  border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease;cursor:pointer}
-.tira a:hover{border-color:var(--ac);color:var(--ac)}
+@media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
 .tira a.soon{opacity:.5}
 .areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
 .area{position:relative;display:flex;flex-direction:column;overflow:hidden;
@@ -163,9 +164,10 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
 .area .lk{font-family:var(--tech);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
  border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease;white-space:nowrap}
-.area .lk:hover{border-color:var(--ac);color:var(--ac)}
 .area .lk.pri{border-color:var(--ac);color:var(--ac)}
-.area .lk.pri:hover{background:var(--ac);color:#06070f}
+@media (hover:hover) and (pointer:fine){
+ .area .lk:hover{border-color:var(--ac);color:var(--ac)}
+ .area .lk.pri:hover{background:var(--ac);color:#06070f}}
 /* área sin página todavía: se ve, pero no promete lo que no hay */
 .area.pend{background:rgba(255,255,255,.015)}
 .area.pend h3,.area.pend .tagd{opacity:.55}
@@ -179,7 +181,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 #btnPrecios.abierto svg{transform:rotate(180deg)}
 #precios{display:grid;grid-template-rows:0fr;opacity:0;
  transition:grid-template-rows var(--dur-panel) var(--ease-out),opacity var(--dur-panel) var(--ease-out)}
-#precios .precios-in{overflow:hidden;min-height:0;padding-top:34px}
+#precios .precios-in{overflow:hidden;min-height:0}
 #precios.on{grid-template-rows:1fr;opacity:1}
 /* franja datos */
 .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.014)}
@@ -241,7 +243,7 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 /* banner suscripción */
 #promo{position:fixed;right:18px;bottom:18px;z-index:75;width:min(340px,calc(100vw - 36px));
  background:linear-gradient(165deg,#141829,#0a0c17);border:1px solid var(--line2);border-radius:20px;padding:22px;
- box-shadow:0 26px 70px -24px #000;transform:translateY(140%);transition:transform .6s var(--ease-drawer)}
+ box-shadow:0 26px 70px -24px #000;transform:translateY(140%);transition:transform 420ms var(--ease-drawer)}
 #promo.on{transform:none}
 #promo .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;font-size:1rem;line-height:1;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease}
 #promo .x:hover{color:var(--ink);border-color:var(--line2)}
@@ -316,10 +318,10 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .tbl td{color:var(--dim)}
 .scrollx{overflow-x:auto}
 /* respuesta al pulsar: en táctil no hay hover, esto es todo el feedback */
-.btn:active{transform:scale(.97)}
+.btn:active{transform:scale(.97);transition:transform 180ms var(--ease-out)}
 .pt:active{transform:scale(.99)}
 .card:active,.area:active{transform:scale(.99)}
-.area .lk:active,.tira a:active,.chip:active{transform:scale(.96)}
+.area .lk:active,.tira a:active,.chip:active{transform:scale(.96);transition:transform 180ms var(--ease-out)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
 .rv.in{opacity:1;transform:none}
 .load{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
@@ -431,7 +433,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
   <div id="precios">
    <div class="precios-in">
-    <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 30px"></div>
+    <div id="uniChips" style="display:flex;flex-wrap:wrap;gap:8px;margin:34px 0 30px"></div>
     <div class="cards" id="paks"><div class="empty"><span class="load"></span></div></div>
     <p style="color:var(--faint);font-size:.84rem;margin-top:26px">¿No encaja ninguno? Casi todo se puede armar a la medida — <a data-go="cotizar" style="color:var(--gold);cursor:pointer;text-decoration:underline">cuéntanos qué necesitas</a>.</p>
    </div>
