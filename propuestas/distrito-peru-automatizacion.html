@@ -325,6 +325,13 @@ table.ancha{min-width:900px}
  text-transform:uppercase;color:var(--faint);text-align:center;line-height:1.4}
 @media(max-width:520px){.teaser{gap:16px}.teaser-qr{width:84px;height:84px}.qr-g{width:44px;height:44px}}
 
+
+.portafolio-nota{margin-top:20px;padding:18px 20px;border-radius:20px 28px 20px 26px;
+ background:color-mix(in oklab,var(--ok) 10%,transparent);border:1px solid color-mix(in oklab,var(--ok) 32%,transparent)}
+.portafolio-nota b{display:block;font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.16em;
+ text-transform:uppercase;color:var(--ok);margin-bottom:8px}
+.portafolio-nota p{font-size:.9rem;color:var(--dim);line-height:1.62;max-width:56ch}
+
 </style>
 <style>
 /* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
@@ -1661,7 +1668,7 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
         <div class="cuna">
           <p class="chico">El paquete completo, precio cerrado</p>
           <div class="precio-big">
-            <span class="pz">$6.400.000</span>
+            <span class="pz">$3.400.000</span>
             <small>COP · pago único · 5–6 semanas</small>
           </div>
           <p class="chico" style="margin-top:16px">Incluye todo lo de la lista de arriba: la página, la base de datos,
@@ -1676,14 +1683,23 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
             <div class="sm"><b>Carga de la carta y capacitación</b><span class="n">$460.000</span></div>
             <div class="sm" style="padding-top:12px;border-top:1px solid var(--line2);border-bottom:0">
               <span style="color:var(--faint)">Suma por separado</span><span class="n" style="color:var(--faint)">$6.830.000</span></div>
-            <div class="sm tot" style="border-top:0"><span>Como paquete</span><span class="n">$6.400.000</span></div>
+            <div class="sm" style="border-bottom:0"><span style="color:var(--faint)">Como paquete</span><span class="n" style="color:var(--faint);text-decoration:line-through">$6.400.000</span></div>
+            <div class="sm tot" style="border-top:0"><span>Precio de portafolio</span><span class="n" style="color:var(--ok)">$3.400.000</span></div>
+          </div>
+
+          <div class="portafolio-nota">
+            <b>Por qué este precio</b>
+            <p>Distrito Perú es uno de los primeros restaurantes con los que montamos esto completo, y queremos
+              que quede impecable para mostrarlo. A cambio del precio te pedimos dos cosas: poder publicar el
+              trabajo —fotos, pantallas y resultados— y una recomendación corta cuando ya lleves un mes usándolo.
+              Nada más. Si prefieres que no lo mostremos, el precio vuelve a $6.400.000 y no pasa nada.</p>
           </div>
         </div>
 
         <div class="bolsa mensual">
           <h3 class="h4">Y después, cada mes</h3>
           <div class="precio-big" style="margin-top:10px">
-            <span class="pzs">$650.000</span>
+            <span class="pzs">$390.000</span>
             <small>COP / mes · desde el mes siguiente al lanzamiento</small>
           </div>
           <ul class="lista" style="margin-top:16px">
@@ -1703,8 +1719,8 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
         <div class="bolsa">
           <h3 class="h4">Forma de pago</h3>
           <ul class="lista" style="margin-top:14px">
-            <li><i></i><span><b class="res">50 % al iniciar</b> — $3.200.000</span></li>
-            <li><i></i><span><b class="res">50 % contra entrega</b> — $3.200.000, al lanzar</span></li>
+            <li><i></i><span><b class="res">50 % al iniciar</b> — $1.700.000</span></li>
+            <li><i></i><span><b class="res">50 % contra entrega</b> — $1.700.000, al lanzar</span></li>
           </ul>
           <p class="mini" style="margin-top:14px">La mensualidad se factura desde el mes siguiente al lanzamiento,
             no antes. Los precios están en pesos colombianos y no incluyen IVA si aplica facturación electrónica.</p>
@@ -1739,7 +1755,7 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
                 <tr><td>Sitio con carta y pedidos</td><td class="n">$4.000.000 – $9.000.000</td><td class="n">incluido</td></tr>
                 <tr><td>Automatización de WhatsApp</td><td class="n">$1.800.000 – $4.000.000</td><td class="n">incluido</td></tr>
                 <tr><td>Integración de pasarela</td><td class="n">$900.000 – $2.500.000</td><td class="n">incluido</td></tr>
-                <tr class="dest"><td>Todo junto</td><td class="n">$7.000.000 – $15.000.000</td><td class="n">$6.400.000</td></tr>
+                <tr class="dest"><td>Todo junto</td><td class="n">$7.000.000 – $15.000.000</td><td class="n">$3.400.000</td></tr>
               </tbody>
             </table>
           </div>
@@ -1819,7 +1835,7 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
 
             <label class="it"><input type="checkbox" data-p="650000" data-t="unico"><span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span>
               <span><b>Cobertura de evento · 4 horas</b><span>Noche peruana, aniversario, lanzamiento de carta nueva. Foto y video del mismo equipo.</span></span>
-              <span class="n">$650.000<em>pago único</em></span></label>
+              <span class="n">$390.000<em>pago único</em></span></label>
 
             <label class="it"><input type="checkbox" data-p="180000" data-t="unico"><span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 7"/></svg></span>
               <span><b>Locución profesional</b><span>Voz grabada en estudio para el video institucional o los reels.</span></span>
@@ -1919,12 +1935,12 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
           <span class="carro-n" id="armN">solo el núcleo</span>
         </div>
         <div class="sumas" style="margin-top:0;padding-top:0;border-top:0">
-          <div class="sm"><span>Núcleo · carta, pedidos y pagos</span><span class="n">$6.400.000</span></div>
+          <div class="sm"><span>Núcleo · carta, pedidos y pagos</span><span class="n">$3.400.000</span></div>
         </div>
         <div class="res-l" id="armL"><p class="res-vac">Marca lo que te interese y aparece aquí.</p></div>
         <div class="sumas">
-          <div class="sm tot"><span>Pago único</span><span class="n" id="armUnico">$6.400.000</span></div>
-          <div class="sm tot" style="border-top:0;padding-top:0"><span>Cada mes</span><span class="n" id="armMes">$650.000</span></div>
+          <div class="sm tot"><span>Pago único</span><span class="n" id="armUnico">$3.400.000</span></div>
+          <div class="sm tot" style="border-top:0;padding-top:0"><span>Cada mes</span><span class="n" id="armMes">$390.000</span></div>
         </div>
         <p class="mini" id="armNota" style="margin-top:14px" hidden></p>
         <a class="bot" href="#cierre" style="width:100%;justify-content:center;margin-top:18px">Pedir esta versión
@@ -2579,7 +2595,7 @@ if('IntersectionObserver' in window){
 }else{ waCorre(0); }
 
 /* ═══════════════ 5 · el armable ═══════════════ */
-var NUCLEO = 6400000, NUCLEO_MES = 480000;
+var NUCLEO = 3400000, NUCLEO_MES = 390000;
 var itens = todos('.it');
 
 function armar(){
