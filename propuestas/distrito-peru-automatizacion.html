@@ -302,6 +302,29 @@ table.ancha{min-width:900px}
 .calc-f.mejor .q{color:var(--ok)}
 .calc-nota{font-size:.84rem;color:var(--dim);margin-top:18px;max-width:60ch;line-height:1.6}
 
+
+.teaser{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(18px,3vw,34px);margin:38px 0 6px;
+ padding:clamp(20px,2.8vw,30px);clip-path:url(#f-cuna);
+ background:linear-gradient(146deg,color-mix(in oklab,var(--u2,#5b8def) 15%,var(--bg2)),var(--bg2) 66%)}
+.teaser h3{font-family:var(--sport);font-size:clamp(1.4rem,2.6vw,2rem);line-height:1;letter-spacing:-.02em;
+ text-transform:uppercase;color:var(--ink);margin-bottom:8px}
+.teaser p{font-size:.95rem;color:var(--dim);line-height:1.6;max-width:46ch}
+.teaser a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.teaser-qr{flex:0 0 auto;width:108px;height:108px;display:grid;place-items:center;gap:6px;
+ border-radius:22px 30px 22px 28px;background:var(--bg3);
+ border:1px solid color-mix(in oklab,var(--u2,#5b8def) 40%,transparent);position:relative}
+.qr-g{width:58px;height:58px;
+ background:
+  conic-gradient(from 0deg at 22% 22%,var(--ink) 0 25%,transparent 0 100%) 0 0/22px 22px no-repeat,
+  conic-gradient(from 0deg at 78% 22%,var(--ink) 0 25%,transparent 0 100%) 100% 0/22px 22px no-repeat,
+  conic-gradient(from 0deg at 22% 78%,var(--ink) 0 25%,transparent 0 100%) 0 100%/22px 22px no-repeat,
+  repeating-linear-gradient(90deg,var(--ink) 0 5px,transparent 5px 10px),
+  repeating-linear-gradient(0deg,var(--bg3) 0 5px,transparent 5px 10px);
+ opacity:.86;border-radius:3px}
+.teaser-qr span{font-family:var(--tech);font-size:.56rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--faint);text-align:center;line-height:1.4}
+@media(max-width:520px){.teaser{gap:16px}.teaser-qr{width:84px;height:84px}.qr-g{width:44px;height:44px}}
+
 </style>
 <style>
 /* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
@@ -684,11 +707,11 @@ table.ancha{min-width:900px}
   <div class="barra-in">
     <a class="marca" href="#portada" aria-label="LQS, inicio de la propuesta"><i>L</i><i>Q</i><i>S</i><em>Distrito Perú</em></a>
     <nav class="enl" aria-label="Secciones de la propuesta">
+      <a href="#whatsapp" class="chico-no">WhatsApp</a>
+      <a href="#pago" class="chico-no">Pagos</a>
       <a href="#carta" class="chico-no">Carta</a>
-      <a href="#pago" class="chico-no">Pago</a>
-      <a href="#datos" class="chico-no">Datos</a>
       <a href="#precio">Precio</a>
-      <a href="#armable" class="chico-no">Armable</a>
+      <a href="#armable" class="chico-no">Opcionales</a>
       <button class="luz" type="button" aria-label="Cambiar entre tema claro y oscuro">
         <svg class="luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
         <svg class="sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
@@ -731,15 +754,6 @@ table.ancha{min-width:900px}
       </div>
     </div>
 
-    <!-- trío retrato: Gota dominante 60 · Hoja subordinada 27 · Guijarro acento 13 -->
-    <div class="trio" data-vel=".9" data-rev>
-      <div class="pieza f-gota dom">
-        <div class="hueco"><span class="et"><b>FOTO 4:5</b><s>JPG · 1600 × 2000 px</s><u>salón de Distrito Perú, luz de tarde</u></span></div>
-      </div>
-      <div class="pieza f-hoja sub">
-        <div class="hueco"><span class="et"><b>FOTO 3:4</b><s>JPG · 1200 × 1600 px</s><u>plato estrella, cenital</u></span></div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -855,63 +869,19 @@ table.ancha{min-width:900px}
       </article>
     </div>
   </div>
-</section>
 
-<!-- ══════════ 4 · LA CARTA, EN VIVO ══════════ universo brasa ══════════ -->
-<section class="esc" id="carta" data-universo="brasa">
-  <div class="estrato" data-vel=".42" aria-hidden="true"
-       style="left:-18vw;right:-18vw;top:-10%;height:70%;
-              background:radial-gradient(52% 56% at 40% 34%,color-mix(in srgb,var(--u1) 26%,transparent),transparent 68%)"></div>
-
-  <div class="marco">
-    <h2 class="tit h2" data-rev>Pruébala. <em>Está corriendo</em> aquí mismo.</h2>
-    <p class="cuerpo" style="margin-top:18px" data-rev>Esto no es una imagen ni un video: es la carta funcionando
-      dentro de esta propuesta. Toca un plato para abrir sus opciones, arma un pedido y mira cómo se comporta el
-      carrito. Los platos y precios son de ejemplo — la carta real la cargamos con la tuya.</p>
-
-    <div class="app">
-      <div>
-        <div class="cats" id="cats" role="tablist" aria-label="Categorías de la carta"></div>
-        <div class="platos" id="platos"></div>
-        <p class="mini" style="margin-top:20px">Cada plato de la demo trae variantes (personal o para compartir),
-          adiciones, nivel de picante y alérgenos. Todo eso vive en la base de datos que describimos más abajo;
-          la página solo lo muestra.</p>
-        <p class="mini" style="margin-top:10px"><b class="res">Las fotos de plato van en 1:1</b> —
-          JPG de 1200 × 1200 px, cenital o a 45°, fondo consistente en toda la carta. Los círculos grises de arriba
-          son ese espacio reservado. Si no tienes fotos, el sistema funciona igual con solo texto, y las puedes
-          sumar plato por plato después.</p>
+    <div class="teaser" data-rev>
+      <div class="teaser-qr" aria-hidden="true">
+        <div class="qr-g"></div>
+        <span>escanea<br>y pide</span>
       </div>
-
-      <aside class="carro" aria-label="Tu pedido">
-        <div class="carro-t">
-          <h3>Tu pedido</h3>
-          <span class="carro-n" id="carroN">vacío</span>
-        </div>
-        <div class="rgl" id="rgl"><p class="carro-vac">Todavía no has agregado nada.</p></div>
-        <div class="sumas" id="sumas" hidden>
-          <div class="sm"><span>Subtotal</span><span class="n" id="sSub">$0</span></div>
-          <div class="sm"><span>Domicilio · Laureles</span><span class="n" id="sEnv">$0</span></div>
-          <div class="sm tot"><span>Total</span><span class="n" id="sTot">$0</span></div>
-        </div>
-        <div class="pagos-op" id="pagosOp">
-          <label class="pop on"><input type="radio" name="mp" value="tarjeta" checked>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 9.6h19"/></svg>
-            Tarjeta<small>al confirmar</small></label>
-          <label class="pop"><input type="radio" name="mp" value="pse">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V9.6l7-5 7 5V20M9.6 20v-5.4h4.8V20"/></svg>
-            PSE<small>al confirmar</small></label>
-          <label class="pop"><input type="radio" name="mp" value="efectivo">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.2"/><circle cx="12" cy="12" r="2.7"/></svg>
-            Efectivo<small>contra entrega</small></label>
-        </div>
-        <button class="bot" type="button" id="btnPedir">Confirmar pedido
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <p class="aviso-demo" id="avisoDemo">Demo · no se cobra nada</p>
-      </aside>
+      <div>
+        <h3>Menú digital y página web</h3>
+        <p>Un QR en la mesa y un link en tu bio abren la misma carta: fotos, precios al día y el botón de
+          pedir. Sin app que descargar, sin PDF que se ve diminuto. Lo ves completo <a href="#carta">más abajo</a>.</p>
+      </div>
     </div>
-  </div>
 </section>
-
 
 <!-- ══════════ 5 · LOS DOS CAMINOS ══════════ universo trama ══════════ -->
 <section class="esc" id="caminos" data-universo="trama">
@@ -1199,6 +1169,62 @@ table.ancha{min-width:900px}
     </div>
   </div>
 </section>
+
+<!-- ══════════ 4 · LA CARTA, EN VIVO ══════════ universo brasa ══════════ -->
+<section class="esc" id="carta" data-universo="brasa">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-18vw;right:-18vw;top:-10%;height:70%;
+              background:radial-gradient(52% 56% at 40% 34%,color-mix(in srgb,var(--u1) 26%,transparent),transparent 68%)"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Pruébala. <em>Está corriendo</em> aquí mismo.</h2>
+    <p class="cuerpo" style="margin-top:18px" data-rev>Esto no es una imagen ni un video: es la carta funcionando
+      dentro de esta propuesta. Toca un plato para abrir sus opciones, arma un pedido y mira cómo se comporta el
+      carrito. Los platos y precios son de ejemplo — la carta real la cargamos con la tuya.</p>
+
+    <div class="app">
+      <div>
+        <div class="cats" id="cats" role="tablist" aria-label="Categorías de la carta"></div>
+        <div class="platos" id="platos"></div>
+        <p class="mini" style="margin-top:20px">Cada plato de la demo trae variantes (personal o para compartir),
+          adiciones, nivel de picante y alérgenos. Todo eso vive en la base de datos que describimos más abajo;
+          la página solo lo muestra.</p>
+        <p class="mini" style="margin-top:10px"><b class="res">Las fotos de plato van en 1:1</b> —
+          JPG de 1200 × 1200 px, cenital o a 45°, fondo consistente en toda la carta. Los círculos grises de arriba
+          son ese espacio reservado. Si no tienes fotos, el sistema funciona igual con solo texto, y las puedes
+          sumar plato por plato después.</p>
+      </div>
+
+      <aside class="carro" aria-label="Tu pedido">
+        <div class="carro-t">
+          <h3>Tu pedido</h3>
+          <span class="carro-n" id="carroN">vacío</span>
+        </div>
+        <div class="rgl" id="rgl"><p class="carro-vac">Todavía no has agregado nada.</p></div>
+        <div class="sumas" id="sumas" hidden>
+          <div class="sm"><span>Subtotal</span><span class="n" id="sSub">$0</span></div>
+          <div class="sm"><span>Domicilio · Laureles</span><span class="n" id="sEnv">$0</span></div>
+          <div class="sm tot"><span>Total</span><span class="n" id="sTot">$0</span></div>
+        </div>
+        <div class="pagos-op" id="pagosOp">
+          <label class="pop on"><input type="radio" name="mp" value="tarjeta" checked>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 9.6h19"/></svg>
+            Tarjeta<small>al confirmar</small></label>
+          <label class="pop"><input type="radio" name="mp" value="pse">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V9.6l7-5 7 5V20M9.6 20v-5.4h4.8V20"/></svg>
+            PSE<small>al confirmar</small></label>
+          <label class="pop"><input type="radio" name="mp" value="efectivo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.2"/><circle cx="12" cy="12" r="2.7"/></svg>
+            Efectivo<small>contra entrega</small></label>
+        </div>
+        <button class="bot" type="button" id="btnPedir">Confirmar pedido
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="aviso-demo" id="avisoDemo">Demo · no se cobra nada</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
 
 <!-- ══════════ 8 · LA BASE DE DATOS ══════════ universo trama ══════════ -->
 <section class="esc" id="datos" data-universo="trama">
