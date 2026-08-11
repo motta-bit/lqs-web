@@ -504,6 +504,13 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  opacity:0;transition:opacity var(--dur-ui) var(--ease-out)}
 .galf .q{font-family:var(--tech);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;
  font-weight:700;color:var(--ac)}
+/* los colores de cliente están calibrados contra el fondo oscuro: sobre papel,
+   la arena y el oro se borran. Se hunden hacia la tinta sin perder el matiz que
+   los identifica —el mismo rubro tiene que seguir siendo del mismo color en las
+   dos luces. */
+:root[data-tema="claro"] .galf .q{color:color-mix(in oklab,var(--ac) 55%,#0c0e18)}
+:root[data-tema="claro"] .galf::before{
+ background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%)}
 .galf h4{font-family:var(--disp);font-variation-settings:'wdth' 90,'wght' 600;
  font-size:clamp(1.08rem,2.2vw,1.42rem);line-height:1.16;letter-spacing:.005em}
 .galf p{font-size:.85rem;color:var(--dim);line-height:1.5;margin-top:5px}
