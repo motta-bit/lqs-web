@@ -483,6 +483,41 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .card li::before{content:'';flex:none;width:13px;height:13px;margin-top:4px;border-radius:4px;background:rgba(230,200,119,.16);border:1px solid rgba(230,200,119,.5);
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4 10-10'/%3E%3C/svg%3E");background-size:10px;background-position:center;background-repeat:no-repeat}
 .tagd{display:inline-block;font-family:var(--tech);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid currentColor;margin-bottom:10px}
+/* ═══ galería: propuestas, muestras y documentos ═══
+   Renglones, no rejilla. Arriba de esta sección ya hay una rejilla de tarjetas
+   y dos rejillas seguidas se leen como una sola lámina: el catálogo entero
+   pierde ritmo. Aquí manda la línea horizontal, y la forma que la acompaña es
+   la losa —la apaisada del léxico— para que no repita la cuña de la tarjeta. */
+.gal-tit{margin-top:clamp(46px,7vw,84px)}
+.gal-tit h3{font-family:var(--disp);font-variation-settings:'wdth' 84,'wght' 700;
+ font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.06;letter-spacing:-.015em}
+.gal-tit p{color:var(--dim);max-width:56ch;margin-top:12px;font-size:.95rem}
+.gal{margin-top:clamp(22px,3vw,32px);border-top:1px solid var(--line)}
+.galf{position:relative;isolation:isolate;display:grid;
+ grid-template-columns:minmax(0,8.5rem) minmax(0,1fr) auto;
+ gap:clamp(10px,2vw,26px);align-items:baseline;width:100%;text-align:left;
+ padding:clamp(18px,2.2vw,26px) clamp(12px,1.6vw,20px);
+ border-bottom:1px solid var(--line);cursor:pointer;
+ transition:translate var(--dur-ui) var(--ease-out)}
+.galf::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-losa);
+ background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 22%,transparent),transparent 62%);
+ opacity:0;transition:opacity var(--dur-ui) var(--ease-out)}
+.galf .q{font-family:var(--tech);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;
+ font-weight:700;color:var(--ac)}
+.galf h4{font-family:var(--disp);font-variation-settings:'wdth' 90,'wght' 600;
+ font-size:clamp(1.08rem,2.2vw,1.42rem);line-height:1.16;letter-spacing:.005em}
+.galf p{font-size:.85rem;color:var(--dim);line-height:1.5;margin-top:5px}
+.galf .ir{align-self:center;font-family:var(--tech);font-size:.66rem;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--dim);white-space:nowrap}
+@media (hover:hover) and (pointer:fine){
+ .galf:hover{translate:5px 0}
+ .galf:hover::before{opacity:1}
+ .galf:hover .ir{color:var(--ac)}}
+.galf:active{translate:2px 0;opacity:.84}
+.galf:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(max-width:700px){
+ .galf{grid-template-columns:1fr;gap:6px}
+ .galf .ir{align-self:start;margin-top:4px}}
 /* formularios */
 .form{display:grid;gap:14px;max-width:560px}
 .fld label{display:block;font-family:var(--tech);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:7px}
@@ -991,6 +1026,18 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <p class="body-l" style="margin:16px 0 34px">Todo se abre aquí mismo, sin salir de la página. Crea una identidad, arma un pedido, previsualiza tu merch o escríbele al bot. Si prefieres verlo en pestaña aparte, usa el enlace ↗ de cada tarjeta.</p>
   <div class="cards" id="demos"></div>
   <div class="puente" id="puenteMue"></div>
+
+  <!-- ═══ la galería ═══
+       Todo lo navegable del ecosistema en un solo renglonario: las propuestas
+       completas ya filtradas por tipo de negocio, las muestras que se pueden
+       tocar y los documentos. Va sin filtro de cliente a propósito — es el
+       único sitio donde se ve el trabajo entero, incluso lo que la puerta de
+       entrada dejó fuera. -->
+  <div class="gal-tit">
+    <h3>Y las propuestas<br>completas.</h3>
+    <p>Cada una es la propuesta que le mandamos a un cliente real, ya filtrada por tipo de negocio: alcance, cronograma, lo que se puede armar aparte y el precio. Se abren aquí mismo. Esta lista no la toca el filtro de arriba: está todo.</p>
+  </div>
+  <div class="gal" id="galeria"></div>
   <p class="body-l" style="margin-top:30px;font-size:.9rem">¿Buscabas las fichas de cada área con sus precios? Están en <a data-go="servicios" style="color:var(--gold);cursor:pointer;text-decoration:underline">Servicios</a>.</p>
 </div></section></div>
 
@@ -1502,6 +1549,75 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
    <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" style="color:inherit;padding:2px 8px;border:1px solid var(--line2);border-radius:999px">↗</a>
   </div></div>`).join('');
 
+/* ═══ las propuestas ═══
+   La misma fuente para las tres cosas que tienen que quedar conectadas: el
+   botón del cliente elegido en la portada, el menú de la barra y la galería.
+   Cada clave de CLIENTES apunta aquí por su sexta casilla, así que cambiar
+   una ruta en un solo sitio la cambia en los tres.
+
+   ¿Por qué la propuesta abre en el visor y no en pestaña nueva? Porque es una
+   página larga: si se la lleva a otra pestaña, el visitante pierde el sitio y
+   casi nunca vuelve. El href real sigue ahí — ctrl/cmd+clic o el ↗ la sacan. */
+const PROPUESTAS=[
+ ['Restaurante','Carta, pedidos y pagos',
+  'Carta interactiva, pedidos por la página y por WhatsApp, pasarela y el panel que la administra. Trae el armable para sumar foto, video y merch.',
+  'propuestas/automatizacion.html?para=restaurante','#e0614a'],
+ ['Hotel','Reservas y estadía',
+  'Motor de disponibilidad con tarifas por temporada, check-in con QR, WhatsApp que confirma y el reporte de ocupación.',
+  'propuestas/automatizacion.html?para=hotel','#2fb8a3'],
+ ['Empresa','Catálogo y cotizador',
+  'Catálogo de servicios con reglas de precio, cotizador en línea, WhatsApp que agenda y seguimiento de cada solicitud.',
+  'propuestas/automatizacion.html?para=empresa','#5b8def'],
+ ['Almacenes','Un catálogo que sabe su stock',
+  'El cliente arma su cotización y le sale en PDF, con el flete ya calculado. Al dueño le llega el reporte de qué se movió.',
+  'propuestas/catalogos.html?para=almacenes','#39c07a'],
+ ['Eventos','Inventario y montaje',
+  'Mobiliario y equipo con disponibilidad por fecha: qué está libre el sábado, qué ya salió y qué falta devolver.',
+  'propuestas/catalogos.html?para=eventos','#e6c877'],
+ ['Marca de ropa','Curva de tallas y pedidos',
+  'Catálogo por talla y color con el pedido mayorista adentro: la curva se arma sola, sin hojas de cálculo cruzadas.',
+  'propuestas/catalogos.html?para=ropa','#b6ad98'],
+ ['Caso real','Distrito Perú',
+  'La propuesta que salió de este mismo sistema y se envió a un restaurante de verdad, con su marca y su carta.',
+  'propuestas/distrito-peru-automatizacion.html','#d98aa6']
+];
+/* documentos: no son propuestas ni muestras, pero existen y hasta hoy no se
+   llegaba a ellos desde ninguna parte del sitio */
+const DOCS=[
+ ['Guía','Cómo se monta la automatización',
+  'El documento técnico: alta de WhatsApp en el sistema oficial paso a paso, plantillas de mensaje listas y los costos reales por mensaje en Colombia.',
+  'automatizacion-guia.html','#3fd0e6',false],
+ ['PDF','Catálogos inteligentes · propuesta impresa',
+  'La misma propuesta de catálogos en PDF, para reenviar o imprimir. 497 KB.',
+  'propuestas/catalogos-propuesta.pdf','#39c07a',true]
+];
+/* una sola lista con las cuatro fuentes, y sin repetidos: una muestra de DEMOS
+   y una ficha de FICHAS pueden apuntar al mismo archivo (automatización y
+   empresas lo hacen), y dos renglones idénticos leen como un error. Gana el
+   primero, que es el que trae la descripción más específica.
+   Cada fila: [rubro, título, descripción, url, color, verbo, fuera].
+   «fuera» sólo para el PDF: un binario no se muestra dentro del visor. */
+const GAL=[]; const vistos={};
+function galAdd(q,t,d,u,c,verbo,fuera){
+ /* la url completa es la clave: dos entradas al mismo archivo con distinto
+    ?para= sí son filas distintas, porque cambian el público y por tanto la
+    propuesta que se ve. */
+ if(vistos[u])return; vistos[u]=1;
+ GAL.push([q,t,d,u,c,verbo,!!fuera]);
+}
+PROPUESTAS.forEach(([q,t,d,u,c])=>galAdd(q,t,d,u,c,'Abrir'));
+DEMOS.forEach(([tag,t,d,u,c])=>galAdd('Muestra',tag+' · '+t,d,u,c,'Probar'));
+/* las fichas de área también entran: son páginas reales del repo y desde
+   Muestras no se llegaba a ninguna */
+FICHAS.filter(f=>f[3]).forEach(([t,sub,d,ficha,muestra,c])=>galAdd('Ficha',t+' · '+sub,d,ficha,c,'Ver'));
+DOCS.forEach(([q,t,d,u,c,fuera])=>galAdd(q,t,d,u,c,fuera?'Descargar':'Abrir',fuera));
+document.getElementById('galeria').innerHTML=GAL.map(([q,t,d,u,c,verbo,fuera])=>
+ `<a class="galf" style="--ac:${c}" href="${u}"${fuera
+   ?' target="_blank" rel="noopener"'
+   :` data-demo="${u}" data-titulo="${q} · ${t}"`}>
+   <span class="q">${q}</span>
+   <span><h4>${t}</h4><p>${d}</p></span>
+   <span class="ir">${verbo} ${fuera?'↗':'→'}</span></a>`).join('');
 
 /* ═══ los universos ═══
    cinco mundos incompatibles entre sí. Cada letra habita uno y se muda cada
@@ -2518,10 +2634,15 @@ function pintarElegido(){
   <div class="hbtns">
    <a class="btn gold" data-go="servicios">Ver mis áreas <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
    ${prop
-    ?`<a class="btn g" href="${prop}" target="_blank" rel="noopener">Ver mi propuesta</a>`
+    /* abre en el visor, no en pestaña nueva: la propuesta es larga y quien se
+       la lleva a otra pestaña rara vez vuelve al sitio. El href real sigue
+       puesto, así que ctrl/cmd+clic y el ↗ de al lado la sacan igual. */
+    ?`<a class="btn g" href="${prop}" data-demo="${prop}" data-titulo="Propuesta · ${c[1]}">Ver mi propuesta</a>
+      <a class="btn g" href="${prop}" target="_blank" rel="noopener" title="Abrir la propuesta en una pestaña nueva" style="padding-left:14px;padding-right:14px">↗</a>`
     :`<a class="btn g" data-go="cotizar">Pedir mi propuesta</a>`}
    <a class="btn g" data-soy="">Ver todo</a>
-  </div>`;
+  </div>
+  ${prop?'':`<p class="ea" style="margin-top:10px;font-size:.86rem;color:var(--faint)">Todavía no tenemos una propuesta armada para ${c[1].toLowerCase()}: la tuya se cotiza a la medida. Mientras tanto, las de los demás se pueden husmear en <a data-go="muestras" style="color:var(--gold);cursor:pointer;text-decoration:underline">Muestras</a>.</p>`}`;
 }
 
 function pintarBarra(){

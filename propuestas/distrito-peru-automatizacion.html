@@ -715,6 +715,17 @@ table.ancha{min-width:900px}
 .firma::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,var(--line2) 16%,var(--line2) 84%,transparent)}
 .firma span{font-family:var(--tech);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+/* el camino de vuelta. Sin esto una propuesta abierta en pestana nueva es un
+   callejon sin salida: no habia un solo enlace de regreso al sitio.
+   target="_top" para que, cuando la propuesta va dentro del visor de
+   index.html, el clic saque al visitante del iframe en vez de anidar el sitio
+   entero dentro de si mismo. */
+.firma a.volver{font-family:var(--tech);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid transparent;padding-bottom:2px;
+  transition:color var(--dur-ui) ease,border-color var(--dur-ui) ease}
+@media (hover:hover) and (pointer:fine){.firma a.volver:hover{color:var(--ink);border-bottom-color:var(--line2)}}
+.firma a.volver:active{opacity:.66}
+.firma a.volver:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .fuentes{margin-top:clamp(30px,4vw,44px)}
 .fuentes summary{cursor:pointer;list-style:none;font-family:var(--tech);font-size:.7rem;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:9px}
@@ -2256,6 +2267,7 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
     <div class="firma">
       <span>LQS · Estudio creativo · Medellín, Colombia</span>
       <span>Propuesta para Distrito Perú · 10 de agosto de 2026 · vigencia 30 días</span>
+      <a class="volver" href="../index.html" target="_top">← Volver a LQS</a>
     </div>
   </div>
 </section>
