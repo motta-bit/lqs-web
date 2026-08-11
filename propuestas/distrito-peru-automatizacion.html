@@ -332,6 +332,56 @@ table.ancha{min-width:900px}
  text-transform:uppercase;color:var(--ok);margin-bottom:8px}
 .portafolio-nota p{font-size:.9rem;color:var(--dim);line-height:1.62;max-width:56ch}
 
+
+/* ejemplo del tablero: lo que de verdad reciben, no un rectángulo vacío */
+.tablero-mini{border-radius:22px 30px 22px 28px;overflow:hidden;border:1px solid var(--line2);background:var(--bg2);
+ box-shadow:0 30px 70px -40px #000}
+.tm-top{display:flex;align-items:center;gap:6px;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--line)}
+.tm-p{width:9px;height:9px;border-radius:50%;background:var(--line2)}
+.tm-top b{margin-left:10px;font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--dim)}
+.tm-fila{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:13px 16px;
+ border-bottom:1px solid var(--line)}
+.tm-n{font-family:var(--tech);font-weight:700;color:var(--faint);font-size:.82rem;font-variant-numeric:tabular-nums}
+.tm-t{font-size:.88rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-e{font-family:var(--tech);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+ padding:4px 9px;border-radius:999px;white-space:nowrap}
+.tm-e.en{color:var(--warn);background:color-mix(in oklab,var(--warn) 15%,transparent)}
+.tm-e.cm{color:#5b8def;background:color-mix(in oklab,#5b8def 15%,transparent)}
+.tm-e.ok{color:var(--ok);background:color-mix(in oklab,var(--ok) 15%,transparent)}
+.tm-pie{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--bg3)}
+.tm-pie span{font-family:var(--tech);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.tm-pie b{font-family:var(--sport);font-size:1.5rem;letter-spacing:-.02em;color:var(--ok);font-variant-numeric:tabular-nums}
+.pf-ini{display:grid;place-items:center;width:100%;height:100%;font-family:var(--sport);font-size:2rem;
+ color:color-mix(in oklab,var(--u1,#e0614a) 70%,var(--ink));
+ background:linear-gradient(150deg,color-mix(in oklab,var(--u1,#e0614a) 22%,var(--bg3)),var(--bg3) 70%)}
+
+
+/* en teléfono la barra no cabe: el resto vive en un panel lateral */
+.hamb{display:grid;place-items:center;gap:4px;width:38px;height:38px;padding:0;border:1px solid var(--line2);
+ border-radius:12px 16px 12px 15px;background:none;cursor:pointer}
+.hamb span{display:block;width:16px;height:1.6px;background:var(--ink);border-radius:2px;
+ transition:transform var(--dur-ui,200ms) cubic-bezier(.23,1,.32,1),opacity var(--dur-ui,200ms)}
+.hamb[aria-expanded="true"] span:first-child{transform:translateY(3px) rotate(45deg)}
+.hamb[aria-expanded="true"] span:last-child{transform:translateY(-2.6px) rotate(-45deg)}
+@media(min-width:900px){.hamb{display:none}}
+.lat-velo{position:fixed;inset:0;z-index:90;background:rgba(4,5,12,.6);backdrop-filter:blur(4px);
+ opacity:0;transition:opacity 300ms cubic-bezier(.23,1,.32,1)}
+.lat-velo.on{opacity:1}
+.menu-lat{position:fixed;top:0;right:0;bottom:0;z-index:91;width:min(80vw,300px);
+ padding:88px 24px 32px 46px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;
+ background:var(--bg2);border-left:1px solid var(--line2);
+ clip-path:polygon(11% 0,100% 0,100% 100%,0 100%);
+ transform:translateX(102%);transition:transform 320ms cubic-bezier(.32,.72,0,1)}
+.menu-lat.on{transform:none}
+.menu-lat a{padding:13px 4px;font-family:var(--tech);font-size:.82rem;font-weight:700;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);
+ transition:color 160ms ease}
+.menu-lat a:last-child{border-bottom:0}
+.menu-lat a:active{color:var(--ink)}
+@media (hover:hover) and (pointer:fine){.menu-lat a:hover{color:var(--ink)}}
+@media(prefers-reduced-motion:reduce){.menu-lat,.lat-velo,.hamb span{transition-duration:1ms}}
+
 </style>
 <style>
 /* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
@@ -719,6 +769,8 @@ table.ancha{min-width:900px}
       <a href="#carta" class="chico-no">Carta</a>
       <a href="#precio">Precio</a>
       <a href="#armable" class="chico-no">Opcionales</a>
+      <button class="hamb" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menuLat">
+        <span></span><span></span></button>
       <button class="luz" type="button" aria-label="Cambiar entre tema claro y oscuro">
         <svg class="luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
         <svg class="sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
@@ -726,6 +778,21 @@ table.ancha{min-width:900px}
     </nav>
   </div>
 </header>
+
+<div class="lat-velo" id="latVelo" hidden></div>
+<nav class="menu-lat" id="menuLat" aria-label="Secciones" hidden>
+  <a href="#problema">El problema</a>
+  <a href="#solucion">Qué montamos</a>
+  <a href="#caminos">Los dos caminos</a>
+  <a href="#whatsapp">WhatsApp</a>
+  <a href="#pago">Pagos y comisiones</a>
+  <a href="#carta">La carta</a>
+  <a href="#datos">La base de datos</a>
+  <a href="#precio">Precio</a>
+  <a href="#armable">Opcionales</a>
+  <a href="#limites">Qué no incluye</a>
+</nav>
+
 
 <main id="lienzo">
 <!-- ══════════ 1 · PORTADA ══════════ universo flujo ══════════ -->
@@ -2140,8 +2207,13 @@ mensaje_fuera_de_horario · tiempo_estimado_cocina · pausa_pedidos</div>
       </div>
 
       <div data-rev>
-        <div class="pieza f-losa" style="aspect-ratio:16/9">
-          <div class="hueco"><span class="et"><b>VIDEO 16:9</b><s>MP4 H.264 · 1920 × 1080 px</s><u>plano del pase de cocina en servicio, 15 s sin audio</u></span></div>
+        <div class="tablero-mini" aria-label="Ejemplo del tablero de pedidos">
+          <div class="tm-top"><span class="tm-p"></span><span class="tm-p"></span><span class="tm-p"></span>
+            <b>Pedidos de hoy</b></div>
+          <div class="tm-fila"><span class="tm-n">#248</span><span class="tm-t">Lomo saltado ×2 · Chicha</span><span class="tm-e en">En cocina</span></div>
+          <div class="tm-fila"><span class="tm-n">#247</span><span class="tm-t">Ceviche mixto · Papa a la huancaína</span><span class="tm-e cm">En camino</span></div>
+          <div class="tm-fila"><span class="tm-n">#246</span><span class="tm-t">Ají de gallina ×3</span><span class="tm-e ok">Entregado</span></div>
+          <div class="tm-pie"><span>Caja del día</span><b>$1.284.000</b></div>
         </div>
         <dl class="port-ficha" style="margin-top:26px">
           <div><dt>WhatsApp</dt><dd>+57 333 279 1710</dd></div>
@@ -2412,7 +2484,7 @@ function pintarPlatos(){
     }
 
     return '<article class="plato' + (pl.ago ? ' ago' : '') + '" data-pl="' + pl.id + '">' +
-      '<div class="plato-foto"><div class="hueco"><span class="et"><b>1:1</b></span></div></div>' +
+      '<div class="plato-foto"><span class="pf-ini">' + esc(pl.n.charAt(0)) + '</span></div>' +
       '<div><h4>' + esc(pl.n) + '</h4><p class="desc">' + esc(pl.d) + '</p>' + marcasDe(pl) + '</div>' +
       '<div class="plato-lado"><span class="plato-pz">' + fmt(precioDe(pl)) + '</span>' +
       (pl.ago
@@ -2674,6 +2746,24 @@ requestAnimationFrame(cuadro);
      <span class="c">${f.com>0?'te descuentan '+peso(f.com):'sin comisión de pasarela'}</span></div>`).join('');
  }
  inp.addEventListener('input',pinta); pinta();
+})();
+
+/* panel lateral en teléfono */
+(function(){
+ const b=document.querySelector('.hamb'),m=document.getElementById('menuLat'),v=document.getElementById('latVelo');
+ if(!b||!m||!v)return;
+ let abierto=false;
+ function pon(x){
+  abierto=x; b.setAttribute('aria-expanded',x?'true':'false');
+  if(x){m.hidden=false;v.hidden=false;requestAnimationFrame(()=>{m.classList.add('on');v.classList.add('on');});}
+  else{m.classList.remove('on');v.classList.remove('on');
+       setTimeout(()=>{if(!abierto){m.hidden=true;v.hidden=true;}},330);}
+  document.body.style.overflow=x?'hidden':'';
+ }
+ b.addEventListener('click',()=>pon(!abierto));
+ v.addEventListener('click',()=>pon(false));
+ m.addEventListener('click',e=>{if(e.target.tagName==='A')pon(false);});
+ addEventListener('keydown',e=>{if(e.key==='Escape'&&abierto)pon(false);});
 })();
 </script>
 
