@@ -2088,7 +2088,16 @@ document.addEventListener('click',e=>{
  const el=e.target.closest('[data-go]');if(!el)return;
  e.preventDefault();go(el.dataset.go);
 });
-addEventListener('popstate',()=>go((location.hash||'#inicio').slice(1),false));
+addEventListener('popstate',()=>{
+ /* Atrás con el visor abierto lo cierra y te deja donde estabas. Antes el
+    visor se quedaba encima mientras la vista de abajo retrocedía sola: eso
+    era el laberinto. */
+ if(visor.classList.contains('on')){cerrarVisor();return;}
+ /* Adelante hacia una entrada de visor: se vuelve a abrir sin apilar otra */
+ const st=history.state;
+ if(st&&st.visor&&st.demoUrl){abrirDemo(st.demoUrl,st.demoTit,null,true);return;}
+ go((location.hash||'#inicio').slice(1),false);
+});
 
 /* ═══ catálogo ═══ */
 let UNIS=[],PAKS=[],uniSel='todos';
@@ -2372,26 +2381,49 @@ function verPromo(){
 
 /* ═══ visor interno ═══ */
 const visor=document.getElementById('visor');
-function abrirDemo(url,titulo){
+/* quién abrió el visor: al cerrar, el foco vuelve exactamente ahí */
+let visorOrigen=null;
+
+/* El iframe no puede acumular historial propio.
+   Asignar `f.src` mete una entrada en el historial de la pestaña, así que
+   Atrás retrocedía DENTRO del visor y sacaba la muestra anterior — eso era
+   «se abren los mundos anteriores». `location.replace` sustituye la entrada
+   en vez de añadirla. Si el documento no se deja tocar, se cambia el iframe
+   entero, que también parte sin historial. */
+function cargarEnVisor(url,alCargar){
+ const f=document.getElementById('visorF');
+ try{
+  f.onload=()=>alCargar(f);
+  f.contentWindow.location.replace(url);
+  return f;
+ }catch(e){
+  const n=document.createElement('iframe');
+  n.id='visorF';n.title='Muestra';
+  f.replaceWith(n);
+  n.onload=()=>alCargar(n);
+  try{n.contentWindow.location.replace(url);}catch(e2){n.src=url;}
+  return n;
+ }
+}
+
+function abrirDemo(url,titulo,origen,sinHistorial){
+ const yaAbierto=visor.classList.contains('on');
  document.getElementById('visorT').textContent=titulo||'Muestra';
  document.getElementById('visorAbrir').href=url;
+ if(!yaAbierto){
+  visorOrigen=origen||(document.activeElement instanceof HTMLElement?document.activeElement:null);
+  /* Una entrada de historial por «visor abierto», con la MISMA url: el filtro
+     ?soy= y la vista quedan intactos, y Atrás aterriza en el popstate de abajo,
+     que cierra el visor sin navegar la vista de atrás. */
+  if(!sinHistorial)try{
+   history.pushState({visor:1,demoUrl:url,demoTit:titulo||''},'',location.href);
+  }catch(e){}
+ }
  visor.classList.add('on');document.body.style.overflow='hidden';
- const f=document.getElementById('visorF');
- // mostrar primero y cargar después: así las animaciones de la muestra sí arrancan
  const fb=document.getElementById('visorFall');
  fb.classList.remove('on');fb.querySelector('a').href=url;
  let ok=false;
- requestAnimationFrame(()=>{f.src=url;});
- // si el visor no logra cargar (abierto con doble clic, bloqueo del navegador),
- // no dejamos pantalla en negro: mostramos el enlace directo.
- // ojo: una muestra lenta no es una muestra rota — solo avisamos si no llegó nada.
- clearTimeout(abrirDemo._t);
- abrirDemo._t=setTimeout(()=>{
-  if(ok)return;
-  let vacio=true;
-  try{const d=f.contentDocument;vacio=!d||!d.body||d.body.children.length===0;}catch(e){vacio=false;}
-  if(vacio)fb.classList.add('on');},5000);
- f.onload=()=>{
+ const alCargar=f=>{
   ok=true;fb.classList.remove('on');
   try{
    const d=f.contentDocument;if(!d)return;
@@ -2401,15 +2433,45 @@ function abrirDemo(url,titulo){
     f.contentWindow.dispatchEvent(new Event('scroll'));},350);
   }catch(e){}
  };
+ // mostrar primero y cargar después: así las animaciones de la muestra sí arrancan
+ requestAnimationFrame(()=>{cargarEnVisor(url,alCargar);});
+ // si el visor no logra cargar (abierto con doble clic, bloqueo del navegador),
+ // no dejamos pantalla en negro: mostramos el enlace directo.
+ // ojo: una muestra lenta no es una muestra rota — solo avisamos si no llegó nada.
+ clearTimeout(abrirDemo._t);
+ abrirDemo._t=setTimeout(()=>{
+  if(ok)return;
+  let vacio=true;
+  try{const d=document.getElementById('visorF').contentDocument;
+   vacio=!d||!d.body||d.body.children.length===0;}catch(e){vacio=false;}
+  if(vacio)fb.classList.add('on');},5000);
+ // teclado: el foco entra al visor, no se queda detrás
+ try{document.getElementById('visorX').focus({preventScroll:true});}catch(e){}
 }
-function cerrarDemo(){clearTimeout(abrirDemo._t);document.getElementById('visorFall').classList.remove('on');
- visor.classList.remove('on');document.getElementById('visorF').src='about:blank';document.body.style.overflow='';}
+
+/* cierre real: no toca el historial */
+function cerrarVisor(){
+ if(!visor.classList.contains('on'))return;
+ clearTimeout(abrirDemo._t);
+ document.getElementById('visorFall').classList.remove('on');
+ visor.classList.remove('on');
+ document.body.style.overflow='';
+ cargarEnVisor('about:blank',()=>{});
+ const o=visorOrigen;visorOrigen=null;
+ if(o&&document.contains(o))try{o.focus({preventScroll:true});}catch(e){}
+}
+/* cierre pedido por el usuario (✕ o Escape): consume la entrada de historial
+   que abrió el visor, para que Atrás no tenga que pulsarse dos veces */
+function cerrarDemo(){
+ if(history.state&&history.state.visor)history.back();
+ else cerrarVisor();
+}
 document.getElementById('visorX').onclick=cerrarDemo;
 document.addEventListener('click',e=>{
  const el=e.target.closest('[data-demo]');if(!el)return;
  // ctrl/cmd/shift o clic en el ↗: que el navegador haga lo suyo (pestaña nueva)
  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button!==0)return;
- e.preventDefault();abrirDemo(el.dataset.demo,el.dataset.titulo);
+ e.preventDefault();abrirDemo(el.dataset.demo,el.dataset.titulo,el);
 });
 addEventListener('keydown',e=>{if(e.key==='Escape'&&visor.classList.contains('on'))cerrarDemo();});
 
