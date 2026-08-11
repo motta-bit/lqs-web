@@ -2739,7 +2739,7 @@ requestAnimationFrame(cuadro);
    if(m.iva)com*=IVA;
    return {n:m.n,com:com,queda:t-com};
   });
-  const max=Math.max(...filas.map(f=>f.queda));
+  const max=Math.max(...filas.filter(f=>f.com>0).map(f=>f.queda));
   out.innerHTML=filas.map(f=>
    `<div class="calc-f${f.queda===max&&t>0?' mejor':''}"><b>${f.n}</b>
      <span class="q">${peso(f.queda)}</span>
