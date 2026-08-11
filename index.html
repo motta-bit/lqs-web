@@ -1424,16 +1424,20 @@ const FICHAS=[
  ['Empresas','Marca completa','Identidad, sitio web y atención automática para negocios que necesitan verse serios desde el primer día.','mundos/empresas.html','mundos/empresas-muestras.html','#5b8def','marca'],
  ['Express','Diseño día a día','Piezas sueltas y combos con precio cerrado, listos en 48–72 horas. Sin reuniones, sin cotización previa.','mundos/express.html','mundos/express-muestras.html','#39c07a','produccion'],
  ['Productora','Video y foto','Reels, foto de producto y contenido para redes. Incluye calculadora de rodaje con transporte y viáticos.','mundos/productora.html','mundos/productora-muestras.html','#3fc6d6','produccion'],
- ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','','#a97bd6','marca'],
+ ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','mundos/creadores-muestras.html','#a97bd6','marca'],
  ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98','marca'],
- ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','','#3fd0e6','presencia'],
+ /* la muestra de Automatización es el simulador que ya vive dentro de su
+    propia ficha: se entra directo por el ancla en vez de duplicar el bot */
+ ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','mundos/automatizacion.html#simulador','#3fd0e6','presencia'],
  /* ↓ Restaurantes y Hoteles quedan sin página a propósito.
     Cuando tengas la definitiva, pon la ruta en el 4º campo (ficha) y,
     si hay demo, en el 5º (muestra). Ejemplo: 'mundos/carta.html'.
     Mientras estén vacíos la tarjeta se muestra igual, pero sin enlaces. */
  ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular, con la carta siempre al día.','','','#e0614a','presencia'],
  ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3','presencia'],
- ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','','#d98aa6','produccion']
+ /* el configurador de Mercury vive en la misma muestra que foma —son el mismo
+    taller de objeto físico—, así que la ficha entra por su ancla */
+ ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','mundos/marcas-muestras.html#cfgjoya','#d98aa6','produccion']
 ];
 /* quinto campo: el color de la familia. Se usa en el remate del hero;
    la agrupación por el séptimo campo de FICHAS no cambia. */
@@ -1538,6 +1542,7 @@ const DEMOS=[
  ['Ropa y merch','Merch y uniformes','Previsualiza tu merch, elige color y aplicación, y cotiza el lote en segundos.','mundos/marcas-muestras.html','#b6ad98'],
  ['Automatización','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
  ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
+ ['Creadores','Kit de marca en vivo','Escribe tu nombre de canal y mira armarse el avatar, el banner, la miniatura y el media kit.','mundos/creadores-muestras.html','#a97bd6'],
  ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5']
  /* Restaurantes y Hoteles: cuando tengas la muestra, agrégala con este formato →
     ['Restaurantes','Menú digital','Cómo queda la carta en el celular.','mundos/carta-muestras.html','#e0614a'], */
