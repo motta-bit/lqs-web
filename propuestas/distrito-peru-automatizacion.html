@@ -278,6 +278,30 @@ table.ancha{min-width:900px}
   :root{transition:none}
   html{scroll-behavior:auto}
 }
+
+.calc-w{margin:46px 0 10px;padding:clamp(24px,3.4vw,40px);position:relative;
+ background:linear-gradient(150deg,color-mix(in oklab,var(--ac,#e0614a) 12%,var(--bg2)),var(--bg2) 64%);
+ clip-path:url(#f-cuna)}
+.calc-in{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:20px}
+.calc-lbl{font-family:var(--tech);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.calc-campo{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);
+ border-radius:14px 20px 14px 22px;padding:10px 16px;background:rgba(255,255,255,.05)}
+.calc-campo span{font-family:var(--tech);color:var(--faint)}
+.calc-campo input{width:9ch;background:none;border:0;color:var(--ink);font-family:var(--tech);
+ font-size:1.25rem;font-weight:700;outline:none;font-variant-numeric:tabular-nums}
+.calc-campo:focus-within{border-color:var(--gold)}
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.calc-f{padding:16px 18px;border:1px solid var(--line);border-radius:18px 26px 18px 24px;
+ background:rgba(255,255,255,.03)}
+.calc-f b{display:block;font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.calc-f .q{display:block;font-family:var(--sport);font-size:1.9rem;line-height:1;letter-spacing:-.02em;
+ color:var(--ink);font-variant-numeric:tabular-nums}
+.calc-f .c{display:block;font-size:.8rem;color:var(--faint);margin-top:6px}
+.calc-f.mejor{border-color:var(--ok);background:color-mix(in oklab,var(--ok) 9%,transparent)}
+.calc-f.mejor .q{color:var(--ok)}
+.calc-nota{font-size:.84rem;color:var(--dim);margin-top:18px;max-width:60ch;line-height:1.6}
+
 </style>
 <style>
 /* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
@@ -1031,6 +1055,19 @@ table.ancha{min-width:900px}
       </div>
     </div>
   </div>
+
+    <div class="calc-w" data-rev>
+      <h3 class="tit h3">Cuánto te queda <em>de verdad</em></h3>
+      <p class="chico" style="margin:12px 0 22px;max-width:56ch">Mete el valor de un pedido promedio y mira qué entra
+        a tu cuenta con cada medio de pago. Son las tarifas publicadas a hoy; la tuya se negocia según volumen.</p>
+      <div class="calc-in">
+        <label class="calc-lbl" for="tk">Pedido promedio</label>
+        <div class="calc-campo"><span>$</span><input id="tk" type="number" min="0" step="1000" value="65000" inputmode="numeric"></div>
+      </div>
+      <div class="calc-out" id="calcOut"></div>
+      <p class="calc-nota">Nequi Negocios corre sobre el mismo motor de Wompi. Cobra un punto menos en tarjeta,
+        que es como paga la mayoría en un restaurante — por eso lo ponemos aparte.</p>
+    </div>
 </section>
 
 
@@ -1058,8 +1095,8 @@ table.ancha{min-width:900px}
           <tbody>
             <tr class="dest">
               <td>Wompi<br><span style="color:var(--faint);font-weight:400;font-size:.82rem">Grupo Bancolombia</span></td>
-              <td>≈ 2,99 % – 3,49 %<br><span style="font-size:.82rem">+ $600–$700 + IVA</span></td>
-              <td>≈ 1,49 % – 3,49 %<br><span style="font-size:.82rem">+ costo fijo + IVA</span></td>
+              <td>2,99 % + IVA<br><span style="font-size:.82rem">+ $600 por cobro</span></td>
+              <td>1,49 %<br><span style="font-size:.82rem">+ $1.200 por cobro</span></td>
               <td>Sin mensualidad<br><span style="font-size:.82rem">ni costo de afiliación</span></td>
               <td>1–2 días hábiles<br><span style="font-size:.82rem">con cuenta Bancolombia</span></td>
               <td>Tarjetas, PSE, Nequi, botón Bancolombia, efectivo</td>
@@ -2566,6 +2603,35 @@ armar();
 /* ═══════════════ arranque ═══════════════ */
 medir();
 requestAnimationFrame(cuadro);
+})();
+
+/* calculadora de comisiones — tarifas publicadas, IVA 19 % sobre la comisión */
+(function(){
+ const inp=document.getElementById('tk'),out=document.getElementById('calcOut');
+ if(!inp||!out)return;
+ const IVA=1.19;
+ const MET=[
+  {n:'Tarjeta · Wompi',      pct:.0299, fijo:600,   iva:true},
+  {n:'Tarjeta · Nequi Neg.', pct:.0199, fijo:0,     iva:true},
+  {n:'PSE · Wompi',          pct:.0149, fijo:1200,  iva:false},
+  {n:'Nequi / Bancolombia',  pct:.015,  fijo:0,     iva:true},
+  {n:'Efectivo contra entrega',pct:0,   fijo:0,     iva:false}
+ ];
+ const peso=v=>'$'+Math.round(v).toLocaleString('es-CO');
+ function pinta(){
+  const t=Math.max(0,+inp.value||0);
+  const filas=MET.map(m=>{
+   let com=t*m.pct+m.fijo;
+   if(m.iva)com*=IVA;
+   return {n:m.n,com:com,queda:t-com};
+  });
+  const max=Math.max(...filas.map(f=>f.queda));
+  out.innerHTML=filas.map(f=>
+   `<div class="calc-f${f.queda===max&&t>0?' mejor':''}"><b>${f.n}</b>
+     <span class="q">${peso(f.queda)}</span>
+     <span class="c">${f.com>0?'te descuentan '+peso(f.com):'sin comisión de pasarela'}</span></div>`).join('');
+ }
+ inp.addEventListener('input',pinta); pinta();
 })();
 </script>
 
