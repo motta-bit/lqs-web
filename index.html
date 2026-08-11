@@ -1137,8 +1137,9 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
   <div style="margin-top:56px">
     <h3 class="disp" style="margin-bottom:10px">Precios del montaje</h3>
-    <p class="body-l" style="margin-bottom:24px">El montaje se paga una vez. La mensualidad cubre el mantenimiento, los ajustes y el costo que cobra Meta por conversación.</p>
+    <p class="body-l" style="margin-bottom:24px">El montaje se paga una vez. La mensualidad cubre el proveedor de la API, el mantenimiento, los ajustes y hasta <b style="color:var(--ink)">1.000 conversaciones atendidas al mes</b>; de ahí en adelante, <b style="color:var(--ink)">$180 por conversación adicional</b>.</p>
     <div class="cards" id="waPlanes"></div>
+    <p class="body-l" style="margin-top:18px;color:var(--dim)">Multicanal cuesta $220.000 más al mes porque suma los canales de Instagram y Facebook a la misma bandeja.</p>
   </div>
 
   <div style="margin-top:56px">
@@ -1177,9 +1178,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
         <tr><td>Servicio</td><td>El cliente escribe primero</td><td>Sin costo</td></tr>
         <tr><td>Utilidad</td><td>Confirmaciones, recordatorios, estados</td><td>~$3 COP c/u</td></tr>
         <tr><td>Marketing</td><td>Promociones y novedades</td><td>~$50 COP c/u</td></tr>
-        <tr><td>Autenticación</td><td>Códigos de verificación</td><td>~$10 COP c/u</td></tr>
+        <tr><td>Autenticación</td><td>Códigos de verificación</td><td>~$3 COP c/u</td></tr>
       </table></div>
       <p style="margin-top:14px">Ejemplo real: un negocio con 400 confirmaciones al mes gasta cerca de <b style="color:var(--ink)">$1.200 COP</b> en costos de Meta. Las tarifas las fija Meta y pueden cambiar; se revisan al montar.</p>
+      <h5 style="margin-top:18px">Lo que ya va dentro de la mensualidad</h5>
+      <p>Además de Meta, el sistema necesita un proveedor de la API de WhatsApp (<b style="color:var(--ink)">$180.000 – $250.000 al mes</b>), la base de datos (<b style="color:var(--ink)">$0 – $100.000 al mes</b>) y el dominio (<b style="color:var(--ink)">≈ $60.000 al año</b>). Todo eso está incluido en la mensualidad: no te llega ninguna factura aparte, salvo la de Meta.</p>
     </div></details>
     <details class="ficha"><summary>Instagram y Facebook</summary><div class="fbody">
       <p>La misma cuenta de Meta Business permite conectar los mensajes directos de Instagram y Facebook al mismo sistema, así todo llega a un solo lugar.</p>
@@ -2099,14 +2102,28 @@ const RESPALDO_U=[
  {id:'aloja',nombre:'Aloja',categoria:'Hoteles',color:'#2fb8a3',orden:6},
  {id:'foma',nombre:'Ropa y merch',categoria:'Ropa y merch',color:'#b6ad98',orden:7},
  {id:'mercury',nombre:'Joyería',categoria:'Joyería',color:'#d98aa6',orden:8,proximamente:true}];
+/* Copia de emergencia del catálogo: espeja las 18 filas activas de `paquetes`
+   en Supabase, con los mismos precios. Si cambia un precio allá, cambia aquí.
+   Ver docs/PRECIOS.md — un servicio, un precio en todo el ecosistema. */
 const RESPALDO_P=[
  {id:'r1',universo_id:'express',nombre:'Pieza suelta',descripcion:'Necesitas una sola cosa, bien hecha.',precio_cop:45000,unidad:'desde · 48-72h',incluye:['1 pieza a elección','2 rondas de ajustes','Archivos en alta']},
- {id:'r2',universo_id:'express',nombre:'Combo Emprendedor',descripcion:'Arrancas y necesitas lo básico ya.',precio_cop:390000,unidad:'pago único',incluye:['Logo básico','Paleta y tipografías','6 posts','Tarjeta personal']},
- {id:'r3',universo_id:'creadores',nombre:'Kit Arranque',descripcion:'Empiezas y necesitas verte profesional.',precio_cop:450000,unidad:'pago único',incluye:['Identidad de canal','Foto de perfil y banners','10 plantillas editables']},
- {id:'r4',universo_id:'productora',nombre:'Foto Producto',descripcion:'Tienes productos o carta que mostrar.',precio_cop:320000,unidad:'20 fotos',incluye:['Hasta 20 fotos editadas','Retoque incluido','Formatos web y redes']},
- {id:'r5',universo_id:'empresas',nombre:'Identidad Esencial',descripcion:'Empresas que necesitan verse serias ya.',precio_cop:890000,unidad:'pago único',incluye:['Logo (3 propuestas)','Paleta y tipografías','Mini manual de marca','Papelería digital']},
- {id:'r6',universo_id:'empresas',nombre:'Despegue Total',descripcion:'Marca, web y atención resueltas de una.',precio_cop:3900000,unidad:'pago único',incluye:['Identidad Esencial','Presencia Digital','Automatización de WhatsApp','3 meses de soporte']},
- {id:'r8',universo_id:'foma',nombre:'Merch de Marca',descripcion:'Ropa que la gente sí usa.',precio_cop:46000,unidad:'por unidad · mín. 20',incluye:['Diseño aplicado','Muestra física previa','Entrega 3-4 semanas']}];
+ {id:'r2',universo_id:'express',nombre:'Pack Contenido',descripcion:'Publicas seguido y no quieres improvisar.',precio_cop:290000,unidad:'al mes · 12 piezas',incluye:['12 piezas al mes','Calendario de publicación','Ajustes incluidos']},
+ {id:'r3',universo_id:'express',nombre:'Combo Emprendedor',descripcion:'Arrancas y necesitas lo básico ya.',precio_cop:390000,unidad:'pago único',incluye:['Logo básico','Paleta y tipografías','6 posts','Tarjeta personal']},
+ {id:'r4',universo_id:'creadores',nombre:'Kit Arranque',descripcion:'Empiezas y necesitas verte profesional.',precio_cop:450000,unidad:'pago único',incluye:['Identidad de canal','Foto de perfil y banners','10 plantillas editables']},
+ {id:'r5',universo_id:'creadores',nombre:'Contenido mensual',descripcion:'No quieres diseñar nunca más.',precio_cop:690000,unidad:'al mes',incluye:['12 piezas al mes','Miniaturas y portadas','Calendario de publicación']},
+ {id:'r6',universo_id:'creadores',nombre:'Kit Pro',descripcion:'Ya creas contenido y quieres subir de nivel.',precio_cop:980000,unidad:'pago único',incluye:['Todo el Kit Arranque','30 plantillas editables','Miniaturas de YouTube','Asesoría 1:1']},
+ {id:'r7',universo_id:'empresas',nombre:'Identidad Esencial',descripcion:'Empresas que necesitan verse serias ya.',precio_cop:890000,unidad:'pago único',incluye:['Logo (3 propuestas)','Paleta y tipografías','Mini manual de marca','Papelería digital']},
+ {id:'r8',universo_id:'empresas',nombre:'Presencia Digital',descripcion:'Ya tienes marca y te falta estar en internet.',precio_cop:1850000,unidad:'pago único',incluye:['Sitio de hasta 5 secciones','Formulario de contacto','Optimizado para buscadores']},
+ {id:'r9',universo_id:'empresas',nombre:'Despegue Total',descripcion:'Marca, web y atención resueltas de una.',precio_cop:3900000,unidad:'pago único',incluye:['Identidad Esencial','Presencia Digital','Automatización de WhatsApp','3 meses de soporte']},
+ {id:'r10',universo_id:'productora',nombre:'Foto de producto',descripcion:'Tienes productos o carta que mostrar.',precio_cop:360000,unidad:'20 fotos',incluye:['Hasta 20 fotos editadas','Retoque incluido','Formatos web y redes']},
+ {id:'r11',universo_id:'productora',nombre:'Pack Reels',descripcion:'Necesitas contenido en video, constante.',precio_cop:480000,unidad:'4 reels',incluye:['4 reels verticales','Grabación y edición','Subtítulos y música con licencia']},
+ {id:'r12',universo_id:'productora',nombre:'Video institucional',descripcion:'Quieres la pieza que representa tu marca.',precio_cop:950000,unidad:'hasta 90s',incluye:['Guion y preproducción','Jornada de rodaje','Edición, color y música']},
+ {id:'r13',universo_id:'foma',nombre:'Merch de marca',descripcion:'Ropa que la gente sí usa.',precio_cop:46000,unidad:'por unidad · mín. 20',incluye:['Diseño aplicado','Muestra física previa','Entrega 3-4 semanas']},
+ {id:'r14',universo_id:'foma',nombre:'Uniformes',descripcion:'Tu equipo necesita verse como una marca.',precio_cop:68000,unidad:'por unidad · mín. 15',incluye:['Diseño aplicado','Tallas por persona','Entrega 3-4 semanas']},
+ {id:'r15',universo_id:'carta',nombre:'Carta digital completa',descripcion:'Tu carta en el celular, siempre al día.',precio_cop:690000,unidad:'pago único',incluye:['Carta por secciones','Código QR para las mesas','Cambios de precio sin reimprimir']},
+ {id:'r16',universo_id:'carta',nombre:'Carta digital + 20 fotos',descripcion:'La carta y las fotos de los platos, de una.',precio_cop:990000,unidad:'pago único',incluye:['Carta digital completa','20 fotos de plato editadas','Código QR para las mesas']},
+ {id:'r17',universo_id:'aloja',nombre:'Aloja Base',descripcion:'Tu hotel con marca y página propias.',precio_cop:2400000,unidad:'pago único',incluye:['Identidad del hotel','Página con habitaciones','Formulario de reserva']},
+ {id:'r18',universo_id:'aloja',nombre:'Aloja Completo',descripcion:'Marca, página, atención y contenido.',precio_cop:4200000,unidad:'pago único',incluye:['Todo Aloja Base','Automatización de WhatsApp','Video del local','20 fotos de habitación']}];
 async function cargarCatalogo(){
  try{
   const [u,p]=await Promise.all([
@@ -2412,12 +2429,12 @@ document.getElementById('waCaps').innerHTML=[
  ['Hablar con alguien','Pasar a una persona real cuando el caso lo amerita.']
 ].map(([t,d])=>`<div class="card rv"><h3>${t}</h3><p>${d}</p></div>`).join('');
 document.getElementById('waPlanes').innerHTML=[
- ['Básico','Negocios que solo necesitan contestar rápido.',780000,'montaje',['Respuestas automáticas','Menú de opciones','Horarios y ubicación','Paso a persona real'],false],
- ['Negocio','Tomas pedidos o reservas por WhatsApp.',1450000,'montaje',['Todo lo del Básico','Catálogo o carta en el chat','Pedidos y reservas','Confirmaciones automáticas','Aviso a tu equipo'],true],
- ['Multicanal','Además de WhatsApp, atiendes por redes.',2100000,'montaje',['Todo lo del Negocio','Instagram y Facebook','Respuesta a comentarios','Recordatorios programados','Reporte mensual'],false]
-].map(([n,d,p,u,inc,dest])=>`<div class="card rv" ${dest?'style="border-color:var(--gold)"':''}>
+ ['Básico','Negocios que solo necesitan contestar rápido.',780000,'montaje',650000,['Respuestas automáticas','Menú de opciones','Horarios y ubicación','Paso a persona real'],false],
+ ['Negocio','Tomas pedidos o reservas por WhatsApp.',1450000,'montaje',650000,['Todo lo del Básico','Catálogo o carta en el chat','Pedidos y reservas','Confirmaciones automáticas','Aviso a tu equipo'],true],
+ ['Multicanal','Además de WhatsApp, atiendes por redes.',2400000,'montaje',870000,['Todo lo del Negocio','Instagram y Facebook','Respuesta a comentarios','Recordatorios programados','Reporte mensual'],false]
+].map(([n,d,p,u,mes,inc,dest])=>`<div class="card rv" ${dest?'style="border-color:var(--gold)"':''}>
  ${dest?'<span class="tagd" style="color:var(--gold)">Más pedido</span>':''}
- <h3>${n}</h3><p>${d}</p><div class="pz">${fmt(p)}</div><div class="un">${u} · + $180.000 al mes</div>
+ <h3>${n}</h3><p>${d}</p><div class="pz">${fmt(p)}</div><div class="un">${u} · + ${fmt(mes)} al mes</div>
  <ul>${inc.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('');
 let waTimer=null,waPaso=0;
 function animarWA(){

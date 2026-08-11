@@ -435,8 +435,8 @@ footer a:hover{color:var(--gold)}
         <div class="blabel">04 · Equipo humano</div>
         <p class="bhint">Personas de LQS en set: dirección, cámara, luces, asistencia y producción.</p>
         <div class="rangerow">
-          <div class="bignum" id="eqOut">2<small>personas</small></div>
-          <input type="range" id="eq" min="1" max="6" step="1" value="2" aria-label="Número de personas del equipo">
+          <div class="bignum" id="eqOut">1<small>persona</small></div>
+          <input type="range" id="eq" min="1" max="6" step="1" value="1" aria-label="Número de personas del equipo">
         </div>
       </div>
 
@@ -450,7 +450,7 @@ footer a:hover{color:var(--gold)}
         <div class="blabel">06 · Entregables y versiones</div>
         <p class="bhint">Cada entregable adicional suma montaje, color y adaptación de formatos.</p>
         <div class="rangerow">
-          <div class="bignum" id="entOut">1<small>entregables</small></div>
+          <div class="bignum" id="entOut">1<small>entregable</small></div>
           <input type="range" id="ent" min="1" max="8" step="1" value="1" aria-label="Número de entregables o versiones">
         </div>
       </div>
@@ -524,11 +524,13 @@ footer a:hover{color:var(--gold)}
 var COP=function(n){return '$'+Math.round(n).toLocaleString('es-CO');};
 
 var TIPOS={
-  foto:  {n:'Foto de producto',      base:260000, crew:180000, post:150000},
-  reel:  {n:'Reel',                  base:420000, crew:210000, post:290000},
-  inst:  {n:'Video institucional',   base:780000, crew:240000, post:520000},
-  evento:{n:'Cobertura de evento',   base:340000, crew:200000, post:230000},
-  spot:  {n:'Spot publicitario',     base:1250000,crew:290000, post:760000}
+  /* Configuración base (día completo · 1 persona · 1 entregable · Medellín)
+     = el precio cerrado del paquete en productora.html. No mover uno sin el otro. */
+  foto:  {n:'Foto de producto',      base:150000, crew:90000,  post:120000},
+  reel:  {n:'Reel',                  base:60000,  crew:30000,  post:50000},
+  inst:  {n:'Video institucional',   base:380000, crew:220000, post:350000},
+  evento:{n:'Cobertura de evento',   base:260000, crew:150000, post:240000},
+  spot:  {n:'Spot publicitario',     base:850000, crew:450000, post:700000}
 };
 var DUR={'0.5':'Medio día (4h)','1':'Día completo (8h)','2':'2 días','3':'3+ días'};
 var LOC={

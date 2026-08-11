@@ -197,7 +197,8 @@ document.querySelectorAll('.pz').forEach(el=>el.addEventListener('click',()=>{
 document.getElementById('lbx').onclick=()=>document.getElementById('lb').classList.remove('on');
 document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb')e.currentTarget.classList.remove('on')});
 /* ---------- configurador joyería ---------- */
-const JT=[['anillo','Anillo',280000],['dije','Dije',210000],['aretes','Aretes',190000],['pin','Pin corporativo',38000],['pulsera','Pulsera',260000],['gemelos','Gemelos',240000]];
+/* Mismos precios que el catálogo de arriba: una pieza, un precio. */
+const JT=[['anillo','Anillo',180000],['dije','Dije',145000],['aretes','Aretes',126000],['pin','Pin corporativo',38000],['pulsera','Pulsera',210000],['gemelos','Gemelos',168000]];
 const JM=[['plata','Plata 925',1],['oro','Baño de oro',1.28]];
 let jT=0,jM=0,jG=0;
 function ch(host,arr,cur,fn,cls){document.getElementById(host).innerHTML=arr.map((o,i)=>
