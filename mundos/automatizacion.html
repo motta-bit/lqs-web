@@ -40,6 +40,11 @@ section{padding:clamp(52px,8vw,104px) 0;position:relative;z-index:2}
 nav{position:sticky;top:0;z-index:40;background:rgba(5,6,15,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line2)}
 nav .in{max-width:1120px;margin:0 auto;padding:12px clamp(18px,5vw,36px);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-family:var(--pix);font-size:.66rem;color:var(--acc-l);display:flex;align-items:center;gap:9px;letter-spacing:.02em;line-height:1.4}
+.miga{display:flex;align-items:center;gap:8px;min-width:0;font-size:.78rem;color:var(--mut)}
+.miga a{border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.miga a:hover{color:var(--acc);border-color:var(--acc)}
+.miga b{color:var(--txt);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.miga i{font-style:normal;color:var(--acc-d,var(--mut));flex:none}
 .back{font-size:.83rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 17px;transition:.22s;white-space:nowrap}
 .back:hover,.back:focus-visible{color:var(--acc-l);border-color:var(--acc);background:rgba(91,141,239,.09)}
 
@@ -139,25 +144,9 @@ h3{font-size:1.06rem;font-weight:800;letter-spacing:-.012em;margin-bottom:8px}
 .tryit li code{font-family:var(--sans);font-weight:700;color:var(--acc-l);background:rgba(91,141,239,.16);border-radius:7px;padding:1px 7px;font-size:.82rem}
 
 /* diagrama */
-.diagbox{border:1px solid var(--line);border-radius:var(--r);background:var(--glass2);padding:clamp(14px,2.4vw,26px)}
 .scrollx{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
 .scrollx::-webkit-scrollbar{height:7px}
 .scrollx::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
-#flow{display:block;width:100%;min-width:660px;height:auto}
-#flow .nd rect{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.2);stroke-width:1.2}
-#flow .nd text{fill:#dbe5ff;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700}
-#flow .nd.acc rect{fill:rgba(91,141,239,.19);stroke:rgba(91,141,239,.72)}
-#flow .nd.acc text{fill:#eaf1ff}
-#flow .nd.start rect{fill:rgba(214,227,255,.9);stroke:none}
-#flow .nd.start text{fill:#071122;font-weight:800}
-#flow .nd.end rect{fill:rgba(91,141,239,.09);stroke:rgba(91,141,239,.34);stroke-dasharray:4 4}
-#flow .nd.end text{fill:#a9bdea;font-size:12px}
-#flow path{fill:none;stroke:rgba(91,141,239,.62);stroke-width:1.7;stroke-linecap:round}
-#flow .lbl{fill:#8397c2;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.02em}
-#flow .nd{opacity:0;transition:opacity .5s ease}
-#flow path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .85s ease}
-#flow.on .nd{opacity:1}
-#flow.on path{stroke-dashoffset:0}
 
 /* paquetes */
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:17px;align-items:stretch}
@@ -181,19 +170,8 @@ h3{font-size:1.06rem;font-weight:800;letter-spacing:-.012em;margin-bottom:8px}
 .plan.pop .go:hover{filter:brightness(1.07);color:#050d1e}
 .costbox{margin-top:26px;border:1px solid rgba(91,141,239,.3);border-radius:18px;background:rgba(91,141,239,.06);padding:22px 24px}
 .costbox h3{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;gap:9px}
-.costtab{width:100%;border-collapse:collapse;font-size:.86rem;margin:15px 0 12px;min-width:430px}
-.costtab th,.costtab td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line2)}
-.costtab th{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--mut2);font-weight:800}
-.costtab td:not(:first-child),.costtab th:not(:first-child){text-align:right;white-space:nowrap}
-.costtab tr:last-child td{border-bottom:none}
-.costtab .hi{color:var(--acc-l);font-weight:800}
 
 /* requisitos */
-.reqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:14px}
-.req{display:flex;gap:15px;border:1px solid var(--line);border-radius:18px;background:var(--glass2);padding:20px 21px;align-items:flex-start}
-.req .n{font-family:var(--pix);font-size:.62rem;color:var(--acc);flex:none;margin-top:4px}
-.req h3{font-size:.96rem;margin-bottom:5px}
-.req p{font-size:.85rem;color:var(--mut);line-height:1.6}
 
 /* final */
 .final{text-align:center;border:1px solid var(--line);border-radius:28px;background:linear-gradient(165deg,rgba(91,141,239,.13),rgba(255,255,255,.014));padding:clamp(38px,6.5vw,72px) clamp(22px,4vw,52px);position:relative;overflow:hidden}
@@ -225,7 +203,6 @@ footer a:hover{color:var(--acc-l)}
   .ph-top .who span em{display:none}
   .msg{max-width:90%}
   .stat{flex:1 1 44%}
-  .req{padding:17px 16px;gap:12px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -238,19 +215,18 @@ footer a:hover{color:var(--acc-l)}
 <div class="bgglow"></div><div class="grid-bg"></div>
 
 <nav><div class="in">
-  <div class="brand">🤖 AUTOMATIZACIÓN</div>
-  <a class="back" href="../index.html" target="_top">← Sitio</a>
+  <div class="miga"><a href="../index.html#servicios" data-lqs="cerrar">LQS</a><i>/</i><a href="../index.html#servicios" data-lqs="cerrar">Servicios</a><i>/</i><b>Automatización</b></div>
+  <a class="back" href="../index.html#servicios" data-lqs="cerrar">← Volver</a>
 </div></nav>
 
 <!-- HERO -->
 <div class="wrap"><header class="hero"><div class="cols">
   <div>
     <div class="badge"><i></i>Cupos abiertos · implementación en 2–3 semanas</div>
-    <div class="kicker">LQS ·· WHATSAPP &amp; REDES</div>
     <h1>Que tu negocio <em>responda solo</em></h1>
     <p class="lead">Conectamos tu WhatsApp, tu Instagram y tu Facebook a un sistema que atiende, muestra el catálogo, toma reservas y avisa a tu equipo — a las 3 de la mañana, un domingo festivo, sin que nadie esté pendiente.</p>
     <div class="btns">
-      <a class="cta" href="#simulador">Probar el chatbot ↓</a>
+      <a class="cta" href="#vivo">Probar el chatbot ↓</a>
       <a class="cta ghost" href="#paquetes">Ver paquetes</a>
     </div>
     <div class="stats">
@@ -269,9 +245,115 @@ footer a:hover{color:var(--acc-l)}
   </div>
 </div></header></div>
 
+<!-- QUÉ AUTOMATIZAMOS -->
+<div class="wrap"><section class="rv">
+  <h2>Qué automatizamos</h2>
+  <p class="intro">No se trata de reemplazar a tu equipo, sino de quitarle de encima las 40 preguntas repetidas que llegan cada día para que atienda las que sí valen la pena.</p>
+  <div class="grid3">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/></svg></div>
+      <h3>Respuestas 24/7</h3>
+      <p>Saludo, preguntas frecuentes, precios, formas de pago y domicilios. Contesta en segundos incluso fuera de horario, y avisa cuando el local está cerrado en vez de dejar el chat en visto.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h8M8 16h5"/></svg></div>
+      <h3>Catálogo y menú</h3>
+      <p>Carta navegable dentro del chat, con categorías, precios y fotos. Se actualiza desde una hoja de cálculo o desde el catálogo nativo de WhatsApp: cambias un precio y queda al aire.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="m9.5 15 1.8 1.8 3.4-3.6"/></svg></div>
+      <h3>Reservas y pedidos</h3>
+      <p>El bot pide fecha, hora, número de personas o los productos, valida que tenga sentido y escribe directo en Google Calendar, Sheets o tu sistema. Sin transcribir chats a mano.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+      <h3>Recordatorios</h3>
+      <p>Confirmación el día anterior, recordatorio dos horas antes, aviso de que el pedido salió y seguimiento post-venta. Menos citas perdidas, menos «se me olvidó».</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Instagram y Facebook</h3>
+      <p>Alguien comenta «precio?» en tu reel y recibe la información por mensaje directo automáticamente. También respondemos DM y llevamos la conversación a WhatsApp, dentro de lo que la API de Meta permite.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.3 3h7.5c.5 0 1 .2 1.4.6l7.4 7.4a2 2 0 0 1 0 2.4z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg></div>
+      <h3>Etiquetado de clientes</h3>
+      <p>Cada conversación queda marcada: cliente nuevo, recurrente, interesado en X, reserva pendiente. Después puedes enviarles campañas segmentadas en vez de disparar a todo el mundo.</p>
+    </div>
+  </div>
+</section></div>
+
+<!-- PAQUETES -->
+<div class="wrap"><section id="paquetes" class="rv">
+  <h2>Paquetes</h2>
+  <p class="intro">Precio cerrado en pesos colombianos. Lo que pagas a LQS cubre diseño del flujo, implementación, plantillas, integraciones y soporte. Lo que consume Meta por cada mensaje se factura aparte y es de tu cuenta — te explicamos exactamente cuánto es más abajo.</p>
+
+  <div class="plans">
+    <div class="plan">
+      <div class="pn">PLAN 01</div>
+      <h3>Setup Básico</h3>
+      <p class="who">Un solo canal, un flujo claro. Para empezar a no perder mensajes.</p>
+      <div class="price">$780.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
+      <ul>
+        <li>WhatsApp Cloud API conectada y verificada</li>
+        <li>Hasta 4 flujos (saludo, FAQ, horarios, humano)</li>
+        <li>3 plantillas aprobadas por Meta</li>
+        <li>Menú de botones y respuestas rápidas</li>
+        <li>Mensaje fuera de horario</li>
+        <li>Capacitación de 1 hora a tu equipo</li>
+        <li>Soporte y ajustes menores mensuales</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
+    </div>
+
+    <div class="plan pop">
+      <span class="tag">Más pedido</span>
+      <div class="pn">PLAN 02</div>
+      <h3>Plan Negocio</h3>
+      <p class="who">Reservas o pedidos de verdad, conectados a tus herramientas.</p>
+      <div class="price">$1.450.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
+      <ul>
+        <li>Todo lo del Setup Básico</li>
+        <li>Flujo de reservas o pedidos con validación</li>
+        <li>Catálogo o menú navegable en el chat</li>
+        <li>Integración con Google Calendar / Sheets / CRM</li>
+        <li>Recordatorios automáticos programados</li>
+        <li>8 plantillas aprobadas (utility y marketing)</li>
+        <li>Etiquetado automático de clientes</li>
+        <li>Tablero mensual de conversaciones</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
+    </div>
+
+    <div class="plan">
+      <div class="pn">PLAN 03</div>
+      <h3>Plan Multicanal</h3>
+      <p class="who">WhatsApp, Instagram y Facebook en una sola bandeja, con campañas.</p>
+      <div class="price">$2.400.000<small>COP · pago único de implementación</small><span class="mo">+ $870.000 COP / mes</span></div>
+      <ul>
+        <li>Todo lo del Plan Negocio</li>
+        <li>DM de Instagram y Messenger automatizados</li>
+        <li>Respuesta automática a comentarios</li>
+        <li>Bandeja unificada para tu equipo</li>
+        <li>Campañas segmentadas con plantillas</li>
+        <li>Respuestas con IA sobre tu propia información</li>
+        <li>Hasta 3 números o cuentas</li>
+        <li>Optimización mensual de flujos y textos</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
+    </div>
+  </div>
+
+  <div class="costbox">
+    <h3>Lo que cobra Meta, aparte</h3>
+    <p class="note">Meta te factura directamente los mensajes de plantilla que salen de tu número: <b>≈ $3 COP</b> una confirmación o un recordatorio, <b>≈ $50 COP</b> un mensaje de promoción. Responder dentro de las 24 horas de un cliente no cuesta nada hoy. Un restaurante con 300 confirmaciones al mes le paga a Meta cerca de <b>$900 COP</b>.</p>
+    <p class="note" style="margin-top:12px">Las tarifas se publican en dólares y cambian varias veces al año; la conversión es referencial. El detalle —categorías, fechas de cambio y cómo se factura— está en la <a href="../automatizacion-guia.html" data-lqs="muestra" data-titulo="Guía · cómo se monta la automatización">guía técnica</a>.</p>
+  </div>
+  <p class="note" style="margin-top:20px">Pago 50% al iniciar y 50% contra entrega. La mensualidad se factura desde el mes siguiente al lanzamiento y se puede cancelar con 30 días de aviso. Sin permanencia, sin letra chiquita.</p>
+</section></div>
+
 <!-- SIMULADOR -->
-<div class="wrap"><section id="simulador" class="rv">
-  <div class="kicker">01 ·· PRUÉBALO TÚ</div>
+<div class="wrap"><section id="vivo" class="rv">
   <h2>Simulador de chatbot</h2>
   <p class="intro">Esto no es un video ni un GIF: es un bot de verdad corriendo en tu navegador. Escribe con tus palabras o usa los botones rápidos. Es el mismo tipo de lógica que montamos sobre la Cloud API de WhatsApp, con un negocio de ejemplo (Café Orión, Medellín).</p>
 
@@ -315,202 +397,43 @@ footer a:hover{color:var(--acc-l)}
   </div>
 </section></div>
 
-<!-- DIAGRAMA -->
-<div class="wrap"><section class="rv">
-  <div class="kicker">02 ·· CÓMO PIENSA</div>
-  <h2>El árbol de conversación</h2>
-  <p class="intro">Antes de programar nada, dibujamos el mapa. Cada nodo es una decisión y cada rama termina en algo concreto: un pedido, una reserva en tu agenda o una notificación a tu equipo. Este es el diagrama del bot que acabas de probar.</p>
-  <div class="diagbox"><div class="scrollx">
-    <svg id="flow" viewBox="0 0 900 584" role="img" aria-label="Diagrama del árbol de conversación del chatbot: mensaje del cliente, saludo del bot y cuatro ramas — carta, reserva, horarios y humano.">
-      <g id="flowlines"></g>
-      <g id="flownodes"></g>
-    </svg>
-  </div></div>
-  <p class="note" style="margin-top:18px"><b>Nota honesta:</b> las ramas de reserva y pedido terminan en una <b>plantilla de mensaje aprobada por Meta</b> (categoría <em>utility</em>). Esas plantillas se envían a revisión y pueden tardar de minutos a 24 horas en aprobarse; si el texto suena promocional, Meta las reclasifica como <em>marketing</em> y cuestan más.</p>
-</section></div>
-
-<!-- QUÉ AUTOMATIZAMOS -->
-<div class="wrap"><section class="rv">
-  <div class="kicker">03 ·· ALCANCE</div>
-  <h2>Qué automatizamos</h2>
-  <p class="intro">No se trata de reemplazar a tu equipo, sino de quitarle de encima las 40 preguntas repetidas que llegan cada día para que atienda las que sí valen la pena.</p>
-  <div class="grid3">
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/></svg></div>
-      <h3>Respuestas 24/7</h3>
-      <p>Saludo, preguntas frecuentes, precios, formas de pago y domicilios. Contesta en segundos incluso fuera de horario, y avisa cuando el local está cerrado en vez de dejar el chat en visto.</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h8M8 16h5"/></svg></div>
-      <h3>Catálogo y menú</h3>
-      <p>Carta navegable dentro del chat, con categorías, precios y fotos. Se actualiza desde una hoja de cálculo o desde el catálogo nativo de WhatsApp: cambias un precio y queda al aire.</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="m9.5 15 1.8 1.8 3.4-3.6"/></svg></div>
-      <h3>Reservas y pedidos</h3>
-      <p>El bot pide fecha, hora, número de personas o los productos, valida que tenga sentido y escribe directo en Google Calendar, Sheets o tu sistema. Sin transcribir chats a mano.</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-      <h3>Recordatorios</h3>
-      <p>Confirmación el día anterior, recordatorio dos horas antes, aviso de que el pedido salió y seguimiento post-venta. Menos citas perdidas, menos «se me olvidó».</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg></div>
-      <h3>Instagram y Facebook</h3>
-      <p>Alguien comenta «precio?» en tu reel y recibe la información por mensaje directo automáticamente. También respondemos DM y llevamos la conversación a WhatsApp, dentro de lo que la API de Meta permite.</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.3 3h7.5c.5 0 1 .2 1.4.6l7.4 7.4a2 2 0 0 1 0 2.4z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg></div>
-      <h3>Etiquetado de clientes</h3>
-      <p>Cada conversación queda marcada: cliente nuevo, recurrente, interesado en X, reserva pendiente. Después puedes enviarles campañas segmentadas en vez de disparar a todo el mundo.</p>
-    </div>
-  </div>
-</section></div>
-
-<!-- PAQUETES -->
-<div class="wrap"><section id="paquetes" class="rv">
-  <div class="kicker">04 ·· INVERSIÓN</div>
-  <h2>Paquetes</h2>
-  <p class="intro">Precio cerrado en pesos colombianos. Lo que pagas a LQS cubre diseño del flujo, implementación, plantillas, integraciones y soporte. Lo que consume Meta por cada mensaje se factura aparte y es de tu cuenta — te explicamos exactamente cuánto es más abajo.</p>
-
-  <div class="plans">
-    <div class="plan">
-      <div class="pn">PLAN 01</div>
-      <h3>Setup Básico</h3>
-      <p class="who">Un solo canal, un flujo claro. Para empezar a no perder mensajes.</p>
-      <div class="price">$780.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
-      <ul>
-        <li>WhatsApp Cloud API conectada y verificada</li>
-        <li>Hasta 4 flujos (saludo, FAQ, horarios, humano)</li>
-        <li>3 plantillas aprobadas por Meta</li>
-        <li>Menú de botones y respuestas rápidas</li>
-        <li>Mensaje fuera de horario</li>
-        <li>Capacitación de 1 hora a tu equipo</li>
-        <li>Soporte y ajustes menores mensuales</li>
-      </ul>
-      <a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%A4%96%20me%20interesa%20el%20Setup%20B%C3%A1sico%20de%20automatizaci%C3%B3n." target="_blank" rel="noopener">Lo quiero →</a>
-    </div>
-
-    <div class="plan pop">
-      <span class="tag">Más pedido</span>
-      <div class="pn">PLAN 02</div>
-      <h3>Plan Negocio</h3>
-      <p class="who">Reservas o pedidos de verdad, conectados a tus herramientas.</p>
-      <div class="price">$1.450.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
-      <ul>
-        <li>Todo lo del Setup Básico</li>
-        <li>Flujo de reservas o pedidos con validación</li>
-        <li>Catálogo o menú navegable en el chat</li>
-        <li>Integración con Google Calendar / Sheets / CRM</li>
-        <li>Recordatorios automáticos programados</li>
-        <li>8 plantillas aprobadas (utility y marketing)</li>
-        <li>Etiquetado automático de clientes</li>
-        <li>Tablero mensual de conversaciones</li>
-      </ul>
-      <a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%A4%96%20me%20interesa%20el%20Plan%20Negocio%20de%20automatizaci%C3%B3n." target="_blank" rel="noopener">Lo quiero →</a>
-    </div>
-
-    <div class="plan">
-      <div class="pn">PLAN 03</div>
-      <h3>Plan Multicanal</h3>
-      <p class="who">WhatsApp, Instagram y Facebook en una sola bandeja, con campañas.</p>
-      <div class="price">$2.400.000<small>COP · pago único de implementación</small><span class="mo">+ $870.000 COP / mes</span></div>
-      <ul>
-        <li>Todo lo del Plan Negocio</li>
-        <li>DM de Instagram y Messenger automatizados</li>
-        <li>Respuesta automática a comentarios</li>
-        <li>Bandeja unificada para tu equipo</li>
-        <li>Campañas segmentadas con plantillas</li>
-        <li>Respuestas con IA sobre tu propia información</li>
-        <li>Hasta 3 números o cuentas</li>
-        <li>Optimización mensual de flujos y textos</li>
-      </ul>
-      <a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%A4%96%20me%20interesa%20el%20Plan%20Multicanal%20de%20automatizaci%C3%B3n." target="_blank" rel="noopener">Lo quiero →</a>
-    </div>
-  </div>
-
-  <div class="costbox">
-    <h3>💸 Lo que cobra Meta, aparte</h3>
-    <p class="note">Desde el <b>1 de julio de 2025</b> Meta dejó de cobrar por «conversación de 24 horas» y cobra <b>por cada mensaje de plantilla entregado</b>. La tarifa depende de la categoría de la plantilla y del país de quien recibe. Estas son las tarifas aproximadas para <b>Colombia</b>:</p>
-    <div class="scrollx"><table class="costtab">
-      <tr><th>Categoría</th><th>USD / mensaje</th><th>≈ COP</th><th>Para qué sirve</th></tr>
-      <tr><td>Marketing</td><td class="hi">≈ 0,0125</td><td class="hi">≈ $50</td><td>Promociones, campañas</td></tr>
-      <tr><td>Utility</td><td class="hi">≈ 0,0008</td><td class="hi">≈ $3</td><td>Confirmaciones, recordatorios</td></tr>
-      <tr><td>Authentication</td><td class="hi">≈ 0,0008</td><td class="hi">≈ $3</td><td>Códigos de verificación</td></tr>
-      <tr><td>Servicio (respuesta libre)</td><td class="hi">Gratis*</td><td class="hi">$0*</td><td>Responder dentro de las 24 h</td></tr>
-    </table></div>
-    <p class="note"><b>Ejemplo real:</b> un restaurante con 400 conversaciones entrantes al mes y 300 confirmaciones de reserva paga a Meta cerca de <b>$900 COP al mes</b> (300 × $3), porque las respuestas dentro de la ventana de servicio son gratuitas hoy. Si además manda 1.000 promociones, súmale unos <b>$50.000 COP</b>.</p>
-    <p class="note" style="margin-top:12px">*<b>Cambia el 1 de octubre de 2026:</b> Meta anunció que volverá a cobrar los mensajes de servicio (las respuestas libres que envía tu equipo o tu bot dentro de la ventana de 24 horas), que eran gratis desde noviembre de 2024. Lo decimos antes de que te sorprenda la factura: cuando entre en vigor, revisamos contigo el impacto y ajustamos los flujos para gastar menos.</p>
-    <p class="note" style="margin-top:12px">Las tarifas de Meta se publican en dólares y cambian varias veces al año; la conversión a pesos es referencial (TRM ≈ $4.000). Meta factura directamente a tu tarjeta o a través del proveedor que elijas — nunca a través nuestro, para que veas el consumo real.</p>
-  </div>
-  <div class="costbox" style="margin-top:20px">
-    <h3>🧾 Qué cubre la mensualidad</h3>
-    <p class="note">La mensualidad no es solo soporte: paga la infraestructura que mantiene el sistema en pie. Lo decimos con cifras para que sepas de dónde sale el número.</p>
-    <div class="scrollx"><table class="costtab">
-      <tr><th>Concepto</th><th>Costo real</th><th>Quién lo paga</th></tr>
-      <tr><td>Proveedor de la API de WhatsApp</td><td class="hi">$180.000 – $250.000 / mes</td><td>LQS, dentro de la mensualidad</td></tr>
-      <tr><td>Base de datos y panel</td><td class="hi">$0 – $100.000 / mes</td><td>LQS, dentro de la mensualidad</td></tr>
-      <tr><td>Dominio propio</td><td class="hi">≈ $60.000 / año</td><td>LQS, dentro de la mensualidad</td></tr>
-      <tr><td>Mensajes de plantilla</td><td class="hi">según la tabla de arriba</td><td>Tú, directo a Meta</td></tr>
-    </table></div>
-    <p class="note"><b>Conversaciones incluidas:</b> hasta <b>1.000 conversaciones atendidas al mes</b>. De ahí en adelante se cobran a <b>$180 COP por conversación adicional</b>, y lo ves en la factura del mes siguiente.</p>
-    <p class="note" style="margin-top:12px">El plan Multicanal cuesta <b>$220.000</b> más al mes porque suma los canales de Instagram y Facebook a la misma bandeja.</p>
-  </div>
-  <p class="note" style="margin-top:20px">Pago 50% al iniciar y 50% contra entrega. La mensualidad se factura desde el mes siguiente al lanzamiento y se puede cancelar con 30 días de aviso. Sin permanencia, sin letra chiquita.</p>
-</section></div>
-
-<!-- REQUISITOS -->
-<div class="wrap"><section class="rv">
-  <div class="kicker">05 ·· ANTES DE ARRANCAR</div>
-  <h2>Qué necesitas tener listo</h2>
-  <p class="intro">Nada de esto es difícil, pero sí toma tiempo y depende de Meta, no de nosotros. Te acompañamos en cada paso; lo listamos para que sepas exactamente en qué te vas a meter.</p>
-  <div class="reqs">
-    <div class="req"><span class="n">01</span><div>
-      <h3>Un número de teléfono libre</h3>
-      <p>Un número que <b>no esté registrado en WhatsApp personal ni en WhatsApp Business App</b>, o que estés dispuesto a liberar. Puede ser celular o fijo, siempre que pueda recibir un SMS o una llamada para verificarse. Muchos clientes compran una línea nueva solo para esto.</p>
-    </div></div>
-    <div class="req"><span class="n">02</span><div>
-      <h3>Portafolio de negocio en Meta</h3>
-      <p>La cuenta antes llamada Business Manager, hoy Portafolio comercial, y que tú seas <b>administrador</b>. Si tu Instagram y tu página de Facebook ya existen, se enlazan ahí mismo.</p>
-    </div></div>
-    <div class="req"><span class="n">03</span><div>
-      <h3>Verificación del negocio</h3>
-      <p>Meta pide nombre legal, NIT o RUT, dirección, teléfono corporativo y sitio web o presencia verificable. Sin verificar arrancas limitado a <b>250 conversaciones nuevas al día</b>; verificado subes de inmediato a <b>2.000</b>, y luego a 10.000, 100.000 y sin límite según tu calidad y volumen. La revisión suele tardar de 1 a 3 días hábiles, aunque puede alargarse.</p>
-    </div></div>
-    <div class="req"><span class="n">04</span><div>
-      <h3>Un método de pago</h3>
-      <p>Tarjeta de crédito o débito internacional a nombre del negocio para que Meta cobre los mensajes. Si prefieres facturación local en pesos, montamos sobre un proveedor (BSP) que la ofrezca.</p>
-    </div></div>
-    <div class="req"><span class="n">05</span><div>
-      <h3>Tu información, ordenada</h3>
-      <p>Carta o catálogo con precios al día, horarios, dirección, formas de pago, zonas de domicilio y las 20 preguntas que más te hacen. Es lo único que realmente te vamos a pedir a ti — el resto lo hacemos nosotros.</p>
-    </div></div>
-    <div class="req"><span class="n">06</span><div>
-      <h3>Alguien que reciba los chats</h3>
-      <p>El bot filtra y resuelve, pero siempre hay casos que necesitan una persona. Definimos a quién le llegan, en qué horario y qué pasa cuando nadie contesta. Automatizar no es desaparecer.</p>
-    </div></div>
-  </div>
-  <p class="note" style="margin-top:26px"><b>Honestidad ante todo:</b> el número no se puede usar al mismo tiempo en la app normal de WhatsApp Business y en la API, salvo que se active el modo de coexistencia de Meta, que tiene sus propias limitaciones. Y aunque el desarrollo lo entregamos en 2–3 semanas, la verificación del negocio depende de los tiempos de Meta y no los controlamos.</p>
-</section></div>
-
-<!-- CTA -->
+<!-- CIERRE -->
 <div class="wrap"><section class="rv"><div class="final">
-  <div class="kicker">HABLEMOS</div>
-  <h2>Cuéntanos qué te preguntan todos los días</h2>
-  <p>Con eso ya podemos dibujarte el flujo. Escríbenos por WhatsApp — sí, el nuestro también responde rápido, aunque del otro lado hay humanos.</p>
+  <h2>Pide tu cotización</h2>
+  <p>Cuéntanos qué te preguntan todos los días. Con eso dibujamos el flujo y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
   <div class="btns">
-    <a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%A4%96%20quiero%20automatizar%20la%20atenci%C3%B3n%20de%20mi%20negocio." target="_blank" rel="noopener">Escribir por WhatsApp →</a>
-    <a class="cta ghost" href="../automatizacion-guia.html" target="_top">Leer la guía técnica</a>
+    <a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a>
   </div>
 </div></section></div>
 
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
-  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">+57 333 279 1710</a> · <a href="../index.html" target="_top">LQS</a></span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">+57 333 279 1710</a> · <a href="../index.html#servicios" data-lqs="cerrar">LQS</a></span>
 </div></div></footer>
 
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta ficha se abre de dos maneras: sola, en su propia pestaña, y dentro del
+   visor del sitio. Antes los enlaces de volver llevaban target="_top": desde
+   el visor recargaban index.html entero y se perdían el filtro ?soy= y la
+   vista donde estabas. Ahora, si estamos dentro, se lo pedimos al sitio; si
+   estamos fuera, el href de siempre hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
+ });
+})();
+
 "use strict";
 var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
@@ -524,80 +447,6 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   els.forEach(function(e){ io.observe(e); });
 })();
 
-/* ---------- diagrama SVG ---------- */
-(function(){
-  var svg = document.getElementById('flow'); if(!svg) return;
-  var NW = 156, NH = 46;
-  var C = [118, 332, 546, 772];
-  var N = [
-    {id:'start', x:450, y:14, w:200, t:'Cliente escribe', k:'start'},
-    {id:'bot',   x:450, y:96, w:230, t:'Saludo + 4 opciones', k:'acc'},
-
-    {id:'a1', x:C[0], y:214, t:'🍽️  Ver la carta'},
-    {id:'a2', x:C[0], y:290, t:'Categorías'},
-    {id:'a3', x:C[0], y:366, t:'Precios del ítem'},
-    {id:'a4', x:C[0], y:442, t:'¿Pedir a domicilio?'},
-    {id:'a5', x:C[0], y:518, t:'Pedido al equipo', k:'end'},
-
-    {id:'b1', x:C[1], y:214, t:'📅  Reservar'},
-    {id:'b2', x:C[1], y:290, t:'¿Qué día?'},
-    {id:'b3', x:C[1], y:366, t:'¿Cuántas personas?'},
-    {id:'b4', x:C[1], y:442, t:'Confirmar datos', k:'acc'},
-    {id:'b5', x:C[1], y:518, t:'Plantilla utility', k:'end'},
-
-    {id:'c1', x:C[2], y:214, t:'🕒  Horario y sitio'},
-    {id:'c2', x:C[2], y:290, t:'Horario + mapa'},
-    {id:'c3', x:C[2], y:366, t:'¿Algo más?'},
-
-    {id:'d1', x:C[3], y:214, t:'🙋  Hablar con alguien'},
-    {id:'d2', x:C[3], y:290, t:'Toma nombre y tema'},
-    {id:'d3', x:C[3], y:366, t:'Notifica al equipo', k:'acc'},
-    {id:'d4', x:C[3], y:442, t:'Ventana de 24 h', k:'end'}
-  ];
-  var map = {}; N.forEach(function(n){ n.w = n.w || NW; map[n.id] = n; });
-
-  var L = ['M450 60 V96'];
-  L.push('M450 142 V168');
-  C.forEach(function(cx){ L.push('M450 168 H'+cx+' V214'); });
-  [['a1','a2'],['a2','a3'],['a3','a4'],['a4','a5'],
-   ['b1','b2'],['b2','b3'],['b3','b4'],['b4','b5'],
-   ['c1','c2'],['c2','c3'],
-   ['d1','d2'],['d2','d3'],['d3','d4']].forEach(function(p){
-    var a = map[p[0]], b = map[p[1]];
-    L.push('M'+a.x+' '+(a.y+NH)+' V'+b.y);
-  });
-
-  var lines = document.getElementById('flowlines'), nodes = document.getElementById('flownodes');
-  var NSU = 'http://www.w3.org/2000/svg';
-  L.forEach(function(d,i){
-    var p = document.createElementNS(NSU,'path');
-    p.setAttribute('d', d); p.setAttribute('pathLength','1');
-    p.style.transitionDelay = (RM ? 0 : 0.22 + i*0.045) + 's';
-    lines.appendChild(p);
-  });
-  N.forEach(function(n,i){
-    var g = document.createElementNS(NSU,'g');
-    g.setAttribute('class','nd' + (n.k ? ' '+n.k : ''));
-    g.style.transitionDelay = (RM ? 0 : 0.1 + i*0.055) + 's';
-    var r = document.createElementNS(NSU,'rect');
-    r.setAttribute('x', n.x - n.w/2); r.setAttribute('y', n.y);
-    r.setAttribute('width', n.w); r.setAttribute('height', NH); r.setAttribute('rx', 13);
-    var t = document.createElementNS(NSU,'text');
-    t.setAttribute('x', n.x); t.setAttribute('y', n.y + NH/2 + 4.5); t.setAttribute('text-anchor','middle');
-    t.textContent = n.t;
-    g.appendChild(r); g.appendChild(t); nodes.appendChild(g);
-  });
-  var lb = document.createElementNS(NSU,'text');
-  lb.setAttribute('class','lbl'); lb.setAttribute('x', 450); lb.setAttribute('y', 196);
-  lb.setAttribute('text-anchor','middle'); lb.textContent = 'el cliente elige (botón o texto libre)';
-  nodes.appendChild(lb);
-
-  if(!('IntersectionObserver' in window) || RM){ svg.classList.add('on'); return; }
-  var io = new IntersectionObserver(function(en){
-    en.forEach(function(e){ if(e.isIntersecting){ svg.classList.add('on'); io.disconnect(); } });
-  },{threshold:.22});
-  io.observe(svg);
-})();
 
 /* ---------- SIMULADOR DE CHATBOT ---------- */
 (function(){

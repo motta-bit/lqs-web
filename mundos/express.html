@@ -20,13 +20,49 @@ a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1120px;margin:0 auto;padding:13px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);display:flex;align-items:center;gap:8px}
-.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:.2s;white-space:nowrap}
+/* el rastro de migas: dónde estás y de dónde vienes, siempre a la vista */
+.miga{display:flex;align-items:center;gap:8px;min-width:0;font-size:.78rem;color:var(--mut)}
+.miga a{border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.miga a:hover{color:var(--acc);border-color:var(--acc)}
+.miga b{color:var(--txt);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.miga i{font-style:normal;color:var(--acc-d);flex:none}
+/* el ejemplo tocable: lo único de esta ficha que no se lee, se usa */
+.vivo{border:1px solid var(--line);border-radius:24px;background:var(--glass);padding:clamp(20px,3vw,28px)}
+.vivo-pie{margin-top:16px;font-size:.84rem;color:var(--mut)}
+.vivo-pie a{color:var(--acc);border-bottom:1px solid currentColor}
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{font:inherit;font-size:.85rem;font-weight:700;color:var(--mut);background:none;cursor:pointer;
+ border:1px solid var(--line);border-radius:999px;padding:10px 16px;
+ transition:color .2s,border-color .2s,background .2s,transform .09s ease}
+.opt[aria-pressed=true]{color:#06120c;background:var(--acc);border-color:var(--acc)}
+.opt:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){.opt:hover{border-color:var(--acc);color:var(--acc)}
+ .opt[aria-pressed=true]:hover{color:#06120c}}
+.cifra{font-size:clamp(2rem,5.6vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--acc-l)}
+.cifra small{display:block;font-size:.74rem;font-weight:600;letter-spacing:.05em;color:var(--mut);margin-top:7px}
+.arma{display:grid;grid-template-columns:1fr 260px;gap:clamp(18px,3vw,30px);align-items:start}
+@media(max-width:760px){.arma{grid-template-columns:1fr}}
+.pzs{display:grid;gap:9px}
+.pz{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;
+ font:inherit;cursor:pointer;color:var(--txt);background:none;
+ border:1px solid var(--line);border-radius:14px;padding:13px 16px;
+ transition:border-color .2s,background .2s,transform .09s ease}
+.pz[aria-pressed=true]{border-color:var(--acc);background:rgba(57,192,122,.1)}
+.pz:active{transform:scale(.99)}
+.pz b{font-size:.9rem;font-weight:700}
+.pz em{font-style:normal;font-size:.86rem;font-weight:800;color:var(--acc);white-space:nowrap}
+.cuenta{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.05);padding:22px;position:sticky;top:74px}
+.cuenta ul{list-style:none;margin:16px 0;display:grid;gap:7px;font-size:.84rem;color:var(--mut)}
+.cuenta li{display:flex;justify-content:space-between;gap:10px}
+.cuenta .plazo{font-size:.82rem;color:var(--mut);border-top:1px solid var(--line);padding-top:13px;margin-top:4px}
+@media(max-width:760px){.cuenta{position:static}}
+.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:color .2s,border-color .2s,transform .09s ease;white-space:nowrap;flex:none;cursor:pointer;background:none;font-family:inherit}
+.back:active{transform:scale(.96)}
 .back:hover{color:var(--acc);border-color:var(--acc)}
 .hero{padding:clamp(44px,8vw,88px) 0 clamp(34px,6vw,60px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
 .badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px}
 .badge i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.4s steps(6) infinite}
 @keyframes bp{50%{opacity:.35}}
-.kicker{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:15px}
 h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;margin-bottom:18px}
 .lead{font-size:clamp(1rem,2vw,1.16rem);margin-bottom:10px;font-weight:600}
 .lead span{color:var(--mut);font-weight:400}
@@ -42,7 +78,6 @@ h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;m
 .panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
 .panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
 section{padding:clamp(40px,6.5vw,74px) 0;position:relative;z-index:2}
-.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:13px}
 h2{font-family:var(--pix);font-size:clamp(1rem,2.9vw,1.42rem);line-height:1.45;margin-bottom:13px}
 .intro{color:var(--mut);max-width:62ch;margin-bottom:30px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:15px}
@@ -70,26 +105,6 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 .plan .go:hover{border-color:var(--acc);color:var(--acc)}
 .plan.pop .go{background:linear-gradient(135deg,#c9f5df,#39c07a);color:#06120c;border:none}
 .plan.pop .go:hover{filter:brightness(1.08);color:#06120c}
-/* extras */
-.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:11px}
-.ex{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;background:var(--glass);padding:14px 17px}
-.ex b{font-size:.89rem;font-weight:700}
-.ex span{font-size:.86rem;font-weight:800;color:var(--acc);white-space:nowrap}
-/* comparativa */
-.cmp{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--glass)}
-.cmp table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
-.cmp th,.cmp td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line)}
-.cmp th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:800}
-.cmp td:last-child,.cmp th:last-child{text-align:right}
-.cmp tr:last-child td{border-bottom:none}
-.cmp .lqs{color:var(--acc);font-weight:800}
-.cmp .mkt{color:var(--mut);text-decoration:line-through}
-.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:15px}
-.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:21px}
-.step .n{font-family:var(--pix);font-size:.7rem;color:var(--acc);margin-bottom:11px;display:block}
-.step h3{font-size:.96rem;font-weight:800;margin-bottom:6px}
-.step p{font-size:.85rem;color:var(--mut)}
 .note{font-size:.8rem;color:var(--mut);margin-top:18px;line-height:1.6}
 .final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(30px,5.5vw,54px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
 .final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
@@ -103,45 +118,111 @@ footer a:hover{color:var(--acc)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style></head><body>
 <canvas id="stars"></canvas><div class="bgglow"></div>
-<nav><div class="in"><div class="brand">⚡ EXPRESS</div><a class="back" href="../index.html" target="_top">← Volver al sitio</a></div></nav>
+<nav><div class="in">
+  <div class="miga"><a href="../index.html#servicios" data-lqs="cerrar">LQS</a><i>/</i><a href="../index.html#servicios" data-lqs="cerrar">Servicios</a><i>/</i><b>Express</b></div>
+  <a class="back" href="../index.html#servicios" data-lqs="cerrar">← Volver</a>
+</div></nav>
 <div class="wrap"><header class="hero">
   <div>
     <div class="badge"><i></i>Pedidos abiertos · entrega 24–72h</div>
-    <div class="kicker">GALAXIA LQS ·· PLANETA VELOZ</div>
     <h1>Express</h1>
     <p class="lead">Diseño del día a día — <span>por pieza, sin mensualidades.</span></p>
     <p class="sub">Para quien necesita una pieza bien hecha hoy, no un contrato de agencia. Precio cerrado por pieza, sin sorpresas y con entrega rápida.</p>
-    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes</a><a class="cta ghost" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9A%A1%20quiero%20cotizar%20una%20pieza%20de%20dise%C3%B1o." target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="cta ghost" data-muestras href="express-muestras.html">Ver muestras y configurador</a></div>
+    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes y precios</a><a class="cta ghost" href="#vivo">Armar un pedido</a></div>
   </div>
   <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">COMETA-01 · EN ÓRBITA</div></div>
 </header></div>
 <div class="wrap"><section>
-  <div class="eyebrow">QUÉ HACEMOS</div><h2>Piezas listas a velocidad luz</h2><p class="intro">Diseño puntual para negocios y personas. Eliges la pieza, nos dices para cuándo y despegamos.</p>
+  <h2>Piezas listas a velocidad luz</h2><p class="intro">Diseño puntual para negocios y personas. Eliges la pieza, nos dices para cuándo y despegamos.</p>
   <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Flyers y volantes</h3><p>Digital para WhatsApp/redes o listo para imprenta, con medidas correctas.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Tarjetas personales</h3><p>Tu presentación en físico y digital, lista para enviar a imprenta.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m5 18 5-5 4 4 2-2 3 3"/></svg></div><h3>Posts para redes</h3><p>Piezas para feed, historias y portadas, con tu misma línea visual.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.8 6.4 20l1.5-6.2L3 9.6l6.4-.5z"/></svg></div><h3>Logo básico</h3><p>Identidad esencial para arrancar: logo, colores y tipografías.</p></div></div>
 </section></div>
 <div class="wrap"><section id="paquetes">
-  <div class="eyebrow">PAQUETES</div><h2>Paquetes Express</h2><p class="intro">Precios cerrados en pesos colombianos. Incluyen 2 rondas de ajustes y archivos finales listos para usar.</p>
-  <div class="plans"><div class="plan"><h3>Pieza suelta</h3><p class="who">Necesitas una sola cosa, bien hecha.</p><div class="price">$45.000<small>COP · desde · 48–72h</small></div><ul><li>1 pieza a elección (flyer, post o portada)</li><li>2 rondas de ajustes</li><li>Archivos JPG + PNG en alta</li><li>Medidas para redes o imprenta</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9A%A1%20quiero%20una%20pieza%20suelta%20de%20Express." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Combo Emprendedor</h3><p class="who">Arrancas tu negocio y necesitas lo básico ya.</p><div class="price">$390.000<small>COP · pago único · 5–7 días</small></div><ul><li>Logo básico (3 propuestas)</li><li>Paleta y tipografías definidas</li><li>6 posts para redes</li><li>Tarjeta personal (digital + imprenta)</li><li>Portada de WhatsApp Business</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9A%A1%20me%20interesa%20el%20Combo%20Emprendedor%20de%20Express." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan"><h3>Pack Contenido</h3><p class="who">Publicas seguido y no quieres improvisar.</p><div class="price">$290.000<small>COP · al mes · 12 piezas</small></div><ul><li>12 piezas al mes (posts e historias)</li><li>Plantillas editables para ti</li><li>Calendario sugerido de publicación</li><li>Ajustes ilimitados en la primera semana</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9A%A1%20quiero%20el%20Pack%20Contenido%20mensual%20de%20Express." target="_blank" rel="noopener">Lo quiero →</a></div></div>
+  <h2>Paquetes Express</h2><p class="intro">Precios cerrados en pesos colombianos. Incluyen 2 rondas de ajustes y archivos finales listos para usar.</p>
+  <div class="plans"><div class="plan"><h3>Pieza suelta</h3><p class="who">Necesitas una sola cosa, bien hecha.</p><div class="price">$45.000<small>COP · desde · 48–72h</small></div><ul><li>1 pieza a elección (flyer, post o portada)</li><li>2 rondas de ajustes</li><li>Archivos JPG + PNG en alta</li><li>Medidas para redes o imprenta</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Combo Emprendedor</h3><p class="who">Arrancas tu negocio y necesitas lo básico ya.</p><div class="price">$390.000<small>COP · pago único · 5–7 días</small></div><ul><li>Logo básico (3 propuestas)</li><li>Paleta y tipografías definidas</li><li>6 posts para redes</li><li>Tarjeta personal (digital + imprenta)</li><li>Portada de WhatsApp Business</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Pack Contenido</h3><p class="who">Publicas seguido y no quieres improvisar.</p><div class="price">$290.000<small>COP · al mes · 12 piezas</small></div><ul><li>12 piezas al mes (posts e historias)</li><li>Plantillas editables para ti</li><li>Calendario sugerido de publicación</li><li>Ajustes ilimitados en la primera semana</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
   <p class="note">Todos los precios son en pesos colombianos (COP) e incluyen los archivos finales. Los pagos se hacen 50% al inicio y 50% contra entrega.</p>
 </section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">A LA CARTA</div><h2>Súmale lo que necesites</h2><p class="intro">Extras que puedes agregar a cualquier paquete, con precio fijo.</p>
-  <div class="extras"><div class="ex"><b>Urgencia 24 horas</b><span>+40%</span></div><div class="ex"><b>Ronda extra de ajustes</b><span>$25.000</span></div><div class="ex"><b>Post adicional</b><span>$32.000</span></div><div class="ex"><b>Adaptación a otro formato</b><span>$18.000</span></div><div class="ex"><b>Archivos editables (fuente)</b><span>$60.000</span></div><div class="ex"><b>Carta digital de 1 página</b><span>$180.000</span></div></div>
-</section></div>
-<div class="wrap"><section><div class="eyebrow">POR QUÉ LQS</div><h2>Lo mismo, sin el precio de agencia</h2><p class="intro">Comparamos con lo que hoy cobra el mercado colombiano por piezas sueltas. Nosotros bajamos el precio quitando la burocracia, no la calidad.</p><div class="cmp scrollx"><table><tr><th>Servicio</th><th>Mercado Colombia</th><th>LQS</th></tr><tr><td>Logo básico</td><td class="mkt">$500.000 – $1.200.000</td><td class="lqs">desde $220.000</td></tr><tr><td>Pack de 12 posts</td><td class="mkt">$450.000 – $900.000</td><td class="lqs">$290.000</td></tr><tr><td>Tarjeta personal</td><td class="mkt">$120.000 – $250.000</td><td class="lqs">$65.000</td></tr><tr><td>Flyer digital</td><td class="mkt">$80.000 – $180.000</td><td class="lqs">desde $45.000</td></tr></table></div><p class="note">Referencias de tarifarios públicos de diseño en Colombia (2026). Nuestro precio es más bajo porque trabajamos con procesos propios y sin intermediarios.</p></section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">CÓMO FUNCIONA</div><h2>Pedir es así de simple</h2><p class="intro">Sin reuniones eternas ni cotizaciones que tardan una semana.</p>
-  <div class="steps"><div class="step"><span class="n">01</span><h3>Escribes</h3><p>Nos cuentas por WhatsApp qué pieza necesitas y para cuándo.</p></div><div class="step"><span class="n">02</span><h3>Confirmamos</h3><p>Te pasamos precio cerrado y fecha. Abonas el 50%.</p></div><div class="step"><span class="n">03</span><h3>Diseñamos</h3><p>Recibes la propuesta y pides tus ajustes.</p></div><div class="step"><span class="n">04</span><h3>Entregamos</h3><p>Archivos finales listos para publicar o imprimir.</p></div></div>
+<div class="wrap"><section id="vivo">
+  <h2>Míralo funcionando</h2><p class="intro">Toca las piezas que necesitas. El precio se arma solo, con las mismas tarifas con las que cotizamos de verdad — sin reunión y sin esperar respuesta.</p>
+  <div class="vivo"><div class="arma">
+    <div class="pzs" id="pzs"></div>
+    <div class="cuenta">
+      <div class="cifra" id="tot">$0<small id="totn">Nada elegido todavía</small></div>
+      <ul id="det"><li><span>Elige al menos una pieza</span></li></ul>
+      <button class="opt" type="button" id="urg" aria-pressed="false" style="width:100%;justify-content:center">Urgencia 24 h · +40%</button>
+      <p class="plazo" id="plazo">Entrega estándar: 48–72 horas hábiles.</p>
+    </div>
+  </div></div>
+  <p class="vivo-pie">El configurador completo, con las piezas reales que hemos hecho, está en <a href="express-muestras.html" data-lqs="muestra" data-titulo="Express · muestras">las muestras de Express</a>.</p>
 </section></div>
 <div class="wrap"><section><div class="final">
-  <h2>¿Qué necesitas diseñar?</h2><p>Escríbenos con la idea (o el desorden de ideas) y te devolvemos precio y fecha el mismo día.</p>
-  <div class="btns"><a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%E2%9A%A1%20quiero%20cotizar%20una%20pieza%20de%20dise%C3%B1o." target="_blank" rel="noopener">Pedir por WhatsApp</a><a class="cta ghost" href="../index.html" target="_top">Explorar otros mundos</a></div>
+  <h2>Pide tu cotización</h2><p>Dinos qué piezas necesitas y para cuándo. En 48 horas tienes la propuesta completa con precio cerrado y fecha.</p>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
-  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html" target="_top">LQS</a></span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html#servicios" data-lqs="cerrar">LQS</a></span>
 </div></div></footer>
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta ficha se abre de dos maneras: sola, en su propia pestaña, y dentro del
+   visor del sitio. Antes los enlaces de volver llevaban target="_top": desde
+   el visor recargaban index.html entero y se perdían el filtro ?soy= y la
+   vista donde estabas. Ahora, si estamos dentro, se lo pedimos al sitio; si
+   estamos fuera, el href de siempre hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
+ });
+})();
+
+/* ═══ el ejemplo tocable ═══
+   Las mismas tarifas de docs/PRECIOS.md: lo que ves aquí es lo que cotizamos.
+   Un servicio, un precio en todo el ecosistema. */
+(function(){
+ var caja=document.getElementById('pzs');if(!caja)return;
+ var PZS=[['Post para redes',32000],['Flyer o pieza suelta',45000],['Tarjeta personal',65000],
+  ['Carta digital de 1 página',180000],['Logo básico',220000],['Pack Contenido · 12 piezas al mes',290000],
+  ['Combo Emprendedor · logo, 6 posts y tarjeta',390000]];
+ var sel=[1],urg=false;
+ var pesos=function(n){return '$'+n.toLocaleString('es-CO');};
+ caja.innerHTML=PZS.map(function(p,i){
+  return '<button class="pz" type="button" data-i="'+i+'" aria-pressed="'+(sel.indexOf(i)>-1)+'">'+
+   '<b>'+p[0]+'</b><em>'+pesos(p[1])+'</em></button>';}).join('');
+ function pinta(){
+  var t=0,det='';
+  sel.slice().sort(function(a,b){return a-b;}).forEach(function(i){
+   t+=PZS[i][1];det+='<li><span>'+PZS[i][0]+'</span><span>'+pesos(PZS[i][1])+'</span></li>';});
+  if(urg&&t){var e=Math.round(t*.4);det+='<li><span>Urgencia 24 h</span><span>'+pesos(e)+'</span></li>';t+=e;}
+  document.getElementById('tot').firstChild.nodeValue=pesos(t);
+  document.getElementById('totn').textContent=sel.length
+   ?(sel.length===1?'1 pieza · precio cerrado':sel.length+' piezas · precio cerrado')
+   :'Nada elegido todavía';
+  document.getElementById('det').innerHTML=det||'<li><span>Elige al menos una pieza</span></li>';
+  document.getElementById('plazo').textContent=urg
+   ?'Entrega urgente: 24 horas desde que apruebas el arranque.'
+   :'Entrega estándar: 48–72 horas hábiles.';
+ }
+ caja.addEventListener('click',function(e){
+  var b=e.target.closest('.pz');if(!b)return;
+  var i=+b.dataset.i,k=sel.indexOf(i);
+  if(k>-1)sel.splice(k,1);else sel.push(i);
+  b.setAttribute('aria-pressed',String(k<0));pinta();
+ });
+ document.getElementById('urg').addEventListener('click',function(){
+  urg=!urg;this.setAttribute('aria-pressed',String(urg));pinta();});
+ pinta();
+})();
+
 (function(){var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
  function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(140,Math.round(innerWidth*innerHeight/12000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
  rz();addEventListener('resize',rz);

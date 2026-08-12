@@ -20,13 +20,49 @@ a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1120px;margin:0 auto;padding:13px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);display:flex;align-items:center;gap:8px}
-.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:.2s;white-space:nowrap}
+/* el rastro de migas: dónde estás y de dónde vienes, siempre a la vista */
+.miga{display:flex;align-items:center;gap:8px;min-width:0;font-size:.78rem;color:var(--mut)}
+.miga a{border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.miga a:hover{color:var(--acc);border-color:var(--acc)}
+.miga b{color:var(--txt);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.miga i{font-style:normal;color:var(--acc-d);flex:none}
+/* el ejemplo tocable: lo único de esta ficha que no se lee, se usa */
+.vivo{border:1px solid var(--line);border-radius:24px;background:var(--glass);padding:clamp(20px,3vw,28px)}
+.vivo-pie{margin-top:16px;font-size:.84rem;color:var(--mut)}
+.vivo-pie a{color:var(--acc);border-bottom:1px solid currentColor}
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{font:inherit;font-size:.85rem;font-weight:700;color:var(--mut);background:none;cursor:pointer;
+ border:1px solid var(--line);border-radius:999px;padding:10px 16px;
+ transition:color .2s,border-color .2s,background .2s,transform .09s ease}
+.opt[aria-pressed=true]{color:#06120c;background:var(--acc);border-color:var(--acc)}
+.opt:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){.opt:hover{border-color:var(--acc);color:var(--acc)}
+ .opt[aria-pressed=true]:hover{color:#06120c}}
+.cifra{font-size:clamp(2rem,5.6vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--acc-l)}
+.cifra small{display:block;font-size:.74rem;font-weight:600;letter-spacing:.05em;color:var(--mut);margin-top:7px}
+.kit{display:grid;grid-template-columns:250px 1fr;gap:clamp(18px,3vw,30px);align-items:start}
+@media(max-width:760px){.kit{grid-template-columns:1fr}}
+.kit label{display:block;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.kit input[type=text]{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:13px;color:var(--txt);padding:13px 15px;font:inherit;font-size:.95rem}
+.kit input[type=text]:focus{outline:none;border-color:var(--acc)}
+.piezas{display:grid;gap:14px}
+.ban{border-radius:16px;padding:clamp(18px,3vw,26px);display:flex;align-items:center;gap:16px;
+ background:var(--lg,linear-gradient(120deg,#4a2f6b,#0b0714));border:1px solid var(--line)}
+.avat{width:62px;height:62px;flex:none;border-radius:50%;display:grid;place-items:center;
+ font-family:var(--pix);font-size:1rem;color:#100a18;background:var(--c1,#e8dcfa)}
+.ban b{display:block;font-size:1.3rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;word-break:break-word}
+.ban span{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut)}
+.mini{aspect-ratio:16/9;border-radius:16px;border:1px solid var(--line);display:grid;align-content:center;
+ padding:clamp(16px,3vw,26px);background:var(--lg2,linear-gradient(200deg,#6b4a9c,#120a1c))}
+.mini u{text-decoration:none;font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--c1,#e8dcfa)}
+.mini strong{font-size:clamp(1.5rem,4.6vw,2.6rem);font-weight:800;line-height:1.02;letter-spacing:-.03em;margin-top:8px;word-break:break-word}
+.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:color .2s,border-color .2s,transform .09s ease;white-space:nowrap;flex:none;cursor:pointer;background:none;font-family:inherit}
+.back:active{transform:scale(.96)}
 .back:hover{color:var(--acc);border-color:var(--acc)}
 .hero{padding:clamp(44px,8vw,88px) 0 clamp(34px,6vw,60px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
 .badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px}
 .badge i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.4s steps(6) infinite}
 @keyframes bp{50%{opacity:.35}}
-.kicker{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:15px}
 h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;margin-bottom:18px}
 .lead{font-size:clamp(1rem,2vw,1.16rem);margin-bottom:10px;font-weight:600}
 .lead span{color:var(--mut);font-weight:400}
@@ -42,7 +78,6 @@ h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;m
 .panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
 .panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
 section{padding:clamp(40px,6.5vw,74px) 0;position:relative;z-index:2}
-.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:13px}
 h2{font-family:var(--pix);font-size:clamp(1rem,2.9vw,1.42rem);line-height:1.45;margin-bottom:13px}
 .intro{color:var(--mut);max-width:62ch;margin-bottom:30px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:15px}
@@ -70,26 +105,6 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 .plan .go:hover{border-color:var(--acc);color:var(--acc)}
 .plan.pop .go{background:linear-gradient(135deg,#e8dcfa,#a97bd6);color:#06120c;border:none}
 .plan.pop .go:hover{filter:brightness(1.08);color:#06120c}
-/* extras */
-.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:11px}
-.ex{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;background:var(--glass);padding:14px 17px}
-.ex b{font-size:.89rem;font-weight:700}
-.ex span{font-size:.86rem;font-weight:800;color:var(--acc);white-space:nowrap}
-/* comparativa */
-.cmp{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--glass)}
-.cmp table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
-.cmp th,.cmp td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line)}
-.cmp th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:800}
-.cmp td:last-child,.cmp th:last-child{text-align:right}
-.cmp tr:last-child td{border-bottom:none}
-.cmp .lqs{color:var(--acc);font-weight:800}
-.cmp .mkt{color:var(--mut);text-decoration:line-through}
-.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:15px}
-.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:21px}
-.step .n{font-family:var(--pix);font-size:.7rem;color:var(--acc);margin-bottom:11px;display:block}
-.step h3{font-size:.96rem;font-weight:800;margin-bottom:6px}
-.step p{font-size:.85rem;color:var(--mut)}
 .note{font-size:.8rem;color:var(--mut);margin-top:18px;line-height:1.6}
 .final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(30px,5.5vw,54px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
 .final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
@@ -103,45 +118,112 @@ footer a:hover{color:var(--acc)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style></head><body>
 <canvas id="stars"></canvas><div class="bgglow"></div>
-<nav><div class="in"><div class="brand">🎬 CREADORES</div><a class="back" href="../index.html" target="_top">← Volver al sitio</a></div></nav>
+<nav><div class="in">
+  <div class="miga"><a href="../index.html#servicios" data-lqs="cerrar">LQS</a><i>/</i><a href="../index.html#servicios" data-lqs="cerrar">Servicios</a><i>/</i><b>Creadores</b></div>
+  <a class="back" href="../index.html#servicios" data-lqs="cerrar">← Volver</a>
+</div></nav>
 <div class="wrap"><header class="hero">
   <div>
     <div class="badge"><i></i>Cupos abiertos · arrancamos esta semana</div>
-    <div class="kicker">GALAXIA LQS ·· PLANETA CREATIVO</div>
     <h1>Creadores</h1>
     <p class="lead">Tu marca personal — <span>con universo propio.</span></p>
     <p class="sub">No es solo un logo bonito: es que tu canal se vea consistente, que publiques sin agotarte y que la gente te reconozca al scroll.</p>
-    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes</a><a class="cta ghost" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%AC%20quiero%20armar%20mi%20marca%20personal." target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="cta ghost" data-muestras href="express-muestras.html">Ver muestras de piezas</a></div>
+    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes y precios</a><a class="cta ghost" href="#vivo">Armar mi kit</a></div>
   </div>
   <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">AURORA-01 · EN VIVO</div></div>
 </header></div>
 <div class="wrap"><section>
-  <div class="eyebrow">QUÉ HACEMOS</div><h2>Lo que construimos contigo</h2><p class="intro">Trabajamos con creadores, marcas personales y proyectos que viven del contenido.</p>
+  <h2>Lo que construimos contigo</h2><p class="intro">Trabajamos con creadores, marcas personales y proyectos que viven del contenido.</p>
   <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Marca personal</h3><p>Definimos tu voz, tu paleta y tu forma. Lo que te hace reconocible.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5M3 17l9 5 9-5"/></svg></div><h3>Kits visuales</h3><p>Plantillas editables para posts, historias, portadas y miniaturas.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg></div><h3>Contenido</h3><p>Piezas listas para publicar y una estructura para no quedarte en blanco.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>Estrategia</h3><p>Qué publicar, cuándo y para quién. Con métricas que sí importan.</p></div></div>
 </section></div>
 <div class="wrap"><section id="paquetes">
-  <div class="eyebrow">PAQUETES</div><h2>Paquetes para creadores</h2><p class="intro">Pensados para que arranques rápido y sostengas el ritmo sin depender de nosotros para todo.</p>
-  <div class="plans"><div class="plan"><h3>Kit Arranque</h3><p class="who">Empiezas y necesitas verte profesional.</p><div class="price">$450.000<small>COP · pago único · 1–2 semanas</small></div><ul><li>Identidad de canal (logo y paleta)</li><li>Foto de perfil y banners</li><li>10 plantillas editables (Canva)</li><li>Portadas para destacadas</li><li>Guía rápida de uso</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%AC%20me%20interesa%20el%20Kit%20Arranque%20para%20creadores." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan pop"><span class="tag">Recomendado</span><h3>Kit Pro</h3><p class="who">Ya creas contenido y quieres subir de nivel.</p><div class="price">$980.000<small>COP · pago único · 2–3 semanas</small></div><ul><li>Todo lo del Kit Arranque</li><li>30 plantillas editables</li><li>Intro y outro animados</li><li>Miniaturas para YouTube</li><li>Guía de estilo completa</li><li>Sesión de estrategia (1h)</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%AC%20me%20interesa%20el%20Kit%20Pro%20para%20creadores." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan"><h3>Contenido Mensual</h3><p class="who">No quieres diseñar nunca más.</p><div class="price">$690.000<small>COP · al mes</small></div><ul><li>12 piezas al mes listas para publicar</li><li>Calendario de contenido</li><li>Adaptación a cada red</li><li>1 ronda de ajustes por pieza</li><li>Reporte mensual simple</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%AC%20quiero%20el%20plan%20de%20Contenido%20Mensual." target="_blank" rel="noopener">Lo quiero →</a></div></div>
+  <h2>Paquetes para creadores</h2><p class="intro">Pensados para que arranques rápido y sostengas el ritmo sin depender de nosotros para todo.</p>
+  <div class="plans"><div class="plan"><h3>Kit Arranque</h3><p class="who">Empiezas y necesitas verte profesional.</p><div class="price">$450.000<small>COP · pago único · 1–2 semanas</small></div><ul><li>Identidad de canal (logo y paleta)</li><li>Foto de perfil y banners</li><li>10 plantillas editables (Canva)</li><li>Portadas para destacadas</li><li>Guía rápida de uso</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Recomendado</span><h3>Kit Pro</h3><p class="who">Ya creas contenido y quieres subir de nivel.</p><div class="price">$980.000<small>COP · pago único · 2–3 semanas</small></div><ul><li>Todo lo del Kit Arranque</li><li>30 plantillas editables</li><li>Intro y outro animados</li><li>Miniaturas para YouTube</li><li>Guía de estilo completa</li><li>Sesión de estrategia (1h)</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Contenido Mensual</h3><p class="who">No quieres diseñar nunca más.</p><div class="price">$690.000<small>COP · al mes</small></div><ul><li>12 piezas al mes listas para publicar</li><li>Calendario de contenido</li><li>Adaptación a cada red</li><li>1 ronda de ajustes por pieza</li><li>Reporte mensual simple</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
   <p class="note">Precios en pesos colombianos (COP). Los planes mensuales son sin cláusula de permanencia: puedes parar cuando quieras avisando con 15 días.</p>
 </section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">A LA CARTA</div><h2>Extras para creadores</h2><p class="intro">Cosas puntuales que puedes sumar cuando las necesites.</p>
-  <div class="extras"><div class="ex"><b>Plantillas adicionales (x10)</b><span>$180.000</span></div><div class="ex"><b>Edición de reel (tú grabas)</b><span>$95.000 c/u</span></div><div class="ex"><b>Miniaturas YouTube (x5)</b><span>$150.000</span></div><div class="ex"><b>Sesión de fotos de perfil (20 fotos)</b><span>desde $360.000</span></div><div class="ex"><b>Media kit para marcas</b><span>$260.000</span></div><div class="ex"><b>Asesoría 1:1 (1 hora)</b><span>$150.000</span></div></div>
-</section></div>
-<div class="wrap"><section><div class="eyebrow">POR QUÉ LQS</div><h2>Precio de creador, no de agencia</h2><p class="intro">El mercado colombiano cobra estos rangos por gestión de contenido. Nosotros armamos el paquete para que puedas mantenerlo tú mismo después.</p><div class="cmp scrollx"><table><tr><th>Servicio</th><th>Mercado Colombia</th><th>LQS</th></tr><tr><td>Kit de marca personal</td><td class="mkt">$800.000 – $1.500.000</td><td class="lqs">$450.000</td></tr><tr><td>Gestión de contenido mensual</td><td class="mkt">$1.500.000 – $2.500.000</td><td class="lqs">$690.000</td></tr><tr><td>Pack de plantillas</td><td class="mkt">$300.000 – $600.000</td><td class="lqs">incluido</td></tr><tr><td>Media kit</td><td class="mkt">$400.000 – $700.000</td><td class="lqs">$260.000</td></tr></table></div><p class="note">Referencias de precios de community management y contenido en Colombia (2026). Nuestro enfoque es entregarte las herramientas, no amarrarte a una mensualidad eterna.</p></section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">TU UNIVERSO</div><h2>De cero a canal reconocible</h2><p class="intro">Tres pasos y un método que ya hemos repetido.</p>
-  <div class="steps"><div class="step"><span class="n">01</span><h3>Descubrimos tu voz</h3><p>Qué cuentas, a quién y por qué a ti sí te escuchan.</p></div><div class="step"><span class="n">02</span><h3>Diseñamos tu universo</h3><p>Colores, tipografías, plantillas y reglas claras.</p></div><div class="step"><span class="n">03</span><h3>Lanzamos contenido</h3><p>Publicas con ritmo, sin improvisar cada día.</p></div><div class="step"><span class="n">04</span><h3>Ajustamos</h3><p>Miramos qué funcionó y afinamos el rumbo.</p></div></div>
+<div class="wrap"><section id="vivo">
+  <h2>Míralo funcionando</h2><p class="intro">Escribe el nombre de tu canal y elige un universo. Se arman la foto de perfil, el banner y la miniatura — las tres piezas con las que la gente te reconoce al scroll.</p>
+  <div class="vivo"><div class="kit">
+    <div>
+      <label for="can">Nombre de tu canal</label>
+      <input type="text" id="can" value="Ruta Propia" maxlength="24" autocomplete="off" spellcheck="false">
+      <div class="opts" id="unis" style="margin-top:18px"></div>
+    </div>
+    <div class="piezas">
+      <div class="ban" id="ban"><span class="avat" id="av">RP</span><span><b id="cnom">Ruta Propia</b><span id="clema">Nuevo video cada semana</span></span></div>
+      <div class="mini" id="mini"><u>Episodio 01</u><strong id="mnom">Ruta Propia</strong></div>
+    </div>
+  </div></div>
+  <p class="vivo-pie">El kit completo, con media kit para marcas y plantillas editables, está en <a href="creadores-muestras.html" data-lqs="muestra" data-titulo="Creadores · muestras">las muestras de Creadores</a>.</p>
 </section></div>
 <div class="wrap"><section><div class="final">
-  <h2>¿Listo para verte como te mereces?</h2><p>Cuéntanos qué creas y te decimos por dónde empezar, incluso si aún no tienes nada armado.</p>
-  <div class="btns"><a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%8E%AC%20quiero%20armar%20mi%20marca%20personal." target="_blank" rel="noopener">Hablemos de tu canal</a><a class="cta ghost" href="../index.html" target="_top">Explorar otros mundos</a></div>
+  <h2>Pide tu cotización</h2><p>Cuéntanos qué creas y en 48 horas tienes la propuesta completa: por dónde empezar, qué entregamos y cuánto vale.</p>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
-  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html" target="_top">LQS</a></span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html#servicios" data-lqs="cerrar">LQS</a></span>
 </div></div></footer>
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta ficha se abre de dos maneras: sola, en su propia pestaña, y dentro del
+   visor del sitio. Antes los enlaces de volver llevaban target="_top": desde
+   el visor recargaban index.html entero y se perdían el filtro ?soy= y la
+   vista donde estabas. Ahora, si estamos dentro, se lo pedimos al sitio; si
+   estamos fuera, el href de siempre hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
+ });
+})();
+
+/* ═══ el ejemplo tocable ═══
+   Las tres piezas del Kit Arranque, armándose con lo que escribas: avatar,
+   banner y miniatura. Es lo que se entrega, no un dibujo de lo que se entrega. */
+(function(){
+ var can=document.getElementById('can');if(!can)return;
+ var U=[
+  ['Nocturno','#e8dcfa','linear-gradient(120deg,#4a2f6b,#0b0714)','linear-gradient(200deg,#6b4a9c,#120a1c)'],
+  ['Cítrico','#ffe6a8','linear-gradient(120deg,#7a4a12,#170d04)','linear-gradient(200deg,#c98a2a,#1c1206)'],
+  ['Menta','#c9f5df','linear-gradient(120deg,#12523a,#04140d)','linear-gradient(200deg,#2f9c72,#06170f)']
+ ],sel=0;
+ var unis=document.getElementById('unis');
+ unis.innerHTML=U.map(function(u,i){
+  return '<button class="opt" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'">'+u[0]+'</button>';}).join('');
+ function iniciales(s){
+  var p=s.trim().split(/\s+/).filter(Boolean);
+  if(!p.length)return 'TU';
+  return (p[0][0]+(p[1]?p[1][0]:(p[0][1]||''))).toUpperCase();
+ }
+ function pinta(){
+  var v=can.value||'Tu canal',u=U[sel];
+  document.getElementById('av').textContent=iniciales(v);
+  document.getElementById('cnom').textContent=v;
+  document.getElementById('mnom').textContent=v;
+  document.getElementById('ban').style.setProperty('--lg',u[2]);
+  document.getElementById('mini').style.setProperty('--lg2',u[3]);
+  document.getElementById('av').style.setProperty('--c1',u[1]);
+  document.getElementById('mini').style.setProperty('--c1',u[1]);
+ }
+ can.addEventListener('input',pinta);
+ unis.addEventListener('click',function(e){
+  var b=e.target.closest('.opt');if(!b)return;
+  sel=+b.dataset.i;
+  [].forEach.call(unis.children,function(x,i){x.setAttribute('aria-pressed',String(i===sel));});
+  pinta();});
+ pinta();
+})();
+
 (function(){var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
  function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(140,Math.round(innerWidth*innerHeight/12000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
  rz();addEventListener('resize',rz);

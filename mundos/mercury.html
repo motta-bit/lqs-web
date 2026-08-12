@@ -20,13 +20,47 @@ a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:20;background:rgba(5,6,15,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1120px;margin:0 auto;padding:13px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-family:var(--pix);font-size:.72rem;color:var(--acc);display:flex;align-items:center;gap:8px}
-.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:.2s;white-space:nowrap}
+/* el rastro de migas: dónde estás y de dónde vienes, siempre a la vista */
+.miga{display:flex;align-items:center;gap:8px;min-width:0;font-size:.78rem;color:var(--mut)}
+.miga a{border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.miga a:hover{color:var(--acc);border-color:var(--acc)}
+.miga b{color:var(--txt);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.miga i{font-style:normal;color:var(--acc-d);flex:none}
+/* el ejemplo tocable: lo único de esta ficha que no se lee, se usa */
+.vivo{border:1px solid var(--line);border-radius:24px;background:var(--glass);padding:clamp(20px,3vw,28px)}
+.vivo-pie{margin-top:16px;font-size:.84rem;color:var(--mut)}
+.vivo-pie a{color:var(--acc);border-bottom:1px solid currentColor}
+.opts{display:flex;flex-wrap:wrap;gap:9px}
+.opt{font:inherit;font-size:.85rem;font-weight:700;color:var(--mut);background:none;cursor:pointer;
+ border:1px solid var(--line);border-radius:999px;padding:10px 16px;
+ transition:color .2s,border-color .2s,background .2s,transform .09s ease}
+.opt[aria-pressed=true]{color:#06120c;background:var(--acc);border-color:var(--acc)}
+.opt:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){.opt:hover{border-color:var(--acc);color:var(--acc)}
+ .opt[aria-pressed=true]:hover{color:#06120c}}
+.cifra{font-size:clamp(2rem,5.6vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--acc-l)}
+.cifra small{display:block;font-size:.74rem;font-weight:600;letter-spacing:.05em;color:var(--mut);margin-top:7px}
+.arma{display:grid;grid-template-columns:1fr 270px;gap:clamp(18px,3vw,30px);align-items:start}
+@media(max-width:760px){.arma{grid-template-columns:1fr}}
+.enc{margin-top:22px}
+.enc h3{font-size:.95rem;font-weight:800;margin-bottom:11px}
+.prev{border:1px solid var(--line);border-radius:18px;
+ background:radial-gradient(78% 92% at 50% 34%,color-mix(in oklab,var(--acc) 22%,transparent),transparent 72%),rgba(255,255,255,.03);
+ padding:14px;display:grid;place-items:center;margin-top:22px}
+.prev svg{width:100%;max-width:340px;height:auto;display:block}
+.prev .metal{fill:none;stroke:var(--met,#dfe3e8);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.prev .metal.lleno{fill:var(--met,#dfe3e8);stroke:none}
+.prev .graba{fill:var(--met,#dfe3e8);font-size:11px;font-weight:800;letter-spacing:.22em;text-anchor:middle;font-family:inherit;opacity:.85}
+.cuenta{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.05);padding:22px}
+.cuenta ul{list-style:none;margin:16px 0 0;display:grid;gap:7px;font-size:.84rem;color:var(--mut)}
+.cuenta li{display:flex;justify-content:space-between;gap:10px}
+.back{font-size:.82rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px;transition:color .2s,border-color .2s,transform .09s ease;white-space:nowrap;flex:none;cursor:pointer;background:none;font-family:inherit}
+.back:active{transform:scale(.96)}
 .back:hover{color:var(--acc);border-color:var(--acc)}
 .hero{padding:clamp(44px,8vw,88px) 0 clamp(34px,6vw,60px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,54px);align-items:center}
 .badge{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;font-weight:700;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:9px 16px;margin-bottom:20px}
 .badge i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.4s steps(6) infinite}
 @keyframes bp{50%{opacity:.35}}
-.kicker{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:15px}
 h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;margin-bottom:18px}
 .lead{font-size:clamp(1rem,2vw,1.16rem);margin-bottom:10px;font-weight:600}
 .lead span{color:var(--mut);font-weight:400}
@@ -42,7 +76,6 @@ h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;m
 .panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
 .panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
 section{padding:clamp(40px,6.5vw,74px) 0;position:relative;z-index:2}
-.eyebrow{font-family:var(--pix);font-size:.55rem;letter-spacing:.2em;color:var(--acc);margin-bottom:13px}
 h2{font-family:var(--pix);font-size:clamp(1rem,2.9vw,1.42rem);line-height:1.45;margin-bottom:13px}
 .intro{color:var(--mut);max-width:62ch;margin-bottom:30px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:15px}
@@ -70,26 +103,6 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 .plan .go:hover{border-color:var(--acc);color:var(--acc)}
 .plan.pop .go{background:linear-gradient(135deg,#ffe1ec,#d98aa6);color:#06120c;border:none}
 .plan.pop .go:hover{filter:brightness(1.08);color:#06120c}
-/* extras */
-.extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:11px}
-.ex{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;background:var(--glass);padding:14px 17px}
-.ex b{font-size:.89rem;font-weight:700}
-.ex span{font-size:.86rem;font-weight:800;color:var(--acc);white-space:nowrap}
-/* comparativa */
-.cmp{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--glass)}
-.cmp table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:420px}
-.cmp th,.cmp td{padding:13px 15px;text-align:left;border-bottom:1px solid var(--line)}
-.cmp th{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:800}
-.cmp td:last-child,.cmp th:last-child{text-align:right}
-.cmp tr:last-child td{border-bottom:none}
-.cmp .lqs{color:var(--acc);font-weight:800}
-.cmp .mkt{color:var(--mut);text-decoration:line-through}
-.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:15px}
-.step{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:21px}
-.step .n{font-family:var(--pix);font-size:.7rem;color:var(--acc);margin-bottom:11px;display:block}
-.step h3{font-size:.96rem;font-weight:800;margin-bottom:6px}
-.step p{font-size:.85rem;color:var(--mut)}
 .note{font-size:.8rem;color:var(--mut);margin-top:18px;line-height:1.6}
 .final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(30px,5.5vw,54px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
 .final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
@@ -103,45 +116,125 @@ footer a:hover{color:var(--acc)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style></head><body>
 <canvas id="stars"></canvas><div class="bgglow"></div>
-<nav><div class="in"><div class="brand">💎 MERCURY</div><a class="back" href="../index.html" target="_top">← Volver al sitio</a></div></nav>
+<nav><div class="in">
+  <div class="miga"><a href="../index.html#servicios" data-lqs="cerrar">LQS</a><i>/</i><a href="../index.html#servicios" data-lqs="cerrar">Servicios</a><i>/</i><b>Joyería</b></div>
+  <a class="back" href="../index.html#servicios" data-lqs="cerrar">← Volver</a>
+</div></nav>
 <div class="wrap"><header class="hero">
   <div>
     <div class="badge"><i></i>Encargos abiertos · colección en camino</div>
-    <div class="kicker">GALAXIA LQS ·· PLANETA JOYERÍA</div>
     <h1>Mercury</h1>
     <p class="lead">Joyería con alma — <span>marca propia de LQS.</span></p>
     <p class="sub">Piezas pensadas para durar y para significar algo. Trabajamos por encargo, en cápsulas cortas y también para marcas que quieren regalar algo memorable.</p>
-    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes</a><a class="cta ghost" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%92%8E%20quiero%20hablar%20de%20una%20pieza%20de%20Mercury." target="_blank" rel="noopener">Escribir por WhatsApp</a><a class="cta ghost" data-muestras href="marcas-muestras.html">Ver catálogo y configurador</a></div>
+    <div class="btns"><a class="cta" href="#paquetes">Ver paquetes y precios</a><a class="cta ghost" href="#vivo">Configurar una pieza</a></div>
   </div>
   <div class="panel"><canvas id="pl" width="300" height="220"></canvas><div class="cap">MERCURY-01 · PULIENDO</div></div>
 </header></div>
 <div class="wrap"><section>
-  <div class="eyebrow">QUÉ HACEMOS</div><h2>Tres formas de tener un Mercury</h2><p class="intro">Mercury nace del mismo estudio que LQS: diseño con intención, aplicado al metal.</p>
+  <h2>Tres formas de tener un Mercury</h2><p class="intro">Mercury nace del mismo estudio que LQS: diseño con intención, aplicado al metal.</p>
   <div class="grid"><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="14" r="6"/><path d="m9 6 3-3 3 3-3 2z"/></svg></div><h3>Piezas por encargo</h3><p>Nos cuentas la idea (o la historia) y diseñamos la pieza contigo, desde el boceto.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3 6 9l6 12 6-12-3-6"/></svg></div><h3>Colección cápsula</h3><p>Series cortas y numeradas. Cuando se agotan, no se reponen.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13M12 8S9 3 7 5s5 3 5 3 3-5 5-3-5 3-5 3"/></svg></div><h3>Joyería corporativa</h3><p>Pines, dijes y detalles con tu marca para equipos, clientes o eventos.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="m12 3 2.6 6.1 6.4.5-4.9 4.2 1.5 6.2L12 16.8 6.4 20l1.5-6.2L3 9.6l6.4-.5z"/></svg></div><h3>Piezas de pareja</h3><p>Anillos y dijes para bodas, aniversarios y momentos que se cuentan.</p></div></div>
 </section></div>
 <div class="wrap"><section id="paquetes">
-  <div class="eyebrow">PAQUETES</div><h2>Cómo trabajamos las piezas</h2><p class="intro">Precios de referencia en pesos colombianos. El valor final depende del metal, el tamaño y el nivel de detalle.</p>
-  <div class="plans"><div class="plan"><h3>Pieza de Colección</h3><p class="who">Quieres algo nuestro, listo para llevar.</p><div class="price">desde $126.000<small>COP · entrega inmediata</small></div><ul><li>Piezas de la cápsula vigente</li><li>Plata 925 o baño de oro</li><li>Empaque de marca incluido</li><li>Envío a todo el país</li><li>Garantía de 6 meses</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%92%8E%20quiero%20ver%20las%20piezas%20de%20colecci%C3%B3n%20de%20Mercury." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Pieza por Encargo</h3><p class="who">Tienes una idea y quieres hacerla real.</p><div class="price">desde $280.000<small>COP · 3–4 semanas</small></div><ul><li>Asesoría y boceto personalizado</li><li>2 rondas de ajustes al diseño</li><li>Elaboración artesanal</li><li>Grabado interior incluido</li><li>Empaque de regalo</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%92%8E%20quiero%20encargar%20una%20pieza%20personalizada." target="_blank" rel="noopener">Lo quiero →</a></div><div class="plan"><h3>Línea Corporativa</h3><p class="who">Tu marca quiere regalar algo que se conserve.</p><div class="price">desde $38.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño con tu identidad</li><li>Pines, dijes o llaveros en metal</li><li>Descuento por volumen</li><li>Empaque personalizado</li><li>Entrega en 3–5 semanas</li></ul><a class="go" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%92%8E%20quiero%20cotizar%20joyer%C3%ADa%20corporativa%20para%20mi%20marca." target="_blank" rel="noopener">Lo quiero →</a></div></div>
+  <h2>Cómo trabajamos las piezas</h2><p class="intro">Precios de referencia en pesos colombianos. El valor final depende del metal, el tamaño y el nivel de detalle.</p>
+  <div class="plans"><div class="plan"><h3>Pieza de Colección</h3><p class="who">Quieres algo nuestro, listo para llevar.</p><div class="price">desde $126.000<small>COP · entrega inmediata</small></div><ul><li>Piezas de la cápsula vigente</li><li>Plata 925 o baño de oro</li><li>Empaque de marca incluido</li><li>Envío a todo el país</li><li>Garantía de 6 meses</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Pieza por Encargo</h3><p class="who">Tienes una idea y quieres hacerla real.</p><div class="price">desde $280.000<small>COP · 3–4 semanas</small></div><ul><li>Asesoría y boceto personalizado</li><li>2 rondas de ajustes al diseño</li><li>Elaboración artesanal</li><li>Grabado interior incluido</li><li>Empaque de regalo</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Línea Corporativa</h3><p class="who">Tu marca quiere regalar algo que se conserve.</p><div class="price">desde $38.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño con tu identidad</li><li>Pines, dijes o llaveros en metal</li><li>Descuento por volumen</li><li>Empaque personalizado</li><li>Entrega en 3–5 semanas</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
   <p class="note">Precios de referencia en pesos colombianos (COP). Cada encargo se cotiza según metal (plata 925, baño de oro), peso y complejidad.</p>
 </section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">A LA CARTA</div><h2>Servicios de taller</h2><p class="intro">También cuidamos lo que ya tienes.</p>
-  <div class="extras"><div class="ex"><b>Grabado personalizado</b><span>$35.000</span></div><div class="ex"><b>Ajuste de talla</b><span>$45.000</span></div><div class="ex"><b>Pulido y restauración</b><span>desde $60.000</span></div><div class="ex"><b>Baño de oro sobre plata</b><span>desde $80.000</span></div><div class="ex"><b>Empaque de regalo premium</b><span>$25.000</span></div><div class="ex"><b>Envío nacional</b><span>$16.000</span></div></div>
-</section></div>
-<div class="wrap"><section><div class="eyebrow">POR QUÉ LQS</div><h2>Diseño de autor, sin sobreprecio de vitrina</h2><p class="intro">La joyería de diseño en Colombia suele venderse con el margen de la tienda encima. Al ser marca propia, ese margen no existe.</p><div class="cmp scrollx"><table><tr><th>Servicio</th><th>Mercado Colombia</th><th>LQS</th></tr><tr><td>Pieza de plata de diseño</td><td class="mkt">$180.000 – $400.000</td><td class="lqs">desde $126.000</td></tr><tr><td>Anillo personalizado</td><td class="mkt">$500.000 – $1.200.000</td><td class="lqs">desde $280.000</td></tr><tr><td>Pin corporativo (x50)</td><td class="mkt">$65.000 c/u</td><td class="lqs">desde $38.000 c/u</td></tr><tr><td>Grabado</td><td class="mkt">$50.000 – $90.000</td><td class="lqs">$35.000</td></tr></table></div><p class="note">Mercury es marca propia de LQS: diseñamos, producimos y vendemos directo, sin intermediarios ni vitrina física que pagar.</p></section></div>
-<div class="wrap"><section>
-  <div class="eyebrow">EL PROCESO</div><h2>De la idea a la pieza</h2><p class="intro">Especialmente para encargos: así se hace tu pieza.</p>
-  <div class="steps"><div class="step"><span class="n">01</span><h3>Conversamos</h3><p>Nos cuentas la idea, el uso y el presupuesto.</p></div><div class="step"><span class="n">02</span><h3>Boceto</h3><p>Dibujamos la propuesta y ajustamos contigo.</p></div><div class="step"><span class="n">03</span><h3>Taller</h3><p>Se elabora a mano, con el metal elegido.</p></div><div class="step"><span class="n">04</span><h3>Entrega</h3><p>Empacada y lista, con su garantía.</p></div></div>
+<div class="wrap"><section id="vivo">
+  <h2>Míralo funcionando</h2><p class="intro">Elige pieza, metal y si lleva grabado. El precio de referencia se arma con la misma tabla del taller.</p>
+  <div class="vivo"><div class="arma">
+    <div>
+      <div class="opts" id="piezas"></div>
+      <div class="enc"><h3>Metal</h3><div class="opts" id="metales"></div></div>
+      <div class="enc"><h3>Grabado</h3><div class="opts" id="grabs"></div></div>
+      <div class="prev" id="prev"></div>
+    </div>
+    <div class="cuenta">
+      <div class="cifra" id="tot">$180.000<small id="totn">Anillo en plata 925</small></div>
+      <ul id="det"></ul>
+    </div>
+  </div></div>
+  <p class="vivo-pie">El configurador completo, con la galería de piezas, está en <a href="marcas-muestras.html#cfgjoya" data-lqs="muestra" data-titulo="Joyería · configurador">el configurador de Mercury</a>.</p>
 </section></div>
 <div class="wrap"><section><div class="final">
-  <h2>¿Tienes una pieza en mente?</h2><p>Cuéntanos qué imaginas — o qué historia quieres contar — y te decimos cómo la hacemos realidad.</p>
-  <div class="btns"><a class="cta" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%92%8E%20quiero%20hablar%20de%20una%20pieza%20de%20Mercury." target="_blank" rel="noopener">Encargar mi pieza</a><a class="cta ghost" href="../index.html" target="_top">Explorar otros mundos</a></div>
+  <h2>Pide tu cotización</h2><p>Cuéntanos qué pieza imaginas —o qué historia quieres contar— y en 48 horas tienes la propuesta con precio cerrado.</p>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
-  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html" target="_top">LQS</a></span>
+  <span><a href="mailto:cdparravargas@gmail.com">cdparravargas@gmail.com</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html#servicios" data-lqs="cerrar">LQS</a></span>
 </div></div></footer>
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta ficha se abre de dos maneras: sola, en su propia pestaña, y dentro del
+   visor del sitio. Antes los enlaces de volver llevaban target="_top": desde
+   el visor recargaban index.html entero y se perdían el filtro ?soy= y la
+   vista donde estabas. Ahora, si estamos dentro, se lo pedimos al sitio; si
+   estamos fuera, el href de siempre hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
+ });
+})();
+
+/* ═══ el ejemplo tocable ═══
+   Los precios de la galería de docs/PRECIOS.md, que son los que manda el
+   configurador: anillo $180.000, dije $145.000, aretes $126.000, pulsera
+   $210.000, gemelos $168.000, pin $38.000. El grabado suma $35.000. */
+(function(){
+ var caja=document.getElementById('piezas');if(!caja)return;
+ var P=[
+  ['Anillo',180000,'<circle class="metal" cx="100" cy="88" r="40"/><path class="metal lleno" d="M80 48 100 20l20 28-20 12z"/>'],
+  ['Dije',145000,'<circle class="metal" cx="100" cy="34" r="13"/><path class="metal lleno" d="M100 52 132 118H68z"/>'],
+  ['Aretes',126000,'<circle class="metal" cx="62" cy="46" r="9"/><path class="metal" d="M62 55v28a22 22 0 1 0 22 22"/><circle class="metal" cx="138" cy="46" r="9"/><path class="metal" d="M138 55v28a22 22 0 1 1-22 22"/>'],
+  ['Pulsera',210000,'<ellipse class="metal" cx="100" cy="82" rx="62" ry="40"/><circle class="metal lleno" cx="100" cy="42" r="8"/>'],
+  ['Gemelos',168000,'<rect class="metal" x="26" y="52" width="58" height="58" rx="12"/><rect class="metal" x="116" y="52" width="58" height="58" rx="12"/>'],
+  ['Pin',38000,'<circle class="metal" cx="100" cy="70" r="38"/><path class="metal" d="M100 108v30"/>']
+ ];
+ var M=[['Plata 925','#dfe3e8',0],['Baño de oro','#e8c877',0],['Acero','#a9b2bd',0]];
+ var G=[['Sin grabado',0,''],['Con grabado · +$35.000',35000,'MERCURY']];
+ var pi=0,me=0,gr=0;
+ var pesos=function(n){return '$'+n.toLocaleString('es-CO');};
+ caja.innerHTML=P.map(function(p,i){
+  return '<button class="opt" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'">'+p[0]+'</button>';}).join('');
+ var cm=document.getElementById('metales');
+ cm.innerHTML=M.map(function(m,i){
+  return '<button class="opt" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'">'+m[0]+'</button>';}).join('');
+ var cg=document.getElementById('grabs');
+ cg.innerHTML=G.map(function(g,i){
+  return '<button class="opt" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'">'+g[0]+'</button>';}).join('');
+ function pinta(){
+  var p=P[pi],t=p[1]+G[gr][1],det='';
+  det+='<li><span>'+p[0]+' en '+M[me][0].toLowerCase()+'</span><span>'+pesos(p[1])+'</span></li>';
+  if(G[gr][1])det+='<li><span>Grabado personalizado</span><span>'+pesos(G[gr][1])+'</span></li>';
+  document.getElementById('tot').firstChild.nodeValue=pesos(t);
+  document.getElementById('totn').textContent=p[0]+' en '+M[me][0].toLowerCase();
+  document.getElementById('det').innerHTML=det+'<li><span>Entrega</span><span>2–3 semanas</span></li>';
+  var pv=document.getElementById('prev');
+  pv.innerHTML='<svg viewBox="0 0 200 152" role="img" aria-label="'+p[0]+' en '+M[me][0]+'">'+p[2]+
+   (G[gr][2]?'<text class="graba" x="100" y="146">'+G[gr][2]+'</text>':'')+'</svg>';
+  pv.style.setProperty('--met',M[me][1]);
+ }
+ function grupo(c,fn){c.addEventListener('click',function(e){
+  var b=e.target.closest('.opt');if(!b)return;
+  fn(+b.dataset.i);
+  [].forEach.call(c.children,function(x){x.setAttribute('aria-pressed',String(x===b));});
+  pinta();});}
+ grupo(caja,function(i){pi=i;});
+ grupo(cm,function(i){me=i;});
+ grupo(cg,function(i){gr=i;});
+ pinta();
+})();
+
 (function(){var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],R=matchMedia('(prefers-reduced-motion:reduce)').matches,t=0;
  function rz(){c.width=innerWidth;c.height=innerHeight;S=[];var n=Math.min(140,Math.round(innerWidth*innerHeight/12000));for(var i=0;i<n;i++)S.push({x:Math.random()*c.width,y:Math.random()*c.height,z:Math.random()*.8+.2,p:Math.random()*6});}
  rz();addEventListener('resize',rz);
