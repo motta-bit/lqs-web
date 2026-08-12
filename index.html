@@ -2690,6 +2690,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape'&&visor.classList.contains('on
      cerrar  → cierra el visor y te deja donde estabas
      ir      → cierra el visor y cambia de vista (la ficha pide «cotizar»)
      abrir   → abre otra página dentro del visor y apila la miga de vuelta
+     volver  → deshace ese salto: la muestra regresa a su ficha
    Fuera del visor los mismos enlaces siguen siendo href normales.
    ═══════════════════════════════════════════════════════════════════════ */
 addEventListener('message',e=>{
@@ -2701,11 +2702,25 @@ addEventListener('message',e=>{
  /* «ir» cierra sin consumir la entrada de historial del visor a propósito:
     así, Atrás desde la cotización te devuelve a la ficha que estabas leyendo
     en vez de sacarte del recorrido. */
- if(d.hacer==='ir'){cerrarVisor();go(String(d.vista||'inicio'));return;}
- if(d.hacer==='abrir'&&typeof d.url==='string'&&!/^[a-z]+:/i.test(d.url)){
+ if(d.hacer==='ir'){
+  cerrarVisor();go(String(d.vista||'inicio'));
+  /* la ficha sabe de qué área venías: el formulario llega con ella puesta y
+     el visitante no tiene que volver a decirla */
+  if(d.area){const s=document.getElementById('solUni');
+   if(s&&[].some.call(s.options,o=>o.value===d.area))s.value=d.area;}
+  return;
+ }
+ if((d.hacer==='abrir'||d.hacer==='volver')&&typeof d.url==='string'&&!/^[a-z]+:/i.test(d.url)){
   /* la url llega relativa a mundos/: se resuelve contra la que ya está puesta */
   const base=new URL(document.getElementById('visorAbrir').getAttribute('href')||'',location.href);
-  abrirDemo(new URL(d.url,base).href.replace(location.origin+'/',''),String(d.titulo||'Muestra'),null,true,true);
+  const rel=new URL(d.url,base).href.replace(location.origin+'/','');
+  if(d.hacer==='volver'){
+   /* la muestra vuelve a su ficha: si esa ficha es de donde vino, se consume
+      la miga en vez de apilar otra, para que el rastro no crezca en círculos */
+   const ant=visorPila[visorPila.length-1];
+   if(ant&&ant.url.split('#')[0]===rel.split('#')[0])visorPila.pop();
+   abrirDemo(rel,String(d.titulo||'Ficha'),null,true);
+  }else abrirDemo(rel,String(d.titulo||'Muestra'),null,true,true);
  }
 });
 

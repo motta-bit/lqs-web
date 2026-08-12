@@ -130,7 +130,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Paquetes de producción</h2><p class="intro">Precio cerrado por entregable. Incluye dirección, rodaje, edición, color y música con licencia.</p>
-  <div class="plans"><div class="plan"><h3>Foto Producto</h3><p class="who">Tienes productos o carta que mostrar.</p><div class="price">$360.000<small>COP · 20 fotos · 5 días</small></div><ul><li>Hasta 20 fotos editadas</li><li>Fondo blanco o ambientado</li><li>Retoque profesional incluido</li><li>Formatos web + redes</li><li>1 ronda de ajustes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Pack Reels</h3><p class="who">Necesitas contenido en video, constante.</p><div class="price">$480.000<small>COP · 4 reels · 2 semanas</small></div><ul><li>4 reels verticales (hasta 40s)</li><li>Guion y storyboard incluidos</li><li>Rodaje en 1 jornada</li><li>Subtítulos y música con licencia</li><li>Versiones para Reels, TikTok y Shorts</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Video Institucional</h3><p class="who">Quieres la pieza que representa tu marca.</p><div class="price">$950.000<small>COP · hasta 90s · 3 semanas</small></div><ul><li>Guion y preproducción</li><li>Jornada completa de rodaje</li><li>Edición, color y musicalización</li><li>Locución o entrevistas</li><li>Master + versiones para redes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Foto Producto</h3><p class="who">Tienes productos o carta que mostrar.</p><div class="price">$360.000<small>COP · 20 fotos · 5 días</small></div><ul><li>Hasta 20 fotos editadas</li><li>Fondo blanco o ambientado</li><li>Retoque profesional incluido</li><li>Formatos web + redes</li><li>1 ronda de ajustes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="productora">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Pack Reels</h3><p class="who">Necesitas contenido en video, constante.</p><div class="price">$480.000<small>COP · 4 reels · 2 semanas</small></div><ul><li>4 reels verticales (hasta 40s)</li><li>Guion y storyboard incluidos</li><li>Rodaje en 1 jornada</li><li>Subtítulos y música con licencia</li><li>Versiones para Reels, TikTok y Shorts</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="productora">Cotizar este paquete →</a></div><div class="plan"><h3>Video Institucional</h3><p class="who">Quieres la pieza que representa tu marca.</p><div class="price">$950.000<small>COP · hasta 90s · 3 semanas</small></div><ul><li>Guion y preproducción</li><li>Jornada completa de rodaje</li><li>Edición, color y musicalización</li><li>Locución o entrevistas</li><li>Master + versiones para redes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="productora">Cotizar este paquete →</a></div></div>
   <p class="note">Precios en pesos colombianos (COP) para Medellín y área metropolitana. Rodajes fuera de la ciudad suman transporte y viáticos.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -149,7 +149,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Cuéntanos qué quieres rodar y para cuándo. En 48 horas tienes la propuesta completa con precio cerrado y fecha de rodaje.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="productora">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -173,7 +173,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

@@ -140,7 +140,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Paquetes de producción textil</h2><p class="intro">Precios de referencia por unidad en pesos colombianos. A más unidades, mejor precio por prenda.</p>
-  <div class="plans"><div class="plan"><h3>Prenda de Cápsula</h3><p class="who">Quieres una pieza foma para ti.</p><div class="price">desde $89.000<small>COP · por prenda</small></div><ul><li>Camisetas de la cápsula vigente</li><li>Algodón de buen gramaje</li><li>Estampado de larga duración</li><li>Serie corta y numerada</li><li>Envío a todo el país</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Merch de Marca</h3><p class="who">Tu marca quiere ropa que la gente use.</p><div class="price">desde $46.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño aplicado a la prenda</li><li>Camisetas, gorras o tote bags</li><li>Estampado o bordado</li><li>Muestra física antes de producir</li><li>Entrega en 3–4 semanas</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Uniformes</h3><p class="who">Tu equipo necesita verse como una marca.</p><div class="price">desde $68.000<small>COP · por unidad · mín. 15</small></div><ul><li>Diseño de uniforme completo</li><li>Camisas, delantales o polos</li><li>Bordado del logo incluido</li><li>Tallas por persona</li><li>Reposición fácil después</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Prenda de Cápsula</h3><p class="who">Quieres una pieza foma para ti.</p><div class="price">desde $89.000<small>COP · por prenda</small></div><ul><li>Camisetas de la cápsula vigente</li><li>Algodón de buen gramaje</li><li>Estampado de larga duración</li><li>Serie corta y numerada</li><li>Envío a todo el país</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="foma">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Merch de Marca</h3><p class="who">Tu marca quiere ropa que la gente use.</p><div class="price">desde $46.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño aplicado a la prenda</li><li>Camisetas, gorras o tote bags</li><li>Estampado o bordado</li><li>Muestra física antes de producir</li><li>Entrega en 3–4 semanas</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="foma">Cotizar este paquete →</a></div><div class="plan"><h3>Uniformes</h3><p class="who">Tu equipo necesita verse como una marca.</p><div class="price">desde $68.000<small>COP · por unidad · mín. 15</small></div><ul><li>Diseño de uniforme completo</li><li>Camisas, delantales o polos</li><li>Bordado del logo incluido</li><li>Tallas por persona</li><li>Reposición fácil después</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="foma">Cotizar este paquete →</a></div></div>
   <p class="note">Precios de referencia en pesos colombianos (COP), varían según prenda, técnica (estampado/bordado), número de tintas y cantidad. Cotizamos exacto en 48h.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -162,7 +162,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Dinos qué prenda tienes en mente y cuántas necesitas. En 48 horas tienes la propuesta completa con precio cerrado y fecha de entrega.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="foma">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -186,7 +186,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

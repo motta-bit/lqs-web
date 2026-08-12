@@ -132,7 +132,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Paquetes para empresas</h2><p class="intro">Precio cerrado en pesos colombianos, sin costos ocultos. Incluyen reuniones de arranque y entrega, y capacitación para tu equipo.</p>
-  <div class="plans"><div class="plan"><h3>Identidad Esencial</h3><p class="who">Empresas que necesitan verse serias ya.</p><div class="price">$890.000<small>COP · pago único · 2 semanas</small></div><ul><li>Logo (3 propuestas, 2 rondas)</li><li>Paleta y tipografías</li><li>Mini manual de marca (PDF)</li><li>Papelería digital y firma de correo</li><li>Kit de plantillas para redes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Presencia Digital</h3><p class="who">Ya tienes marca y te falta estar en internet.</p><div class="price">$1.850.000<small>COP · pago único · 3 semanas</small></div><ul><li>Sitio web hasta 5 secciones</li><li>Dominio y correos configurados</li><li>Optimización móvil y velocidad</li><li>SEO base + Google Maps</li><li>Formulario y WhatsApp integrados</li><li>1 mes de soporte incluido</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Mejor valor</span><h3>Despegue Total</h3><p class="who">Quieres resolver marca, web y atención de una.</p><div class="price">$3.900.000<small>COP · pago único · 5–6 semanas</small></div><ul><li>Todo lo de Identidad Esencial</li><li>Todo lo de Presencia Digital</li><li>Automatización de WhatsApp</li><li>Catálogo digital o reservas</li><li>Capacitación a tu equipo</li><li>3 meses de soporte incluido</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Identidad Esencial</h3><p class="who">Empresas que necesitan verse serias ya.</p><div class="price">$890.000<small>COP · pago único · 2 semanas</small></div><ul><li>Logo (3 propuestas, 2 rondas)</li><li>Paleta y tipografías</li><li>Mini manual de marca (PDF)</li><li>Papelería digital y firma de correo</li><li>Kit de plantillas para redes</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="empresas">Cotizar este paquete →</a></div><div class="plan"><h3>Presencia Digital</h3><p class="who">Ya tienes marca y te falta estar en internet.</p><div class="price">$1.850.000<small>COP · pago único · 3 semanas</small></div><ul><li>Sitio web hasta 5 secciones</li><li>Dominio y correos configurados</li><li>Optimización móvil y velocidad</li><li>SEO base + Google Maps</li><li>Formulario y WhatsApp integrados</li><li>1 mes de soporte incluido</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="empresas">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Mejor valor</span><h3>Despegue Total</h3><p class="who">Quieres resolver marca, web y atención de una.</p><div class="price">$3.900.000<small>COP · pago único · 5–6 semanas</small></div><ul><li>Todo lo de Identidad Esencial</li><li>Todo lo de Presencia Digital</li><li>Automatización de WhatsApp</li><li>Catálogo digital o reservas</li><li>Capacitación a tu equipo</li><li>3 meses de soporte incluido</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="empresas">Cotizar este paquete →</a></div></div>
   <p class="note">Precios en pesos colombianos (COP). Pago 50% al inicio y 50% contra entrega. La tienda online y proyectos a medida se cotizan aparte.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -154,7 +154,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Cuéntanos qué necesita tu empresa y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="empresas">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -178,7 +178,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

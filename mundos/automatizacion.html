@@ -429,7 +429,7 @@ footer a:hover{color:var(--acc-l)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

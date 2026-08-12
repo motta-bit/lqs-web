@@ -138,7 +138,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Paquetes Express</h2><p class="intro">Precios cerrados en pesos colombianos. Incluyen 2 rondas de ajustes y archivos finales listos para usar.</p>
-  <div class="plans"><div class="plan"><h3>Pieza suelta</h3><p class="who">Necesitas una sola cosa, bien hecha.</p><div class="price">$45.000<small>COP · desde · 48–72h</small></div><ul><li>1 pieza a elección (flyer, post o portada)</li><li>2 rondas de ajustes</li><li>Archivos JPG + PNG en alta</li><li>Medidas para redes o imprenta</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Combo Emprendedor</h3><p class="who">Arrancas tu negocio y necesitas lo básico ya.</p><div class="price">$390.000<small>COP · pago único · 5–7 días</small></div><ul><li>Logo básico (3 propuestas)</li><li>Paleta y tipografías definidas</li><li>6 posts para redes</li><li>Tarjeta personal (digital + imprenta)</li><li>Portada de WhatsApp Business</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Pack Contenido</h3><p class="who">Publicas seguido y no quieres improvisar.</p><div class="price">$290.000<small>COP · al mes · 12 piezas</small></div><ul><li>12 piezas al mes (posts e historias)</li><li>Plantillas editables para ti</li><li>Calendario sugerido de publicación</li><li>Ajustes ilimitados en la primera semana</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Pieza suelta</h3><p class="who">Necesitas una sola cosa, bien hecha.</p><div class="price">$45.000<small>COP · desde · 48–72h</small></div><ul><li>1 pieza a elección (flyer, post o portada)</li><li>2 rondas de ajustes</li><li>Archivos JPG + PNG en alta</li><li>Medidas para redes o imprenta</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="express">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">El más pedido</span><h3>Combo Emprendedor</h3><p class="who">Arrancas tu negocio y necesitas lo básico ya.</p><div class="price">$390.000<small>COP · pago único · 5–7 días</small></div><ul><li>Logo básico (3 propuestas)</li><li>Paleta y tipografías definidas</li><li>6 posts para redes</li><li>Tarjeta personal (digital + imprenta)</li><li>Portada de WhatsApp Business</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="express">Cotizar este paquete →</a></div><div class="plan"><h3>Pack Contenido</h3><p class="who">Publicas seguido y no quieres improvisar.</p><div class="price">$290.000<small>COP · al mes · 12 piezas</small></div><ul><li>12 piezas al mes (posts e historias)</li><li>Plantillas editables para ti</li><li>Calendario sugerido de publicación</li><li>Ajustes ilimitados en la primera semana</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="express">Cotizar este paquete →</a></div></div>
   <p class="note">Todos los precios son en pesos colombianos (COP) e incluyen los archivos finales. Los pagos se hacen 50% al inicio y 50% contra entrega.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -156,7 +156,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Dinos qué piezas necesitas y para cuándo. En 48 horas tienes la propuesta completa con precio cerrado y fecha.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="express">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -180,7 +180,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

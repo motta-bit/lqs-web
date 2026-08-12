@@ -136,7 +136,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Cómo trabajamos las piezas</h2><p class="intro">Precios de referencia en pesos colombianos. El valor final depende del metal, el tamaño y el nivel de detalle.</p>
-  <div class="plans"><div class="plan"><h3>Pieza de Colección</h3><p class="who">Quieres algo nuestro, listo para llevar.</p><div class="price">desde $126.000<small>COP · entrega inmediata</small></div><ul><li>Piezas de la cápsula vigente</li><li>Plata 925 o baño de oro</li><li>Empaque de marca incluido</li><li>Envío a todo el país</li><li>Garantía de 6 meses</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Pieza por Encargo</h3><p class="who">Tienes una idea y quieres hacerla real.</p><div class="price">desde $280.000<small>COP · 3–4 semanas</small></div><ul><li>Asesoría y boceto personalizado</li><li>2 rondas de ajustes al diseño</li><li>Elaboración artesanal</li><li>Grabado interior incluido</li><li>Empaque de regalo</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Línea Corporativa</h3><p class="who">Tu marca quiere regalar algo que se conserve.</p><div class="price">desde $38.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño con tu identidad</li><li>Pines, dijes o llaveros en metal</li><li>Descuento por volumen</li><li>Empaque personalizado</li><li>Entrega en 3–5 semanas</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Pieza de Colección</h3><p class="who">Quieres algo nuestro, listo para llevar.</p><div class="price">desde $126.000<small>COP · entrega inmediata</small></div><ul><li>Piezas de la cápsula vigente</li><li>Plata 925 o baño de oro</li><li>Empaque de marca incluido</li><li>Envío a todo el país</li><li>Garantía de 6 meses</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="mercury">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Más pedido</span><h3>Pieza por Encargo</h3><p class="who">Tienes una idea y quieres hacerla real.</p><div class="price">desde $280.000<small>COP · 3–4 semanas</small></div><ul><li>Asesoría y boceto personalizado</li><li>2 rondas de ajustes al diseño</li><li>Elaboración artesanal</li><li>Grabado interior incluido</li><li>Empaque de regalo</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="mercury">Cotizar este paquete →</a></div><div class="plan"><h3>Línea Corporativa</h3><p class="who">Tu marca quiere regalar algo que se conserve.</p><div class="price">desde $38.000<small>COP · por unidad · mín. 20</small></div><ul><li>Diseño con tu identidad</li><li>Pines, dijes o llaveros en metal</li><li>Descuento por volumen</li><li>Empaque personalizado</li><li>Entrega en 3–5 semanas</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="mercury">Cotizar este paquete →</a></div></div>
   <p class="note">Precios de referencia en pesos colombianos (COP). Cada encargo se cotiza según metal (plata 925, baño de oro), peso y complejidad.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -157,7 +157,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Cuéntanos qué pieza imaginas —o qué historia quieres contar— y en 48 horas tienes la propuesta con precio cerrado.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="mercury">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -181,7 +181,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

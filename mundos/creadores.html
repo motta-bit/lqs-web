@@ -138,7 +138,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section id="paquetes">
   <h2>Paquetes para creadores</h2><p class="intro">Pensados para que arranques rápido y sostengas el ritmo sin depender de nosotros para todo.</p>
-  <div class="plans"><div class="plan"><h3>Kit Arranque</h3><p class="who">Empiezas y necesitas verte profesional.</p><div class="price">$450.000<small>COP · pago único · 1–2 semanas</small></div><ul><li>Identidad de canal (logo y paleta)</li><li>Foto de perfil y banners</li><li>10 plantillas editables (Canva)</li><li>Portadas para destacadas</li><li>Guía rápida de uso</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Recomendado</span><h3>Kit Pro</h3><p class="who">Ya creas contenido y quieres subir de nivel.</p><div class="price">$980.000<small>COP · pago único · 2–3 semanas</small></div><ul><li>Todo lo del Kit Arranque</li><li>30 plantillas editables</li><li>Intro y outro animados</li><li>Miniaturas para YouTube</li><li>Guía de estilo completa</li><li>Sesión de estrategia (1h)</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div><div class="plan"><h3>Contenido Mensual</h3><p class="who">No quieres diseñar nunca más.</p><div class="price">$690.000<small>COP · al mes</small></div><ul><li>12 piezas al mes listas para publicar</li><li>Calendario de contenido</li><li>Adaptación a cada red</li><li>1 ronda de ajustes por pieza</li><li>Reporte mensual simple</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a></div></div>
+  <div class="plans"><div class="plan"><h3>Kit Arranque</h3><p class="who">Empiezas y necesitas verte profesional.</p><div class="price">$450.000<small>COP · pago único · 1–2 semanas</small></div><ul><li>Identidad de canal (logo y paleta)</li><li>Foto de perfil y banners</li><li>10 plantillas editables (Canva)</li><li>Portadas para destacadas</li><li>Guía rápida de uso</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="creadores">Cotizar este paquete →</a></div><div class="plan pop"><span class="tag">Recomendado</span><h3>Kit Pro</h3><p class="who">Ya creas contenido y quieres subir de nivel.</p><div class="price">$980.000<small>COP · pago único · 2–3 semanas</small></div><ul><li>Todo lo del Kit Arranque</li><li>30 plantillas editables</li><li>Intro y outro animados</li><li>Miniaturas para YouTube</li><li>Guía de estilo completa</li><li>Sesión de estrategia (1h)</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="creadores">Cotizar este paquete →</a></div><div class="plan"><h3>Contenido Mensual</h3><p class="who">No quieres diseñar nunca más.</p><div class="price">$690.000<small>COP · al mes</small></div><ul><li>12 piezas al mes listas para publicar</li><li>Calendario de contenido</li><li>Adaptación a cada red</li><li>1 ronda de ajustes por pieza</li><li>Reporte mensual simple</li></ul><a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="creadores">Cotizar este paquete →</a></div></div>
   <p class="note">Precios en pesos colombianos (COP). Los planes mensuales son sin cláusula de permanencia: puedes parar cuando quieras avisando con 15 días.</p>
 </section></div>
 <div class="wrap"><section id="vivo">
@@ -158,7 +158,7 @@ footer a:hover{color:var(--acc)}
 </section></div>
 <div class="wrap"><section><div class="final">
   <h2>Pide tu cotización</h2><p>Cuéntanos qué creas y en 48 horas tienes la propuesta completa: por dónde empezar, qué entregamos y cuánto vale.</p>
-  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a></div>
+  <div class="btns"><a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="creadores">Pedir mi cotización</a></div>
 </div></section></div>
 <footer><div class="wrap"><div class="in">
   <span>LQS · Ecosistema creativo · Medellín, Colombia</span>
@@ -182,7 +182,7 @@ footer a:hover{color:var(--acc)}
   var q=a.getAttribute('data-lqs');
   e.preventDefault();
   if(q==='cerrar')avisa({hacer:'cerrar'});
-  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar',area:a.getAttribute('data-area')||''});
   else if(q==='muestra')avisa({hacer:'abrir',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Muestra'});
  });
 })();

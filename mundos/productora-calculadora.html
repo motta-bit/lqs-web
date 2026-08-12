@@ -197,8 +197,8 @@ footer a:hover{color:var(--gold)}
 <nav><div class="in">
   <div class="brand">🎬 LQS <b>· Calculadora<span class="lg"> de rodaje</span></b></div>
   <div class="navlinks">
-    <a class="nlink" href="productora.html">← Productora</a>
-    <a class="nlink sec" href="../index.html" target="_top">Sitio</a>
+    <a class="nlink" href="productora.html" data-lqs="ficha" data-titulo="Productora · Video y foto">← Ficha de Productora</a>
+    <a class="nlink sec" href="../index.html#servicios" data-lqs="cerrar">Sitio</a>
   </div>
 </div></nav>
 
@@ -513,12 +513,34 @@ footer a:hover{color:var(--gold)}
 
 <footer><div class="wrap"><div class="in">
   <span>LQS · Estudio creativo · Medellín, Colombia</span>
-  <span><a href="../index.html#servicios" target="_top">Servicios</a> · <a href="productora.html">Productora</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html" target="_top">Sitio</a></span>
+  <span><a href="../index.html#servicios" data-lqs="cerrar">Servicios</a> · <a href="productora.html" data-lqs="ficha" data-titulo="Productora · Video y foto">Productora</a> · <a href="https://wa.me/573332791710" target="_blank" rel="noopener">WhatsApp</a> · <a href="../index.html#servicios" data-lqs="cerrar">Sitio</a></span>
 </div></div></footer>
 
 <div class="mbar"><div class="mt"><em>Total estimado</em><b id="mTotal">$0</b></div><button type="button" id="mWa">WhatsApp →</button></div>
 
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta muestra se abre sola, en su pestaña, y también dentro del visor del
+   sitio, casi siempre viniendo de su ficha. Dentro del visor los enlaces de
+   volver se los pedimos al sitio: así el rastro de migas de arriba sabe a
+   dónde regresas y no se pierde el filtro ?soy=. Fuera, el href de siempre
+   hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='cotizar')avisa({hacer:'ir',vista:'cotizar'});
+  else if(q==='ficha')avisa({hacer:'volver',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Ficha'});
+ });
+})();
+
 (function(){
 "use strict";
 var COP=function(n){return '$'+Math.round(n).toLocaleString('es-CO');};
