@@ -643,7 +643,23 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 #visor.on{opacity:1;visibility:visible;transform:none}
 #visor .vtop{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px var(--pad);
  border-bottom:1px solid var(--line);background:rgba(6,7,15,.94);backdrop-filter:blur(12px)}
-#visor .vt{font-family:var(--tech);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+#visor .vmigas{display:flex;align-items:center;gap:12px;min-width:0}
+#visor .vt{display:flex;align-items:center;gap:8px;min-width:0;
+ font-family:var(--tech);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+#visor .vt>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#visor .vraiz,#visor .vsep{color:var(--faint)}
+#visor .vback{display:inline-flex;align-items:center;gap:7px;flex:none;cursor:pointer;
+ font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+ color:var(--ink);background:none;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;
+ transition:border-color var(--dur-fast) ease,color var(--dur-fast) ease,transform 90ms var(--ease-out)}
+#visor .vback[hidden]{display:none}
+#visor .vback svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#visor .vback:active{transform:scale(.96)}
+@media(hover:hover) and (pointer:fine){#visor .vback:hover{border-color:var(--gold);color:var(--gold)}}
+@media(max-width:640px){
+ #visor .vback span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ #visor .vback{padding:8px 11px}
+ #visor .vraiz,#visor .vsep{display:none}}
 #visor .vbody{flex:1;position:relative;display:flex}
 #visor iframe{flex:1;width:100%;border:0;background:var(--bg)}
 #visorFall{display:none;position:absolute;inset:0;z-index:2;background:var(--bg);
@@ -1276,7 +1292,17 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 
 <!-- visor interno -->
 <div id="visor">
-  <div class="vtop"><div class="vt" id="visorT">Muestra</div>
+  <!-- La cabecera del visor es el rastro de migas: dice dónde estás y por
+       dónde llegaste. Cuando entras a una muestra desde una ficha aparece el
+       botón de volver a la ficha, para que el único camino de salida no sea
+       cerrarlo todo. -->
+  <div class="vtop">
+    <div class="vmigas">
+      <button class="vback" type="button" id="visorBack" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span id="visorBackT">Volver</span></button>
+      <div class="vt"><span class="vraiz">LQS</span><span class="vsep">/</span><span id="visorT">Muestra</span></div>
+    </div>
     <div style="display:flex;gap:8px">
       <a class="btn g" id="visorAbrir" target="_blank" rel="noopener" style="padding:9px 16px;font-size:.7rem">Abrir aparte</a>
       <button class="btn p" id="visorX" style="padding:9px 16px;font-size:.7rem">✕ Cerrar</button>
@@ -2177,8 +2203,19 @@ document.addEventListener('click',e=>{
 addEventListener('popstate',()=>{
  /* Atrás con el visor abierto lo cierra y te deja donde estabas. Antes el
     visor se quedaba encima mientras la vista de abajo retrocedía sola: eso
-    era el laberinto. */
- if(visor.classList.contains('on')){cerrarVisor();return;}
+    era el laberinto.
+    Si venías de una ficha y estás en su muestra, Atrás hace lo que dice el
+    rastro de migas —te devuelve a la ficha— y sólo cierra cuando ya no hay
+    a dónde volver. */
+ if(visor.classList.contains('on')){
+  if(visorPila.length){
+   const ant=visorPila.pop();
+   try{history.pushState({visor:1,demoUrl:ant.url,demoTit:ant.titulo},'',location.href);}catch(e){}
+   abrirDemo(ant.url,ant.titulo,null,true);
+   return;
+  }
+  cerrarVisor();return;
+ }
  /* Adelante hacia una entrada de visor: se vuelve a abrir sin apilar otra */
  const st=history.state;
  if(st&&st.visor&&st.demoUrl){abrirDemo(st.demoUrl,st.demoTit,null,true);return;}
@@ -2549,10 +2586,33 @@ function cargarEnVisor(url,alCargar){
  }
 }
 
-function abrirDemo(url,titulo,origen,sinHistorial){
+/* ═══ el rastro de migas del visor ═══
+   Una pila de lo que se ha ido abriendo dentro del visor sin cerrarlo: hoy
+   sólo pasa en un salto (ficha → su muestra), pero la pila lo aguanta hondo.
+   Mientras haya algo en la pila, la cabecera muestra a dónde vuelves. */
+let visorPila=[];
+function pintarMigas(){
+ const b=document.getElementById('visorBack');
+ const ant=visorPila[visorPila.length-1];
+ b.hidden=!ant;
+ if(ant)document.getElementById('visorBackT').textContent='Volver a '+ant.titulo;
+}
+document.getElementById('visorBack').onclick=()=>{
+ const ant=visorPila.pop();if(!ant)return;
+ abrirDemo(ant.url,ant.titulo,null,true);
+};
+
+function abrirDemo(url,titulo,origen,sinHistorial,apilar){
  const yaAbierto=visor.classList.contains('on');
+ if(apilar&&yaAbierto){
+  const act=document.getElementById('visorAbrir').getAttribute('href');
+  const actT=document.getElementById('visorT').textContent;
+  if(act&&act!==url)visorPila.push({url:act,titulo:actT});
+ }
+ if(!yaAbierto)visorPila=[];
  document.getElementById('visorT').textContent=titulo||'Muestra';
  document.getElementById('visorAbrir').href=url;
+ pintarMigas();
  if(!yaAbierto){
   visorOrigen=origen||(document.activeElement instanceof HTMLElement?document.activeElement:null);
   /* Una entrada de historial por «visor abierto», con la MISMA url: el filtro
@@ -2595,6 +2655,7 @@ function abrirDemo(url,titulo,origen,sinHistorial){
 /* cierre real: no toca el historial */
 function cerrarVisor(){
  if(!visor.classList.contains('on'))return;
+ visorPila=[];pintarMigas();
  clearTimeout(abrirDemo._t);
  document.getElementById('visorFall').classList.remove('on');
  visor.classList.remove('on');
@@ -2617,6 +2678,36 @@ document.addEventListener('click',e=>{
  e.preventDefault();abrirDemo(el.dataset.demo,el.dataset.titulo,el);
 });
 addEventListener('keydown',e=>{if(e.key==='Escape'&&visor.classList.contains('on'))cerrarDemo();});
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LO QUE LA PÁGINA DE ADENTRO LE PIDE AL SITIO
+
+   Antes, el «← Volver al sitio» de una ficha llevaba target="_top": desde el
+   visor recargaba index.html entero y se perdían el filtro ?soy= y la vista
+   donde estabas. Ése era el laberinto por dentro.
+
+   Ahora la ficha avisa y el sitio responde sin recargar nada:
+     cerrar  → cierra el visor y te deja donde estabas
+     ir      → cierra el visor y cambia de vista (la ficha pide «cotizar»)
+     abrir   → abre otra página dentro del visor y apila la miga de vuelta
+   Fuera del visor los mismos enlaces siguen siendo href normales.
+   ═══════════════════════════════════════════════════════════════════════ */
+addEventListener('message',e=>{
+ if(e.origin!==location.origin)return;
+ const d=e.data;if(!d||typeof d!=='object'||d.lqs!==1)return;
+ const f=document.getElementById('visorF');
+ if(!f||e.source!==f.contentWindow)return;
+ if(d.hacer==='cerrar'){cerrarDemo();return;}
+ /* «ir» cierra sin consumir la entrada de historial del visor a propósito:
+    así, Atrás desde la cotización te devuelve a la ficha que estabas leyendo
+    en vez de sacarte del recorrido. */
+ if(d.hacer==='ir'){cerrarVisor();go(String(d.vista||'inicio'));return;}
+ if(d.hacer==='abrir'&&typeof d.url==='string'&&!/^[a-z]+:/i.test(d.url)){
+  /* la url llega relativa a mundos/: se resuelve contra la que ya está puesta */
+  const base=new URL(document.getElementById('visorAbrir').getAttribute('href')||'',location.href);
+  abrirDemo(new URL(d.url,base).href.replace(location.origin+'/',''),String(d.titulo||'Muestra'),null,true,true);
+ }
+});
 
 /* ═══ contenido WhatsApp ═══ */
 document.getElementById('fases').innerHTML=[
