@@ -538,6 +538,21 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .msg.on{display:block}
 .msg.ok{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#a7f3c4}
 .msg.er{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);color:#ffb3b3}
+/* la confirmación de la cotización: la única puerta a la propuesta completa */
+#cotOk[hidden]{display:none}
+.eq-ok{font-family:var(--edit);font-style:italic;font-size:clamp(1.15rem,2.4vw,1.75rem);line-height:1.25;color:var(--ink)}
+.ea-ok{margin-top:10px;font-size:.9rem;color:var(--dim);max-width:56ch}
+.propq{display:block;max-width:620px;margin-top:22px;border:1px solid var(--line);border-radius:18px;
+ background:rgba(255,255,255,.045);padding:20px 22px;position:relative;overflow:hidden;
+ transition:border-color var(--dur-fast) ease,transform 90ms var(--ease-out)}
+.propq::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ac,var(--gold))}
+.propq h4{font-family:var(--disp);font-size:1.35rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:6px}
+.propq p{font-size:.88rem;color:var(--dim);line-height:1.55}
+.propq .ir{display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+ font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac,var(--gold))}
+@media(hover:hover) and (pointer:fine){.propq:hover{border-color:var(--ac,var(--gold))}}
+.propq:active{transform:scale(.99)}
+.propq-alt{margin-top:18px;font-size:.88rem;color:var(--faint);max-width:56ch;line-height:1.6}
 /* portal */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
 .proj{position:relative;isolation:isolate;border:0;background:none;
@@ -1035,17 +1050,18 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
   <div class="puente" id="puenteMue"></div>
 
   <!-- ═══ la galería ═══
-       Todo lo navegable del ecosistema en un solo renglonario: las propuestas
-       completas ya filtradas por tipo de negocio, las muestras que se pueden
-       tocar y los documentos. Va sin filtro de cliente a propósito — es el
-       único sitio donde se ve el trabajo entero, incluso lo que la puerta de
-       entrada dejó fuera. -->
+       Muestras, fichas y documentos: todo lo que se puede tocar sin pedir nada.
+       Va sin filtro de cliente a propósito — es el único sitio donde se ve el
+       trabajo entero, incluso lo que la puerta de entrada dejó fuera.
+
+       Las propuestas completas ya no viven aquí: son la capa 3, y esa se
+       entrega cuando pides cotización. -->
   <div class="gal-tit">
-    <h3>Y las propuestas<br>completas.</h3>
-    <p>Cada una es la propuesta que le mandamos a un cliente real, ya filtrada por tipo de negocio: alcance, cronograma, lo que se puede armar aparte y el precio. Se abren aquí mismo. Esta lista no la toca el filtro de arriba: está todo.</p>
+    <h3>Todo lo que<br>se puede tocar.</h3>
+    <p>Las muestras interactivas, las fichas de cada área con sus precios y los documentos del estudio. Se abren aquí mismo. Esta lista no la toca el filtro de arriba: está todo.</p>
   </div>
   <div class="gal" id="galeria"></div>
-  <p class="body-l" style="margin-top:30px;font-size:.9rem">¿Buscabas las fichas de cada área con sus precios? Están en <a data-go="servicios" style="color:var(--gold);cursor:pointer;text-decoration:underline">Servicios</a>.</p>
+  <p class="body-l" style="margin-top:30px;font-size:.9rem">La propuesta completa —alcance, cronograma y precio para tu caso— va aparte: la armamos y te la entregamos cuando <a data-go="cotizar" style="color:var(--gold);cursor:pointer;text-decoration:underline">pides tu cotización</a>.</p>
 </div></section></div>
 
 <!-- ═══════ COTIZAR ═══════ -->
@@ -1078,9 +1094,22 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
       <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a> de LQS.</span>
     </label>
     <div class="msg" id="mSol"></div>
-    <div class="hbtns"><button class="btn gold" type="submit" id="bSol">Enviar solicitud</button>
+    <div class="hbtns"><button class="btn gold" type="submit" id="bSol">Cotizar mi proyecto</button>
     <a class="btn g" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Prefiero WhatsApp</a></div>
   </form>
+
+  <!-- ═══ la entrega de la capa 3 ═══
+       Aquí, y sólo aquí, aparece la propuesta completa. Se pinta al enviar el
+       formulario, con el ?para= que corresponde a quien acaba de escribir. -->
+  <div id="cotOk" hidden>
+    <p class="eq-ok">Recibido. Te respondemos en menos de <span class="gold">48 horas</span>.</p>
+    <p class="ea-ok" id="cotQuien">Mientras tanto, ya puedes leer la propuesta completa del tipo de negocio que nos contaste.</p>
+    <div id="cotProp"></div>
+    <div class="hbtns" style="margin-top:22px">
+      <a class="btn g" href="https://wa.me/573332791710?text=Hola%20LQS%20%F0%9F%91%8B%20acabo%20de%20enviar%20mi%20cotizaci%C3%B3n%20por%20la%20web." target="_blank" rel="noopener">Escribirnos por WhatsApp</a>
+      <button class="btn g" type="button" id="cotOtra">Enviar otra solicitud</button>
+    </div>
+  </div>
 </div></section></div>
 
 <!-- ═══════ MI CUENTA ═══════ -->
@@ -1564,11 +1593,18 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
    <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" style="color:inherit;padding:2px 8px;border:1px solid var(--line2);border-radius:999px">↗</a>
   </div></div>`).join('');
 
-/* ═══ las propuestas ═══
-   La misma fuente para las tres cosas que tienen que quedar conectadas: el
-   botón del cliente elegido en la portada, el menú de la barra y la galería.
-   Cada clave de CLIENTES apunta aquí por su sexta casilla, así que cambiar
-   una ruta en un solo sitio la cambia en los tres.
+/* ═══ las propuestas · CAPA 3 ═══
+   Ya no se navegan: se entregan. Ninguna tarjeta de esta lista se pinta en la
+   portada ni en la galería. El único sitio del sitio donde aparece una
+   propuesta es la pantalla de confirmación de la cotización, y ahí llega con
+   su ?para= ya puesto (ver `mostrarPropuesta`).
+
+   Los archivos siguen existiendo tal cual y siguen siendo enlazables a mano:
+   LQS los manda por WhatsApp cuando quiera. Lo que cambió es que dejaron de
+   estar sueltos en la navegación, compitiendo con la ficha del área.
+
+   La lista sirve aquí para dos cosas: el título y la descripción con que se
+   entrega cada una, y su color.
 
    ¿Por qué la propuesta abre en el visor y no en pestaña nueva? Porque es una
    página larga: si se la lleva a otra pestaña, el visitante pierde el sitio y
@@ -1597,30 +1633,29 @@ const PROPUESTAS=[
   'propuestas/distrito-peru-automatizacion.html','#d98aa6']
 ];
 /* documentos: no son propuestas ni muestras, pero existen y hasta hoy no se
-   llegaba a ellos desde ninguna parte del sitio */
+   llegaba a ellos desde ninguna parte del sitio.
+   El PDF de la propuesta de catálogos salió de aquí: es capa 3, y la capa 3
+   se entrega al cotizar, no se deja suelta en la navegación. */
 const DOCS=[
  ['Guía','Cómo se monta la automatización',
   'El documento técnico: alta de WhatsApp en el sistema oficial paso a paso, plantillas de mensaje listas y los costos reales por mensaje en Colombia.',
-  'automatizacion-guia.html','#3fd0e6',false],
- ['PDF','Catálogos inteligentes · propuesta impresa',
-  'La misma propuesta de catálogos en PDF, para reenviar o imprimir. 497 KB.',
-  'propuestas/catalogos-propuesta.pdf','#39c07a',true]
+  'automatizacion-guia.html','#3fd0e6',false]
 ];
-/* una sola lista con las cuatro fuentes, y sin repetidos: una muestra de DEMOS
-   y una ficha de FICHAS pueden apuntar al mismo archivo (automatización y
-   empresas lo hacen), y dos renglones idénticos leen como un error. Gana el
-   primero, que es el que trae la descripción más específica.
+/* una sola lista con las tres fuentes que la galería sí muestra —muestras,
+   fichas y documentos—, sin repetidos: una muestra de DEMOS y una ficha de
+   FICHAS pueden apuntar al mismo archivo (automatización y empresas lo hacen),
+   y dos renglones idénticos leen como un error. Gana el primero, que es el que
+   trae la descripción más específica.
    Cada fila: [rubro, título, descripción, url, color, verbo, fuera].
-   «fuera» sólo para el PDF: un binario no se muestra dentro del visor. */
+
+   PROPUESTAS ya no entra aquí. Es la capa 3: se entrega al pedir cotización,
+   con su ?para= puesto. Los archivos siguen existiendo y siguen siendo
+   enlazables a mano para mandarlos por WhatsApp. */
 const GAL=[]; const vistos={};
 function galAdd(q,t,d,u,c,verbo,fuera){
- /* la url completa es la clave: dos entradas al mismo archivo con distinto
-    ?para= sí son filas distintas, porque cambian el público y por tanto la
-    propuesta que se ve. */
  if(vistos[u])return; vistos[u]=1;
  GAL.push([q,t,d,u,c,verbo,!!fuera]);
 }
-PROPUESTAS.forEach(([q,t,d,u,c])=>galAdd(q,t,d,u,c,'Abrir'));
 DEMOS.forEach(([tag,t,d,u,c])=>galAdd('Muestra',tag+' · '+t,d,u,c,'Probar'));
 /* las fichas de área también entran: son páginas reales del repo y desde
    Muestras no se llegaba a ninguna */
@@ -2294,21 +2329,78 @@ async function cargarPortal(){
  box.innerHTML=html;
 }
 
-/* ═══ solicitud ═══ */
+/* ═══════════════════════════════════════════════════════════════════════
+   SOLICITUD — Y LA ENTREGA DE LA CAPA 3
+
+   El formulario es la única puerta a `propuestas/*.html` dentro del sitio.
+   Al enviarlo, el visitante recibe el enlace a la propuesta que le
+   corresponde, con su `?para=` ya puesto.
+
+   ¿De dónde sale «la que le corresponde»? En este orden:
+     1. el filtro que él mismo eligió en la portada (?soy=),
+     2. el área que marcó en el formulario,
+   y si ninguna de las dos apunta a una propuesta armada, se lo decimos: la
+   suya se escribe a la medida y llega por WhatsApp o correo.
+   ═══════════════════════════════════════════════════════════════════════ */
+/* el universo del catálogo → la propuesta que ya está escrita para él */
+const PROP_UNI={
+ carta:'propuestas/automatizacion.html?para=restaurante',
+ aloja:'propuestas/automatizacion.html?para=hotel',
+ empresas:'propuestas/automatizacion.html?para=empresa',
+ foma:'propuestas/catalogos.html?para=ropa'
+};
+/* título y descripción de una propuesta ya armada, para no mandar a nadie a
+   un enlace mudo */
+function datosProp(url){
+ const p=PROPUESTAS.find(x=>x[3]===url);
+ return p?{tit:p[0]+' · '+p[1],des:p[2],col:p[4]}
+         :{tit:'Tu propuesta completa',des:'Alcance, cronograma y precio cerrado.',col:'#e6c877'};
+}
+function propuestaTras(uni){
+ const porCliente=propuestaDe(CLIENTE);
+ if(porCliente)return porCliente;
+ const u=PROP_UNI[uni];
+ if(u&&u.indexOf('catalogos.html')>-1&&CAT_OK===false)return null;
+ return u||null;
+}
+function mostrarPropuesta(uni){
+ const box=document.getElementById('cotProp'),url=propuestaTras(uni);
+ const quien=document.getElementById('cotQuien');
+ if(!url){
+  quien.textContent='Tu propuesta se escribe a la medida: no hay una ya armada para lo que nos contaste. Te la mandamos por WhatsApp o correo con alcance, cronograma y precio cerrado.';
+  box.innerHTML='';return;
+ }
+ const d=datosProp(url);
+ quien.textContent='Mientras tanto, aquí tienes la propuesta completa para tu tipo de negocio: alcance, cronograma, lo que se puede armar aparte y el precio.';
+ box.innerHTML=`<a class="propq" style="--ac:${d.col}" href="${url}" data-demo="${url}" data-titulo="Propuesta · ${d.tit}">
+   <h4>${d.tit}</h4><p>${d.des}</p><span class="ir">Abrir mi propuesta →</span></a>
+  <p class="propq-alt">Se abre aquí mismo. Si la quieres en pestaña aparte para guardarla,
+   <a href="${url}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline">ábrela así</a>.</p>`;
+}
+document.getElementById('cotOtra').onclick=()=>{
+ document.getElementById('cotOk').hidden=true;
+ document.getElementById('fSol').hidden=false;
+ document.getElementById('mSol').className='msg';
+ document.getElementById('fSol').scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});
+};
 document.getElementById('fSol').onsubmit=async e=>{
  e.preventDefault();
  const f=e.target,b=document.getElementById('bSol');
+ const uni=f.universo_id.value||'';
  b.disabled=true;b.innerHTML='<span class="load"></span>';
  try{
   const row={nombre:f.nombre.value.trim(),email:f.email.value.trim()||null,telefono:f.telefono.value.trim()||null,
-   universo_id:f.universo_id.value||null,detalle:f.detalle.value.trim(),
+   universo_id:uni||null,detalle:f.detalle.value.trim(),
    presupuesto:f.presupuesto.value?Number(f.presupuesto.value):null,
    cliente_id:sesion?sesion.id:null,origen:'web'};
   await API.crear('solicitudes',row);
-  aviso('mSol','¡Recibido! Te respondemos en menos de 48 horas. Si tienes afán, escríbenos por WhatsApp.',true);
   f.reset();
+  mostrarPropuesta(uni);
+  f.hidden=true;
+  document.getElementById('cotOk').hidden=false;
+  document.getElementById('cotOk').scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});
  }catch(err){aviso('mSol','No se pudo enviar: '+(err.message||'error')+'. Escríbenos por WhatsApp.',false);}
- finally{b.disabled=false;b.textContent='Enviar solicitud';}
+ finally{b.disabled=false;b.textContent='Cotizar mi proyecto';}
 };
 
 /* ═══ suscripción ═══ */
@@ -2719,21 +2811,19 @@ function pintarElegido(){
    : SUB_BASE;
  }
  if(!c){box.innerHTML='';return;}
- const prop=propuestaDe(CLIENTE);
+ /* La propuesta completa ya no se ofrece aquí. Antes esta pantalla era la
+    puerta trasera a `propuestas/*.html`: el visitante entraba por «soy
+    restaurante» y caía en un documento de 3.700 líneas antes de haber visto
+    una sola ficha. Ahora la puerta sólo hace su trabajo —decir qué quedó a la
+    vista— y la propuesta se entrega al cotizar. */
  box.innerHTML=`<p class="eq">Listo: el sitio quedó armado para <span class="gold">${c[1].toLowerCase()}</span>.</p>
   <p class="ea">Te dejamos ${c[4].length} áreas a la vista — ${c[4].join(' · ')} — con sus muestras y sus precios. El resto sigue ahí, a un toque de la barra de arriba.</p>
   <div class="hbtns">
    <a class="btn gold" data-go="servicios">Ver mis áreas <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-   ${prop
-    /* abre en el visor, no en pestaña nueva: la propuesta es larga y quien se
-       la lleva a otra pestaña rara vez vuelve al sitio. El href real sigue
-       puesto, así que ctrl/cmd+clic y el ↗ de al lado la sacan igual. */
-    ?`<a class="btn g" href="${prop}" data-demo="${prop}" data-titulo="Propuesta · ${c[1]}">Ver mi propuesta</a>
-      <a class="btn g" href="${prop}" target="_blank" rel="noopener" title="Abrir la propuesta en una pestaña nueva" style="padding-left:14px;padding-right:14px">↗</a>`
-    :`<a class="btn g" data-go="cotizar">Pedir mi propuesta</a>`}
+   <a class="btn g" data-go="cotizar">Pedir mi cotización</a>
    <a class="btn g" data-soy="">Ver todo</a>
   </div>
-  ${prop?'':`<p class="ea" style="margin-top:10px;font-size:.86rem;color:var(--faint)">Todavía no tenemos una propuesta armada para ${c[1].toLowerCase()}: la tuya se cotiza a la medida. Mientras tanto, las de los demás se pueden husmear en <a data-go="muestras" style="color:var(--gold);cursor:pointer;text-decoration:underline">Muestras</a>.</p>`}`;
+  <p class="ea" style="margin-top:10px;font-size:.86rem;color:var(--faint)">La propuesta completa —alcance, cronograma y precio para ${c[1].toLowerCase()}— te llega al pedir la cotización. Antes de eso, mira las áreas y toca las muestras.</p>`;
 }
 
 function pintarBarra(){
