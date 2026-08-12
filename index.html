@@ -434,13 +434,26 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .lks{margin-top:20px}
 @media(max-width:820px){.area .a-lado{min-height:104px}}
 .area p{font-size:clamp(.92rem,1.2vw,1.06rem);color:var(--dim);line-height:1.6;max-width:34ch}
+/* para quién es el área: la mitad del trabajo del panel. Va pegado a la frase,
+   con la etiqueta en la tipografía de datos para que se lea como un dato y no
+   como otra frase de venta. */
+.area .para{margin-top:11px;font-size:.85rem;color:var(--faint);max-width:34ch;line-height:1.5}
+.area .para span{font-family:var(--tech);font-size:.62rem;font-weight:700;letter-spacing:.15em;
+ text-transform:uppercase;color:var(--ac);margin-right:7px}
 .area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
 .area .lk{font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
- border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease;white-space:nowrap}
-.area .lk.pri{border-color:var(--ac);color:var(--ac)}
+ border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease,transform 90ms var(--ease-out);white-space:nowrap}
+/* el único botón del panel: se nombra entero («Ver la ficha de Express») para
+   que quien lo toca sepa a dónde va antes de tocarlo */
+.area .lk.pri{border-color:var(--ac);color:var(--ac);display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-size:.72rem}
+.area .lk.pri svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+ transition:transform var(--dur-fast) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
  .area .lk:hover{border-color:var(--ac);color:var(--ac)}
- .area .lk.pri:hover{background:var(--ac);color:#06070f}}
+ .area .lk.pri:hover{background:var(--ac);color:#06070f}
+ .area .lk.pri:hover svg{transform:translateX(3px)}}
+.area .lk:active{transform:scale(.96)}
+@media(prefers-reduced-motion:reduce){.area .lk.pri:hover svg{transform:none}}
 /* área sin página todavía: se ve, pero no promete lo que no hay */
 .area.pend{background:rgba(255,255,255,.015)}
 .area.pend h3,.area.pend .tagd{opacity:.55}
@@ -1008,7 +1021,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
        style="right:-8vw;top:6%;width:26vw;height:17vw;background:var(--u1);--o:.18;scale:-1 1"></div>
 <div class="wrap">
   <h2 class="disp" id="servTit">Todo lo que hacemos,<br>en <span class="gold">tres familias</span>.</h2>
-  <p class="body-l" id="servSub" style="margin:16px 0 8px">Marca, Presencia y Producción. Adentro de cada una está cómo trabajamos, qué entregamos y una muestra que puedes tocar. Los precios están al final, cuando quieras verlos.</p>
+  <p class="body-l" id="servSub" style="margin:16px 0 8px">Marca, Presencia y Producción. Aquí cada área dice qué resuelve y para quién, en una frase. Lo que incluye, cuánto vale y una muestra que puedes tocar están adentro de su ficha, a un toque.</p>
  </div>
  <!-- las tres familias, que antes remataban el hero. Aquí sí ordenan algo:
       son el índice de la sección donde viven las áreas. -->
@@ -1457,29 +1470,67 @@ document.getElementById('proc').innerHTML=[
  ['03','Producción','Trabajamos por entregas parciales: ves avances y ajustas sobre la marcha.'],
  ['04','Lanzamiento','Publicamos, capacitamos a tu equipo y medimos qué está funcionando.']
 ].map(([n,t,d])=>`<div class="card"><div class="un">${n}</div><h3>${t}</h3><p>${d}</p></div>`).join('');
-/* ═══ las áreas y su ficha propia ═══
-   cada una es un enlace real: si el visor interno falla, el href sigue funcionando */
+/* ═══ las áreas y su ficha propia · CAPA 1 ═══
+   Cada panel hace UN trabajo: decir qué resuelve el área, en una frase, y para
+   quién. Nada más. Ni precios, ni lo que incluye, ni la muestra: eso vive en la
+   ficha, un toque más adentro, y por eso el panel tiene un solo botón.
+
+   Antes había tres botones (ver ficha · probar muestra · ↗) y la descripción
+   metía media ficha adentro. El visitante leía dos veces lo mismo y no sabía
+   qué le faltaba por ver.
+
+   Cada fila: [área, subtítulo, qué resuelve, para quién, ficha, muestra, color,
+   familia]. La muestra sigue en la lista porque la usan la galería y los
+   puentes; simplemente ya no se ofrece desde el panel.
+   Cada enlace es real: si el visor interno falla, el href sigue funcionando. */
 const FICHAS=[
- ['Empresas','Marca completa','Identidad, sitio web y atención automática para negocios que necesitan verse serios desde el primer día.','mundos/empresas.html','mundos/empresas-muestras.html','#5b8def','marca'],
- ['Express','Diseño día a día','Piezas sueltas y combos con precio cerrado, listos en 48–72 horas. Sin reuniones, sin cotización previa.','mundos/express.html','mundos/express-muestras.html','#39c07a','produccion'],
- ['Productora','Video y foto','Reels, foto de producto y contenido para redes. Incluye calculadora de rodaje con transporte y viáticos.','mundos/productora.html','mundos/productora-muestras.html','#3fc6d6','produccion'],
- ['Creadores','Marca personal','Identidad de canal, portada, foto de perfil y plantillas editables para publicar sin frenar.','mundos/creadores.html','mundos/creadores-muestras.html','#a97bd6','marca'],
- ['Ropa y merch','foma','Uniformes y merch: diseño aplicado, muestra física antes de producir y entrega en 3–4 semanas.','mundos/foma.html','mundos/marcas-muestras.html','#b6ad98','marca'],
+ ['Empresas','Marca completa',
+  'Tu empresa se ve seria y responde sola: marca, sitio y atención bajo una sola dirección.',
+  'Negocios que ya venden y todavía se ven improvisados.',
+  'mundos/empresas.html','mundos/empresas-muestras.html','#5b8def','marca'],
+ ['Express','Diseño día a día',
+  'Las piezas del día a día salen en 48–72 horas, con precio cerrado y sin reunión previa.',
+  'Quien publica seguido y no quiere cotizar cada pieza.',
+  'mundos/express.html','mundos/express-muestras.html','#39c07a','produccion'],
+ ['Productora','Video y foto',
+  'Tu producto y tu local se ven grabados como se deben ver, no en foto de celular.',
+  'Negocios que necesitan contenido constante para redes.',
+  'mundos/productora.html','mundos/productora-muestras.html','#3fc6d6','produccion'],
+ ['Creadores','Marca personal',
+  'Tu canal se ve reconocible en cada publicación, sin tener que diseñar cada vez.',
+  'Creadores que ya publican y quieren verse profesionales.',
+  'mundos/creadores.html','mundos/creadores-muestras.html','#a97bd6','marca'],
+ ['Ropa y merch','foma',
+  'Uniformes y merch con tu marca aplicada, con muestra física antes de producir el lote.',
+  'Marcas y equipos que quieren vestirse con lo suyo.',
+  'mundos/foma.html','mundos/marcas-muestras.html','#b6ad98','marca'],
  /* la muestra de Automatización es el simulador que ya vive dentro de su
     propia ficha: se entra directo por el ancla en vez de duplicar el bot */
- ['Automatización','WhatsApp y redes','Tu negocio contesta solo: reservas, pedidos, precios y preguntas frecuentes, todos los días del año.','mundos/automatizacion.html','mundos/automatizacion.html#simulador','#3fd0e6','presencia'],
+ ['Automatización','WhatsApp y redes',
+  'Tu negocio contesta solo: reservas, pedidos y precios, todos los días del año.',
+  'Quien pierde ventas por no alcanzar a responder.',
+  'mundos/automatizacion.html','mundos/automatizacion.html#muestra','#3fd0e6','presencia'],
  /* ↓ Restaurantes y Hoteles quedan sin página a propósito.
-    Cuando tengas la definitiva, pon la ruta en el 4º campo (ficha) y,
-    si hay demo, en el 5º (muestra). Ejemplo: 'mundos/carta.html'.
+    Cuando tengas la definitiva, pon la ruta en el 5º campo (ficha) y,
+    si hay demo, en el 6º (muestra). Ejemplo: 'mundos/carta.html'.
     Mientras estén vacíos la tarjeta se muestra igual, pero sin enlaces. */
- ['Restaurantes','Carta','Carta digital, pedidos y reservas desde el celular, con la carta siempre al día.','','','#e0614a','presencia'],
- ['Hoteles','Aloja','Reservas, check-in con QR y llave digital. Plataforma completa para hospedaje.','','','#2fb8a3','presencia'],
+ ['Restaurantes','Carta',
+  'Tu carta está siempre al día y los pedidos entran desde el celular del cliente.',
+  'Restaurantes que hoy mandan la carta en foto por WhatsApp.',
+  '','','#e0614a','presencia'],
+ ['Hoteles','Aloja',
+  'Las reservas entran solas y el huésped llega con su check-in ya hecho.',
+  'Hoteles y hospedajes que llevan la agenda a mano.',
+  '','','#2fb8a3','presencia'],
  /* el configurador de Mercury vive en la misma muestra que foma —son el mismo
     taller de objeto físico—, así que la ficha entra por su ancla */
- ['Joyería','Mercury · pronto','Piezas en plata y acero, y regalos corporativos con tu marca grabada. Línea en preparación.','mundos/mercury.html','mundos/marcas-muestras.html#cfgjoya','#d98aa6','produccion']
+ ['Joyería','Mercury · pronto',
+  'Piezas en plata y acero, y regalos corporativos con tu marca grabada.',
+  'Marcas que regalan y personas que buscan pieza propia.',
+  'mundos/mercury.html','mundos/marcas-muestras.html#cfgjoya','#d98aa6','produccion']
 ];
 /* quinto campo: el color de la familia. Se usa en el remate del hero;
-   la agrupación por el séptimo campo de FICHAS no cambia. */
+   la agrupación por el octavo campo de FICHAS no cambia. */
 const FAMILIAS=[
  ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.','#5b8def'],
  ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.','#3fd0e6'],
@@ -1490,24 +1541,24 @@ const FAMILIAS=[
 const UNI_ACTO={marca:'pulso',presencia:'hielo',produccion:'brasa'};
 /* una familia entera se esconde cuando ninguna de sus áreas le sirve al
    cliente activo: así nunca queda un título de acto con nada debajo. */
-const AREAS_FAM=k=>FICHAS.filter(f=>f[6]===k).map(f=>f[0]);
+const AREAS_FAM=k=>FICHAS.filter(f=>f[7]===k).map(f=>f[0]);
 document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
  `<div class="tramo" data-universo="${UNI_ACTO[k]||'flujo'}"${attrC(AREAS_FAM(k))}>
   <div class="acto" data-fam="${k}">
    <div class="cresta" data-vel=".42" aria-hidden="true"></div>
    <div class="acto-in">
     <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
-   </div></div>`+FICHAS.filter(f=>f[6]===k).map(([t,sub,d,ficha,muestra,c],n)=>
+   </div></div>`+FICHAS.filter(f=>f[7]===k).map(([t,sub,d,para,ficha,muestra,c],n)=>
  /* el trío: dominante, subordinada, acento. Cada panel toma una forma distinta
     del léxico según su sitio, y el del medio va volteado. */
  `<div class="area p${n+1}${n===1?' espejo':''}${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}"${attrC(t)}>
   <div class="a-txt"><span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
-   <div class="lks">${ficha?
-    `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver ficha</a>
-     ${muestra?`<a class="lk" href="${muestra}" data-demo="${muestra}" data-titulo="${t} · muestra">Probar muestra</a>`:''}
-     <a class="lk" href="${ficha}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva">↗</a>`
-    :`<span class="lk mudo">Ficha en camino</span>
-      <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
+   <p class="para"><span>Para</span> ${para}</p>
+   <div class="lks">${ficha
+    ? `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver la ficha de ${t}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`
+    : `<span class="lk mudo">Ficha en camino</span>
+       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
    </div></div>
 </div>`).join('')
  +`<div class="guijarro" data-vel="1.16" aria-hidden="true"
@@ -1558,7 +1609,7 @@ document.getElementById('soyM').innerHTML=CLIENTES.map(([k,tit,gan,col])=>
    Se pintan los ocho; el filtro deja visible sólo el del cliente activo, y
    sin filtro ninguno (regla .puente en la hoja de estilo). Los enlaces abren
    la ficha en el visor: nombran lo que quedó fuera sin deshacer el filtro. */
-const FICHA_DE={};FICHAS.forEach(f=>{FICHA_DE[f[0]]=[f[3],f[5],f[1]];});
+const FICHA_DE={};FICHAS.forEach(f=>{FICHA_DE[f[0]]=[f[4],f[6],f[1]];});
 function pintaPuente(nodo,cierre){
  if(!nodo)return;
  nodo.innerHTML=CLIENTES.map(([k])=>{
@@ -1659,7 +1710,7 @@ function galAdd(q,t,d,u,c,verbo,fuera){
 DEMOS.forEach(([tag,t,d,u,c])=>galAdd('Muestra',tag+' · '+t,d,u,c,'Probar'));
 /* las fichas de área también entran: son páginas reales del repo y desde
    Muestras no se llegaba a ninguna */
-FICHAS.filter(f=>f[3]).forEach(([t,sub,d,ficha,muestra,c])=>galAdd('Ficha',t+' · '+sub,d,ficha,c,'Ver'));
+FICHAS.filter(f=>f[4]).forEach(([t,sub,d,para,ficha,muestra,c])=>galAdd('Ficha',t+' · '+sub,d,ficha,c,'Ver'));
 DOCS.forEach(([q,t,d,u,c,fuera])=>galAdd(q,t,d,u,c,fuera?'Descargar':'Abrir',fuera));
 document.getElementById('galeria').innerHTML=GAL.map(([q,t,d,u,c,verbo,fuera])=>
  `<a class="galf" style="--ac:${c}" href="${u}"${fuera
@@ -2817,7 +2868,7 @@ function pintarElegido(){
     una sola ficha. Ahora la puerta sólo hace su trabajo —decir qué quedó a la
     vista— y la propuesta se entrega al cotizar. */
  box.innerHTML=`<p class="eq">Listo: el sitio quedó armado para <span class="gold">${c[1].toLowerCase()}</span>.</p>
-  <p class="ea">Te dejamos ${c[4].length} áreas a la vista — ${c[4].join(' · ')} — con sus muestras y sus precios. El resto sigue ahí, a un toque de la barra de arriba.</p>
+  <p class="ea">Te dejamos ${c[4].length} áreas a la vista — ${c[4].join(' · ')} —, cada una con su ficha: qué incluye, cuánto vale y una muestra que puedes tocar. El resto sigue ahí, a un toque de la barra de arriba.</p>
   <div class="hbtns">
    <a class="btn gold" data-go="servicios">Ver mis áreas <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
    <a class="btn g" data-go="cotizar">Pedir mi cotización</a>
