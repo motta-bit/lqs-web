@@ -540,6 +540,9 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  .galf .ir{align-self:start;margin-top:4px}}
 /* formularios */
 .form{display:grid;gap:14px;max-width:560px}
+/* display:grid le gana a [hidden] del navegador: sin esto, el formulario
+   sigue a la vista debajo de su propia confirmación */
+.form[hidden]{display:none}
 .fld label{display:block;font-family:var(--tech);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:7px}
 .inp{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:13px;color:var(--ink);padding:13px 15px;font-size:.94rem;transition:border-color var(--dur-fast) ease,background var(--dur-fast) ease}
 .inp:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.07)}
