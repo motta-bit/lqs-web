@@ -1,20 +1,22 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html><html lang="es" data-para="rest"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Automatización · WhatsApp y redes — LQS</title>
-<meta name="description" content="Automatizamos la atención de tu negocio con WhatsApp Cloud API de Meta, Instagram y Facebook: respuestas 24/7, catálogo, reservas y recordatorios. Prueba el simulador de chatbot y mira los paquetes en pesos colombianos.">
+<meta name="description" content="Automatizamos la atención de tu negocio con WhatsApp Cloud API de Meta, Instagram y Facebook. La ficha se adapta a restaurante, hotel o empresa y almacén: prueba el simulador y mira los paquetes en pesos colombianos.">
 <meta name="theme-color" content="#05060f">
 <meta property="og:title" content="Automatización · WhatsApp y redes — LQS">
-<meta property="og:description" content="Que tu negocio responda solo: chatbot de WhatsApp, catálogo, reservas y recordatorios. Simulador interactivo y paquetes cerrados en COP.">
+<meta property="og:description" content="Que tu negocio responda solo: carta, reservas, cotizaciones y recordatorios. Simulador interactivo por tipo de negocio y paquetes cerrados en COP.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
   --bg:#05060f;--acc:#5b8def;--acc-l:#d6e3ff;--acc-d:#1f3f7a;
   --txt:#e9efff;--mut:#94a5cc;--mut2:#7688ae;
   --glass:rgba(255,255,255,.042);--glass2:rgba(255,255,255,.028);--line:rgba(255,255,255,.11);--line2:rgba(255,255,255,.07);
-  --pix:'Press Start 2P',monospace;--sans:'Manrope','Segoe UI',system-ui,-apple-system,sans-serif;
+  --sans:'Manrope','Segoe UI',system-ui,-apple-system,sans-serif;
   --r:22px;
+  --ease-out:cubic-bezier(.2,.7,.3,1);
+  --dur-fast:160ms;--dur-ui:200ms;--dur-panel:300ms;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -23,6 +25,19 @@ a{color:inherit;text-decoration:none}
 img,svg{max-width:100%}
 button{font-family:inherit}
 ::selection{background:var(--acc);color:#04060e}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+
+/* ═══ EL CONMUTADOR DE PÚBLICO ═══
+   Mismo mecanismo que propuestas/automatizacion.html: un atributo en :root y
+   una sola regla que oculta lo que no pertenece al público activo. Lo que
+   cambia entre restaurante, hotel y empresa lleva data-p con los públicos a
+   los que sirve; lo que no lleva data-p es común a los tres.
+   Especificidad 0,4,0: le gana a cualquier display de una clase, sin
+   !important. El HTML nace en data-para="rest", así que sin JavaScript se ve
+   la versión de restaurante completa y nunca queda la página en blanco. */
+:root[data-para="rest"]  [data-p]:not([data-p~="rest"]){display:none}
+:root[data-para="hotel"] [data-p]:not([data-p~="hotel"]){display:none}
+:root[data-para="emp"]   [data-p]:not([data-p~="emp"]){display:none}
 
 /* fondo */
 .bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -34,70 +49,94 @@ button{font-family:inherit}
   background-size:64px 64px;mask-image:radial-gradient(circle at 50% 0%,#000,transparent 78%);-webkit-mask-image:radial-gradient(circle at 50% 0%,#000,transparent 78%)}
 
 .wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,36px)}
-section{padding:clamp(52px,8vw,104px) 0;position:relative;z-index:2}
+section{padding:clamp(46px,6.6vw,86px) 0;position:relative;z-index:2}
 
 /* nav */
 nav{position:sticky;top:0;z-index:40;background:rgba(5,6,15,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line2)}
 nav .in{max-width:1120px;margin:0 auto;padding:12px clamp(18px,5vw,36px);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-family:var(--pix);font-size:.66rem;color:var(--acc-l);display:flex;align-items:center;gap:9px;letter-spacing:.02em;line-height:1.4}
 .miga{display:flex;align-items:center;gap:8px;min-width:0;font-size:.78rem;color:var(--mut)}
-.miga a{border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
-.miga a:hover{color:var(--acc);border-color:var(--acc)}
+.miga a{border-bottom:1px solid transparent;transition:color var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out)}
 .miga b{color:var(--txt);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.miga i{font-style:normal;color:var(--acc-d,var(--mut));flex:none}
-.back{font-size:.83rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 17px;transition:.22s;white-space:nowrap}
-.back:hover,.back:focus-visible{color:var(--acc-l);border-color:var(--acc);background:rgba(91,141,239,.09)}
+.miga i{font-style:normal;color:var(--mut2);flex:none}
+.back{font-size:.83rem;font-weight:700;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 17px;white-space:nowrap;
+  transition:color var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out),background-color var(--dur-ui) var(--ease-out)}
+.back:focus-visible{color:var(--acc-l);border-color:var(--acc);background:rgba(91,141,239,.09)}
+.back:active{transform:scale(.97)}
 
 /* tipografía */
-.kicker{font-family:var(--pix);font-size:.52rem;letter-spacing:.22em;color:var(--acc);margin-bottom:20px;line-height:1.9}
-h1{font-size:clamp(2.3rem,7vw,4.05rem);line-height:1.04;letter-spacing:-.035em;font-weight:800;margin-bottom:22px}
+h1{font-size:clamp(2.2rem,6.6vw,3.8rem);line-height:1.05;letter-spacing:-.035em;font-weight:800;margin-bottom:20px}
 h1 em{font-style:normal;background:linear-gradient(105deg,var(--acc-l),var(--acc) 62%);-webkit-background-clip:text;background-clip:text;color:transparent}
-h2{font-size:clamp(1.65rem,4vw,2.5rem);line-height:1.14;letter-spacing:-.03em;font-weight:800;margin-bottom:16px}
-h3{font-size:1.06rem;font-weight:800;letter-spacing:-.012em;margin-bottom:8px}
-.lead{font-size:clamp(1.04rem,2.1vw,1.24rem);color:var(--mut);max-width:56ch;font-weight:400}
-.intro{color:var(--mut);max-width:64ch;margin-bottom:clamp(28px,4vw,44px);font-size:1.02rem}
+h2{font-size:clamp(1.6rem,3.8vw,2.4rem);line-height:1.14;letter-spacing:-.03em;font-weight:800;margin-bottom:14px}
+h3{font-size:1.04rem;font-weight:800;letter-spacing:-.012em;margin-bottom:8px}
+.lead{font-size:clamp(1.02rem,2vw,1.2rem);color:var(--mut);max-width:54ch;font-weight:400}
+.intro{color:var(--mut);max-width:64ch;margin-bottom:clamp(24px,3.4vw,38px);font-size:1.01rem}
 .note{font-size:.85rem;color:var(--mut2);line-height:1.7;max-width:72ch}
 .note b{color:var(--mut);font-weight:700}
+.note a{color:var(--acc-l);border-bottom:1px solid rgba(91,141,239,.4)}
 
-.badge{display:inline-flex;align-items:center;gap:9px;font-size:.79rem;font-weight:700;color:var(--acc-l);border:1px solid rgba(91,141,239,.34);background:rgba(91,141,239,.09);border-radius:999px;padding:8px 16px;margin-bottom:26px}
+.badge{display:inline-flex;align-items:center;gap:9px;font-size:.79rem;font-weight:700;color:var(--acc-l);border:1px solid rgba(91,141,239,.34);background:rgba(91,141,239,.09);border-radius:999px;padding:8px 16px;margin-bottom:24px}
 .badge i{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:bp 2.6s ease-in-out infinite}
 @keyframes bp{0%,100%{opacity:1}50%{opacity:.3}}
 
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.96rem;color:#050a16;
-  background:linear-gradient(120deg,var(--acc-l),var(--acc));border:none;border-radius:15px;padding:15px 26px;cursor:pointer;transition:.22s;
-  box-shadow:0 20px 44px -22px rgba(91,141,239,.95)}
-.cta:hover,.cta:focus-visible{transform:translateY(-2px);filter:brightness(1.07)}
+  background:linear-gradient(120deg,var(--acc-l),var(--acc));border:none;border-radius:15px;padding:15px 26px;cursor:pointer;
+  box-shadow:0 20px 44px -22px rgba(91,141,239,.95);
+  transition:transform var(--dur-ui) var(--ease-out),filter var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out),color var(--dur-ui) var(--ease-out),background-color var(--dur-ui) var(--ease-out)}
+.cta:focus-visible{filter:brightness(1.07)}
+.cta:active{transform:scale(.985)}
 .cta.ghost{background:none;color:var(--txt);border:1px solid var(--line);box-shadow:none}
-.cta.ghost:hover,.cta.ghost:focus-visible{border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.07)}
+.cta.ghost:focus-visible{border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.07)}
+
+/* ═══ el conmutador, en pantalla ═══ */
+.elige{margin-top:clamp(24px,3vw,32px)}
+.elige p{font-size:.86rem;color:var(--mut2);font-weight:600;margin-bottom:11px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--glass2)}
+.seg button{font-size:.85rem;font-weight:700;color:var(--mut);background:none;border:none;border-radius:999px;padding:10px 18px;cursor:pointer;
+  transition:color var(--dur-ui) var(--ease-out),background-color var(--dur-ui) var(--ease-out)}
+.seg button[aria-pressed="true"]{background:linear-gradient(120deg,var(--acc-l),var(--acc));color:#050d1e}
+.seg button:active{transform:scale(.97)}
+.seg.mini button{font-size:.78rem;padding:8px 14px}
 
 /* hero */
-.hero{padding:clamp(58px,10vw,116px) 0 clamp(20px,3vw,34px)}
-.hero .cols{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,64px);align-items:center}
-.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:38px}
-.stat{border:1px solid var(--line);border-radius:16px;background:var(--glass);padding:14px 18px;min-width:0}
-.stat b{display:block;font-size:1.3rem;font-weight:800;letter-spacing:-.02em;color:var(--acc-l);line-height:1.2}
-.stat span{font-size:.76rem;color:var(--mut2);font-weight:600}
+.hero{padding:clamp(50px,8vw,96px) 0 clamp(18px,3vw,30px)}
+.hero .cols{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,60px);align-items:center}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:30px}
+.stat{border:1px solid var(--line);border-radius:16px;background:var(--glass);padding:13px 16px;min-width:0}
+.stat b{display:block;font-size:1.26rem;font-weight:800;letter-spacing:-.02em;color:var(--acc-l);line-height:1.2}
+.stat span{display:block;font-size:.75rem;line-height:1.4;color:var(--mut2);font-weight:600;margin-top:2px}
 .heroart{border:1px solid var(--line);border-radius:26px;background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012));padding:22px;position:relative;overflow:hidden}
 .heroart::after{content:'';position:absolute;inset:-40% -10% auto;height:60%;background:radial-gradient(closest-side,rgba(91,141,239,.22),transparent);pointer-events:none}
-.hb{display:flex;gap:10px;margin-bottom:11px;align-items:flex-end}
+.hb{display:flex;gap:10px;margin-bottom:11px;align-items:flex-end;position:relative}
 .hb .av{width:26px;height:26px;border-radius:9px;flex:none;background:linear-gradient(140deg,var(--acc),var(--acc-d));display:grid;place-items:center;font-size:.72rem}
 .hb p{font-size:.85rem;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:14px 14px 14px 5px;padding:9px 13px;color:var(--txt)}
 .hb.me{justify-content:flex-end}
 .hb.me p{background:linear-gradient(120deg,rgba(214,227,255,.92),rgba(91,141,239,.92));color:#061024;border:none;border-radius:14px 14px 5px 14px;font-weight:600}
+.heroart .hb:last-child{margin-bottom:0}
 
-/* glass cards */
-.card{border:1px solid var(--line);border-radius:var(--r);background:var(--glass);padding:26px 24px;transition:.28s cubic-bezier(.2,.7,.3,1);position:relative;overflow:hidden}
-.card:hover{transform:translateY(-5px);border-color:rgba(91,141,239,.5);background:rgba(91,141,239,.055)}
-.card p{font-size:.9rem;color:var(--mut);line-height:1.68}
-.ico{width:44px;height:44px;border-radius:13px;background:linear-gradient(140deg,rgba(91,141,239,.24),rgba(91,141,239,.06));border:1px solid rgba(91,141,239,.34);display:grid;place-items:center;margin-bottom:17px}
-.ico svg{width:21px;height:21px;stroke:var(--acc-l);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:16px}
+/* tarjetas */
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--glass);padding:24px 22px;position:relative;overflow:hidden;
+  transition:transform var(--dur-panel) var(--ease-out),border-color var(--dur-panel) var(--ease-out),background-color var(--dur-panel) var(--ease-out)}
+.card p{font-size:.89rem;color:var(--mut);line-height:1.66}
+.ico{width:42px;height:42px;border-radius:13px;background:linear-gradient(140deg,rgba(91,141,239,.24),rgba(91,141,239,.06));border:1px solid rgba(91,141,239,.34);display:grid;place-items:center;margin-bottom:15px}
+.ico svg{width:20px;height:20px;stroke:var(--acc-l);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:15px}
 
-/* ===== SIMULADOR ===== */
-.simwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:clamp(20px,3.4vw,38px);align-items:stretch}
+/* con qué se conecta */
+.conecta{margin-top:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:var(--r);background:var(--glass2);padding:22px 24px}
+.conecta h3{font-size:.98rem;margin-bottom:13px}
+.conecta ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:13px}
+.conecta li{font-size:.82rem;font-weight:600;color:var(--acc-l);border:1px solid rgba(91,141,239,.32);background:rgba(91,141,239,.08);border-radius:999px;padding:7px 14px}
+
+/* ═══ SIMULADOR ═══ */
+.cab{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(20px,2.6vw,28px)}
+.cab .intro{margin-bottom:0}
+.simwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,330px);gap:clamp(20px,3.2vw,36px);align-items:start}
+/* alto fijo a propósito: el teléfono no crece con la conversación, el
+   historial se desplaza por dentro. Con height:100% la ficha se estiraba
+   cientos de píxeles a medida que el visitante escribía. */
 .phone{border:1px solid var(--line);border-radius:26px;background:linear-gradient(170deg,rgba(255,255,255,.05),rgba(255,255,255,.015));overflow:hidden;
-  box-shadow:0 40px 90px -50px rgba(0,0,0,.95),0 0 0 1px rgba(91,141,239,.07) inset;display:flex;flex-direction:column;height:100%;min-height:560px}
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.95),0 0 0 1px rgba(91,141,239,.07) inset;display:flex;flex-direction:column;height:clamp(470px,66vh,610px)}
 .ph-top{display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(31,63,122,.4);border-bottom:1px solid var(--line);flex:none}
 .ph-top .av{width:38px;height:38px;border-radius:12px;flex:none;background:linear-gradient(140deg,var(--acc-l),var(--acc-d));display:grid;place-items:center;font-size:1.05rem}
 .ph-top .who{min-width:0;flex:1}
@@ -105,113 +144,178 @@ h3{font-size:1.06rem;font-weight:800;letter-spacing:-.012em;margin-bottom:8px}
 .ph-top .who span{font-size:.72rem;color:#8fd8a8;font-weight:600;display:flex;align-items:center;gap:6px}
 .ph-top .who span::before{content:'';flex:none;width:6px;height:6px;border-radius:50%;background:#5fcf86;box-shadow:0 0 8px #5fcf86}
 .ph-top .who span em{font-style:normal}
-.rst{font-size:.72rem;font-weight:800;color:var(--mut);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:7px 13px;cursor:pointer;transition:.2s;white-space:nowrap}
-.rst:hover,.rst:focus-visible{color:var(--acc-l);border-color:var(--acc)}
-.ph-log{flex:1;overflow-y:auto;overflow-x:hidden;padding:20px 15px 8px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth;
+.rst{font-size:.72rem;font-weight:800;color:var(--mut);border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap;
+  transition:color var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out)}
+.rst:focus-visible{color:var(--acc-l);border-color:var(--acc)}
+.rst:active{transform:scale(.96)}
+.ph-log{flex:1 1 0;min-height:0;overflow-y:auto;overflow-x:hidden;padding:20px 15px 8px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;
   background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);background-size:22px 22px}
 .ph-log::-webkit-scrollbar{width:7px}
 .ph-log::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
 .msg{max-width:84%;font-size:.9rem;line-height:1.55;padding:10px 14px;border-radius:16px 16px 16px 6px;background:rgba(255,255,255,.062);border:1px solid var(--line);
-  align-self:flex-start;word-wrap:break-word;overflow-wrap:anywhere;animation:pop .34s cubic-bezier(.2,.8,.3,1) both}
+  align-self:flex-start;word-wrap:break-word;overflow-wrap:anywhere;animation:sube .32s var(--ease-out) both}
 .msg.me{align-self:flex-end;border-radius:16px 16px 6px 16px;background:linear-gradient(120deg,rgba(214,227,255,.94),rgba(91,141,239,.94));color:#050d1e;border:none;font-weight:600}
+.msg:not(.me)+.msg:not(.me){border-radius:6px 16px 16px 6px}
+.msg.me+.msg.me{border-radius:16px 6px 6px 16px}
 .msg b{font-weight:800}
 .msg .li{display:flex;justify-content:space-between;gap:14px;padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
 .msg .li:last-child{border-bottom:none}
 .msg .li em{font-style:normal;color:var(--acc-l);font-weight:700;white-space:nowrap}
 .msg .sys{font-size:.76rem;color:var(--mut2);display:block;margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.1)}
-.msg .t{display:block;font-size:.63rem;opacity:.55;text-align:right;margin-top:3px;font-weight:600}
-@keyframes pop{from{opacity:0;transform:translateY(9px) scale(.97)}to{opacity:1;transform:none}}
-.typing{align-self:flex-start;display:flex;gap:5px;padding:13px 16px;border-radius:16px 16px 16px 6px;background:rgba(255,255,255,.062);border:1px solid var(--line);animation:pop .3s both}
+.msg .t{display:flex;align-items:center;justify-content:flex-end;gap:2px;font-size:.63rem;opacity:.6;margin-top:3px;font-weight:600}
+/* las marcas de entregado y leído: un tilde, dos tildes, dos tildes azules */
+.tk{width:17px;height:11px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.msg.me .t{opacity:.72}
+.tk .p2{opacity:0;transition:opacity var(--dur-fast) linear}
+.msg.ent .tk .p2{opacity:1}
+.msg.vis .tk{stroke:#0f62c4}
+.msg.vis .t{opacity:1;color:#0f62c4}
+@keyframes sube{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.typing{align-self:flex-start;display:flex;gap:5px;padding:13px 16px;border-radius:16px 16px 16px 6px;background:rgba(255,255,255,.062);border:1px solid var(--line);animation:sube .28s var(--ease-out) both}
 .typing i{width:6px;height:6px;border-radius:50%;background:var(--acc-l);opacity:.5;animation:tw 1.25s infinite}
 .typing i:nth-child(2){animation-delay:.16s}.typing i:nth-child(3){animation-delay:.32s}
-@keyframes tw{0%,60%,100%{transform:translateY(0);opacity:.42}30%{transform:translateY(-5px);opacity:1}}
+@keyframes tw{0%,60%,100%{transform:translateY(0);opacity:.42}30%{transform:translateY(-4px);opacity:1}}
 .qr{display:flex;flex-wrap:wrap;gap:7px;padding:9px 15px 3px;flex:none}
-.qr button{font-size:.79rem;font-weight:700;color:var(--acc-l);background:rgba(91,141,239,.13);border:1px solid rgba(91,141,239,.42);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.18s;animation:pop .3s both}
-.qr button:hover,.qr button:focus-visible{background:rgba(91,141,239,.28);transform:translateY(-1px)}
+.qr button{font-size:.79rem;font-weight:700;color:var(--acc-l);background:rgba(91,141,239,.13);border:1px solid rgba(91,141,239,.42);border-radius:999px;padding:8px 14px;cursor:pointer;animation:sube .28s var(--ease-out) both;
+  transition:background-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.qr button:focus-visible{background:rgba(91,141,239,.28)}
+.qr button:active{transform:scale(.96)}
 .ph-in{display:flex;gap:9px;padding:12px 14px 14px;border-top:1px solid var(--line);background:rgba(5,6,15,.5);flex:none}
-.ph-in input{flex:1;min-width:0;font-family:inherit;font-size:.9rem;color:var(--txt);background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:999px;padding:12px 17px;outline:none;transition:.2s}
+.ph-in input{flex:1;min-width:0;font-family:inherit;font-size:.9rem;color:var(--txt);background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:999px;padding:12px 17px;outline:none;
+  transition:border-color var(--dur-ui) var(--ease-out),background-color var(--dur-ui) var(--ease-out)}
 .ph-in input::placeholder{color:var(--mut2)}
 .ph-in input:focus{border-color:var(--acc);background:rgba(91,141,239,.09)}
-.ph-in .snd{flex:none;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(125deg,var(--acc-l),var(--acc));display:grid;place-items:center;transition:.2s}
-.ph-in .snd:hover,.ph-in .snd:focus-visible{transform:scale(1.07)}
+.ph-in .snd{flex:none;width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(125deg,var(--acc-l),var(--acc));display:grid;place-items:center;
+  transition:transform var(--dur-ui) var(--ease-out),filter var(--dur-ui) var(--ease-out)}
+.ph-in .snd:active{transform:scale(.94)}
 .ph-in .snd svg{width:19px;height:19px;fill:#050d1e}
 .simside{display:flex;flex-direction:column;gap:13px}
 .simside .card{padding:22px}
 .tryit{border:1px solid rgba(91,141,239,.34);border-radius:18px;background:rgba(91,141,239,.075);padding:20px}
 .tryit h3{font-size:.95rem;margin-bottom:11px}
 .tryit ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.tryit li{font-size:.85rem;color:var(--mut);line-height:1.75}
+.tryit li{font-size:.85rem;color:var(--mut);line-height:1.7}
+.tryit li span{color:var(--mut2)}
 .tryit li code{font-family:var(--sans);font-weight:700;color:var(--acc-l);background:rgba(91,141,239,.16);border-radius:7px;padding:1px 7px;font-size:.82rem}
 
-/* diagrama */
-.scrollx{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
-.scrollx::-webkit-scrollbar{height:7px}
-.scrollx::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:9px}
-
 /* paquetes */
-.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:17px;align-items:stretch}
-.plan{border:1px solid var(--line);border-radius:var(--r);background:var(--glass);padding:28px 25px 25px;display:flex;flex-direction:column;position:relative;transition:.28s}
-.plan:hover{transform:translateY(-5px);border-color:rgba(91,141,239,.5)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:17px;align-items:stretch}
+.plan{border:1px solid var(--line);border-radius:var(--r);background:var(--glass);padding:26px 24px 24px;display:flex;flex-direction:column;position:relative;
+  transition:transform var(--dur-panel) var(--ease-out),border-color var(--dur-panel) var(--ease-out)}
 .plan.pop{border-color:rgba(91,141,239,.62);background:linear-gradient(172deg,rgba(91,141,239,.14),rgba(255,255,255,.02))}
-.tag{position:absolute;top:-11px;left:25px;font-size:.6rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;background:linear-gradient(120deg,var(--acc-l),var(--acc));color:#050d1e;padding:5px 13px;border-radius:999px}
-.plan .pn{font-family:var(--pix);font-size:.6rem;letter-spacing:.13em;color:var(--acc);margin-bottom:14px;line-height:1.7}
-.plan h3{font-size:1.25rem;margin-bottom:7px;letter-spacing:-.02em}
-.plan .who{font-size:.85rem;color:var(--mut);margin-bottom:20px;min-height:2.9em}
-.price{font-size:1.95rem;font-weight:800;letter-spacing:-.035em;line-height:1.08}
-.price small{display:block;font-size:.75rem;font-weight:700;color:var(--mut);letter-spacing:0;margin-top:7px}
+.tag{position:absolute;top:-11px;left:24px;font-size:.6rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;background:linear-gradient(120deg,var(--acc-l),var(--acc));color:#050d1e;padding:5px 13px;border-radius:999px}
+/* el plan se presenta por el problema que resuelve, no por lo que incluye */
+.plan .prob{font-size:1.02rem;font-weight:700;line-height:1.42;letter-spacing:-.015em;color:var(--acc-l);margin-bottom:14px;min-height:4.3em}
+.plan h3{font-size:1.14rem;margin-bottom:6px;letter-spacing:-.02em}
+.plan .who{font-size:.85rem;color:var(--mut);margin-bottom:18px;min-height:3.9em}
+.price{font-size:1.9rem;font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.price small{display:block;font-size:.75rem;font-weight:700;color:var(--mut);letter-spacing:0;margin-top:6px}
 .price .mo{display:block;font-size:.92rem;font-weight:700;color:var(--acc-l);margin-top:9px;letter-spacing:-.01em}
-.plan ul{list-style:none;margin:21px 0 24px;display:flex;flex-direction:column;gap:10px}
-.plan li{font-size:.87rem;color:var(--txt);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.price .mo em{display:block;font-style:normal;font-size:.72rem;font-weight:600;color:var(--mut2);margin-top:3px;letter-spacing:0}
+.plan ul{list-style:none;margin:19px 0 22px;display:flex;flex-direction:column;gap:9px}
+.plan li{font-size:.86rem;color:var(--txt);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
 .plan li::before{content:'';flex:none;width:16px;height:16px;margin-top:3px;border-radius:6px;background:rgba(91,141,239,.22);border:1px solid rgba(91,141,239,.5);
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dbe5ff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4 4 10-10'/%3E%3C/svg%3E");background-size:11px;background-position:center;background-repeat:no-repeat}
-.plan .go{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:.9rem;border-radius:14px;padding:14px 18px;border:1px solid var(--line);color:var(--txt);transition:.2s}
-.plan .go:hover,.plan .go:focus-visible{border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.08)}
+.plan .go{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:.9rem;border-radius:14px;padding:14px 18px;border:1px solid var(--line);color:var(--txt);
+  transition:color var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out),background-color var(--dur-ui) var(--ease-out),filter var(--dur-ui) var(--ease-out)}
+.plan .go:focus-visible{border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.08)}
+.plan .go:active{transform:scale(.985)}
 .plan.pop .go{background:linear-gradient(120deg,var(--acc-l),var(--acc));color:#050d1e;border:none}
-.plan.pop .go:hover{filter:brightness(1.07);color:#050d1e}
-.costbox{margin-top:26px;border:1px solid rgba(91,141,239,.3);border-radius:18px;background:rgba(91,141,239,.06);padding:22px 24px}
-.costbox h3{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;gap:9px}
-
-/* requisitos */
+.costbox{margin-top:24px;border:1px solid rgba(91,141,239,.3);border-radius:18px;background:rgba(91,141,239,.06);padding:22px 24px}
+.costbox h3{font-size:1rem;margin-bottom:10px}
+.costbox .note+.note{margin-top:11px}
 
 /* final */
-.final{text-align:center;border:1px solid var(--line);border-radius:28px;background:linear-gradient(165deg,rgba(91,141,239,.13),rgba(255,255,255,.014));padding:clamp(38px,6.5vw,72px) clamp(22px,4vw,52px);position:relative;overflow:hidden}
+.final{text-align:center;border:1px solid var(--line);border-radius:28px;background:linear-gradient(165deg,rgba(91,141,239,.13),rgba(255,255,255,.014));padding:clamp(34px,5.6vw,62px) clamp(22px,4vw,52px);position:relative;overflow:hidden}
 .final::after{content:'';position:absolute;left:50%;top:-60%;width:120%;height:120%;transform:translateX(-50%);pointer-events:none;background:radial-gradient(closest-side,rgba(91,141,239,.2),transparent)}
 .final>*{position:relative}
 .final p{color:var(--mut);max-width:54ch;margin:0 auto}
 .final .btns{justify-content:center}
 
-footer{border-top:1px solid var(--line2);padding:30px 0 52px;position:relative;z-index:2}
+footer{border-top:1px solid var(--line2);padding:28px 0 48px;position:relative;z-index:2}
 footer .in{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;font-size:.83rem;color:var(--mut2)}
-footer a:hover{color:var(--acc-l)}
+footer a{border-bottom:1px solid transparent;transition:color var(--dur-ui) var(--ease-out)}
 
 /* reveal — solo se oculta si hay JS, así nunca queda contenido invisible */
-.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
 .js .rv.on{opacity:1;transform:none}
 
+/* el movimiento de hover sólo donde hay puntero fino */
+@media(hover:hover) and (pointer:fine){
+  .miga a:hover{color:var(--acc);border-color:var(--acc)}
+  .back:hover{color:var(--acc-l);border-color:var(--acc);background:rgba(91,141,239,.09)}
+  .cta:hover{transform:translateY(-2px);filter:brightness(1.07)}
+  .cta.ghost:hover{transform:translateY(-2px);border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.07)}
+  .seg button:hover{color:var(--acc-l)}
+  .seg button[aria-pressed="true"]:hover{color:#050d1e}
+  .card:hover{transform:translateY(-4px);border-color:rgba(91,141,239,.5);background:rgba(91,141,239,.055)}
+  .plan:hover{transform:translateY(-4px);border-color:rgba(91,141,239,.5)}
+  .plan .go:hover{border-color:var(--acc);color:var(--acc-l);background:rgba(91,141,239,.08)}
+  .plan.pop .go:hover{filter:brightness(1.07);color:#050d1e}
+  .rst:hover{color:var(--acc-l);border-color:var(--acc)}
+  .qr button:hover{background:rgba(91,141,239,.28)}
+  .ph-in .snd:hover{transform:scale(1.06)}
+  footer a:hover{color:var(--acc-l)}
+}
+
 @media(max-width:960px){
-  .hero .cols{grid-template-columns:1fr;gap:34px}
+  .hero .cols{grid-template-columns:1fr;gap:32px}
   .heroart{order:-1}
   .simwrap{grid-template-columns:1fr}
 }
 @media(max-width:600px){
   body{font-size:15.5px}
-  .brand{font-size:.55rem}
   .back{padding:8px 13px;font-size:.76rem}
   .btns{flex-direction:column;align-items:stretch}
   .cta{width:100%}
-  .phone{min-height:480px;height:auto}
+  .seg{display:flex;width:100%}
+  .seg button{flex:1 1 auto;padding:10px 12px;font-size:.79rem}
+  .phone{height:clamp(430px,72vh,540px)}
   .ph-top .who span em{display:none}
   .msg{max-width:90%}
-  .stat{flex:1 1 44%}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plan .prob,.plan .who{min-height:0}
 }
+
+/* Movimiento reducido: se quita el desplazamiento y se detienen los bucles.
+   La opacidad y el color se conservan, y nada queda invisible. */
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
-  .js .rv{opacity:1;transform:none}
   .ph-log{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .msg,.typing,.qr button{animation:none}
+  .badge i{animation:none;opacity:1}
+  .typing i{animation:none;opacity:.8}
+  .cta:hover,.cta.ghost:hover,.card:hover,.plan:hover,.ph-in .snd:hover,
+  .cta:active,.seg button:active,.qr button:active,.rst:active,.back:active,.plan .go:active,.ph-in .snd:active{transform:none}
 }
 </style></head><body>
-<script>document.documentElement.classList.add('js');</script>
+<script>
+document.documentElement.classList.add('js');
+/* ═══ quién está mirando ═══
+   Prioridad: ?soy= de esta página > el ?soy= del sitio que la abrió en el
+   visor > lo que se eligió aquí antes > el filtro del sitio guardado.
+   Se resuelve antes de pintar para que la ficha no parpadee de restaurante a
+   hotel delante del visitante. */
+(function(){
+ function n(v){
+  if(!v)return null;
+  v=String(v).toLowerCase().trim();
+  if(/^(rest|resto|restaurante|restaurantes|cafe|bar)$/.test(v))return 'rest';
+  if(/^(hotel|hoteles|hospedaje|hostal|alojamiento)$/.test(v))return 'hotel';
+  if(/^(emp|empresa|empresas|negocio|almacen|almacenes|bodega|bodegas|distribuidora|catalogos|eventos)$/.test(v))return 'emp';
+  return null;
+ }
+ var d=false;try{d=window.top!==window.self;}catch(e){d=true;}
+ var v=null;
+ try{var q=new URLSearchParams(location.search);v=n(q.get('soy'))||n(q.get('para'));}catch(e){}
+ if(!v&&d){try{v=n(new URLSearchParams(parent.location.search).get('soy'));}catch(e){}}
+ if(!v){try{v=n(localStorage.getItem('lqs_para_auto'));}catch(e){}}
+ if(!v){try{v=n(localStorage.getItem('lqs_cliente'));}catch(e){}}
+ window.LQS={dentro:d,pub:v||'rest',norm:n};
+ document.documentElement.setAttribute('data-para',window.LQS.pub);
+})();
+</script>
 <div class="bgglow"></div><div class="grid-bg"></div>
 
 <nav><div class="in">
@@ -219,149 +323,156 @@ footer a:hover{color:var(--acc-l)}
   <a class="back" href="../index.html#servicios" data-lqs="cerrar">← Volver</a>
 </div></nav>
 
-<!-- HERO -->
+<!-- ══ 1 · HERO ══ -->
 <div class="wrap"><header class="hero"><div class="cols">
   <div>
     <div class="badge"><i></i>Cupos abiertos · implementación en 2–3 semanas</div>
-    <h1>Que tu negocio <em>responda solo</em></h1>
-    <p class="lead">Conectamos tu WhatsApp, tu Instagram y tu Facebook a un sistema que atiende, muestra el catálogo, toma reservas y avisa a tu equipo — a las 3 de la mañana, un domingo festivo, sin que nadie esté pendiente.</p>
+
+    <h1 data-p="rest">Que tu restaurante <em>responda solo</em></h1>
+    <h1 data-p="hotel">Que tu hotel <em>responda solo</em></h1>
+    <h1 data-p="emp">Que tu negocio <em>responda solo</em></h1>
+
+    <p class="lead" data-p="rest">Tu WhatsApp muestra la carta, toma la reserva y recibe el domicilio — a las 11 de la noche, un domingo festivo, sin que nadie del turno tenga que salir de la cocina.</p>
+    <p class="lead" data-p="hotel">Tu WhatsApp responde disponibilidad y tarifa reales, toma la reserva con anticipo y deja el check-in hecho antes de que el huésped llegue. Sin recepción despierta a las 3 de la mañana.</p>
+    <p class="lead" data-p="emp">Tu WhatsApp consulta precios y existencias, arma la cotización con su número y dice en qué va cada pedido — sin que nadie tenga que abrir la lista de Excel para contestar.</p>
+
+    <div class="elige">
+      <p id="eligeT">Esto se monta distinto según el negocio. ¿Cuál es el tuyo?</p>
+      <div class="seg" role="group" aria-labelledby="eligeT">
+        <button type="button" data-sel="rest" aria-pressed="true">Restaurante</button>
+        <button type="button" data-sel="hotel" aria-pressed="false">Hotel</button>
+        <button type="button" data-sel="emp" aria-pressed="false">Empresa y almacén</button>
+      </div>
+    </div>
+
     <div class="btns">
       <a class="cta" href="#vivo">Probar el chatbot ↓</a>
       <a class="cta ghost" href="#paquetes">Ver paquetes</a>
     </div>
+
     <div class="stats">
-      <div class="stat"><b>24/7</b><span>Respuesta inmediata</span></div>
-      <div class="stat"><b>~$3 COP</b><span>Por mensaje de utilidad*</span></div>
+      <div class="stat"><b>24/7</b><span>Sin horario</span></div>
+      <div class="stat"><b>1.000</b><span>Conversaciones al mes</span></div>
       <div class="stat"><b>API oficial</b><span>Meta Cloud API</span></div>
     </div>
-    <p class="note" style="margin-top:16px">*Tarifa aproximada de Meta por plantilla <em>utility</em> entregada a Colombia. Detalle abajo.</p>
+    <p class="note" style="margin-top:15px">Tu número de siempre, dado de alta en el sistema oficial de Meta. Nada de aplicaciones no oficiales que un día bloquean la línea.</p>
   </div>
+
   <div class="heroart">
-    <div class="hb"><span class="av">🤖</span><p>Hola 👋 Soy el asistente de Café Orión. ¿Qué necesitas?</p></div>
-    <div class="hb me"><p>Quiero reservar para el viernes</p></div>
-    <div class="hb"><span class="av">🤖</span><p>Perfecto, viernes. ¿Para cuántas personas?</p></div>
-    <div class="hb me"><p>4</p></div>
-    <div class="hb"><span class="av">🤖</span><p>Listo ✅ Mesa para 4, viernes 8:00 p.m. Te llega la confirmación en un minuto.</p></div>
+    <div data-p="rest">
+      <div class="hb"><span class="av">🤖</span><p>Hola 👋 Soy el asistente de Café Orión. ¿Qué necesitas?</p></div>
+      <div class="hb me"><p>Quiero reservar para el viernes</p></div>
+      <div class="hb"><span class="av">🤖</span><p>Perfecto, viernes. ¿Para cuántas personas?</p></div>
+      <div class="hb me"><p>4</p></div>
+      <div class="hb"><span class="av">🤖</span><p>Listo ✅ Mesa para 4, viernes 7:30 p.m. Te llega la confirmación en un minuto.</p></div>
+    </div>
+    <div data-p="hotel">
+      <div class="hb"><span class="av">🤖</span><p>Hola 👋 Soy el asistente de Casa Verde. ¿Para qué fechas?</p></div>
+      <div class="hb me"><p>Del 14 al 16, somos 2</p></div>
+      <div class="hb"><span class="av">🤖</span><p>Dos noches. Me queda la Superior con balcón a $340.000 la noche.</p></div>
+      <div class="hb me"><p>Esa. ¿Aceptan mascotas?</p></div>
+      <div class="hb"><span class="av">🤖</span><p>Sí, hasta 10 kg ✅ Te bloqueo la habitación con el 30 % de anticipo.</p></div>
+    </div>
+    <div data-p="emp">
+      <div class="hb"><span class="av">🤖</span><p>Hola 👋 Soy el asistente de Suministros Aurora. ¿Qué necesitas cotizar?</p></div>
+      <div class="hb me"><p>200 cajas de guantes de nitrilo</p></div>
+      <div class="hb"><span class="av">🤖</span><p>200 cajas a $38.000 — con el 15 % por volumen quedan en $32.300.</p></div>
+      <div class="hb me"><p>Mándame la cotización</p></div>
+      <div class="hb"><span class="av">🤖</span><p>Listo ✅ Cotización AU-2481 por $6.460.000, vigente 15 días.</p></div>
+    </div>
   </div>
 </div></header></div>
 
-<!-- QUÉ AUTOMATIZAMOS -->
+<!-- ══ 2 · QUÉ RESUELVE ══ -->
 <div class="wrap"><section class="rv">
-  <h2>Qué automatizamos</h2>
-  <p class="intro">No se trata de reemplazar a tu equipo, sino de quitarle de encima las 40 preguntas repetidas que llegan cada día para que atienda las que sí valen la pena.</p>
+  <h2 data-p="rest">Qué le quitas de encima al turno</h2>
+  <h2 data-p="hotel">Qué le quitas de encima a recepción</h2>
+  <h2 data-p="emp">Qué le quitas de encima al equipo</h2>
+
+  <p class="intro" data-p="rest">No es reemplazar a nadie: es que el mesero no tenga que dejar la mesa para contestar «¿tienen mesa el viernes?» por vigésima vez en el día.</p>
+  <p class="intro" data-p="hotel">No es reemplazar a nadie: es que recepción no tenga que interrumpir un check-in para responder «¿cuánto vale la habitación el puente?».</p>
+  <p class="intro" data-p="emp">No es reemplazar a nadie: es que el comercial no tenga que abrir la lista de precios cada vez que alguien pregunta cuánto vale una referencia.</p>
+
   <div class="grid3">
     <div class="card">
       <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.4 2"/></svg></div>
-      <h3>Respuestas 24/7</h3>
-      <p>Saludo, preguntas frecuentes, precios, formas de pago y domicilios. Contesta en segundos incluso fuera de horario, y avisa cuando el local está cerrado en vez de dejar el chat en visto.</p>
+      <h3>Fuera de horario</h3>
+      <p data-p="rest">El «¿están abiertos?» de las 11 p.m. recibe horario, ubicación y la carta, y si el local está cerrado lo dice en vez de dejar el chat en visto.</p>
+      <p data-p="hotel">La consulta de las 11 p.m. recibe disponibilidad y tarifa reales, no un «mañana le confirmamos» que ya reservó en otro lado.</p>
+      <p data-p="emp">La solicitud que entra un sábado recibe precio, existencias y cotización con número, y el lunes ya está en tu lista de seguimiento.</p>
     </div>
+
     <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h8M8 16h5"/></svg></div>
-      <h3>Catálogo y menú</h3>
-      <p>Carta navegable dentro del chat, con categorías, precios y fotos. Se actualiza desde una hoja de cálculo o desde el catálogo nativo de WhatsApp: cambias un precio y queda al aire.</p>
+      <div class="ico" data-p="rest"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h8M8 16h5"/></svg></div>
+      <div class="ico" data-p="hotel"><svg viewBox="0 0 24 24"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"/><path d="M3 15h18M6 9V6.5A1.5 1.5 0 0 1 7.5 5h9A1.5 1.5 0 0 1 18 6.5V9"/><path d="M4 18v2M20 18v2"/></svg></div>
+      <div class="ico" data-p="emp"><svg viewBox="0 0 24 24"><path d="M3.5 8.5 12 4l8.5 4.5v7L12 20l-8.5-4.5z"/><path d="M3.5 8.5 12 13l8.5-4.5M12 13v7"/></svg></div>
+      <h3 data-p="rest">La carta, dentro del chat</h3>
+      <h3 data-p="hotel">Tarifas y disponibilidad</h3>
+      <h3 data-p="emp">Precios y existencias</h3>
+      <p data-p="rest">Categorías, precios y fotos navegables sin salir de WhatsApp. Cambias un precio en la hoja de cálculo y queda al aire, sin volver a mandar el PDF.</p>
+      <p data-p="hotel">Qué habitación está libre esas fechas, a qué tarifa de temporada y con qué extras. Nunca ofrece una noche que ya estaba vendida.</p>
+      <p data-p="emp">Referencia por referencia: precio unitario, descuento por volumen y si hay existencias hoy o cuándo llega. Sale de tu misma lista de precios.</p>
     </div>
+
     <div class="card">
       <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="m9.5 15 1.8 1.8 3.4-3.6"/></svg></div>
-      <h3>Reservas y pedidos</h3>
-      <p>El bot pide fecha, hora, número de personas o los productos, valida que tenga sentido y escribe directo en Google Calendar, Sheets o tu sistema. Sin transcribir chats a mano.</p>
+      <h3 data-p="rest">Reservas y domicilios</h3>
+      <h3 data-p="hotel">Reserva con anticipo</h3>
+      <h3 data-p="emp">Cotización con su número</h3>
+      <p data-p="rest">Pide día, hora y personas o arma el pedido, valida que tenga sentido y lo escribe en tu agenda o tu hoja. Nadie transcribe chats a mano.</p>
+      <p data-p="hotel">Toma fechas, huéspedes y tipo de habitación, cobra el anticipo en línea y bloquea el calendario. El resto se paga en recepción.</p>
+      <p data-p="emp">Producto, cantidad, descuento y flete: sale una cotización numerada, con vigencia, y queda registrada para hacerle seguimiento.</p>
     </div>
+
     <div class="card">
       <div class="ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-      <h3>Recordatorios</h3>
-      <p>Confirmación el día anterior, recordatorio dos horas antes, aviso de que el pedido salió y seguimiento post-venta. Menos citas perdidas, menos «se me olvidó».</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg></div>
-      <h3>Instagram y Facebook</h3>
-      <p>Alguien comenta «precio?» en tu reel y recibe la información por mensaje directo automáticamente. También respondemos DM y llevamos la conversación a WhatsApp, dentro de lo que la API de Meta permite.</p>
-    </div>
-    <div class="card">
-      <div class="ico"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.3 3h7.5c.5 0 1 .2 1.4.6l7.4 7.4a2 2 0 0 1 0 2.4z"/><circle cx="7.5" cy="7.5" r="1.4"/></svg></div>
-      <h3>Etiquetado de clientes</h3>
-      <p>Cada conversación queda marcada: cliente nuevo, recurrente, interesado en X, reserva pendiente. Después puedes enviarles campañas segmentadas en vez de disparar a todo el mundo.</p>
+      <h3 data-p="rest">Recordatorios</h3>
+      <h3 data-p="hotel">Antes, durante y después</h3>
+      <h3 data-p="emp">Seguimiento</h3>
+      <p data-p="rest">Confirmación el día anterior, aviso de que el domicilio salió y mensaje de vuelta a la semana. Menos mesas vacías, menos «se me olvidó».</p>
+      <p data-p="hotel">Recordatorio de llegada con el enlace de check-in, aviso de la hora de salida y la reseña pedida al día siguiente, cuando todavía se acuerda.</p>
+      <p data-p="emp">La cotización que nadie contestó se recuerda sola a los tres días, y el cliente puede preguntar en qué va su pedido sin llamar a nadie.</p>
     </div>
   </div>
+
+  <div class="conecta">
+    <h3>Con qué se conecta</h3>
+    <ul data-p="rest">
+      <li>Google Calendar</li><li>Google Sheets</li><li>Catálogo nativo de WhatsApp</li><li>Wompi o Bold</li><li>Instagram y Facebook</li>
+    </ul>
+    <ul data-p="hotel">
+      <li>Google Calendar</li><li>Tu planilla de disponibilidad</li><li>Booking y Expedia</li><li>Wompi o Bold</li><li>Instagram y Facebook</li>
+    </ul>
+    <ul data-p="emp">
+      <li>Tu lista de precios en Excel</li><li>Google Sheets</li><li>CRM</li><li>Siigo o Alegra</li><li>Correo del equipo</li><li>Instagram y Facebook</li>
+    </ul>
+    <p class="note">Si ya usas un sistema propio —POS, PMS, ERP— se conecta si tiene API, y si no la tiene se sincroniza por hoja de cálculo. <span data-p="hotel">Booking y Expedia se cotizan aparte: <b>$1.250.000</b> de montaje y <b>$180.000</b> al mes. </span>Lo revisamos antes de cotizar, no después.</p>
+  </div>
+
+  <p class="note" style="margin-top:18px">En los tres casos, además: comentarios de Instagram respondidos por mensaje directo, y cada conversación etiquetada —cliente nuevo, recurrente, reserva pendiente— para poder escribirles después con criterio y no a todo el mundo por igual.</p>
 </section></div>
 
-<!-- PAQUETES -->
-<div class="wrap"><section id="paquetes" class="rv">
-  <h2>Paquetes</h2>
-  <p class="intro">Precio cerrado en pesos colombianos. Lo que pagas a LQS cubre diseño del flujo, implementación, plantillas, integraciones y soporte. Lo que consume Meta por cada mensaje se factura aparte y es de tu cuenta — te explicamos exactamente cuánto es más abajo.</p>
-
-  <div class="plans">
-    <div class="plan">
-      <div class="pn">PLAN 01</div>
-      <h3>Setup Básico</h3>
-      <p class="who">Un solo canal, un flujo claro. Para empezar a no perder mensajes.</p>
-      <div class="price">$780.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
-      <ul>
-        <li>WhatsApp Cloud API conectada y verificada</li>
-        <li>Hasta 4 flujos (saludo, FAQ, horarios, humano)</li>
-        <li>3 plantillas aprobadas por Meta</li>
-        <li>Menú de botones y respuestas rápidas</li>
-        <li>Mensaje fuera de horario</li>
-        <li>Capacitación de 1 hora a tu equipo</li>
-        <li>Soporte y ajustes menores mensuales</li>
-      </ul>
-      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
-    </div>
-
-    <div class="plan pop">
-      <span class="tag">Más pedido</span>
-      <div class="pn">PLAN 02</div>
-      <h3>Plan Negocio</h3>
-      <p class="who">Reservas o pedidos de verdad, conectados a tus herramientas.</p>
-      <div class="price">$1.450.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes</span></div>
-      <ul>
-        <li>Todo lo del Setup Básico</li>
-        <li>Flujo de reservas o pedidos con validación</li>
-        <li>Catálogo o menú navegable en el chat</li>
-        <li>Integración con Google Calendar / Sheets / CRM</li>
-        <li>Recordatorios automáticos programados</li>
-        <li>8 plantillas aprobadas (utility y marketing)</li>
-        <li>Etiquetado automático de clientes</li>
-        <li>Tablero mensual de conversaciones</li>
-      </ul>
-      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
-    </div>
-
-    <div class="plan">
-      <div class="pn">PLAN 03</div>
-      <h3>Plan Multicanal</h3>
-      <p class="who">WhatsApp, Instagram y Facebook en una sola bandeja, con campañas.</p>
-      <div class="price">$2.400.000<small>COP · pago único de implementación</small><span class="mo">+ $870.000 COP / mes</span></div>
-      <ul>
-        <li>Todo lo del Plan Negocio</li>
-        <li>DM de Instagram y Messenger automatizados</li>
-        <li>Respuesta automática a comentarios</li>
-        <li>Bandeja unificada para tu equipo</li>
-        <li>Campañas segmentadas con plantillas</li>
-        <li>Respuestas con IA sobre tu propia información</li>
-        <li>Hasta 3 números o cuentas</li>
-        <li>Optimización mensual de flujos y textos</li>
-      </ul>
-      <a class="go" href="../index.html#cotizar" data-lqs="cotizar">Cotizar este paquete →</a>
-    </div>
-  </div>
-
-  <div class="costbox">
-    <h3>Lo que cobra Meta, aparte</h3>
-    <p class="note">Meta te factura directamente los mensajes de plantilla que salen de tu número: <b>≈ $3 COP</b> una confirmación o un recordatorio, <b>≈ $50 COP</b> un mensaje de promoción. Responder dentro de las 24 horas de un cliente no cuesta nada hoy. Un restaurante con 300 confirmaciones al mes le paga a Meta cerca de <b>$900 COP</b>.</p>
-    <p class="note" style="margin-top:12px">Las tarifas se publican en dólares y cambian varias veces al año; la conversión es referencial. El detalle —categorías, fechas de cambio y cómo se factura— está en la <a href="../automatizacion-guia.html" data-lqs="muestra" data-titulo="Guía · cómo se monta la automatización">guía técnica</a>.</p>
-  </div>
-  <p class="note" style="margin-top:20px">Pago 50% al iniciar y 50% contra entrega. La mensualidad se factura desde el mes siguiente al lanzamiento y se puede cancelar con 30 días de aviso. Sin permanencia, sin letra chiquita.</p>
-</section></div>
-
-<!-- SIMULADOR -->
+<!-- ══ 3 · SIMULADOR ══ -->
 <div class="wrap"><section id="vivo" class="rv">
-  <h2>Simulador de chatbot</h2>
-  <p class="intro">Esto no es un video ni un GIF: es un bot de verdad corriendo en tu navegador. Escribe con tus palabras o usa los botones rápidos. Es el mismo tipo de lógica que montamos sobre la Cloud API de WhatsApp, con un negocio de ejemplo (Café Orión, Medellín).</p>
+  <div class="cab">
+    <div>
+      <h2>Pruébalo aquí mismo</h2>
+      <p class="intro" data-p="rest">No es un video: es un bot de verdad corriendo en tu navegador, con un restaurante de ejemplo. Escribe con tus palabras o usa los botones.</p>
+      <p class="intro" data-p="hotel">No es un video: es un bot de verdad corriendo en tu navegador, con un hotel de ejemplo. Escribe con tus palabras o usa los botones.</p>
+      <p class="intro" data-p="emp">No es un video: es un bot de verdad corriendo en tu navegador, con una distribuidora de ejemplo. Escribe con tus palabras o usa los botones.</p>
+    </div>
+    <div class="seg mini" role="group" aria-label="Cambiar el tipo de negocio del simulador">
+      <button type="button" data-sel="rest" aria-pressed="true">Restaurante</button>
+      <button type="button" data-sel="hotel" aria-pressed="false">Hotel</button>
+      <button type="button" data-sel="emp" aria-pressed="false">Empresa y almacén</button>
+    </div>
+  </div>
 
   <div class="simwrap">
     <div class="phone">
       <div class="ph-top">
-        <span class="av">🪐</span>
-        <span class="who"><b>Café Orión · demo</b><span>en línea<em>&nbsp;· responde al instante</em></span></span>
+        <span class="av" id="botAv">🪐</span>
+        <span class="who"><b id="botNom">Café Orión · demo</b><span>en línea<em>&nbsp;· responde al instante</em></span></span>
         <button class="rst" id="reset" type="button">Reiniciar</button>
       </div>
       <div class="ph-log" id="log" role="log" aria-live="polite" aria-label="Conversación con el asistente"></div>
@@ -375,34 +486,124 @@ footer a:hover{color:var(--acc-l)}
     <aside class="simside">
       <div class="tryit">
         <h3>Prueba a escribir…</h3>
-        <ul>
-          <li><code>la carta</code> — muestra el menú por categorías</li>
-          <li><code>quiero reservar</code> — pide fecha y personas</li>
-          <li><code>a qué hora abren</code> — horarios y ubicación</li>
-          <li><code>hablar con alguien</code> — pasa a una persona</li>
-          <li><code>tienen wifi</code> — preguntas sueltas</li>
+        <ul data-p="rest">
+          <li><code>la carta</code> <span>el menú por categorías</span></li>
+          <li><code>quiero reservar</code> <span>pide día, hora y personas</span></li>
+          <li><code>a qué hora abren</code> <span>horarios y ubicación</span></li>
+          <li><code>tienen algo sin gluten</code> <span>preguntas sueltas</span></li>
+          <li><code>hablar con alguien</code> <span>pasa a una persona</span></li>
+        </ul>
+        <ul data-p="hotel">
+          <li><code>tienen habitación</code> <span>fechas, personas y tarifa</span></li>
+          <li><code>hacer el check-in</code> <span>registro antes de llegar</span></li>
+          <li><code>a qué hora es el desayuno</code> <span>servicios</span></li>
+          <li><code>aceptan mascotas</code> <span>preguntas sueltas</span></li>
+          <li><code>hablar con alguien</code> <span>pasa a una persona</span></li>
+        </ul>
+        <ul data-p="emp">
+          <li><code>lista de precios</code> <span>referencias y valor</span></li>
+          <li><code>quiero cotizar</code> <span>cantidad, descuento y flete</span></li>
+          <li><code>estado de mi pedido</code> <span>pide el número</span></li>
+          <li><code>manejan crédito</code> <span>preguntas sueltas</span></li>
+          <li><code>hablar con un asesor</code> <span>pasa a una persona</span></li>
         </ul>
       </div>
       <div class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></div>
         <h3>Qué está pasando por debajo</h3>
-        <p>El bot entiende texto libre (no solo botones), recuerda en qué punto va la conversación, valida los datos de la reserva y sabe cuándo callarse y pasarle el chat a un humano. En producción esa lógica corre en un servidor conectado al webhook de Meta y escribe en tu agenda o tu hoja de cálculo.</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-7.5-10A7.5 7.5 0 0 1 12 3.5 7.5 7.5 0 0 1 19.5 11c0 5.4-7.5 10-7.5 10z"/><circle cx="12" cy="11" r="2.6"/></svg></div>
-        <h3>Se adapta a tu negocio</h3>
-        <p>Restaurante, barbería, consultorio, tienda o inmobiliaria: cambian los flujos y los datos, no la arquitectura. Definimos juntos el árbol de conversación antes de escribir una sola línea.</p>
+        <p>El bot entiende texto libre, no solo botones: recuerda en qué punto va, valida los datos antes de darlos por buenos y sabe cuándo callarse y pasarle el chat a una persona. Cambia el negocio ahí arriba y verás que lo que cambia son los flujos y los datos, no la arquitectura.</p>
       </div>
     </aside>
   </div>
 </section></div>
 
-<!-- CIERRE -->
+<!-- ══ 4 · PAQUETES ══ -->
+<div class="wrap"><section id="paquetes" class="rv">
+  <h2>¿Cuál es tu problema hoy?</h2>
+  <p class="intro">Los planes no se eligen por la lista de funciones: se eligen por lo que te está costando plata esta semana. Precio cerrado en pesos colombianos, sin permanencia.</p>
+
+  <div class="plans">
+    <div class="plan">
+      <p class="prob">«Me escriben fuera de horario y contesto lo mismo veinte veces al día.»</p>
+      <h3>Setup Básico</h3>
+      <p class="who" data-p="rest">Contesta carta, horarios, domicilios y formas de pago. Todavía sin tomar reservas.</p>
+      <p class="who" data-p="hotel">Contesta tarifas, servicios, horarios y cómo llegar. Todavía sin motor de reservas.</p>
+      <p class="who" data-p="emp">Contesta precios, existencias, horarios y condiciones de pago. Todavía sin cotizador.</p>
+      <div class="price">$780.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes<em>1.000 conversaciones incluidas</em></span></div>
+      <ul>
+        <li>Tu número dado de alta en la Cloud API de Meta</li>
+        <li>Hasta 4 flujos y menú de botones</li>
+        <li>3 plantillas aprobadas por Meta</li>
+        <li>Mensaje distinto dentro y fuera de horario</li>
+        <li data-p="rest">Carta y precios respondidos desde tu hoja de cálculo</li>
+        <li data-p="hotel">Tarifas y servicios respondidos desde tu planilla</li>
+        <li data-p="emp">Lista de precios respondida desde tu Excel</li>
+        <li>Capacitación de 1 hora y soporte mensual</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="carta">Cotizar este paquete →</a>
+    </div>
+
+    <div class="plan pop">
+      <span class="tag">Más pedido</span>
+      <p class="prob">«Se me pierden pedidos y reservas entre los chats, y hay que transcribirlos a mano.»</p>
+      <h3>Plan Negocio</h3>
+      <p class="who" data-p="rest">Reservas y pedidos de verdad, escritos solos en tu agenda y tu hoja de cocina.</p>
+      <p class="who" data-p="hotel">Reservas con disponibilidad real y anticipo, escritas solas en tu calendario.</p>
+      <p class="who" data-p="emp">Cotizaciones y pedidos numerados, con seguimiento y aviso al comercial.</p>
+      <div class="price">$1.450.000<small>COP · pago único de implementación</small><span class="mo">+ $650.000 COP / mes<em>1.000 conversaciones incluidas</em></span></div>
+      <ul>
+        <li>Todo lo del Setup Básico</li>
+        <li data-p="rest">Flujo de reservas y de pedidos, con validación</li>
+        <li data-p="hotel">Flujo de disponibilidad y reserva, con anticipo en línea</li>
+        <li data-p="emp">Cotizador con descuento por volumen y flete</li>
+        <li data-p="rest">Carta navegable dentro del chat</li>
+        <li data-p="hotel">Check-in anticipado con los datos de los huéspedes</li>
+        <li data-p="emp">Consulta de estado del pedido por número</li>
+        <li>Integración con Calendar, Sheets o tu CRM</li>
+        <li>Recordatorios automáticos programados</li>
+        <li>8 plantillas aprobadas (utility y marketing)</li>
+        <li>Etiquetado de clientes y tablero mensual</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="carta">Cotizar este paquete →</a>
+    </div>
+
+    <div class="plan">
+      <p class="prob">«Me escriben por WhatsApp, Instagram y Facebook, y nadie sabe quién contestó qué.»</p>
+      <h3>Plan Multicanal</h3>
+      <p class="who" data-p="rest">Los tres canales en una sola bandeja, con campañas a quien ya te compró.</p>
+      <p class="who" data-p="hotel">Los tres canales en una sola bandeja, con campañas por temporada.</p>
+      <p class="who" data-p="emp">Los tres canales en una sola bandeja, con campañas por línea de producto.</p>
+      <div class="price">$2.400.000<small>COP · pago único de implementación</small><span class="mo">+ $870.000 COP / mes<em>incluye el canal de Instagram y Facebook</em></span></div>
+      <ul>
+        <li>Todo lo del Plan Negocio</li>
+        <li>DM de Instagram y Messenger automatizados</li>
+        <li>Respuesta automática a comentarios</li>
+        <li>Bandeja unificada para tu equipo</li>
+        <li>Campañas segmentadas con plantillas</li>
+        <li>Respuestas con IA sobre tu propia información</li>
+        <li>Hasta 3 números o cuentas</li>
+        <li>Optimización mensual de flujos y textos</li>
+      </ul>
+      <a class="go" href="../index.html#cotizar" data-lqs="cotizar" data-area="carta">Cotizar este paquete →</a>
+    </div>
+  </div>
+
+  <div class="costbox">
+    <h3>Qué cubre la mensualidad, y qué cobra Meta aparte</h3>
+    <p class="note">Los <b>$650.000</b> incluyen <b>1.000 conversaciones atendidas al mes</b>; de ahí en adelante, <b>$180</b> por conversación adicional. De esa mensualidad, <b>$282.000</b> se van en infraestructura que se paga por fuera —proveedor de la API, base de datos, dominio y los mensajes incluidos de Meta— y el resto son las horas mensuales de monitoreo, ajustes de flujos y textos, cambios de carta o tarifas, e informe. Lo decimos porque preferimos que sepas en qué se va.</p>
+    <p class="note">Meta te factura directo los mensajes de plantilla que salen de tu número: <b>≈ $3 COP</b> una confirmación o un recordatorio, <b>≈ $50 COP</b> un mensaje de promoción. Responder dentro de las 24 horas de un cliente no cuesta nada hoy. Un negocio con 300 confirmaciones al mes le paga a Meta cerca de <b>$900 COP</b>. Las tarifas se publican en dólares y cambian varias veces al año; el detalle está en la <a href="../automatizacion-guia.html" data-lqs="muestra" data-titulo="Guía · cómo se monta la automatización">guía técnica</a>.</p>
+  </div>
+  <p class="note" style="margin-top:18px">Pago 50 % al iniciar y 50 % contra entrega. La mensualidad se factura desde el mes siguiente al lanzamiento y se cancela avisando con 30 días. Sin permanencia, sin letra chiquita.</p>
+</section></div>
+
+<!-- ══ 5 · CIERRE ══ -->
 <div class="wrap"><section class="rv"><div class="final">
   <h2>Pide tu cotización</h2>
-  <p>Cuéntanos qué te preguntan todos los días. Con eso dibujamos el flujo y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
+  <p data-p="rest">Cuéntanos qué te preguntan todos los días en el chat del restaurante. Con eso dibujamos el flujo y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
+  <p data-p="hotel">Cuéntanos qué te preguntan todos los días los huéspedes. Con eso dibujamos el flujo y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
+  <p data-p="emp">Cuéntanos qué te preguntan todos los días tus clientes. Con eso dibujamos el flujo y en 48 horas tienes la propuesta completa: alcance, cronograma y precio cerrado.</p>
   <div class="btns">
-    <a class="cta" href="../index.html#cotizar" data-lqs="cotizar">Pedir mi cotización</a>
+    <a class="cta" href="../index.html#cotizar" data-lqs="cotizar" data-area="carta">Pedir mi cotización</a>
   </div>
 </div></section></div>
 
@@ -419,8 +620,7 @@ footer a:hover{color:var(--acc-l)}
    vista donde estabas. Ahora, si estamos dentro, se lo pedimos al sitio; si
    estamos fuera, el href de siempre hace su trabajo. */
 (function(){
- var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
- if(!dentro)return;
+ if(!window.LQS.dentro)return;
  document.documentElement.setAttribute('data-en-visor','1');
  function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
  document.addEventListener('click',function(e){
@@ -443,126 +643,45 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('on');}); return; }
   var io = new IntersectionObserver(function(en){
     en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
-  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  },{threshold:.08,rootMargin:'0px 0px -6% 0px'});
   els.forEach(function(e){ io.observe(e); });
 })();
 
+/* ═══════════════════════════════════════════════════════════════════════
+   EL SIMULADOR
 
-/* ---------- SIMULADOR DE CHATBOT ---------- */
+   Un solo motor y tres cerebros. Lo que cambia entre restaurante, hotel y
+   empresa son los pasos y las intenciones, no la máquina: es exactamente lo
+   que decimos en la ficha, y aquí se puede comprobar.
+   ═══════════════════════════════════════════════════════════════════════ */
 (function(){
   var log = document.getElementById('log'), qr = document.getElementById('qr'),
       form = document.getElementById('form'), inp = document.getElementById('inp'),
-      reset = document.getElementById('reset');
+      reset = document.getElementById('reset'),
+      botNom = document.getElementById('botNom'), botAv = document.getElementById('botAv');
   if(!log) return;
 
-  var KEY = 'lqs_bot_v1';
-  var MENU = {
-    'Cafés': [['Espresso doble','$7.500'],['Latte de la casa','$11.000'],['Cold brew 12 oz','$13.000'],['Chocolate de Támesis','$10.500']],
-    'Para comer': [['Croissant de jamón y queso','$14.000'],['Tostada de aguacate','$19.000'],['Bowl de frutas y granola','$17.500'],['Huevos Orión','$22.000']],
-    'Postres': [['Cheesecake de maracuyá','$13.000'],['Brownie con helado','$14.500'],['Tres leches de café','$12.000']]
-  };
+  var P = window.LQS.pub;
+  var state = { step:'root', data:{}, msgs:[], qr:[] };
+  var busy = false, queue = [], nodos = [], pendiente = null;
+
+  /* ---------- utilidades compartidas ---------- */
   var DAYS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   var DAYS_N = ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
   var MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var NUMS = {uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,veinte:20,cincuenta:50,cien:100};
 
-  var state = { step:'root', data:{}, msgs:[], qr:[] };
-  var busy = false, queue = [];
-
-  function norm(s){
-    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
-  }
+  function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim(); }
   function now(){
     var d = new Date(), h = d.getHours(), m = d.getMinutes();
     var ap = h >= 12 ? 'p.m.' : 'a.m.', hh = h % 12; if(hh === 0) hh = 12;
     return hh + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
   }
-  function save(){
-    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
-  }
-  function load(){
-    try{
-      var raw = localStorage.getItem(KEY); if(!raw) return false;
-      var s = JSON.parse(raw);
-      if(!s || !s.msgs || !s.msgs.length) return false;
-      state = s; state.data = state.data || {}; state.qr = state.qr || [];
-      return true;
-    }catch(e){ return false; }
-  }
+  function pesos(n){ return '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function llave(){ return 'lqs_bot_' + P; }
 
-  function el(m){
-    var d = document.createElement('div');
-    d.className = 'msg' + (m.me ? ' me' : '');
-    d.innerHTML = m.html + '<span class="t">' + (m.t || now()) + '</span>';
-    return d;
-  }
-  function paint(){
-    log.innerHTML = '';
-    state.msgs.forEach(function(m){ var n = el(m); n.style.animation = 'none'; log.appendChild(n); });
-    drawQR();
-    log.scrollTop = log.scrollHeight;
-  }
-  function drawQR(){
-    qr.innerHTML = '';
-    (state.qr || []).forEach(function(label, i){
-      var b = document.createElement('button');
-      b.type = 'button'; b.textContent = label;
-      b.style.animationDelay = (i * 0.05) + 's';
-      b.addEventListener('click', function(){ send(label); });
-      qr.appendChild(b);
-    });
-  }
-  function push(html, me){
-    var m = { html: html, me: !!me, t: now() };
-    state.msgs.push(m);
-    if(state.msgs.length > 60) state.msgs.splice(0, state.msgs.length - 60);
-    var n = el(m); log.appendChild(n);
-    log.scrollTop = log.scrollHeight;
-    save();
-  }
-  function typing(on){
-    var ex = document.getElementById('typing');
-    if(on){
-      if(ex) return;
-      var d = document.createElement('div');
-      d.className = 'typing'; d.id = 'typing';
-      d.innerHTML = '<i></i><i></i><i></i>';
-      log.appendChild(d); log.scrollTop = log.scrollHeight;
-    } else if(ex){ ex.remove(); }
-  }
-  function setQR(list){ state.qr = list || []; drawQR(); save(); }
-
-  /* cola de burbujas escalonadas */
-  function bot(lines, quick){
-    queue.push({ lines: [].concat(lines), quick: quick || [] });
-    if(!busy) run();
-  }
-  function run(){
-    var job = queue.shift();
-    if(!job){ busy = false; inp.disabled = false; return; }
-    busy = true; inp.disabled = false;
-    setQR([]);
-    var i = 0;
-    (function next(){
-      if(i >= job.lines.length){
-        setQR(job.quick);
-        run();
-        return;
-      }
-      var txt = job.lines[i++];
-      var wait = RM ? 60 : Math.min(1250, 380 + txt.replace(/<[^>]+>/g,'').length * 11);
-      typing(true);
-      setTimeout(function(){
-        typing(false);
-        push(txt, false);
-        setTimeout(next, RM ? 20 : 170);
-      }, wait);
-    })();
-  }
-
-  /* --------- parsers --------- */
   function parseDate(s){
-    var t = norm(s);
-    var d = new Date(), out = null;
+    var t = norm(s), d = new Date(), out = null;
     if(/\bhoy\b/.test(t)) out = new Date(d);
     else if(/pasado\s*manana/.test(t)){ out = new Date(d); out.setDate(out.getDate()+2); }
     else if(/\bmanana\b/.test(t)){ out = new Date(d); out.setDate(out.getDate()+1); }
@@ -591,15 +710,14 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     if(!out) return null;
     return DAYS[out.getDay()] + ' ' + out.getDate() + ' de ' + MONTHS[out.getMonth()];
   }
-  function parsePeople(s){
+  function parseNum(s, min, max){
     var t = norm(s);
-    var words = {uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12};
-    for(var w in words){ if(new RegExp('\\b'+w+'\\b').test(t)) return words[w]; }
-    var m = t.match(/\d{1,2}/);
-    if(m){ var n = parseInt(m[0],10); if(n >= 1 && n <= 40) return n; }
+    for(var w in NUMS){ if(new RegExp('\\b'+w+'\\b').test(t)) { var v = NUMS[w]; if(v>=min && v<=max) return v; } }
+    var m = t.match(/\d{1,5}/);
+    if(m){ var n = parseInt(m[0],10); if(n >= min && n <= max) return n; }
     return null;
   }
-  function parseTime(s){
+  function parseTime(s, desde, hasta){
     var t = norm(s);
     var m = t.match(/(\d{1,2})(?:[:.](\d{2}))?\s*(am|pm|a\.?m\.?|p\.?m\.?|de la manana|de la tarde|de la noche)?/);
     if(!m) return null;
@@ -607,168 +725,216 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     var mm = m[2] || '00', tag = m[3] || '';
     var pm = /p/.test(tag) || /tarde|noche/.test(tag);
     if(h <= 12 && pm) h = h === 12 ? 12 : h + 12;
-    if(h > 20 || h < 7) return null;
+    if(h > hasta || h < desde) return null;
     var ap = h >= 12 ? 'p.m.' : 'a.m.', hh = h % 12; if(hh === 0) hh = 12;
     return hh + ':' + mm + ' ' + ap;
   }
-  function menuHTML(cat){
-    var rows = MENU[cat].map(function(r){
+  function lista(filas){
+    return filas.map(function(r){
       return '<span class="li"><span>' + r[0] + '</span><em>' + r[1] + '</em></span>';
     }).join('');
-    return '<b>' + cat + '</b><br>' + rows;
+  }
+  function codigo(pre){ return pre + '-' + Math.floor(1000 + Math.random() * 9000); }
+  /* con límites de palabra a propósito: sin ellos, «sin desayuno» se leía
+     como un «sí» porque contiene «si». */
+  function si(t){ return /\b(si|dale|listo|confirmar|confirmo|correcto|perfecto|ok|de una|claro|hagamos|mandala|mandalo|enviala|envialo)\b/.test(t); }
+
+  /* ---------- pintar ---------- */
+  var TICK = '<svg class="tk" viewBox="0 0 20 12" aria-hidden="true"><path class="p1" d="M2 6.4 5 9.6 11 2.4"/><path class="p2" d="M8.4 6.4 11.4 9.6 17.4 2.4"/></svg>';
+
+  /* el desplazamiento al fondo espera un cuadro: si se pide antes de que el
+     navegador mida la burbuja recién insertada, el último mensaje queda a
+     medio ver. */
+  function alFondo(){
+    if(RM){ log.scrollTop = log.scrollHeight; return; }
+    requestAnimationFrame(function(){ log.scrollTop = log.scrollHeight; });
+  }
+  function el(m){
+    var d = document.createElement('div');
+    d.className = 'msg' + (m.me ? ' me' : '') + (m.ok >= 1 ? ' ent' : '') + (m.ok >= 2 ? ' vis' : '');
+    d.innerHTML = m.html + '<span class="t">' + (m.t || now()) + (m.me ? TICK : '') + '</span>';
+    return d;
+  }
+  function paint(){
+    log.innerHTML = ''; nodos = [];
+    state.msgs.forEach(function(m){ var n = el(m); n.style.animation = 'none'; log.appendChild(n); nodos.push(n); });
+    drawQR();
+    alFondo();
+  }
+  function drawQR(){
+    qr.innerHTML = '';
+    (state.qr || []).forEach(function(label, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = label;
+      b.style.animationDelay = (RM ? 0 : i * 0.05) + 's';
+      b.addEventListener('click', function(){ send(label); });
+      qr.appendChild(b);
+    });
+  }
+  function push(html, me){
+    var m = { html: html, me: !!me, t: now(), ok: 0 };
+    state.msgs.push(m);
+    var n = el(m); log.appendChild(n); nodos.push(n);
+    if(state.msgs.length > 60){
+      var sobra = state.msgs.length - 60;
+      state.msgs.splice(0, sobra);
+      nodos.splice(0, sobra).forEach(function(x){ x.remove(); });
+    }
+    alFondo();
+    /* entregado: el segundo tilde llega un momento después, como en WhatsApp */
+    if(me) setTimeout(function(){ marcar(m, n, 1); }, RM ? 0 : 420);
+    save();
+    return n;
+  }
+  function marcar(m, n, ok){
+    if(m.ok >= ok) return;
+    m.ok = ok; n.classList.add(ok >= 2 ? 'vis' : 'ent');
+    if(ok >= 2) n.classList.add('ent');
+    save();
+  }
+  /* leído: cuando el asistente empieza a escribir, ya vio todo lo tuyo */
+  function leerTodo(){
+    state.msgs.forEach(function(m, i){ if(m.me && nodos[i]) marcar(m, nodos[i], 2); });
+  }
+  function typing(on){
+    var ex = document.getElementById('typing');
+    if(on){
+      leerTodo();
+      if(ex) return;
+      var d = document.createElement('div');
+      d.className = 'typing'; d.id = 'typing';
+      d.innerHTML = '<i></i><i></i><i></i>';
+      log.appendChild(d); alFondo();
+    } else if(ex){ ex.remove(); }
+  }
+  function setQR(l){ state.qr = l || []; drawQR(); save(); }
+  function save(){ try{ localStorage.setItem(llave(), JSON.stringify(state)); }catch(e){} }
+  function load(){
+    try{
+      var raw = localStorage.getItem(llave()); if(!raw) return false;
+      var s = JSON.parse(raw);
+      if(!s || !s.msgs || !s.msgs.length) return false;
+      state = s; state.data = state.data || {}; state.qr = state.qr || [];
+      return true;
+    }catch(e){ return false; }
   }
 
-  var ROOT_QR = ['Ver la carta','Reservar mesa','Horarios y ubicación','Hablar con alguien'];
+  /* cola de burbujas escalonadas: escribe, aparece, respira, escribe la siguiente */
+  function bot(lines, quick){
+    queue.push({ lines: [].concat(lines), quick: quick || [] });
+    if(!busy) run();
+  }
+  function run(){
+    var job = queue.shift();
+    if(!job){
+      busy = false;
+      /* si el visitante contestó mientras el asistente todavía escribía, se
+         le responde ahora: así el bot nunca se adelanta a su propia frase. */
+      if(pendiente !== null){ var p = pendiente; pendiente = null; brain(p); }
+      return;
+    }
+    busy = true;
+    setQR([]);
+    var i = 0;
+    (function next(){
+      if(i >= job.lines.length){ setQR(job.quick); run(); return; }
+      var txt = job.lines[i++];
+      var wait = RM ? 40 : Math.min(1150, 340 + txt.replace(/<[^>]+>/g,'').length * 10);
+      typing(true);
+      setTimeout(function(){
+        typing(false);
+        push(txt, false);
+        setTimeout(next, RM ? 15 : 190);
+      }, wait);
+    })();
+  }
 
-  function greet(){
-    bot([
+  /* ═══════════════ los tres cerebros ═══════════════ */
+
+  /* ---- 1 · RESTAURANTE ---- */
+  var CARTA = {
+    'Cafés': [['Espresso doble','$7.500'],['Latte de la casa','$11.000'],['Cold brew 12 oz','$13.000'],['Chocolate de Támesis','$10.500']],
+    'Para comer': [['Croissant de jamón y queso','$14.000'],['Tostada de aguacate','$19.000'],['Bowl de frutas y granola','$17.500'],['Huevos Orión','$22.000']],
+    'Postres': [['Cheesecake de maracuyá','$13.000'],['Brownie con helado','$14.500'],['Tres leches de café','$12.000']]
+  };
+  function cartaHTML(cat){ return '<b>' + cat + '</b><br>' + lista(CARTA[cat]); }
+
+  var REST = {
+    nombre:'Café Orión · demo', av:'🪐',
+    raiz:['Ver la carta','Reservar mesa','Horarios y ubicación','Hablar con alguien'],
+    saludo:[
       '¡Hola! 👋 Soy <b>Orión</b>, el asistente de Café Orión (Laureles, Medellín).',
       'Puedo mostrarte la carta, tomarte una reserva, darte horarios o pasarte con alguien del equipo. Escribe lo que necesites o usa los botones. 👇'
-    ], ROOT_QR);
-  }
-
-  /* --------- cerebro --------- */
-  function brain(raw){
-    var t = norm(raw);
-    if(!t) return;
-
-    /* salidas universales */
-    if(/^(menu|inicio|volver|atras|empezar|reiniciar)$/.test(t) || /volver al (menu|inicio)/.test(t)){
-      state.step = 'root'; state.data = {};
-      bot(['Listo, volvemos al inicio. ¿Qué necesitas?'], ROOT_QR);
-      return;
-    }
-    if(/(cancelar|olvidalo|dejalo asi|ya no)/.test(t) && state.step !== 'root'){
-      state.step = 'root'; state.data = {};
-      bot(['Sin problema, cancelo eso. Aquí sigo cuando quieras. 🙂'], ROOT_QR);
-      return;
-    }
-    if(/(hablar con|una persona|un humano|humano|asesor|agente|alguien real|persona real)/.test(t) && state.step !== 'human_name'){
-      state.step = 'human_name'; state.data = {};
-      bot([
-        'Claro, te paso con el equipo. 🙋',
-        '¿Me dices tu <b>nombre</b> para avisarles?'
-      ], []);
-      return;
-    }
-
-    switch(state.step){
-
-      /* ---- RESERVA ---- */
-      case 'res_date': {
+    ],
+    fallback:[
+      'Eso todavía no lo sé responder. 🤔 Un bot bien hecho reconoce sus límites en vez de inventar.',
+      'Puedo ayudarte con la carta, una reserva, horarios y ubicación, o pasarte con una persona del equipo.'
+    ],
+    pasos:{
+      res_date:function(raw){
         var d = parseDate(raw);
-        if(!d){
-          bot(['Mmm, no logré entender la fecha. 😅 Puedes escribir <b>hoy</b>, <b>mañana</b>, <b>viernes</b> o algo como <b>22/08</b>.'], ['Hoy','Mañana','Este viernes','Cancelar']);
-          return;
-        }
+        if(!d){ bot(['Mmm, no logré entender la fecha. 😅 Puedes escribir <b>hoy</b>, <b>mañana</b>, <b>viernes</b> o algo como <b>22/08</b>.'], ['Hoy','Mañana','Este viernes','Cancelar']); return; }
         state.data.date = d; state.step = 'res_people';
         bot(['Perfecto, <b>' + d + '</b>. 📅', '¿Para cuántas personas?'], ['2','4','6','8']);
-        return;
-      }
-      case 'res_people': {
-        var p = parsePeople(raw);
-        if(!p){
-          bot(['Necesito un número de personas, por ejemplo <b>4</b>.'], ['2','4','6','8']);
-          return;
-        }
-        if(p > 12){
-          state.data.people = p; state.step = 'res_time';
-          bot([
-            'Para <b>' + p + ' personas</b> reservamos el salón de atrás, así que el equipo confirma disponibilidad manualmente.',
-            '¿A qué hora los esperamos? Atendemos de 7:00 a.m. a 8:00 p.m.'
-          ], ['12:00 p.m.','6:00 p.m.','7:30 p.m.']);
-          return;
-        }
+      },
+      res_people:function(raw){
+        var p = parseNum(raw, 1, 40);
+        if(!p){ bot(['Necesito un número de personas, por ejemplo <b>4</b>.'], ['2','4','6','8']); return; }
         state.data.people = p; state.step = 'res_time';
-        bot(['Anotado: <b>' + p + ' ' + (p === 1 ? 'persona' : 'personas') + '</b>. 👥', '¿A qué hora? Atendemos de 7:00 a.m. a 8:00 p.m.'], ['9:00 a.m.','12:00 p.m.','6:00 p.m.','7:30 p.m.']);
-        return;
-      }
-      case 'res_time': {
-        var h = parseTime(raw);
-        if(!h){
-          bot(['Esa hora se me sale del horario. 🕒 Estamos abiertos de <b>7:00 a.m. a 8:00 p.m.</b> ¿A qué hora te sirve?'], ['9:00 a.m.','12:00 p.m.','6:00 p.m.','7:30 p.m.']);
+        if(p > 12){
+          bot(['Para <b>' + p + ' personas</b> usamos el salón de atrás, así que el equipo confirma disponibilidad a mano.','¿A qué hora los esperamos? Atendemos de 7:00 a.m. a 8:00 p.m.'], ['12:00 p.m.','6:00 p.m.','7:30 p.m.']);
           return;
         }
+        bot(['Anotado: <b>' + p + ' ' + (p === 1 ? 'persona' : 'personas') + '</b>. 👥', '¿A qué hora? Atendemos de 7:00 a.m. a 8:00 p.m.'], ['9:00 a.m.','12:00 p.m.','6:00 p.m.','7:30 p.m.']);
+      },
+      res_time:function(raw){
+        var h = parseTime(raw, 7, 20);
+        if(!h){ bot(['Esa hora se me sale del horario. 🕒 Abrimos de <b>7:00 a.m. a 8:00 p.m.</b> ¿Cuál te sirve?'], ['9:00 a.m.','12:00 p.m.','6:00 p.m.','7:30 p.m.']); return; }
         state.data.time = h; state.step = 'res_name';
         bot(['¿A nombre de quién la dejo?'], []);
-        return;
-      }
-      case 'res_name': {
+      },
+      res_name:function(raw){
         var nm = raw.trim().replace(/\s+/g,' ').slice(0,40);
         state.data.name = nm.charAt(0).toUpperCase() + nm.slice(1);
         state.step = 'res_confirm';
-        bot([
-          'Confirmemos: <br><b>' + state.data.name + '</b><br>📅 ' + state.data.date + '<br>🕒 ' + state.data.time + '<br>👥 ' + state.data.people + ' ' + (state.data.people === 1 ? 'persona' : 'personas'),
-          '¿Está bien así?'
-        ], ['Sí, confirmar','Cambiar la fecha','Cancelar']);
-        return;
-      }
-      case 'res_confirm': {
-        if(/(cambiar|otra fecha|otro dia|corregir|no)/.test(t) && !/^si/.test(t)){
+        bot(['Confirmemos:<br><b>' + state.data.name + '</b><br>📅 ' + state.data.date + '<br>🕒 ' + state.data.time + '<br>👥 ' + state.data.people + ' ' + (state.data.people === 1 ? 'persona' : 'personas'), '¿Está bien así?'], ['Sí, confirmar','Cambiar la fecha','Cancelar']);
+      },
+      res_confirm:function(raw, t){
+        if(/(cambiar|otra fecha|otro dia|corregir)/.test(t)){
           state.step = 'res_date';
           bot(['Sin problema. ¿Para qué día la movemos?'], ['Hoy','Mañana','Este viernes','Este sábado']);
           return;
         }
-        if(/(si|dale|listo|confirmar|correcto|perfecto|ok|de una)/.test(t)){
-          var code = 'OR-' + Math.floor(1000 + Math.random() * 9000);
+        if(si(t)){
           state.step = 'root';
-          bot([
-            '¡Reserva confirmada! ✅<br>Código <b>' + code + '</b> · ' + state.data.date + ' a las ' + state.data.time + ' para ' + state.data.people + '.' +
-            '<span class="sys">En un montaje real, aquí el bot escribe la reserva en Google Calendar y dispara una plantilla <b>utility</b> aprobada por Meta (≈ $3 COP).</span>',
-            'Te enviaremos un recordatorio el día anterior. ¿Algo más? 🙂'
-          ], ROOT_QR);
+          bot(['¡Reserva confirmada! ✅<br>Código <b>' + codigo('OR') + '</b> · ' + state.data.date + ' a las ' + state.data.time + ' para ' + state.data.people + '.' +
+               '<span class="sys">En un montaje real, aquí el bot escribe la reserva en Google Calendar y dispara una plantilla <b>utility</b> aprobada por Meta (≈ $3 COP).</span>',
+               'Te mandamos el recordatorio el día anterior. ¿Algo más? 🙂'], REST.raiz);
           state.data = {};
           return;
         }
         bot(['¿Confirmo la reserva o prefieres cambiar algo?'], ['Sí, confirmar','Cambiar la fecha','Cancelar']);
-        return;
-      }
-
-      /* ---- HUMANO ---- */
-      case 'human_name': {
-        state.data.hname = raw.trim().slice(0,40);
-        state.step = 'human_topic';
-        bot(['Gracias, ' + state.data.hname + '. ¿Sobre qué tema es? Así le paso el contexto a la persona correcta.'], ['Un pedido','Una reserva','Eventos privados','Otra cosa']);
-        return;
-      }
-      case 'human_topic': {
-        state.step = 'root';
-        bot([
-          'Listo. 📨 Le pasé tu caso al equipo de Café Orión:<br><b>' + state.data.hname + '</b> · ' + raw.trim().slice(0,60) +
-          '<span class="sys">Aquí el bot se calla y notifica por correo o Slack. Meta deja responder gratis durante 24 h desde tu último mensaje; después hay que usar una plantilla aprobada.</span>',
-          'Te responden en horario de atención (hoy hasta las 8:00 p.m.). Mientras tanto, ¿te muestro algo más?'
-        ], ROOT_QR);
-        state.data = {};
-        return;
-      }
-
-      /* ---- CARTA ---- */
-      case 'menu_cat': {
+      },
+      menu_cat:function(raw, t){
         var found = null;
         if(/(cafe|bebida|tomar|espresso|latte)/.test(t)) found = 'Cafés';
         else if(/(comer|comida|desayuno|salado|croissant|tostada|huevo)/.test(t)) found = 'Para comer';
         else if(/(postre|dulce|torta|brownie|cheesecake)/.test(t)) found = 'Postres';
         else if(/(todo|completa|toda la carta)/.test(t)){
           state.step = 'menu_after';
-          bot([menuHTML('Cafés'), menuHTML('Para comer'), menuHTML('Postres'), '¿Te antojaste de algo? 😄'], ['Quiero pedir','Reservar mesa','Volver al menú']);
+          bot([cartaHTML('Cafés'), cartaHTML('Para comer'), cartaHTML('Postres'), '¿Te antojaste de algo? 😄'], ['Quiero pedir','Reservar mesa','Volver al menú']);
           return;
         }
-        if(!found){
-          bot(['¿Cuál categoría te muestro?'], ['Cafés','Para comer','Postres','Toda la carta']);
-          return;
-        }
+        if(!found){ bot(['¿Cuál categoría te muestro?'], ['Cafés','Para comer','Postres','Toda la carta']); return; }
         state.step = 'menu_after';
-        bot([menuHTML(found), 'Todos los precios incluyen impuestos. ¿Quieres pedir algo o ver otra categoría?'], ['Quiero pedir','Ver otra categoría','Volver al menú']);
-        return;
-      }
-      case 'menu_after': {
+        bot([cartaHTML(found), 'Todos los precios incluyen impuestos. ¿Quieres pedir algo o ver otra categoría?'], ['Quiero pedir','Ver otra categoría','Volver al menú']);
+      },
+      menu_after:function(raw, t){
         if(/(pedir|domicilio|llevar|ordenar|comprar)/.test(t)){
           state.step = 'root';
-          bot([
-            '¡Genial! 🛵 Para domicilios en Laureles y Estadio el pedido mínimo es <b>$25.000</b> y el domicilio cuesta <b>$6.000</b>.' +
-            '<span class="sys">En producción, aquí el bot arma el carrito con el catálogo nativo de WhatsApp y envía el link de pago.</span>',
-            'Te paso con el equipo para cerrar el pedido, o dime si prefieres reservar mesa.'
-          ], ['Hablar con alguien','Reservar mesa','Volver al menú']);
+          bot(['¡Genial! 🛵 Para domicilios en Laureles y Estadio el pedido mínimo es <b>$25.000</b> y el domicilio cuesta <b>$6.000</b>.' +
+               '<span class="sys">En producción, aquí el bot arma el carrito con el catálogo nativo de WhatsApp y envía el link de pago.</span>',
+               'Te paso con el equipo para cerrar el pedido, o dime si prefieres reservar mesa.'], ['Hablar con alguien','Reservar mesa','Volver al menú']);
           return;
         }
         if(/(otra|categoria|ver mas|mas)/.test(t)){
@@ -776,71 +942,334 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
           bot(['¿Cuál te muestro?'], ['Cafés','Para comer','Postres','Toda la carta']);
           return;
         }
-        break;
+        return false;
       }
-    }
+    },
+    intents:[
+      [/(carta|menu|men u|comida|que venden|que tienen|precios|productos|catalogo)/, function(){
+        state.step = 'menu_cat';
+        bot(['Con gusto, esta es nuestra carta. 🍽️', '¿Por dónde empezamos?'], ['Cafés','Para comer','Postres','Toda la carta']);
+      }],
+      [/(reserv|mesa|apartar|agendar|cita|separar)/, function(){
+        state.step = 'res_date';
+        bot(['¡Listo, tomamos la reserva! 📅', '¿Para qué día? Puedes decir <b>hoy</b>, <b>mañana</b>, un día de la semana o una fecha.'], ['Hoy','Mañana','Este viernes','Este sábado']);
+      }],
+      [/(horario|hora abren|hora cierran|abren|cierran|donde estan|direccion|ubicacion|como llego|queda|mapa)/, function(){
+        state.step = 'root';
+        bot(['🕒 <b>Horarios</b>' + lista([['Lunes a viernes','7:00 a.m. – 8:00 p.m.'],['Sábados','8:00 a.m. – 9:00 p.m.'],['Domingos y festivos','9:00 a.m. – 4:00 p.m.']]),
+             '📍 <b>Dónde estamos</b><br>Circular 4 # 70-32, Laureles, Medellín.<br>A una cuadra del Primer Parque. Parqueadero en la esquina.',
+             '¿Te ayudo con algo más?'], ['Reservar mesa','Ver la carta','Hablar con alguien']);
+      }],
+      [/(wifi|wi fi|internet|clave)/, function(){ bot(['Sí, wifi gratis para clientes ☕ La clave está en cada mesa y en la barra.'], REST.raiz); }],
+      [/(parque|parqueadero|carro|moto)/, function(){ bot(['Hay parqueadero pago en la esquina (Circular 4 con 70) y zona azul sobre la 70. 🚗'], REST.raiz); }],
+      [/(mascota|perro|gato|pet)/, function(){ bot(['¡Claro! 🐶 Somos pet friendly en la terraza.'], REST.raiz); }],
+      [/(pago|pagar|tarjeta|nequi|daviplata|efectivo|transferencia)/, function(){ bot(['Recibimos efectivo, tarjetas débito y crédito, Nequi y Daviplata. 💳'], REST.raiz); }],
+      [/(vegan|vegetarian|sin gluten|celiac|sin lactosa)/, function(){ bot(['Tenemos opciones vegetarianas y veganas marcadas en la carta, y leches vegetales sin recargo. 🌱 Sin gluten manejamos el bowl de frutas y algunos postres.'], ['Ver la carta','Reservar mesa']); }]
+    ]
+  };
 
-    /* ---- intents desde la raíz (o fallback) ---- */
-    if(/(carta|menu|men u|comida|que venden|que tienen|precios|productos|catalogo)/.test(t)){
-      state.step = 'menu_cat';
-      bot(['Con gusto, esta es nuestra carta. 🍽️', '¿Por dónde empezamos?'], ['Cafés','Para comer','Postres','Toda la carta']);
+  /* ---- 2 · HOTEL ---- */
+  var HAB = {
+    'Estándar': 240000, 'Superior con balcón': 340000, 'Suite familiar': 520000
+  };
+  var HOTEL = {
+    nombre:'Hotel Casa Verde · demo', av:'🌿',
+    raiz:['Ver tarifas','Reservar','Servicios del hotel','Hablar con alguien'],
+    saludo:[
+      '¡Hola! 👋 Soy <b>Verde</b>, el asistente de Hotel Casa Verde (El Poblado, Medellín).',
+      'Puedo decirte qué hay disponible y a qué tarifa, tomarte la reserva, adelantarte el check-in o pasarte con recepción. 👇'
+    ],
+    fallback:[
+      'Eso todavía no lo sé responder. 🤔 Prefiero decirlo a inventar una tarifa.',
+      'Puedo ayudarte con disponibilidad y tarifas, una reserva, el check-in anticipado, los servicios del hotel, o pasarte con recepción.'
+    ],
+    pasos:{
+      hab_fecha:function(raw){
+        var d = parseDate(raw);
+        if(!d){ bot(['No logré leer la fecha. 😅 Puedes escribir <b>mañana</b>, <b>viernes</b> o algo como <b>14/09</b>.'], ['Hoy','Mañana','Este viernes','Cancelar']); return; }
+        state.data.entrada = d; state.step = 'hab_noches';
+        bot(['Entrada el <b>' + d + '</b>. 📅', '¿Cuántas noches se quedan?'], ['1 noche','2 noches','3 noches','5 noches']);
+      },
+      hab_noches:function(raw){
+        var n = parseNum(raw, 1, 30);
+        if(!n){ bot(['Necesito el número de noches, por ejemplo <b>2</b>.'], ['1 noche','2 noches','3 noches']); return; }
+        state.data.noches = n; state.step = 'hab_personas';
+        bot([n + (n === 1 ? ' noche' : ' noches') + '. ¿Cuántas personas son, contando niños?'], ['1','2','3','4']);
+      },
+      hab_personas:function(raw){
+        var p = parseNum(raw, 1, 12);
+        if(!p){ bot(['¿Cuántas personas se hospedan? Un número me sirve.'], ['1','2','3','4']); return; }
+        state.data.personas = p; state.step = 'hab_tipo';
+        var filas = [['Estándar · 2 personas', pesos(HAB['Estándar']) + '/noche'],
+                     ['Superior con balcón · 3', pesos(HAB['Superior con balcón']) + '/noche'],
+                     ['Suite familiar · 5', pesos(HAB['Suite familiar']) + '/noche']];
+        bot(['Para <b>' + p + (p === 1 ? ' persona' : ' personas') + '</b>, esto es lo que me queda libre esas noches:',
+             lista(filas) + '<span class="sys">Tarifas de temporada media. El bot lee la disponibilidad real, no una lista fija: nunca ofrece una noche ya vendida.</span>',
+             '¿Cuál te reservo?'], ['Estándar','Superior con balcón','Suite familiar']);
+      },
+      hab_tipo:function(raw, t){
+        var tipo = null;
+        if(/(estandar|sencilla|basica|economica)/.test(t)) tipo = 'Estándar';
+        else if(/(superior|balcon)/.test(t)) tipo = 'Superior con balcón';
+        else if(/(suite|familiar|grande)/.test(t)) tipo = 'Suite familiar';
+        if(!tipo){ bot(['¿Cuál de las tres prefieres?'], ['Estándar','Superior con balcón','Suite familiar']); return; }
+        state.data.tipo = tipo; state.step = 'hab_desayuno';
+        var sub = HAB[tipo] * state.data.noches;
+        state.data.sub = sub;
+        bot(['<b>' + tipo + '</b>, ' + state.data.noches + (state.data.noches === 1 ? ' noche' : ' noches') + ': ' + pesos(HAB[tipo]) + ' × ' + state.data.noches + ' = <b>' + pesos(sub) + '</b>.',
+             '¿Le agrego desayuno? Son <b>$28.000</b> por persona por noche — ' + pesos(28000 * state.data.personas * state.data.noches) + ' por todos.'], ['Sí, con desayuno','Sin desayuno']);
+      },
+      hab_desayuno:function(raw, t){
+        var con = si(t) || /desayuno/.test(t) && !/sin/.test(t);
+        if(/sin/.test(t)) con = false;
+        state.data.desayuno = con ? 28000 * state.data.personas * state.data.noches : 0;
+        var total = state.data.sub + state.data.desayuno;
+        state.data.total = total;
+        state.step = 'hab_confirm';
+        var filas = [[state.data.tipo + ' × ' + state.data.noches, pesos(state.data.sub)]];
+        if(con) filas.push(['Desayuno × ' + state.data.personas + ' × ' + state.data.noches, pesos(state.data.desayuno)]);
+        filas.push(['Total de la estadía', pesos(total)]);
+        bot(['Así queda:' + lista(filas),
+             'Para bloquear la habitación se paga un <b>anticipo del 30 %</b> — ' + pesos(total * 0.3) + '. El resto en recepción al llegar. ¿Confirmo?'], ['Sí, confirmar','Cambiar las fechas','Cancelar']);
+      },
+      hab_confirm:function(raw, t){
+        if(/(cambiar|otra fecha|otras fechas|otro dia|corregir)/.test(t)){
+          state.step = 'hab_fecha';
+          bot(['Claro. ¿Para qué día movemos la entrada?'], ['Mañana','Este viernes','Este sábado']);
+          return;
+        }
+        if(si(t)){
+          state.step = 'root';
+          bot(['¡Reserva confirmada! ✅<br>Código <b>' + codigo('HT') + '</b> · entrada el ' + state.data.entrada + ' · ' + state.data.tipo + ' · ' + state.data.personas + (state.data.personas === 1 ? ' persona' : ' personas') + '.' +
+               '<span class="sys">En producción el bot cobra el anticipo con la pasarela, bloquea el calendario y manda la plantilla <b>utility</b> de confirmación (≈ $3 COP).</span>',
+               'Check-in desde las 3 p.m. Un día antes te mando el enlace para hacerlo desde el celular y llegar directo a la habitación. ¿Algo más?'], HOTEL.raiz);
+          state.data = {};
+          return;
+        }
+        bot(['¿Confirmo la reserva o prefieres ajustar algo?'], ['Sí, confirmar','Cambiar las fechas','Cancelar']);
+      },
+      chk_personas:function(raw){
+        var p = parseNum(raw, 1, 12);
+        if(!p){ bot(['¿Cuántos huéspedes registro? Un número me sirve.'], ['1','2','3','4']); return; }
+        state.data.chk = p; state.step = 'chk_hora';
+        bot(['Perfecto, ' + p + (p === 1 ? ' huésped' : ' huéspedes') + '. Registrados y verificados. ✅' +
+             '<span class="sys">Aquí el bot abre un formulario con nombre, documento y fecha de nacimiento de cada uno, y lo guarda para el registro hotelero.</span>',
+             '¿A qué hora llegan, más o menos? Sirve para tener la habitación lista.'], ['Antes de las 3 p.m.','Entre 3 y 6 p.m.','Después de las 6 p.m.']);
+      },
+      chk_hora:function(raw){
+        state.step = 'root';
+        bot(['Anotado: <b>' + raw.trim().slice(0,40) + '</b>. Le aviso a recepción.',
+             'Este es tu código de entrada: <b>' + codigo('QR') + '</b>. Al llegar lo muestras, firmas y subes — sin fila.' +
+             '<span class="sys">En producción es un QR de un solo uso que vence a la medianoche del día de llegada.</span>'], HOTEL.raiz);
+      }
+    },
+    intents:[
+      [/(reserv|habitacion|disponib|cuarto|puente|alojar|hospedar|quedarme)/, function(){
+        state.step = 'hab_fecha';
+        bot(['¡Con gusto! 📅', '¿Para qué día es la entrada? Puedes decir <b>mañana</b>, un día de la semana o una fecha.'], ['Hoy','Mañana','Este viernes','Este sábado']);
+      }],
+      [/(servicio|que incluye|amenidad|instalacion|que hay)/, function(){
+        bot(['Esto es lo que tiene el hotel:' + lista([['Desayuno','6:30 – 10:30 a.m.'],['Piscina y gimnasio','6 a.m. – 9 p.m.'],['Parqueadero cubierto','$18.000 / noche'],['Traslado al aeropuerto','$95.000 por trayecto'],['Spa · masaje 60 min','desde $140.000']]),
+             '¿Te cuento de alguno en detalle?'], ['Desayuno','Parqueadero','Traslado','Reservar']);
+      }],
+      [/(check.?in|checkin|registro|adelantar|llegada)/, function(){
+        state.step = 'chk_personas';
+        bot(['Podemos dejar el check-in hecho desde ya. 📲', '¿Cuántas personas se registran?'], ['1','2','3','4']);
+      }],
+      [/(tarifa|precio|vale|cuesta|cuanto)/, function(){
+        bot(['Estas son las tarifas de temporada media, por noche:' + lista([['Estándar · 2 personas', pesos(HAB['Estándar'])],['Superior con balcón · 3', pesos(HAB['Superior con balcón'])],['Suite familiar · 5', pesos(HAB['Suite familiar'])]]),
+             'En temporada alta y puentes cambian. Dime las fechas y te doy la tarifa exacta.'], ['Reservar','Servicios del hotel']);
+      }],
+      [/(desayuno|comida|restaurante|cena)/, function(){ bot(['El desayuno es de 6:30 a 10:30 a.m. en el restaurante del primer piso. 🍳 Si tu plan no lo incluye, cuesta <b>$28.000</b> por persona. También hay carta hasta las 9 p.m.'], HOTEL.raiz); }],
+      [/(parqueadero|carro|moto|estacion)/, function(){ bot(['Parqueadero cubierto, <b>$18.000</b> por noche, con cupo garantizado si lo reservas junto con la habitación. 🚗'], HOTEL.raiz); }],
+      [/(mascota|perro|gato|pet)/, function(){ bot(['Sí aceptamos mascotas hasta 10 kg 🐶, con un cargo único de <b>$60.000</b> por la estancia. Hay zona verde al lado.'], HOTEL.raiz); }],
+      [/(aeropuerto|traslado|transporte|vuelo|recoger)/, function(){ bot(['Traslado desde el aeropuerto José María Córdova: <b>$95.000</b> por trayecto, hasta 4 personas con equipaje. ✈️ Te esperamos con letrero y seguimos el vuelo, así que un retraso no cuesta más.'], ['Reservar','Hablar con alguien']); }],
+      [/(spa|masaje|piscina|gimnasio|gym|jacuzzi)/, function(){ bot(['Piscina y gimnasio abiertos de 6 a.m. a 9 p.m., incluidos. 🏊 Masaje de 60 minutos: <b>$140.000</b> en el spa o <b>$175.000</b> en la habitación, con cita previa.'], HOTEL.raiz); }],
+      [/(wifi|wi fi|internet|clave)/, function(){ bot(['Wifi de fibra en todo el hotel, incluido. La clave va en la tarjeta de la habitación. 📶'], HOTEL.raiz); }],
+      [/(check.?out|salida|entrega|hora de salir)/, function(){ bot(['Check-in desde las <b>3:00 p.m.</b> y check-out hasta la <b>1:00 p.m.</b> 🕒 Salida tardía hasta las 4 p.m. por $70.000, según ocupación. Y guardamos el equipaje sin costo.'], HOTEL.raiz); }],
+      [/(donde|direccion|ubicacion|como llego|queda|mapa)/, function(){ bot(['📍 Carrera 37 # 8-52, El Poblado, Medellín.<br>A cinco cuadras del Parque Lleras y a diez minutos del metro Aguacatala.'], HOTEL.raiz); }],
+      [/(pago|pagar|tarjeta|nequi|daviplata|efectivo|transferencia|anticipo)/, function(){ bot(['Recibimos tarjeta débito y crédito, PSE, Nequi y transferencia. 💳 Para bloquear la reserva se paga el <b>30 % de anticipo</b> y el resto en recepción.'], HOTEL.raiz); }]
+    ]
+  };
+
+  /* ---- 3 · EMPRESA Y ALMACÉN ---- */
+  var REFS = [
+    { re:/(guante|nitrilo)/, n:'Guantes de nitrilo · caja x100', p:38000, st:'420 cajas en bodega' },
+    { re:/(cinta|embalaje|tape)/, n:'Cinta de embalaje 48 mm × 100 m', p:6500, st:'1.800 rollos en bodega' },
+    { re:/(estiba|pallet|palet)/, n:'Estiba plástica 1,20 × 1,00 m', p:118000, st:'64 unidades en bodega' },
+    { re:/(vinipel|stretch|film|envolver)/, n:'Vinipel stretch 500 mm × 300 m', p:29000, st:'240 rollos en bodega' },
+    { re:/(kraft|papel)/, n:'Papel kraft 90 g · rollo de 1 m', p:52000, st:'agotado — entra el jueves' }
+  ];
+  function buscaRef(t){ for(var i=0;i<REFS.length;i++){ if(REFS[i].re.test(t)) return REFS[i]; } return null; }
+  function catalogoHTML(){
+    return '<b>Lista de precios · unidad</b><br>' + lista(REFS.map(function(r){ return [r.n, pesos(r.p)]; }));
+  }
+  var EMP = {
+    nombre:'Suministros Aurora · demo', av:'📦',
+    raiz:['Lista de precios','Cotizar un pedido','Estado de mi pedido','Hablar con un asesor'],
+    saludo:[
+      '¡Hola! 👋 Soy <b>Aurora</b>, el asistente de Suministros Aurora (Itagüí, Antioquia).',
+      'Puedo darte precios y existencias, armarte una cotización con su número, decirte en qué va un pedido, o pasarte con un asesor. 👇'
+    ],
+    fallback:[
+      'Eso todavía no lo sé responder. 🤔 Antes de inventar un precio, prefiero decirlo.',
+      'Puedo ayudarte con la lista de precios, una cotización, el estado de un pedido, o pasarte con un asesor.'
+    ],
+    pasos:{
+      cot_ref:function(raw, t){
+        var r = buscaRef(t);
+        if(!r){ bot(['No ubico esa referencia. 😅 Estas son las que manejamos:', catalogoHTML(), '¿Cuál cotizamos?'], ['Guantes de nitrilo','Cinta de embalaje','Estibas','Vinipel']); return; }
+        state.data.ref = r.n; state.data.pu = r.p; state.step = 'cot_cant';
+        bot(['<b>' + r.n + '</b> — ' + pesos(r.p) + ' la unidad. ' + r.st + '.',
+             '¿Cuántas unidades necesitas? Desde <b>50</b> hay 8 % de descuento y desde <b>200</b>, 15 %.'], ['50','100','200','500']);
+      },
+      cot_cant:function(raw){
+        var c = parseNum(raw, 1, 99999);
+        if(!c){ bot(['Necesito una cantidad, por ejemplo <b>200</b>.'], ['50','100','200','500']); return; }
+        var desc = c >= 200 ? 0.15 : (c >= 50 ? 0.08 : 0);
+        state.data.cant = c; state.data.desc = desc; state.step = 'cot_ciudad';
+        var pu = state.data.pu * (1 - desc);
+        state.data.bruto = pu * c;
+        bot([c + ' unidades' + (desc ? ' — te aplica el <b>' + Math.round(desc*100) + ' %</b> por volumen, la unidad queda en ' + pesos(pu) + '.' : ' — a partir de 50 unidades entra el descuento por volumen.'),
+             'Subtotal: <b>' + pesos(state.data.bruto) + '</b>. ¿A qué ciudad va el despacho?'], ['Medellín','Bogotá','Cali','Otra ciudad']);
+      },
+      cot_ciudad:function(raw, t){
+        var local = /(medellin|itagui|envigado|sabaneta|bello|caldas|copacabana|girardota|barbosa|aburra)/.test(t);
+        var flete = local ? (state.data.bruto >= 300000 ? 0 : 18000) : 32000;
+        state.data.ciudad = raw.trim().slice(0,32);
+        state.data.flete = flete;
+        var total = state.data.bruto + flete;
+        state.data.total = total;
+        state.step = 'cot_confirm';
+        var filas = [[state.data.ref + ' × ' + state.data.cant, pesos(state.data.bruto)],
+                     ['Flete a ' + state.data.ciudad, flete ? pesos(flete) : 'sin costo'],
+                     ['Total antes de IVA', pesos(total)]];
+        bot([lista(filas) + '<span class="sys">En producción el flete sale de tu tabla de zonas y el descuento, de tus reglas de precio. El bot no improvisa ninguno de los dos.</span>',
+             '¿Te mando la cotización formal con su número y vigencia?'], ['Sí, mándala','Cambiar la cantidad','Hablar con un asesor']);
+      },
+      cot_confirm:function(raw, t){
+        if(/(cambiar|otra cantidad|corregir|mas|menos)/.test(t)){
+          state.step = 'cot_cant';
+          bot(['Claro. ¿Cuántas unidades entonces?'], ['50','100','200','500']);
+          return;
+        }
+        if(si(t) || /(mandala|mandalo|enviala|envia)/.test(t)){
+          state.step = 'root';
+          bot(['Listo. 📄 Cotización <b>' + codigo('AU') + '</b> por <b>' + pesos(state.data.total) + '</b> antes de IVA, <b>vigente 15 días</b>.' +
+               '<span class="sys">Aquí el bot genera el PDF, lo manda por el chat y deja la solicitud registrada con responsable y fecha de seguimiento.</span>',
+               'Si en tres días no me dices nada, te la recuerdo una vez y no más. ¿Algo más?'], EMP.raiz);
+          state.data = {};
+          return;
+        }
+        bot(['¿Te mando la cotización o prefieres ajustar la cantidad?'], ['Sí, mándala','Cambiar la cantidad','Hablar con un asesor']);
+      },
+      ped_num:function(raw, t){
+        var m = t.match(/\d{3,}/);
+        if(!m){ bot(['El número va como <b>AU-2481</b> o los cuatro dígitos solos. Lo encuentras en la confirmación que te llegó por aquí.'], ['AU-2481','Volver al menú']); return; }
+        state.step = 'root';
+        bot(['Pedido <b>AU-' + m[0].slice(0,4) + '</b>' +
+             lista([['Estado','despachado ayer'],['Transportadora','Coordinadora · guía 924-118'],['Entrega estimada','mañana antes de las 5 p.m.']]) +
+             '<span class="sys">El estado sale de tu sistema, no de una respuesta escrita a mano. Si el pedido se mueve, el cliente se entera sin llamar a nadie.</span>',
+             '¿Te ayudo con algo más?'], EMP.raiz);
+      }
+    },
+    intents:[
+      [/(cotiz|comprar|quiero pedir|hacer un pedido|orden de compra|necesito comprar)/, function(){
+        state.step = 'cot_ref';
+        bot(['Perfecto, te la armo aquí mismo. 📄', '¿Qué referencia necesitas?'], ['Guantes de nitrilo','Cinta de embalaje','Estibas','Vinipel']);
+      }],
+      [/(estado|donde va|despach|guia|envio|rastre|seguimiento)/, function(){
+        state.step = 'ped_num';
+        bot(['Claro. ¿Cuál es el número del pedido?'], ['AU-2481','Volver al menú']);
+      }],
+      [/(lista|catalogo|precios|que manejan|que venden|productos|referencias)/, function(){
+        bot([catalogoHTML(), 'Los precios son antes de IVA y bajan por volumen: <b>8 %</b> desde 50 unidades y <b>15 %</b> desde 200. ¿Cotizamos alguna?'], ['Cotizar un pedido','Hablar con un asesor']);
+      }],
+      [/(hay|existencia|stock|disponible|tienen|queda)/, function(raw, t){
+        var r = buscaRef(t);
+        if(!r){ bot(['¿De cuál referencia? Te digo existencias al momento.'], ['Guantes de nitrilo','Cinta de embalaje','Estibas','Vinipel']); return; }
+        bot(['<b>' + r.n + '</b><br>' + r.st + ' · ' + pesos(r.p) + ' la unidad.'], ['Cotizar un pedido','Lista de precios']);
+      }],
+      [/(credito|plazo|factura|cupo|pago|pagar|contado)/, function(){ bot(['Contado por transferencia o PSE, o <b>crédito a 30 días</b> con cupo aprobado. 💳 Facturamos electrónicamente el mismo día del despacho.'], EMP.raiz); }],
+      [/(flete|domicilio|despacho|envian|entrega)/, function(){ bot(['Despacho al Valle de Aburrá <b>sin costo</b> desde $300.000, y <b>$18.000</b> por debajo de eso. 🚚 Resto del país, <b>$32.000</b> por transportadora, 2 a 4 días hábiles.'], EMP.raiz); }],
+      [/(horario|donde|direccion|ubicacion|bodega|abren)/, function(){ bot(['📍 Calle 77 sur # 45-12, Itagüí.' + lista([['Lunes a viernes','7:30 a.m. – 5:30 p.m.'],['Sábados','8:00 a.m. – 12:00 m.']]) + 'Recogida en bodega sin cita, con el número de la cotización.'], EMP.raiz); }],
+      [/(garantia|devolu|cambio|dañado|malo)/, function(){ bot(['Cambio por defecto de fábrica dentro de los <b>30 días</b>, con la factura. Si el producto llegó averiado, lo reponemos y el flete corre por nuestra cuenta. 📦'], EMP.raiz); }]
+    ]
+  };
+
+  var CEREBROS = { rest:REST, hotel:HOTEL, emp:EMP };
+  var B = CEREBROS[P];
+
+  /* ═══════════════ el motor ═══════════════ */
+  function saluda(){ bot(B.saludo, B.raiz); }
+
+  function brain(raw){
+    var t = norm(raw);
+    if(!t) return;
+
+    /* salidas universales: valen en los tres negocios */
+    if(/^(menu|inicio|volver|atras|empezar|reiniciar)$/.test(t) || /volver al (menu|inicio)/.test(t)){
+      state.step = 'root'; state.data = {};
+      bot(['Listo, volvemos al inicio. ¿Qué necesitas?'], B.raiz);
       return;
     }
-    if(/(reserv|mesa|apartar|agendar|cita|separar)/.test(t)){
-      state.step = 'res_date';
-      bot(['¡Listo, tomamos la reserva! 📅', '¿Para qué día? Puedes decir <b>hoy</b>, <b>mañana</b>, un día de la semana o una fecha.'], ['Hoy','Mañana','Este viernes','Este sábado']);
+    if(/(cancelar|olvidalo|dejalo asi|ya no)/.test(t) && state.step !== 'root'){
+      state.step = 'root'; state.data = {};
+      bot(['Sin problema, cancelo eso. Aquí sigo cuando quieras. 🙂'], B.raiz);
       return;
     }
-    if(/(horario|hora abren|hora cierran|abren|cierran|donde estan|direccion|ubicacion|como llego|queda|mapa)/.test(t)){
+    if(/(hablar con|una persona|un humano|humano|asesor|agente|alguien real|persona real|recepcion)/.test(t) && state.step !== 'hum_nombre'){
+      state.step = 'hum_nombre'; state.data = {};
+      bot(['Claro, te paso con el equipo. 🙋', '¿Me dices tu <b>nombre</b> para avisarles?'], []);
+      return;
+    }
+    if(state.step === 'hum_nombre'){
+      state.data.hn = raw.trim().slice(0,40);
+      state.step = 'hum_tema';
+      var temas = P === 'rest' ? ['Un pedido','Una reserva','Eventos privados','Otra cosa']
+                : P === 'hotel' ? ['Una reserva','Un grupo','Facturación','Otra cosa']
+                : ['Una cotización','Un pedido','Cartera','Otra cosa'];
+      bot(['Gracias, ' + state.data.hn + '. ¿Sobre qué tema es? Así le paso el contexto a la persona correcta.'], temas);
+      return;
+    }
+    if(state.step === 'hum_tema'){
       state.step = 'root';
-      bot([
-        '🕒 <b>Horarios</b><span class="li"><span>Lunes a viernes</span><em>7:00 a.m. – 8:00 p.m.</em></span><span class="li"><span>Sábados</span><em>8:00 a.m. – 9:00 p.m.</em></span><span class="li"><span>Domingos y festivos</span><em>9:00 a.m. – 4:00 p.m.</em></span>',
-        '📍 <b>Dónde estamos</b><br>Circular 4 # 70-32, Laureles, Medellín.<br>A una cuadra del Primer Parque. Parqueadero en la esquina.',
-        '¿Te ayudo con algo más?'
-      ], ['Reservar mesa','Ver la carta','Hablar con alguien']);
-      return;
-    }
-    if(/(wifi|wi fi|internet|clave)/.test(t)){
-      bot(['Sí, wifi gratis para clientes ☕ La clave está en cada mesa y en la barra.'], ROOT_QR);
-      return;
-    }
-    if(/(parque|parqueadero|carro|moto)/.test(t)){
-      bot(['Hay parqueadero pago en la esquina (Circular 4 con 70) y zona azul sobre la 70. 🚗'], ROOT_QR);
-      return;
-    }
-    if(/(mascota|perro|gato|pet)/.test(t)){
-      bot(['¡Claro! 🐶 Somos pet friendly en la terraza.'], ROOT_QR);
-      return;
-    }
-    if(/(pago|pagar|tarjeta|nequi|daviplata|efectivo|transferencia)/.test(t)){
-      bot(['Recibimos efectivo, tarjetas débito y crédito, Nequi y Daviplata. 💳'], ROOT_QR);
-      return;
-    }
-    if(/(vegan|vegetarian|sin gluten|celiac|sin lactosa)/.test(t)){
-      bot(['Tenemos opciones vegetarianas y veganas marcadas en la carta, y leches vegetales sin recargo. 🌱 Sin gluten manejamos el bowl de frutas y algunos postres.'], ['Ver la carta','Reservar mesa']);
-      return;
-    }
-    if(/(gracias|muchas gracias|mil gracias|chao|hasta luego|adios)/.test(t)){
-      bot(['¡Con mucho gusto! ☕ Aquí estoy cuando quieras.'], ROOT_QR);
-      return;
-    }
-    if(/^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|hi|que mas|quiubo)/.test(t)){
-      bot(['¡Hola de nuevo! 👋 ¿Qué necesitas?'], ROOT_QR);
+      bot(['Listo. 📨 Le pasé tu caso al equipo:<br><b>' + state.data.hn + '</b> · ' + raw.trim().slice(0,60) +
+           '<span class="sys">Aquí el bot se calla y notifica por correo o Slack. Meta deja responder gratis durante 24 h desde tu último mensaje; después hay que usar una plantilla aprobada.</span>',
+           'Te responden en horario de atención. Mientras tanto, ¿te muestro algo más?'], B.raiz);
+      state.data = {};
       return;
     }
 
-    /* fallback */
+    /* el paso en el que va la conversación manda sobre las intenciones sueltas */
+    var paso = B.pasos[state.step];
+    if(paso && paso(raw, t) !== false) return;
+
+    /* el saludo se atiende antes que las intenciones y sólo si el mensaje es
+       nada más que un saludo: si no, un «buenas noches» le abría al huésped
+       un flujo de reserva que nadie pidió. */
+    if(/^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|hi|que mas|quiubo)[\s!¡.,]*$/.test(t)){
+      bot(['¡Hola de nuevo! 👋 ¿Qué necesitas?'], B.raiz);
+      return;
+    }
+    if(/\b(gracias|chao|hasta luego|adios)\b/.test(t)){
+      bot(['¡Con mucho gusto! Aquí estoy cuando quieras. 🙂'], B.raiz);
+      return;
+    }
+
+    for(var i = 0; i < B.intents.length; i++){
+      if(B.intents[i][0].test(t)){ B.intents[i][1](raw, t); return; }
+    }
+
     state.step = 'root';
-    bot([
-      'Eso todavía no lo sé responder. 🤔 Un bot bien hecho sabe reconocer sus límites en vez de inventar.',
-      'Puedo ayudarte con la carta, una reserva, horarios y ubicación, o pasarte con una persona del equipo.'
-    ], ROOT_QR);
+    bot(B.fallback, B.raiz);
   }
 
   function send(txt){
     if(!txt || !txt.trim()) return;
     push(txt.replace(/[<>]/g, ''), true);
     setQR([]);
+    if(busy){ pendiente = txt; return; }
     brain(txt);
     save();
   }
@@ -850,17 +1279,57 @@ var RM = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     var v = inp.value; inp.value = '';
     send(v);
   });
-  reset.addEventListener('click', function(){
-    queue = []; busy = false;
-    try{ localStorage.removeItem(KEY); }catch(e){}
+  function arrancar(limpiar){
+    queue = []; busy = false; pendiente = null;
+    if(limpiar){ try{ localStorage.removeItem(llave()); }catch(e){} }
     state = { step:'root', data:{}, msgs:[], qr:[] };
-    log.innerHTML = ''; setQR([]);
-    greet();
-    inp.focus();
+    log.innerHTML = ''; nodos = []; setQR([]);
+    saluda();
+  }
+  reset.addEventListener('click', function(){ arrancar(true); inp.focus(); });
+
+  /* ═══════════════ cambiar de público ═══════════════
+     Un solo atributo en :root cambia toda la ficha; aquí sólo hay que
+     cambiarle el cerebro al simulador y volver a saludar. */
+  function pintarBot(){
+    botNom.textContent = B.nombre;
+    botAv.textContent = B.av;
+    inp.setAttribute('placeholder','Escribe un mensaje…');
+  }
+  function setPublico(p, guardar){
+    p = window.LQS.norm(p) || 'rest';
+    if(p === P && guardar) return;
+    P = p; B = CEREBROS[P];
+    document.documentElement.setAttribute('data-para', p);
+    document.querySelectorAll('[data-sel]').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-sel') === p ? 'true' : 'false');
+    });
+    /* el formulario del sitio llega con el área que corresponde al negocio */
+    var area = { rest:'carta', hotel:'aloja', emp:'empresas' }[p];
+    document.querySelectorAll('[data-lqs="cotizar"]').forEach(function(a){ a.setAttribute('data-area', area); });
+    pintarBot();
+    queue = []; busy = false; pendiente = null;
+    if(load()) paint(); else arrancar(false);
+    if(guardar){
+      try{ localStorage.setItem('lqs_para_auto', p); }catch(e){}
+      /* dentro del visor no se toca la URL: la miga y el «abrir aparte» del
+         sitio apuntan a esta página y no tienen por qué moverse. */
+      if(!window.LQS.dentro){
+        try{
+          var u = new URL(location.href);
+          u.searchParams.set('soy', { rest:'restaurante', hotel:'hotel', emp:'empresa' }[p]);
+          history.replaceState(null, '', u);
+        }catch(e){}
+      }
+    }
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-sel]');
+    if(!b) return;
+    setPublico(b.getAttribute('data-sel'), true);
   });
 
-  if(load()){ paint(); }
-  else { greet(); }
+  setPublico(P, false);
 })();
 </script>
 </body></html>
