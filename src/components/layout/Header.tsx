@@ -8,11 +8,14 @@ import clsx from 'clsx'
 import CTAButton from '@/components/ui/CTAButton'
 import { useQuoterStore } from '@/store/quoterStore'
 
+// La home es la ciudad (D-13): las anclas /#... del home viejo ya no existen.
+// Reapuntadas a destinos reales.
 const NAV_LINKS = [
-  { label: 'Portafolio', href: '/#portafolio' },
-  { label: 'Planes',     href: '/#planes'     },
+  { label: 'La Ciudad',  href: '/'            },
+  { label: 'Portafolio', href: '/portafolio' },
+  { label: 'Cotizar',    href: '/ayuntamiento' },
   { label: 'Nosotros',   href: '/nosotros'    },
-  { label: 'Contacto',   href: '/#contacto'   },
+  { label: 'Contacto',   href: '/contacto'    },
 ]
 
 export default function Header() {

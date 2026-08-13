@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tooling de build (CommonJS por requisito de sus runners), no código de app.
+    ".size-limit.cjs",
+    ".claude/skills/**",
   ]),
 ]);
 
