@@ -201,7 +201,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    clima del hero se derrama en dos curvas y se decanta en las tres familias.
    Ni una recta, ni un rectángulo, y no se mueve si nadie lo toca — el
    movimiento del encuadre ya lo ponen las letras. */
-.remate{position:relative;padding:clamp(34px,6vh,62px) 0 clamp(30px,5vh,52px);overflow:hidden}
+.remate{position:relative;padding:clamp(24px,3.6vh,38px) 0 clamp(22px,3.2vh,34px);overflow:hidden}
 .remate .onda{position:absolute;left:-3%;top:0;width:106%;height:100%;z-index:0;pointer-events:none}
 .remate .in{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 var(--pad);
  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2.6vw,38px)}
@@ -353,99 +353,174 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease;cursor:pointer}
 @media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
 .tira a.soon{opacity:.5}
-.acto{position:relative;z-index:20;min-height:56vh;display:grid;place-items:center;text-align:center;
- padding:clamp(40px,8vh,90px) 0;margin:clamp(30px,6vh,70px) 0;scroll-margin-top:96px}
+/* ── EL CATÁLOGO ABIERTO ──────────────────────────────────────────────
+   La cabecera va a dos columnas desiguales —titular y aclaración a su
+   derecha, alineados por la base— en vez de apilarse. Un catálogo que se
+   escanea no puede gastar media pantalla en presentarse. */
+.sec-cat{padding-top:clamp(40px,4vw,58px)}
+.cat-cab{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px clamp(20px,3vw,44px)}
+.cat-cab h2{flex:0 1 auto}
+.cat-cab #servSub{flex:1 1 22rem;max-width:46ch;margin:0 0 clamp(2px,.6vw,8px)}
+@media(max-width:820px){.cat-cab{display:block}.cat-cab #servSub{margin:14px 0 0;max-width:56ch}}
+
+/* Nueve áreas se escanean, no se caminan. Antes cada acto gastaba media
+   pantalla y cada panel se apilaba con position:sticky: nueve pantallas para
+   ver nueve cosas. Ahora el acto es una franja de encabezado y las tres áreas
+   de la familia forman una composición asimétrica — dominante alta a un lado,
+   subordinada y acento apilados al otro — con el reparto 60·27·13.
+   Ni rejilla de tarjetas iguales ni apilado por scroll: composición. */
+.acto{position:relative;z-index:0;padding:clamp(10px,1.4vh,18px) 0 clamp(8px,1.2vh,14px);
+ margin-bottom:clamp(10px,1.4vh,16px);scroll-margin-top:96px}
 /* Cresta: la masa de fondo del acto. No lleva contenido, lleva color — es lo
-   que hace que el acto se sienta como un estrato y no como un div. */
-.acto .cresta{position:absolute;left:-18vw;right:-18vw;top:8%;height:84%;z-index:0;pointer-events:none;
+   que hace que el acto se sienta como un estrato y no como un div. Ahora es
+   una franja baja detrás del encabezado, no un telón de media pantalla. */
+.acto .cresta{position:absolute;left:-16vw;right:-16vw;top:-46%;height:230%;z-index:0;pointer-events:none;
  clip-path:url(#f-cresta);
- background:radial-gradient(54% 62% at 40% 74%,color-mix(in oklab,var(--u1) 34%,transparent),transparent 72%);
- opacity:.5}
+ background:radial-gradient(48% 74% at 32% 76%,color-mix(in oklab,var(--u1) 32%,transparent),transparent 72%);
+ opacity:.46}
 /* nunca dos Crestas seguidas con la onda en el mismo sentido */
 .tramo:nth-of-type(even) .cresta{scale:-1 1}
-.acto h3{font-family:var(--sport);font-size:clamp(3.2rem,12vw,9rem);line-height:.82;letter-spacing:-.045em;
+/* el encabezado: nombre, ganancia y de qué va, en una sola franja. El nombre
+   ancla la izquierda; la descripción cuelga a la derecha y deja libre el
+   cuarto que pide la regla del silencio. */
+.acto-in{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:baseline;
+ gap:4px clamp(10px,1.6vw,20px)}
+.acto h3{font-family:var(--sport);font-size:clamp(2rem,4.6vw,3.5rem);line-height:.86;letter-spacing:-.04em;
  text-transform:uppercase;color:var(--ink)}
-.acto-gan{font-family:var(--edit);font-style:italic;font-size:clamp(1.2rem,3.4vw,2.2rem);color:var(--gold);
- margin:6px 0 14px;line-height:1.15}
-.acto-des{font-size:clamp(.92rem,1.4vw,1.05rem);color:var(--dim);max-width:44ch;margin:0 auto}
+.acto-gan{font-family:var(--edit);font-style:italic;font-size:clamp(1.02rem,1.9vw,1.5rem);color:var(--gold);
+ line-height:1.15}
+.acto-des{flex:1 1 22ch;font-size:clamp(.84rem,1vw,.94rem);color:var(--dim);max-width:40ch;
+ line-height:1.5;align-self:center;padding-left:clamp(0px,1vw,14px)}
+@media(max-width:900px){.acto-des{flex-basis:100%;padding-left:0;margin-top:6px}}
 @supports (animation-timeline:view()){
- .acto-in{animation:actoEntra linear both;animation-timeline:view();animation-range:entry 10% cover 42%}
- @keyframes actoEntra{from{opacity:0;transform:translateY(30px) scale(.96)}}
+ .acto-in{animation:actoEntra linear both;animation-timeline:view();animation-range:entry 6% cover 26%}
+ @keyframes actoEntra{from{opacity:0;transform:translateY(16px)}}
 }
 @media(prefers-reduced-motion:reduce){.acto-in{animation:none}}
-.areas{display:flex;flex-direction:column;gap:0}
-/* cada área se queda fija y la siguiente se le monta encima: el catálogo
-   deja de ser una lista y pasa a ser un recorrido. El estado por defecto es
-   el VISIBLE — si el navegador no soporta líneas de tiempo por scroll, esto
-   se queda como una pila normal en vez de salir en blanco. */
+.areas{display:flex;flex-direction:column;gap:clamp(26px,2.8vh,34px)}
+
+/* la composición de la familia: una dominante y una columna con las otras dos.
+   La columna lleva su propio data-c, así el filtro por tipo de cliente puede
+   borrarla entera sin dejar un hueco en la maqueta. */
+/* el reparto 60·27·13 no se improvisa al maquetar: sale de tres decisiones
+   medidas. El ancho lo fija el flex (60/40), la altura de la dominante la fija
+   su min-height —y no se estira con la columna, así queda el cuarto vacío
+   abajo a un costado—, y el acento va más angosto y pegado al borde exterior.
+   Medido en el navegador a 1440: 58% · 27% · 15% del área de la composición. */
+.comp{display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(14px,1.9vw,26px)}
+.comp>.dom{flex:60 1 min(100%,28rem);align-self:flex-start;min-height:clamp(300px,35vw,504px)}
+.comp>.par{flex:40 1 min(100%,18rem);display:flex;flex-direction:column;gap:clamp(13px,1.6vw,22px);min-width:0}
+.comp>.par>.sub{min-height:clamp(224px,21vw,302px)}
+.comp>.par>.acc{width:84%;align-self:flex-end}
+/* la familia del medio invierte el eje: tres composiciones idénticas seguidas
+   se leen como plantilla, no como composición */
+.tramo:nth-of-type(2) .comp{flex-direction:row-reverse}
+
 /* la Cuña: el contenedor que reemplaza a la tarjeta. La máscara NO va sobre el
    panel sino sobre una capa de fondo — así el copy no se puede recortar por
    accidente, y de paso se gana un filo de universo de 1,4px que ninguna caja
-   rectangular puede tener. Reparto 60·27·13: texto dominante, pieza
-   subordinada, guijarro de acento. Nada de empate a 50/50. */
-.area{position:sticky;top:clamp(88px,12vh,132px);display:grid;
- grid-template-columns:minmax(0,1fr);gap:clamp(20px,4vw,54px);align-items:center;
- min-height:min(46vh,380px);margin-bottom:clamp(22px,4vh,44px);
- border:0;padding:clamp(30px,3.6vw,52px) clamp(44px,6vw,96px) clamp(38px,4.4vw,60px) clamp(28px,3.4vw,46px);
- isolation:isolate;transform-origin:50% 0}
+   rectangular puede tener. */
+.area{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;
+ border:0;min-width:0;
+ padding:clamp(22px,2.2vw,28px) clamp(28px,3.4vw,44px) clamp(24px,2.4vw,30px) clamp(18px,2vw,26px)}
+/* la dominante no es «el mismo panel más grande»: es otro trato. El nombre
+   ocupa el ancho entero, la frase y el «para quién» se reparten en dos
+   columnas desiguales debajo, y el contenido se estira de arriba abajo en vez
+   de quedar flotando en el centro de una caja hueca. */
+.comp>.dom{padding:clamp(30px,3.4vw,44px) clamp(42px,5.4vw,78px) clamp(34px,3.6vw,48px) clamp(26px,3.2vw,40px);
+ display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,1fr);
+ grid-template-areas:"e e" "n n" "q p" "b b";grid-template-rows:auto auto 1fr auto;
+ column-gap:clamp(20px,2.8vw,40px);row-gap:clamp(12px,1.5vw,20px)}
+.comp>.dom>p:not(.para),.comp>.dom .para{align-self:start}
+.comp>.dom .tagd{grid-area:e;justify-self:start}
+.comp>.dom h3{grid-area:n;margin:0}
+.comp>.dom>p:not(.para){grid-area:q;margin:0;max-width:none}
+.comp>.dom .para{grid-area:p;margin:0;align-self:start;max-width:none;padding-top:3px}
+.comp>.dom .lks{grid-area:b;margin:0;justify-self:start}
+@media(max-width:900px){
+ .comp>.dom{grid-template-columns:minmax(0,1fr);grid-template-areas:"e" "n" "q" "p" "b";
+  grid-template-rows:auto;align-content:start;row-gap:0}
+ .comp>.dom h3{margin:9px 0 12px}
+ .comp>.dom>p:not(.para){max-width:34ch}
+ .comp>.dom .para{margin-top:10px;padding-top:0}
+ .comp>.dom .lks{margin-top:16px}
+}
+/* el desfase medido: la silueta se inclina entre 2° y 7°, nunca 0° dos piezas
+   seguidas. Se inclina la capa de fondo, no el texto — un párrafo torcido no
+   se lee. */
 .area::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+ transform:rotate(var(--gi,0deg)) scaleX(var(--esp,1));
  background:radial-gradient(118% 88% at 86% 14%,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%),
   linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%)}
 /* el filo: 1,4px del universo, nunca un borde de color grueso al costado */
 .area::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
+ transform:rotate(var(--gi,0deg)) scaleX(var(--esp,1));
  background:linear-gradient(148deg,color-mix(in oklab,var(--ac) 52%,transparent),transparent 62%)}
-/* la Cuña del medio va volteada: dos siluetas idénticas seguidas se leen como
-   una plantilla, no como una composición */
-.area.espejo::before,.area.espejo::after{scale:-1 1}
+.comp>.dom{--gi:-2.1deg}
+.comp>.par>.sub{--gi:2.6deg;--esp:-1}
+.comp>.par>.acc{--gi:-2.8deg}
+.tramo:nth-of-type(2) .comp>.dom{--gi:2.4deg;--esp:-1}
+.tramo:nth-of-type(2) .comp>.par>.sub{--gi:-2.9deg;--esp:1}
+.tramo:nth-of-type(3) .comp>.dom{--gi:-3deg;--esp:-1}
+.tramo:nth-of-type(3) .comp>.par>.acc{--gi:2.7deg;--esp:-1}
 .area>*{position:relative;z-index:2}
 @supports (animation-timeline:view()){
- .area{animation:apilar linear both,aparece linear both;
-  animation-timeline:view(),view();animation-range:exit 0% exit 90%,entry 4% entry 96%}
- @keyframes apilar{to{transform:scale(.93) translateY(-16px);filter:brightness(.62) saturate(.7)}}
- @keyframes aparece{from{opacity:0}}
+ @media not (prefers-reduced-motion:reduce){
+  .area{animation:aparece linear both;animation-timeline:view();animation-range:entry 3% entry 88%}
+  @keyframes aparece{from{opacity:0;transform:translate3d(0,26px,0)}}
+ }
 }
-/* en una columna el apilado se come renglones de lectura: en pantalla chica
-   los paneles se sueltan y el recorrido se queda para el escritorio */
-@media(max-width:820px){.area{grid-template-columns:1fr;min-height:0;align-items:start;gap:16px;
- position:relative;top:auto;animation:none;filter:none;margin-bottom:clamp(30px,5vh,48px);
- padding:clamp(26px,5vw,38px) clamp(30px,7vw,46px) clamp(34px,7vw,44px) clamp(22px,5vw,32px)}
- /* en una columna la pieza queda apaisada: una Gota estirada a 3:1 deja de ser
-    una Gota. A esa proporción la forma que corresponde es la Losa. */
- .area.p1 .a-lado,.area.p2 .a-lado,.area.p3 .a-lado{clip-path:url(#f-losa);min-height:120px}}
-@media(prefers-reduced-motion:reduce){.area{animation:none;position:relative;top:auto}}
-.area .tagd{color:var(--faint)}
-.area h3{font-family:var(--sport);font-size:clamp(2.4rem,6.2vw,4.6rem);line-height:.88;letter-spacing:-.035em;text-transform:uppercase;color:var(--ink);margin:6px 0 14px;hyphens:auto;overflow-wrap:break-word}
+/* en pantalla chica la composición se suelta en una columna, pero los pesos se
+   conservan: la dominante sigue siendo la más grande y el acento el más corto.
+   Nueve cajas del mismo tamaño es justo lo que estamos evitando. */
+@media(max-width:900px){
+ /* en una columna el eje cruzado es el horizontal: si la dominante conservara
+    su align-self se encogería al ancho de su texto */
+ .comp,.tramo:nth-of-type(2) .comp{flex-direction:column}
+ .comp>.dom{min-height:0;align-self:stretch;
+  padding:clamp(24px,5.4vw,34px) clamp(30px,7vw,44px) clamp(30px,6vw,40px) clamp(20px,5vw,30px)}
+ .comp>.par>.sub{min-height:0}
+ .comp>.par>.acc{width:100%;align-self:stretch}
+ .area{padding:clamp(20px,4.6vw,28px) clamp(26px,6.4vw,38px) clamp(24px,5vw,32px) clamp(18px,4.4vw,26px)}
+ .comp>.dom,.tramo:nth-of-type(2) .comp>.dom,.tramo:nth-of-type(3) .comp>.dom{--gi:0deg}
+ .comp>.par>.sub{--gi:2.4deg}
+ .comp>.par>.acc,.tramo:nth-of-type(3) .comp>.par>.acc{--gi:-3.2deg}
+ /* los Guijarros del encabezado viven en el cuarto vacío de su franja. En una
+    columna ese cuarto no existe: caerían encima del texto del grupo o del
+    panel de arriba, así que no se pintan. */
+ .acto .guijarro{display:none}
+}
+@media(prefers-reduced-motion:reduce){.area{animation:none}}
 .area .tagd{border-color:var(--ac);color:var(--ac);align-self:flex-start}
-.area .a-txt{display:flex;flex-direction:column;justify-content:center}
-/* la pieza subordinada. Cada una toma una forma distinta del léxico según su
-   sitio en el acto: Losa para la dominante, Gota para la segunda, Hoja para el
-   acento. Ninguna hace el oficio de la vecina. */
-.area .a-lado{position:relative;align-self:stretch;min-height:150px;border:0;overflow:hidden;
- background:repeating-linear-gradient(128deg,color-mix(in oklab,var(--ac) 30%,transparent) 0 3px,transparent 3px 16px),
-  radial-gradient(130% 120% at 22% 18%,color-mix(in oklab,var(--ac) 55%,transparent),transparent 64%),var(--bg3);
- transition:scale 640ms var(--ease-out)}
-.area.p1 .a-lado{clip-path:url(#f-losa)}
-.area.p2 .a-lado{clip-path:url(#f-gota)}
-.area.p3 .a-lado{clip-path:url(#f-hoja)}
-.area.p3 .a-lado .ini{margin-top:6%}
-.area .a-lado .ini{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--sport);
- font-size:clamp(5rem,13vw,10rem);line-height:1;color:color-mix(in oklab,var(--ac) 82%,var(--ink));opacity:.9;
- mix-blend-mode:overlay;letter-spacing:-.05em}
-.area .lks{margin-top:20px}
-@media(max-width:820px){.area .a-lado{min-height:104px}}
-.area p{font-size:clamp(.92rem,1.2vw,1.06rem);color:var(--dim);line-height:1.6;max-width:34ch}
+.area h3{font-family:var(--sport);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;
+ color:var(--ink);margin:5px 0 7px;hyphens:auto;overflow-wrap:break-word;
+ font-size:clamp(1.25rem,2vw,1.48rem)}
+.comp>.dom h3{font-size:clamp(2.3rem,4.6vw,3.7rem);margin:9px 0 14px}
+.comp>.par>.sub h3{font-size:clamp(1.55rem,2.9vw,2.1rem);margin:6px 0 10px}
+/* en una columna «Automatización» —el nombre más largo del catálogo— parte a
+   la mitad si conserva la escala de escritorio */
+@media(max-width:900px){.comp>.dom h3{font-size:clamp(1.7rem,6.6vw,2.9rem)}}
+.area p{font-size:.84rem;color:var(--dim);line-height:1.45;max-width:46ch}
+.comp>.par>.sub p{font-size:.92rem;line-height:1.55;max-width:42ch}
+.comp>.dom p{font-size:clamp(.96rem,1.15vw,1.08rem);line-height:1.6;max-width:31ch}
 /* para quién es el área: la mitad del trabajo del panel. Va pegado a la frase,
    con la etiqueta en la tipografía de datos para que se lea como un dato y no
    como otra frase de venta. */
-.area .para{margin-top:11px;font-size:.85rem;color:var(--faint);max-width:34ch;line-height:1.5}
+.area .para{margin-top:8px;font-size:.78rem;color:var(--faint);max-width:44ch;line-height:1.4}
+.comp>.par>.sub .para{margin-top:9px;font-size:.82rem;max-width:38ch;line-height:1.45}
+.comp>.dom .para{margin-top:11px;font-size:.85rem;max-width:34ch;line-height:1.5}
 .area .para span{font-family:var(--tech);font-size:.62rem;font-weight:700;letter-spacing:.15em;
  text-transform:uppercase;color:var(--ac);margin-right:7px}
-.area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.comp>.par>.sub .lks{margin-top:14px}
+.comp>.dom .lks{margin-top:18px}
 .area .lk{font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
  border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease,transform 90ms var(--ease-out);white-space:nowrap}
 /* el único botón del panel: se nombra entero («Ver la ficha de Express») para
    que quien lo toca sepa a dónde va antes de tocarlo */
-.area .lk.pri{border-color:var(--ac);color:var(--ac);display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-size:.72rem}
+.area .lk.pri{border-color:var(--ac);color:var(--ac);display:inline-flex;align-items:center;gap:7px;padding:8px 13px;font-size:.64rem}
+.comp>.par>.sub .lk.pri{padding:9px 15px;font-size:.68rem}
+.comp>.dom .lk.pri{padding:11px 18px;font-size:.72rem}
 .area .lk.pri svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
  transition:transform var(--dur-fast) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
@@ -800,7 +875,6 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  calc(16px + 14px * var(--curva)) calc(26px - 7px * var(--curva))}
 .hit i{border-radius:60% 40% 52% 48% / 55% 50% 50% 45%}
 .card li::before{border-radius:58% 42% 50% 50% / 52% 48% 52% 48%}
-.area .a-lado .ini{mix-blend-mode:overlay}
 
 /* ── coreografía por scroll, con líneas de tiempo nativas ────────────────
    El estado por defecto es el VISIBLE: si el navegador no las soporta, la
@@ -828,11 +902,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  .nbtn:hover{border-radius:calc(20px - 6px * var(--curva)) calc(10px + 14px * var(--curva))
   calc(18px - 5px * var(--curva)) calc(9px + 13px * var(--curva))}
  .luz:hover{border-radius:54% 40% 46% 52% / 42% 52% 44% 56%}
- .area:hover .a-lado{scale:1.035}
+ /* el panel no es pulsable —lo es su botón—, así que no se levanta: lo que
+    responde es el filo de universo, que se enciende bajo el puntero */
+ .area::after{transition:filter var(--dur-ui) var(--ease-out)}
+ .area:hover::after{filter:brightness(1.55) saturate(1.2)}
 }
 /* respuesta al pulsar: en táctil es el único feedback que existe */
 .btn:active{translate:0 1px;scale:.97}
-.card:active,.area:active,.fase:active{scale:.99}
+/* el panel del catálogo no entra aquí: lo pulsable es su botón, no la Cuña */
+.card:active,.fase:active{scale:.99}
 .load{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){
@@ -840,8 +918,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  .rv{opacity:1;transform:none;transition:opacity var(--dur-ui) var(--ease-out)}
  #hero h1 .ln i{transform:none;animation:none}
  .view.on{animation:none}
- .card:hover,.area:hover,.btn.p:hover{transform:none}
- .btn:active,.card:active,.area:active,.area .lk:active,.tira a:active,.chip:active{transform:none}
+ .card:hover,.btn.p:hover{transform:none}
+ .btn:active,.card:active,.area .lk:active,.tira a:active,.chip:active{transform:none}
  /* piel orgánica: se apaga el desplazamiento, nunca el color ni la forma.
     Las reglas van con la misma especificidad que las que animan — si no,
     `:nth-child` gana y el bucle sigue corriendo pese a la petición. */
@@ -850,10 +928,8 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  .area,.acto-in,.card,.proj,.todo,.fam,.head,.ficha,.wa-hero>*,.rv{animation:none;opacity:1;transform:none}
  /* las puertas conservan su escalón: es maquetación, no movimiento */
  .pue{animation:none;opacity:1}
- .area{position:relative;top:auto;filter:none}
  .pue:hover,.card:hover,.fase:hover,.btn.p:hover,.btn.gold:hover{translate:none}
- .area:hover .a-lado{scale:none}
- .btn:active,.pue:active,.card:active,.area:active,.fase:active{translate:none;scale:none}
+ .btn:active,.pue:active,.card:active,.fase:active{translate:none;scale:none}
  /* el paralaje no se apaga con !important: el lazo ni siquiera lo escribe */
  [data-vel]{will-change:auto}
  #promo{transform:none;opacity:0;pointer-events:none;transition:opacity var(--dur-ui) var(--ease-out)}
@@ -1032,15 +1108,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 </div></section></div>
 
 <!-- ═══════ SERVICIOS ═══════ -->
-<div class="view" id="v-servicios"><section class="sec" data-universo="trama">
+<div class="view" id="v-servicios"><section class="sec sec-cat" data-universo="trama">
   <div class="estrato" data-vel=".42" aria-hidden="true"
        style="right:-14vw;top:0;width:62vw;height:62vw;max-height:820px;
               background:radial-gradient(circle at 42% 42%,color-mix(in oklab,var(--u2) 30%,transparent),transparent 66%)"></div>
   <div class="astilla" data-vel="1.34" aria-hidden="true"
        style="right:-8vw;top:6%;width:26vw;height:17vw;background:var(--u1);--o:.18;scale:-1 1"></div>
-<div class="wrap">
+<div class="wrap cat-cab">
   <h2 class="disp" id="servTit">Todo lo que hacemos,<br>en <span class="gold">tres familias</span>.</h2>
-  <p class="body-l" id="servSub" style="margin:16px 0 8px">Marca, Presencia y Producción. Aquí cada área dice qué resuelve y para quién, en una frase. Lo que incluye, cuánto vale y una muestra que puedes tocar están adentro de su ficha, a un toque.</p>
+  <p class="body-l" id="servSub">Nueve áreas, a la vista. Cada una dice qué resuelve y para quién; lo que incluye, cuánto vale y la muestra que puedes tocar están en su ficha, a un toque.</p>
  </div>
  <!-- las tres familias, que antes remataban el hero. Aquí sí ordenan algo:
       son el índice de la sección donde viven las áreas. -->
@@ -1571,30 +1647,46 @@ const UNI_ACTO={marca:'pulso',presencia:'hielo',produccion:'brasa'};
 /* una familia entera se esconde cuando ninguna de sus áreas le sirve al
    cliente activo: así nunca queda un título de acto con nada debajo. */
 const AREAS_FAM=k=>FICHAS.filter(f=>f[7]===k).map(f=>f[0]);
-document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>
- `<div class="tramo" data-universo="${UNI_ACTO[k]||'flujo'}"${attrC(AREAS_FAM(k))}>
+/* un panel del catálogo: nombre, qué resuelve, para quién y un botón nombrado
+   entero. Nada más — el detalle vive en la ficha. Lo único que cambia entre
+   dominante, subordinada y acento es el peso visual, nunca la información. */
+function panelArea([t,sub,d,para,ficha,muestra,c],peso){
+ return `<div class="area ${peso}${ficha?'':' pend'}" style="--ac:${c}"${attrC(t)}>
+  <span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
+  <p class="para"><span>Para</span> ${para}</p>
+  <div class="lks">${ficha
+   ? `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver la ficha de ${t}
+       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`
+   : `<span class="lk mudo">Ficha en camino</span>
+      <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
+  </div></div>`;
+}
+document.getElementById('areas').innerHTML=FAMILIAS.map(([k,tit,gan,des])=>{
+ const fam=FICHAS.filter(f=>f[7]===k);
+ /* el trío de la composición: la primera manda —alta y ancha—, las otras dos
+    se apilan al costado en una columna que pesa menos. Esa columna lleva su
+    propio data-c: si el filtro por cliente se lleva las dos, desaparece
+    entera y la dominante se queda con todo el ancho, sin dejar un hueco. */
+ const resto=fam.slice(1);
+ const col=resto.length
+  ? `<div class="par"${attrC(resto.map(f=>f[0]))}>`
+    +resto.map((f,i)=>panelArea(f,i?'acc':'sub')).join('')+`</div>`
+  : '';
+ return `<div class="tramo" data-universo="${UNI_ACTO[k]||'flujo'}"${attrC(AREAS_FAM(k))}>
   <div class="acto" data-fam="${k}">
    <div class="cresta" data-vel=".42" aria-hidden="true"></div>
    <div class="acto-in">
     <h3>${tit}</h3><p class="acto-gan">${gan}</p><p class="acto-des">${des}</p>
-   </div></div>`+FICHAS.filter(f=>f[7]===k).map(([t,sub,d,para,ficha,muestra,c],n)=>
- /* el trío: dominante, subordinada, acento. Cada panel toma una forma distinta
-    del léxico según su sitio, y el del medio va volteado. */
- `<div class="area p${n+1}${n===1?' espejo':''}${ficha?'':' pend'}" style="--ac:${c};z-index:${n+1}"${attrC(t)}>
-  <div class="a-txt"><span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
-   <p class="para"><span>Para</span> ${para}</p>
-   <div class="lks">${ficha
-    ? `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver la ficha de ${t}
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`
-    : `<span class="lk mudo">Ficha en camino</span>
-       <a class="lk" data-go="cotizar">Preguntar por esta área</a>`}
-   </div></div>
-</div>`).join('')
- +`<div class="guijarro" data-vel="1.16" aria-hidden="true"
-     style="right:4%;top:18%;width:7vw;height:7vw;max-width:92px;max-height:92px;background:var(--u2);--o:.44"></div>
+   </div>
+   <div class="guijarro" data-vel="1.16" aria-hidden="true"
+     style="right:2%;top:-14%;width:6vw;height:6vw;max-width:74px;max-height:74px;
+            background:radial-gradient(circle at 36% 30%,var(--u2),color-mix(in oklab,var(--u2) 22%,transparent));--o:.4"></div>
    <div class="guijarro" data-vel="1.26" aria-hidden="true"
-     style="left:6%;bottom:12%;width:4.2vw;height:4.2vw;max-width:52px;max-height:52px;background:var(--u1);--o:.58"></div>
-  </div>`).join('');
+     style="right:13%;top:-64%;width:3.4vw;height:3.4vw;max-width:42px;max-height:42px;
+            background:radial-gradient(circle at 40% 32%,var(--u1),color-mix(in oklab,var(--u1) 24%,transparent));--o:.52"></div>
+  </div>
+  <div class="comp">${fam[0]?panelArea(fam[0],'dom'):''}${col}</div>
+ </div>`;}).join('');
 /* ═══ el remate de familias ═══
    Tres semillas de contorno irregular — ninguna igual a otra, ninguna un
    círculo perfecto — y la promesa de cada familia. Quietas: sólo responden a
