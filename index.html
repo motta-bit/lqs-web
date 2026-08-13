@@ -251,10 +251,21 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    Cambiar de filtro tiene que ser tan visible como ponerlo: si esconder
    es reversible de un toque, esconder deja de dar miedo. */
 .soy{position:relative;flex:none}
-.soy-b{display:flex;align-items:center;gap:8px;max-width:46vw;padding:8px 13px;cursor:pointer;
- background:none;border:1px solid var(--line2);color:var(--dim);
+.soy-b{display:flex;align-items:center;gap:9px;max-width:46vw;padding:9px 15px;cursor:pointer;
+ border:1px solid color-mix(in oklab,var(--sc,var(--line2)) 46%,var(--line2));color:var(--ink);
+ background:linear-gradient(148deg,color-mix(in oklab,var(--sc,var(--gold)) 17%,var(--bg2)),var(--bg2) 72%);
+ box-shadow:0 2px 14px -8px color-mix(in oklab,var(--sc,var(--gold)) 60%,transparent);
  font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
- transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,border-radius 480ms var(--ease-out)}
+ transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,box-shadow var(--dur-ui) var(--ease-out),
+  background var(--dur-ui) var(--ease-out),border-radius 480ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+ .soy-b:hover{border-color:color-mix(in oklab,var(--sc,var(--gold)) 70%,var(--line2));
+  box-shadow:0 4px 20px -8px color-mix(in oklab,var(--sc,var(--gold)) 80%,transparent)}}
+.soy-b:active{transform:scale(.97);transition:transform 180ms var(--ease-out)}
+/* el punto late suave mientras no hayas elegido: dice "esto se puede tocar" */
+.soy:not(.eleg) .soy-b i{animation:latir 2.6s var(--ease-in-out) infinite}
+@keyframes latir{50%{opacity:.35;transform:scale(.82)}}
+@media(prefers-reduced-motion:reduce){.soy:not(.eleg) .soy-b i{animation:none}}
 .soy-b i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--sc,var(--faint));
  transition:background var(--dur-ui) var(--ease-out)}
 .soy-b span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -448,18 +459,26 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 /* el desfase medido: la silueta se inclina entre 2° y 7°, nunca 0° dos piezas
    seguidas. Se inclina la capa de fondo, no el texto — un párrafo torcido no
    se lee. */
-.area::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- transform:rotate(var(--gi,0deg)) scaleX(var(--esp,1));
+.area::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:var(--rad);
+ transform:rotate(var(--gi,0deg));
  background:radial-gradient(118% 88% at 86% 14%,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%),
   linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%)}
 /* el filo: 1,4px del universo, nunca un borde de color grueso al costado */
-.area::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- transform:rotate(var(--gi,0deg)) scaleX(var(--esp,1));
+.area::after{content:'';position:absolute;inset:-1.4px;z-index:-2;border-radius:var(--rad);pointer-events:none;
+ transform:rotate(var(--gi,0deg));
  background:linear-gradient(148deg,color-mix(in oklab,var(--ac) 52%,transparent),transparent 62%)}
-.comp>.dom{--gi:-2.1deg}
-.comp>.par>.sub{--gi:2.6deg;--esp:-1}
-.comp>.par>.acc{--gi:-2.8deg}
-.tramo:nth-of-type(2) .comp>.dom{--gi:2.4deg;--esp:-1}
+/* radios asimétricos y generosos: la curva nace del tamaño de la caja, así que
+   nunca se cizalla. Cuatro perfiles para que dos piezas seguidas no rimen. */
+.area{--rad:38% 14% 30% 12% / 22% 34% 16% 28%}
+.comp>.par>.sub{--rad:16% 34% 12% 30% / 30% 18% 32% 20%}
+.comp>.par>.acc{--rad:30% 12% 36% 16% / 18% 30% 20% 34%}
+.tramo:nth-of-type(2) .comp>.dom{--rad:14% 32% 16% 34% / 32% 16% 30% 18%}
+.tramo:nth-of-type(3) .comp>.dom{--rad:34% 16% 28% 14% / 20% 32% 18% 30%}
+@media(max-width:700px){.area{--rad:26% 12% 22% 10% / 14% 24% 12% 20%}}
+.comp>.dom{--gi:-1.1deg}
+.comp>.par>.sub{--gi:1.3deg}
+.comp>.par>.acc{--gi:-1.4deg}
+.tramo:nth-of-type(2) .comp>.dom{--gi:1.2deg}
 .tramo:nth-of-type(2) .comp>.par>.sub{--gi:-2.9deg;--esp:1}
 .tramo:nth-of-type(3) .comp>.dom{--gi:-3deg;--esp:-1}
 .tramo:nth-of-type(3) .comp>.par>.acc{--gi:2.7deg;--esp:-1}
@@ -3080,7 +3099,7 @@ function pintarElegido(){
 
 function pintarBarra(){
  const c=datosDe(CLIENTE), b=document.getElementById('soyB');
- document.getElementById('soyTx').textContent=c?c[1]:'Ver todo';
+ document.getElementById('soy').classList.toggle('eleg',!!c);document.getElementById('soyTx').textContent=c?c[1]:'Ver todo';
  b.style.setProperty('--sc',c?c[3]:'var(--faint)');
  b.setAttribute('title',c?'Estás viendo el sitio para '+c[1].toLowerCase():'Estás viendo el sitio completo');
  document.querySelectorAll('#soyM [data-soy]').forEach(x=>
