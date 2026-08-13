@@ -159,8 +159,8 @@ footer .in{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,32px);display
 <nav><div class="in">
   <div class="brand">📘 GUÍA LQS</div>
   <div class="navlinks">
-    <a class="back" href="mundos/automatizacion.html">Ver el servicio</a>
-    <a class="back" href="index.html" target="_top">← Sitio</a>
+    <a class="back" href="mundos/automatizacion.html" data-lqs="volver" data-titulo="Automatización · WhatsApp y redes">← Volver a la ficha</a>
+    <a class="back" href="index.html" data-lqs="cerrar">Salir al sitio</a>
   </div>
 </div></nav>
 
@@ -457,6 +457,24 @@ Si es urgente, escribe URGENTE y le damos prioridad.</pre></div>
       <li><strong>Segmentar</strong>: mandar marketing a toda la base es caro y hunde la calificación de calidad, que a su vez baja el límite de mensajería.</li>
     </ul>
 
+    <h3>Qué cubre la mensualidad de LQS</h3>
+    <p>Lo que Meta cobra es una cosa; lo que cobramos nosotros es otra, y conviene no mezclarlas al cotizar. La mensualidad publicada es de <strong>$650.000 COP con 1.000 conversaciones atendidas incluidas</strong>, y <strong>$180</strong> por conversación adicional. De esos $650.000, <strong>$282.000 son costo duro</strong> que se paga por fuera todos los meses:</p>
+    <div class="scrollx"><table>
+      <thead><tr><th>Concepto</th><th>Costo real</th><th>En el cálculo</th></tr></thead>
+      <tbody>
+        <tr><td>Proveedor de la API de WhatsApp</td><td class="n">$180.000 – $250.000 / mes</td><td class="n">$215.000</td></tr>
+        <tr><td>Supabase (base de datos y panel)</td><td class="n">$0 – $100.000 / mes</td><td class="n">$50.000</td></tr>
+        <tr><td>Dominio propio</td><td class="n">≈ $60.000 / año</td><td class="n">$5.000</td></tr>
+        <tr><td>Meta · las 1.000 conversaciones incluidas</td><td class="n">mezcla utility/marketing</td><td class="n">$12.000</td></tr>
+        <tr><td><b>Total de costo duro</b></td><td class="n">—</td><td class="n"><b>$282.000</b></td></tr>
+      </tbody>
+    </table></div>
+    <p class="tblnote">Los $368.000 restantes son las 7 horas mensuales de trabajo real: monitoreo, ajustes de flujos y textos, cambios de carta o de tarifas, y el informe. El detalle de cómo se arma cada precio está en <code>docs/PRECIOS.md</code>. La mensualidad del Plan Multicanal es de <strong>$870.000</strong> porque suma el canal de Instagram y Facebook, que vale $220.000/mes esté donde esté.</p>
+    <div class="callout">
+      <span class="lb">No cotices por debajo de esto</span>
+      <p>Cualquier mensualidad por debajo de <strong>$282.000</strong> significa que LQS paga por trabajar. Si el cliente pide rebaja, se recorta alcance —menos flujos, sin campañas, sin informe—, nunca la mensualidad por debajo del costo duro.</p>
+    </div>
+
     <h3>Ejemplo de cálculo — restaurante mediano en Medellín</h3>
     <div class="card">
       <p style="margin-bottom:12px"><strong>Supuestos:</strong> 600 clientes escriben al mes; 320 reservas confirmadas; 320 recordatorios el día anterior; 1 campaña mensual a 800 contactos.</p>
@@ -581,8 +599,8 @@ Si es urgente, escribe URGENTE y le damos prioridad.</pre></div>
 
   <div class="endcta">
     <h3 style="margin-top:0;font-size:1.15rem">¿Vas a cotizar un proyecto con esto?</h3>
-    <p>Revisa primero la página pública del servicio para no contradecir los precios que ya están publicados.</p>
-    <a class="cta" href="mundos/automatizacion.html">Ver la página de automatización →</a>
+    <p>Revisa primero la página pública del servicio para no contradecir los precios que ya están publicados. Ahí están los tres paquetes con su precio, la mensualidad y el simulador por tipo de negocio.</p>
+    <a class="cta" href="mundos/automatizacion.html" data-lqs="volver" data-titulo="Automatización · WhatsApp y redes">Volver a la página de automatización →</a>
   </div>
 </main>
 </div>
@@ -593,6 +611,28 @@ Si es urgente, escribe URGENTE y le damos prioridad.</pre></div>
 </div></footer>
 
 <script>
+/* ═══ dónde estoy y cómo salgo ═══
+   Esta guía se abre desde la ficha, dentro del visor del sitio. Antes el
+   «← Sitio» llevaba target="_top": recargaba index.html entero y se perdían el
+   filtro ?soy= y la vista donde estabas, y «Ver el servicio» navegaba el
+   iframe por su cuenta dejando el rastro de migas diciendo «Guía» encima de
+   la ficha. Ahora se le pide al sitio, con las mismas señales que usan las
+   fichas: cerrar · volver. Fuera del visor, el href de siempre hace su trabajo. */
+(function(){
+ var dentro=false;try{dentro=window.top!==window.self;}catch(e){dentro=true;}
+ if(!dentro)return;
+ document.documentElement.setAttribute('data-en-visor','1');
+ function avisa(m){m.lqs=1;try{parent.postMessage(m,location.origin);}catch(e){}}
+ document.addEventListener('click',function(e){
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+  var a=e.target.closest?e.target.closest('[data-lqs]'):null;if(!a)return;
+  var q=a.getAttribute('data-lqs');
+  e.preventDefault();
+  if(q==='cerrar')avisa({hacer:'cerrar'});
+  else if(q==='volver')avisa({hacer:'volver',url:a.getAttribute('href'),titulo:a.getAttribute('data-titulo')||'Ficha'});
+ });
+})();
+
 "use strict";
 /* copiar plantillas */
 document.querySelectorAll('.cp').forEach(function(btn){
