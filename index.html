@@ -225,27 +225,27 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 }
 .fam:active .sem{transform:scale(.95);transition:transform 180ms var(--ease-out)}
 
-/* ── EL FILTRO POR TIPO DE CLIENTE ────────────────────────────────────
+/* ── EL FILTRO POR NICHO ──────────────────────────────────────────────
    Mismo mecanismo que propuestas/automatizacion.html, con un vocabulario
-   más ancho: todo lo que pertenece a unos clientes y no a otros lleva
+   más ancho: todo lo que pertenece a unos nichos y no a otros lleva
    data-c con la lista de claves a las que sirve. Lo que no lleva data-c
    es común y no se filtra nunca.
 
-   Especificidad 0,4,0 — le gana a cualquier display de una sola clase sin
-   necesitar !important. Y el estado por defecto de :root es SIN atributo:
-   sin JavaScript no hay data-cliente, no aplica ninguna de estas reglas y
-   se ve el sitio entero. El filtro sólo puede esconder, nunca revelar. */
-:root[data-cliente="restaurante"] [data-c]:not([data-c~="restaurante"]),
-:root[data-cliente="hotel"]       [data-c]:not([data-c~="hotel"]),
-:root[data-cliente="empresa"]     [data-c]:not([data-c~="empresa"]),
-:root[data-cliente="creador"]     [data-c]:not([data-c~="creador"]),
-:root[data-cliente="ropa"]        [data-c]:not([data-c~="ropa"]),
-:root[data-cliente="almacenes"]   [data-c]:not([data-c~="almacenes"]),
-:root[data-cliente="eventos"]     [data-c]:not([data-c~="eventos"]),
-:root[data-cliente="joyeria"]     [data-c]:not([data-c~="joyeria"]){display:none}
-/* el puente y la confirmación sólo existen cuando hay filtro puesto */
-:root:not([data-cliente]) .puente,
-:root:not([data-cliente]) .elegido{display:none}
+   La regla que esconde ya no se escribe a mano: la genera `aplicarFiltro`
+   dentro de la hoja `#hojaFiltro`, porque en el paso 2 el visitante puede
+   marcar VARIOS nichos y la lista de exclusiones cambia con lo que marque.
+   Sale una sola regla, de la forma
+
+     [data-c]:not([data-c~="hoteles"]):not([data-c~="eventos"]){display:none}
+
+   — esconde lo que no sirve a NINGUNO de los nichos activos. Especificidad
+   0,3+,0: le gana a cualquier display de una sola clase sin !important.
+
+   El estado por defecto de :root es SIN atributo y la hoja arranca vacía:
+   sin JavaScript no hay data-cliente, no hay regla y se ve el sitio
+   entero. El filtro sólo puede esconder, nunca revelar. */
+/* el puente sólo existe cuando hay filtro puesto */
+:root:not([data-cliente]) .puente{display:none}
 
 /* ── el conmutador de la barra ───────────────────────────────────────
    Cambiar de filtro tiene que ser tan visible como ponerlo: si esconder
@@ -294,63 +294,148 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @media(max-width:520px){.soy-b{padding:8px 10px;font-size:.62rem;letter-spacing:.05em}
  .soy-m{min-width:min(74vw,238px)}}
 
-/* ── la puerta: una sola pregunta ────────────────────────────────────
-   Ocho semillas, ninguna igual a otra. Sin campo de relleno y sin caja
-   gris: el color lo pone el contorno y la semilla, no un rectángulo. */
+/* ── LAS ILUSTRACIONES · Memphis corporativo ─────────────────────────
+   Formas primarias grandes y pocas —círculos, triángulos, arcos,
+   rectángulos girados—, puntos y rayas, confeti suelto y composición
+   asimétrica. Color plano, sin un solo degradé, contorno grueso.
+   «Corporativo» es lo que las ata: todo el color sale de var(--ac) y de
+   currentColor, así una sola definición sirve en claro y en oscuro sin
+   duplicarse, y son cuatro o cinco piezas por dibujo — no un carnaval. */
+.ilu{flex:none;overflow:visible}
+.ilu .fl{fill:color-mix(in oklab,var(--ac) 22%,transparent)}
+.ilu .fl2{fill:color-mix(in oklab,var(--ac) 52%,transparent)}
+.ilu .so{fill:var(--ac)}
+.ilu .ln{fill:none;stroke:var(--ac);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ilu .lk{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.4}
+.ilu .pt{fill:currentColor;opacity:.34}
+/* movimiento contenido: una forma que gira lento, un punto que late, una
+   pieza que se mece. Sólo transform y opacity, nada más. */
+.ilu .gira,.ilu .late,.ilu .mece{transform-box:fill-box;transform-origin:center}
+.ilu .gira{animation:iluGira 24s linear infinite}
+.ilu .late{animation:iluLate 3.6s var(--ease-in-out) infinite}
+.ilu .mece{animation:iluMece 7s var(--ease-in-out) infinite alternate}
+@keyframes iluGira{to{transform:rotate(360deg)}}
+@keyframes iluLate{50%{transform:scale(.74);opacity:.5}}
+@keyframes iluMece{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}
+@media(prefers-reduced-motion:reduce){
+ /* se apaga el movimiento, nunca el dibujo: la forma queda donde arranca */
+ .ilu .gira,.ilu .late,.ilu .mece{animation:none;transform:none;opacity:1}
+}
+
+/* ── PASO 1 · cuatro puertas amplias ─────────────────────────────────
+   Ocho obligaban a leerlas todas antes de decidir, y quien no se veía
+   exacto en ninguna se iba. Cuatro caben en una mirada. Van en dos filas
+   de dos —piezas grandes, cómodas de tocar—, cada una con su ilustración,
+   y no hay nada más en esta pantalla: una pregunta, cuatro respuestas. */
 .puerta h2{max-width:14ch}
-.puertas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,16px);margin-top:clamp(30px,5vw,46px)}
-@media(max-width:980px){.puertas{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:400px){.puertas{grid-template-columns:1fr}}
-/* Ocho puertas iguales vuelven a ser ocho cajas, que es justo lo que
-   sobraba. Cada una toma una esquina distinta como ancla —el radio grande
-   rota— y las pares bajan medio paso: así la fila deja de ser una rejilla y
-   ninguna se lee como plantilla de la anterior. */
-.pue{display:flex;align-items:center;gap:13px;text-align:left;cursor:pointer;min-width:0;
- padding:clamp(15px,1.8vw,20px) clamp(15px,1.8vw,21px);
+.puertas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:clamp(12px,1.6vw,22px);margin-top:clamp(28px,4vw,44px)}
+@media(max-width:600px){.puertas{grid-template-columns:1fr}}
+/* cuatro puertas iguales vuelven a ser cuatro cajas. Cada una toma una
+   esquina distinta como ancla —el radio grande rota— y la columna de la
+   derecha baja medio paso: la rejilla deja de leerse como rejilla. */
+.pue{display:flex;align-items:center;gap:clamp(15px,1.9vw,24px);text-align:left;cursor:pointer;min-width:0;
+ padding:clamp(18px,2.1vw,26px) clamp(20px,2.4vw,30px);
  background:none;color:inherit;font:inherit;border:1px solid var(--line2);
  transition:border-color var(--dur-ui) var(--ease-out),
   border-radius 520ms var(--ease-out),translate 120ms var(--ease-out),scale 120ms var(--ease-out)}
-.pue:nth-child(4n+1){border-radius:calc(6px + 34px * var(--curva)) calc(16px - 6px * var(--curva))
- calc(18px + 10px * var(--curva)) calc(14px - 4px * var(--curva))}
-.pue:nth-child(4n+2){border-radius:calc(14px - 4px * var(--curva)) calc(8px + 36px * var(--curva))
- calc(15px - 5px * var(--curva)) calc(19px + 9px * var(--curva))}
-.pue:nth-child(4n+3){border-radius:calc(19px + 9px * var(--curva)) calc(13px - 4px * var(--curva))
- calc(7px + 33px * var(--curva)) calc(16px - 5px * var(--curva))}
-.pue:nth-child(4n){border-radius:calc(12px - 3px * var(--curva)) calc(20px + 8px * var(--curva))
- calc(15px - 5px * var(--curva)) calc(7px + 35px * var(--curva))}
-@media(min-width:981px){.pue:nth-child(2n){transform:translateY(clamp(8px,1.3vw,20px))}}
-.pue .sem{flex:none;width:clamp(34px,3.4vw,42px);height:clamp(34px,3.4vw,42px);
+.pue:nth-child(4n+1){border-radius:calc(6px + 40px * var(--curva)) calc(18px - 6px * var(--curva))
+ calc(20px + 12px * var(--curva)) calc(16px - 4px * var(--curva))}
+.pue:nth-child(4n+2){border-radius:calc(16px - 4px * var(--curva)) calc(8px + 42px * var(--curva))
+ calc(17px - 5px * var(--curva)) calc(21px + 11px * var(--curva))}
+.pue:nth-child(4n+3){border-radius:calc(21px + 11px * var(--curva)) calc(15px - 4px * var(--curva))
+ calc(7px + 39px * var(--curva)) calc(18px - 5px * var(--curva))}
+.pue:nth-child(4n){border-radius:calc(14px - 3px * var(--curva)) calc(22px + 10px * var(--curva))
+ calc(17px - 5px * var(--curva)) calc(7px + 41px * var(--curva))}
+@media(min-width:601px){.pue:nth-child(2n){transform:translateY(clamp(10px,1.6vw,26px))}}
+.pue .ilu{width:clamp(60px,8.4vw,116px);height:clamp(60px,8.4vw,116px);
  transition:transform var(--dur-panel) var(--ease-out)}
-.pue .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 22%,transparent);stroke:var(--ac);stroke-width:1.6;
- transition:fill var(--dur-ui) var(--ease-out)}
-.pue .sem .veta{fill:none;stroke:var(--ac);stroke-width:1.6;stroke-linecap:round;opacity:.7}
 .pue .tx{display:block;min-width:0}
-.pue b{display:block;font-family:var(--disp);font-size:clamp(1.02rem,1.5vw,1.24rem);line-height:1.05;
+.pue b{display:block;font-family:var(--disp);font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1.02;
  letter-spacing:.01em;color:var(--ink);transition:color var(--dur-ui) var(--ease-out)}
 /* el gancho cae encima del clima, que en esta sección se aclara mucho:
    con --faint se perdía por completo contra la mancha turquesa */
-.pue em{display:block;font-family:var(--tech);font-style:normal;font-size:.66rem;letter-spacing:.09em;
- text-transform:uppercase;color:var(--dim);margin-top:6px;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pue em{display:block;font-family:var(--tech);font-style:normal;font-size:.68rem;letter-spacing:.09em;
+ text-transform:uppercase;color:var(--dim);margin-top:8px;line-height:1.35}
 .pue.on{border-color:var(--ac)}
 .pue.on b{color:var(--ac)}
-.pue.on .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 48%,transparent)}
 @media (hover:hover) and (pointer:fine){
  .pue:hover{border-color:var(--ac);translate:0 -2px}
  .pue:hover b{color:var(--ac)}
- .pue:hover .sem{transform:rotate(-7deg) scale(1.06)}
- .pue:hover .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 42%,transparent)}
+ .pue:hover .ilu{transform:rotate(-4deg) scale(1.05)}
 }
 .pue:active{scale:.98;translate:0 0}
-.puerta-pie{margin-top:22px;font-size:.86rem;color:var(--faint)}
+.puerta-pie{margin-top:clamp(20px,3vw,30px);font-size:.86rem;color:var(--faint)}
 .puerta-pie a{color:var(--dim);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 
-/* la confirmación: qué pasó al elegir, y a dónde se va desde aquí */
-.elegido{margin-top:clamp(26px,4vw,40px);padding-top:clamp(22px,3vw,30px);border-top:1px solid var(--line)}
-.elegido .eq{font-family:var(--edit);font-style:italic;font-size:clamp(1.05rem,2vw,1.5rem);
- line-height:1.3;color:var(--ink);max-width:34ch}
-.elegido .ea{margin-top:9px;font-size:.88rem;color:var(--dim);max-width:52ch}
-.elegido .hbtns{margin-top:20px}
+/* ── PASO 2 · el mini-filtro ─────────────────────────────────────────
+   No puede sentirse otro peaje. Por eso no cambia de pantalla: se
+   despliega debajo de las mismas cuatro puertas, con la altura animada
+   por grid-template-rows —la única manera de animar alto sin repintar la
+   maqueta— en 300ms. Las puertas siguen ahí arriba: volver al paso 1 es
+   tocar otra, y «ver todo» está a la vista en la misma franja. */
+.paso2{display:grid;grid-template-rows:0fr;opacity:0;
+ transition:grid-template-rows var(--dur-panel) var(--ease-drawer),
+  opacity var(--dur-panel) var(--ease-out)}
+.paso2-in{overflow:hidden;min-height:0;visibility:hidden;
+ transition:visibility var(--dur-panel)}
+.paso2.on{grid-template-rows:1fr;opacity:1}
+.paso2.on .paso2-in{visibility:visible}
+.paso2-cab{margin-top:clamp(26px,4vw,42px);padding-top:clamp(22px,3vw,30px);border-top:1px solid var(--line)}
+.paso2-cab .p2q{font-family:var(--disp);font-size:clamp(1.35rem,2.6vw,2.05rem);line-height:1.04;
+ text-transform:uppercase;letter-spacing:.015em;color:var(--ink);max-width:20ch}
+.paso2-cab .p2a{margin-top:9px;font-size:.9rem;color:var(--dim);max-width:50ch}
+/* el catálogo seleccionable: tres o cuatro, nunca más */
+.nics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15.5rem),1fr));
+ gap:clamp(10px,1.3vw,16px);margin-top:clamp(16px,2.2vw,26px)}
+.nic{position:relative;display:flex;align-items:flex-start;gap:13px;text-align:left;cursor:pointer;min-width:0;
+ padding:clamp(14px,1.6vw,19px) clamp(38px,3.4vw,44px) clamp(15px,1.7vw,20px) clamp(15px,1.7vw,20px);
+ background:none;color:inherit;font:inherit;border:1px solid var(--line);
+ transition:border-color var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out),
+  border-radius 520ms var(--ease-out),scale 120ms var(--ease-out)}
+.nic:nth-child(3n+1){border-radius:calc(8px + 26px * var(--curva)) calc(14px - 4px * var(--curva))
+ calc(16px + 8px * var(--curva)) calc(12px - 3px * var(--curva))}
+.nic:nth-child(3n+2){border-radius:calc(12px - 3px * var(--curva)) calc(8px + 28px * var(--curva))
+ calc(13px - 4px * var(--curva)) calc(17px + 7px * var(--curva))}
+.nic:nth-child(3n){border-radius:calc(17px + 7px * var(--curva)) calc(11px - 3px * var(--curva))
+ calc(7px + 25px * var(--curva)) calc(14px - 4px * var(--curva))}
+.nic .ilu{width:clamp(38px,4.2vw,52px);height:clamp(38px,4.2vw,52px)}
+.nic .tx{display:block;min-width:0}
+.nic b{display:block;font-family:var(--disp);font-size:clamp(.98rem,1.4vw,1.16rem);line-height:1.1;
+ color:var(--ink);transition:color var(--dur-ui) var(--ease-out)}
+.nic em{display:block;font-style:normal;font-size:.79rem;line-height:1.4;color:var(--dim);margin-top:6px}
+/* la marca de selección: un disco que se llena. Nada de casilla cuadrada */
+.nic .mk{position:absolute;top:clamp(12px,1.4vw,15px);right:clamp(12px,1.4vw,15px);
+ width:20px;height:20px;border:1.6px solid var(--line2);border-radius:50%;display:grid;place-items:center;
+ transition:border-color var(--dur-fast) ease,background var(--dur-fast) ease}
+.nic .mk svg{width:11px;height:11px;stroke:#06070f;fill:none;stroke-width:3;stroke-linecap:round;
+ stroke-linejoin:round;opacity:0;transform:scale(.5);
+ transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.nic[aria-pressed="true"]{border-color:var(--ac);background:color-mix(in oklab,var(--ac) 10%,transparent)}
+.nic[aria-pressed="true"] b{color:var(--ac)}
+.nic[aria-pressed="true"] .mk{background:var(--ac);border-color:var(--ac)}
+.nic[aria-pressed="true"] .mk svg{opacity:1;transform:none}
+@media (hover:hover) and (pointer:fine){
+ .nic:hover{border-color:var(--ac)}
+ .nic:hover b{color:var(--ac)}
+}
+.nic:active{scale:.985}
+@media(prefers-reduced-motion:reduce){
+ .nic .mk svg{transform:none}
+ .nic:active,.pue:active{scale:none;translate:none}
+}
+
+/* la confirmación: qué quedó a la vista, y a dónde se va desde aquí */
+.elegido{margin-top:clamp(18px,2.6vw,26px)}
+.elegido .eq{font-family:var(--edit);font-style:italic;font-size:clamp(1rem,1.7vw,1.24rem);
+ line-height:1.34;color:var(--ink);max-width:64ch;text-wrap:pretty}
+.elegido .eq b{font-style:normal;color:var(--gold);font-weight:400}
+.elegido .ea{margin-top:8px;font-size:.85rem;color:var(--faint);max-width:52ch}
+.elegido .hbtns{margin-top:18px;align-items:center}
+.elegido .vt{font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.11em;
+ text-transform:uppercase;color:var(--faint);text-decoration:underline;text-underline-offset:4px;
+ cursor:pointer;padding:6px 2px;transition:color var(--dur-fast) ease}
+.elegido .vt:hover{color:var(--ink)}
 
 /* el puente: lo que el filtro dejó fuera, nombrado sin reabrir el catálogo */
 .puente{margin-top:clamp(38px,6vw,64px);padding-top:22px;border-top:1px solid var(--line)}
@@ -380,8 +465,8 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    de la familia forman una composición asimétrica — dominante alta a un lado,
    subordinada y acento apilados al otro — con el reparto 60·27·13.
    Ni rejilla de tarjetas iguales ni apilado por scroll: composición. */
-.acto{position:relative;z-index:0;padding:clamp(10px,1.4vh,18px) 0 clamp(8px,1.2vh,14px);
- margin-bottom:clamp(10px,1.4vh,16px);scroll-margin-top:96px}
+.acto{position:relative;z-index:0;padding:clamp(7px,1.1vh,14px) 0 clamp(5px,.9vh,11px);
+ margin-bottom:clamp(7px,1.1vh,12px);scroll-margin-top:96px}
 /* Cresta: la masa de fondo del acto. No lleva contenido, lleva color — es lo
    que hace que el acto se sienta como un estrato y no como un div. Ahora es
    una franja baja detrás del encabezado, no un telón de media pantalla. */
@@ -408,7 +493,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  @keyframes actoEntra{from{opacity:0;transform:translateY(16px)}}
 }
 @media(prefers-reduced-motion:reduce){.acto-in{animation:none}}
-.areas{display:flex;flex-direction:column;gap:clamp(26px,2.8vh,34px)}
+.areas{display:flex;flex-direction:column;gap:clamp(22px,2.4vh,30px)}
 
 /* la composición de la familia: una dominante y una columna con las otras dos.
    La columna lleva su propio data-c, así el filtro por tipo de cliente puede
@@ -420,8 +505,8 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    Medido en el navegador a 1440: 58% · 27% · 15% del área de la composición. */
 .comp{display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(14px,1.9vw,26px)}
 .comp>.dom{flex:60 1 min(100%,28rem);align-self:flex-start;min-height:clamp(300px,35vw,504px)}
-.comp>.par{flex:40 1 min(100%,18rem);display:flex;flex-direction:column;gap:clamp(13px,1.6vw,22px);min-width:0}
-.comp>.par>.sub{min-height:clamp(224px,21vw,302px)}
+.comp>.par{flex:40 1 min(100%,18rem);display:flex;flex-direction:column;gap:clamp(12px,1.4vw,19px);min-width:0}
+.comp>.par>.sub{min-height:clamp(214px,20vw,288px)}
 .comp>.par>.acc{width:84%;align-self:flex-end}
 /* la familia del medio invierte el eje: tres composiciones idénticas seguidas
    se leen como plantilla, no como composición */
@@ -443,7 +528,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  grid-template-areas:"e e" "n n" "q p" "b b";grid-template-rows:auto auto 1fr auto;
  column-gap:clamp(20px,2.8vw,40px);row-gap:clamp(12px,1.5vw,20px)}
 .comp>.dom>p:not(.para),.comp>.dom .para{align-self:start}
-.comp>.dom .tagd{grid-area:e;justify-self:start}
+.comp>.dom .cab{grid-area:e;justify-self:start}
 .comp>.dom h3{grid-area:n;margin:0}
 .comp>.dom>p:not(.para){grid-area:q;margin:0;max-width:none}
 .comp>.dom .para{grid-area:p;margin:0;align-self:start;max-width:none;padding-top:3px}
@@ -510,7 +595,17 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  .acto .guijarro{display:none}
 }
 @media(prefers-reduced-motion:reduce){.area{animation:none}}
-.area .tagd{border-color:var(--ac);color:var(--ac);align-self:flex-start}
+/* la cabecera del panel: la ilustración del área y su etiqueta, en la misma
+   línea. La ilustración entra en el flujo —no flota encima del texto— y no
+   estira el panel: la dominante y la subordinada ya traen min-height. */
+.area .cab{display:flex;align-items:center;gap:clamp(10px,1.2vw,15px);min-width:0;align-self:flex-start}
+/* el acento es el panel más corto de la composición: su dibujo se queda a la
+   altura de la etiqueta para no estirarlo — el reparto 60·27·13 se decide en
+   la maqueta, no lo puede mover una ilustración */
+.area .cab .ilu{width:34px;height:34px}
+.comp>.dom .cab .ilu{width:clamp(52px,6vw,104px);height:clamp(52px,6vw,104px)}
+.comp>.par>.sub .cab .ilu{width:clamp(38px,3.9vw,54px);height:clamp(38px,3.9vw,54px)}
+.area .tagd{border-color:var(--ac);color:var(--ac);align-self:center;margin-bottom:0}
 .area h3{font-family:var(--sport);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;
  color:var(--ink);margin:5px 0 7px;hyphens:auto;overflow-wrap:break-word;
  font-size:clamp(1.25rem,2vw,1.48rem)}
@@ -948,7 +1043,10 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  /* las puertas conservan su escalón: es maquetación, no movimiento */
  .pue{animation:none;opacity:1}
  .pue:hover,.card:hover,.fase:hover,.btn.p:hover,.btn.gold:hover{translate:none}
- .btn:active,.pue:active,.card:active,.fase:active{translate:none;scale:none}
+ .btn:active,.pue:active,.card:active,.fase:active,.nic:active{translate:none;scale:none}
+ /* el paso 2 se abre sin deslizar el alto: aparece con su altura ya puesta */
+ .paso2{transition:opacity var(--dur-ui) var(--ease-out)}
+ .pue:hover .ilu{transform:none}
  /* el paralaje no se apaga con !important: el lazo ni siquiera lo escribe */
  [data-vel]{will-change:auto}
  #promo{transform:none;opacity:0;pointer-events:none;transition:opacity var(--dur-ui) var(--ease-out)}
@@ -1005,7 +1103,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <a class="nbtn" id="authBtn">Ingresar</a>
   </div>
   <!-- el filtro vive en la barra, no en una pantalla intermedia: siempre a la
-       vista y siempre reversible. Se llena desde JS con CLIENTES. -->
+       vista y siempre reversible. Se llena desde JS con PUERTAS. -->
   <div class="soy" id="soy">
     <button class="soy-b" id="soyB" type="button" aria-haspopup="true" aria-expanded="false">
       <i></i><span id="soyTx">Ver todo</span>
@@ -1073,12 +1171,17 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
             style="stroke:var(--c2);opacity:.5" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
     </svg>
   </div>
-  <!-- ═══ LA PUERTA ═══
+  <!-- ═══ LA PUERTA · dos pasos en vez de uno ═══
        Lo único que queda de la portada además del hero. Antes aquí había seis
        portales, tres familias y nueve pastillas de área compitiendo por la
-       misma mirada; ahora hay una pregunta y ocho respuestas. Nadie llega
-       pensando «necesito automatización»: llega pensando «tengo un
-       restaurante». -->
+       misma mirada; después, ocho puertas — y ocho seguía siendo demasiado
+       para una primera decisión: obligaba a leerlas todas antes de elegir, y
+       quien no se veía exacto en ninguna se iba.
+
+       Ahora son cuatro puertas amplias en las que nadie duda (paso 1) y, al
+       elegir una, se despliega aquí mismo su catálogo de nichos para marcar
+       lo que se busca (paso 2). El paso 2 no cambia de pantalla ni pide nada:
+       es el mismo sitio, 300ms más abajo, y volver es tocar otra puerta. -->
   <section class="sec puerta" data-universo="pulso">
     <div class="estrato" data-vel=".42" aria-hidden="true"
          style="right:-14vw;top:-4%;width:60vw;height:60vw;max-height:760px;
@@ -1089,10 +1192,11 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
          style="left:-9vw;bottom:6%;width:28vw;height:18vw;background:var(--u1);--o:.14"></div>
    <div class="wrap">
     <h2 class="disp">¿Qué tienes <span class="gold">entre manos</span>?</h2>
-    <p class="body-l" style="max-width:44ch;margin-top:16px">Dinos qué es y el sitio se ordena alrededor de eso: sólo tus áreas, tus muestras y tu propuesta. Se cambia cuando quieras desde la barra de arriba.</p>
+    <p class="body-l" style="max-width:44ch;margin-top:16px">Cuatro respuestas, una sola pregunta. Elige la tuya y el sitio se ordena alrededor de eso.</p>
     <div class="puertas" id="puertas"></div>
+    <!-- paso 2: se despliega en el sitio, sin cambiar de pantalla -->
+    <div class="paso2" id="paso2"><div class="paso2-in" id="paso2In"></div></div>
     <p class="puerta-pie">¿Es otra cosa, o prefieres husmear? <a data-go="servicios">Mira el catálogo completo</a>.</p>
-    <div class="elegido" id="elegido"></div>
   </div></section>
 </div>
 
@@ -1504,83 +1608,226 @@ const API={
 let sb=true; // hay capa de datos disponible
 
 /* ═══════════════════════════════════════════════════════════════════════
-   EL FILTRO POR TIPO DE CLIENTE
+   CUATRO PUERTAS Y ONCE NICHOS
 
    El sitio se filtra por quién eres, no por cómo LQS clasifica su trabajo.
    Nadie llega pensando «necesito automatización»: llega pensando «tengo un
    restaurante». Las tres familias no desaparecen — dejan de ser la puerta y
    pasan a ser el orden de adentro.
 
-   Cada cliente: [clave, etiqueta, gancho, color, áreas, propuesta].
-   La quinta casilla es el mapeo que decide qué se ve; la sexta, a qué
+   Pero ocho puertas seguían siendo demasiado para la PRIMERA decisión:
+   obligaban a leerlas todas y quien no se veía exacto en ninguna se iba.
+   Así que la decisión se parte en dos:
+
+     paso 1 · cuatro puertas amplias — nadie duda en cuál cae
+     paso 2 · el catálogo de nichos de esa puerta — se marca lo que se busca
+
+   Cada puerta: [clave, título, gancho, color, nichos, pregunta, plural].
+   Cada nicho:  clave → [título, línea, color, áreas, propuesta].
+   La casilla de áreas es el mapeo que decide qué se ve; la última, a qué
    propuesta ya filtrada lleva.
    ═══════════════════════════════════════════════════════════════════════ */
-const CLIENTES=[
- ['restaurante','Restaurante','Carta y pedidos','#e0614a',
-  ['Restaurantes','Automatización','Productora','Express'],
-  'propuestas/automatizacion.html?para=restaurante'],
- ['hotel','Hotel','Reservas y estadía','#2fb8a3',
-  ['Hoteles','Automatización','Productora'],
-  'propuestas/automatizacion.html?para=hotel'],
- ['empresa','Empresa','Marca, web y atención','#5b8def',
-  ['Empresas','Automatización','Express','Productora','Ropa y merch'],
+const PUERTAS=[
+ ['empresa','Soy empresa','Marca, sitio y atención','#5b8def',
+  ['empresas','almacenes','automatizacion'],'¿Qué necesita tu <span class="gold">empresa</span>?','empresas'],
+ ['local','Tengo un local','Reservas, carta y pedidos','#e0614a',
+  ['restaurantes','hoteles','eventos'],'¿Qué tipo de <span class="gold">local</span> tienes?','locales'],
+ ['creador','Soy creador','Marca personal y contenido','#a97bd6',
+  ['creadores','productora','express'],'¿Qué necesitas para tu <span class="gold">canal</span>?','creadores'],
+ ['marca','Tengo una marca','Prendas, piezas y producto','#d98aa6',
+  ['ropa','joyeria','productora'],'¿Qué hace tu <span class="gold">marca</span>?','marcas propias']
+];
+/* Express entra en varios nichos porque un almacén, un restaurante y una
+   joyería viven de piezas recurrentes —lista de precios, promo del mes,
+   catálogo actualizado— y ésa es justo el área de precio cerrado y 48
+   horas. Sin ella el mapeo dejaba fuera su trabajo más frecuente. */
+const NICHOS={
+ empresas:['Empresas','Marca, sitio y correo que se ven de una sola empresa.','#5b8def',
+  ['Empresas','Automatización','Express','Productora'],
   'propuestas/automatizacion.html?para=empresa'],
- ['creador','Creador','Marca personal','#a97bd6',
-  ['Creadores','Productora','Express'],null],
- ['ropa','Marca de ropa','Prendas y merch','#b6ad98',
-  ['Ropa y merch','Productora','Creadores'],
-  'propuestas/catalogos.html?para=ropa'],
- /* Express entra aquí porque un almacén vive de piezas recurrentes —lista de
-    precios, promo del mes, catálogo actualizado— y ése es justo el área de
-    precio cerrado y 48 horas. Sin ella el mapeo dejaba fuera su trabajo
-    más frecuente. */
- ['almacenes','Almacenes y catálogos','Catálogo y pedidos','#39c07a',
+ almacenes:['Almacenes y catálogos','Catálogo al día y pedidos que entran por mensaje.','#39c07a',
   ['Empresas','Automatización','Productora','Express'],
   'propuestas/catalogos.html?para=almacenes'],
- ['eventos','Eventos','Montaje y equipo','#e6c877',
-  ['Empresas','Productora','Express','Ropa y merch'],
+ automatizacion:['Automatización','Reservas, pedidos y precios contestados sin nadie escribiendo.','#3fd0e6',
+  ['Automatización','Empresas'],
+  'propuestas/automatizacion.html?para=empresa'],
+ restaurantes:['Restaurantes','Carta al día y pedidos desde el celular del cliente.','#e0614a',
+  ['Restaurantes','Automatización','Productora','Express'],
+  'propuestas/automatizacion.html?para=restaurante'],
+ hoteles:['Hoteles','Reservas que entran solas y check-in ya hecho.','#2fb8a3',
+  ['Hoteles','Automatización','Productora'],
+  'propuestas/automatizacion.html?para=hotel'],
+ eventos:['Eventos','Equipo vestido, montaje grabado y lo que la gente se lleva.','#e6c877',
+  ['Productora','Express','Ropa y merch'],
   'propuestas/catalogos.html?para=eventos'],
- /* misma razón que almacenes: la vitrina de una joyería se sostiene con
-    piezas sueltas constantes, no sólo con rodajes. */
- ['joyeria','Joyería','Piezas y catálogo','#d98aa6',
-  ['Joyería','Productora','Creadores','Express'],null]
-];
-const CLAVES=CLIENTES.map(c=>c[0]);
-/* Ocho semillas de contorno irregular, ninguna igual a otra: el mismo léxico
-   del remate de familias, aplicado a las puertas. */
-const SEM8=[
- ['M32 3c14 2 25 13 26 27 1 15-11 30-26 31C17 60 5 47 5 31 5 15 18 1 32 3Z','M15 42c5-14 16-23 31-25'],
- ['M32 8c18-1 29 9 29 24 0 16-13 26-30 26C15 58 3 46 4 31 5 17 16 9 32 8Z','M11 28c11-7 24-6 36 4'],
- ['M32 2c15 0 24 12 25 27 1 16-9 33-25 33S6 46 6 30 17 2 32 2Z','M20 52c-3-16 2-28 15-36'],
- ['M30 4c17-2 30 8 31 24 1 17-12 31-29 31C14 59 3 45 4 28 5 14 15 6 30 4Z','M14 20c12 8 15 21 10 34'],
- ['M34 5c16 1 25 14 25 29 0 15-12 26-28 25C13 58 4 44 5 29 6 14 19 4 34 5Z','M46 15c-14 4-23 15-25 30'],
- ['M32 4c18 0 27 11 28 26 1 17-11 30-27 30-17 0-28-12-28-29C5 15 15 4 32 4Z','M12 38c14 3 26-3 34-16'],
- ['M28 4c19-1 32 9 32 26 0 16-14 30-30 29C13 58 4 43 5 27 6 13 15 5 28 4Z','M24 8c-4 16 1 30 14 40'],
- ['M32 3c17 1 28 13 28 28 0 17-13 30-29 29C14 59 4 44 5 28 6 13 17 2 32 3Z','M50 42c-14 5-27 2-37-9']
-];
-/* El puente: lo que el filtro dejó fuera, nombrado al cierre del recorrido.
-   Esconder vende mejor, pero también pierde ventas — si entras como
-   restaurante y nunca ves que también hacemos uniformes, esa venta no
-   existió. Esto la recupera sin reabrir el catálogo entero. */
-const PUENTES={
- restaurante:['Distrito Perú entró por la carta y salió con los uniformes de cocina.',['Ropa y merch','Empresas']],
- hotel:['Un hotel rara vez se detiene en las reservas: los uniformes de recepción y las piezas del día a día vienen detrás.',['Ropa y merch','Express']],
- empresa:['Muchas empresas llegan por la marca y vuelven por la cara de quien la dirige.',['Creadores']],
- creador:['Cuando la audiencia ya está, lo que sigue suele ser merch propio y un WhatsApp que conteste solo.',['Ropa y merch','Automatización']],
- ropa:['Una marca que vende por mensaje directo termina necesitando que el mensaje se conteste solo.',['Automatización','Empresas']],
- almacenes:['El catálogo casi siempre arrastra la marca detrás: papelería, señalización y uniformes de reparto.',['Ropa y merch','Creadores']],
- eventos:['Después del montaje viene lo que la gente se lleva: el recordatorio grabado y la reserva que se toma sola.',['Automatización','Joyería']],
- joyeria:['Una línea de joyería se vende contando quién la hace: contenido constante y respuesta inmediata.',['Automatización','Ropa y merch']]
+ creadores:['Creadores','Verte igual de reconocible en cada publicación.','#a97bd6',
+  ['Creadores','Productora','Express'],null],
+ productora:['Productora','Tu producto y tu local grabados como se deben ver.','#3fc6d6',
+  ['Productora','Express'],null],
+ express:['Express','Las piezas del día a día, con precio cerrado y en 48 horas.','#39c07a',
+  ['Express','Productora'],null],
+ ropa:['Ropa y merch','Uniformes y merch con muestra física antes del lote.','#b6ad98',
+  ['Ropa y merch','Productora','Creadores'],
+  'propuestas/catalogos.html?para=ropa'],
+ joyeria:['Joyería','Plata, acero y regalo corporativo con tu marca grabada.','#d98aa6',
+  ['Joyería','Productora','Express'],null]
 };
-/* ¿a qué clientes sirve un área? Devuelve '' cuando sirve a todos: eso la
+const CLAVES=PUERTAS.map(p=>p[0]);
+const NCLAVES=Object.keys(NICHOS);
+const puertaDe=k=>PUERTAS.find(p=>p[0]===k);
+/* las áreas de un conjunto de nichos, sin repetidos y en el orden del catálogo */
+function areasDeNichos(ns){
+ const v=[];
+ (ns||[]).forEach(n=>{const d=NICHOS[n];if(d)d[3].forEach(a=>{if(v.indexOf(a)<0)v.push(a);});});
+ return v;
+}
+
+/* ═══ ILUSTRACIONES · Memphis corporativo, en SVG en línea ═══
+   Una por puerta (4) y una por área (9), más las dos del paso 2 que no son
+   área del catálogo (almacenes y eventos). Ni una sola imagen externa: todo
+   trazo propio, formas primarias grandes y pocas, puntos y rayas, confeti
+   suelto y composición asimétrica.
+
+   El color no se escribe aquí: sale de var(--ac) y de currentColor, así el
+   mismo dibujo sirve en claro y en oscuro sin duplicarse. El movimiento va
+   en tres clases —gira, late, mece—, siempre sobre un solo trazo, siempre
+   transform u opacity, y siempre apagado con prefers-reduced-motion. */
+const ILU={
+ /* ── las cuatro puertas ── */
+ 'p-empresa':`<rect class="fl" x="7" y="17" width="26" height="41" rx="3" transform="rotate(-3 20 38)"/>
+  <rect class="ln" x="7" y="17" width="26" height="41" rx="3" transform="rotate(-3 20 38)"/>
+  <circle class="fl2" cx="47" cy="21" r="11"/>
+  <circle class="pt" cx="14" cy="29" r="2.2"/><circle class="pt" cx="23" cy="28" r="2.2"/>
+  <circle class="pt" cx="15" cy="39" r="2.2"/><circle class="pt" cx="24" cy="38" r="2.2"/>
+  <path class="lk gira" d="M45 39l9 15H36z"/>
+  <circle class="so late" cx="57" cy="46" r="3.2"/>
+  <path class="ln" d="M6 60h52"/>`,
+ 'p-local':`<path class="fl" d="M6 27c0-10 9-17 26-17s26 7 26 17z"/>
+  <path class="ln" d="M6 27c0-10 9-17 26-17s26 7 26 17H6z"/>
+  <path class="ln" d="M19 12v15M32 10v17M45 12v15"/>
+  <circle class="fl2" cx="22" cy="43" r="9"/>
+  <path class="ln" d="M22 52v7M14 59h16"/>
+  <rect class="lk" x="42" y="36" width="15" height="23" rx="2"/>
+  <rect class="so gira" x="46" y="42" width="8" height="8" rx="1.5"/>
+  <circle class="so late" cx="9" cy="44" r="3"/>`,
+ 'p-creador':`<rect class="fl" x="5" y="23" width="33" height="25" rx="4"/>
+  <rect class="ln" x="5" y="23" width="33" height="25" rx="4"/>
+  <circle class="fl2" cx="21" cy="35" r="8.5"/>
+  <circle class="ln" cx="21" cy="35" r="8.5"/>
+  <circle class="so late" cx="33" cy="28" r="2.6"/>
+  <rect class="so" x="47" y="9" width="11" height="21" rx="5.5"/>
+  <path class="ln" d="M43 25a9.5 9.5 0 0 0 19 0M52.5 36v7"/>
+  <path class="lk gira" d="M48 47l7 12H41z"/>`,
+ 'p-marca':`<path class="fl" d="M34 7h20a4 4 0 0 1 4 4v20L32 57 6 31z"/>
+  <path class="ln" d="M34 7h20a4 4 0 0 1 4 4v20L32 57 6 31z"/>
+  <circle class="so" cx="48" cy="17" r="3.6"/>
+  <path class="ln" d="M20 27l11 11"/>
+  <circle class="fl2 late" cx="12" cy="12" r="7"/>
+  <rect class="so gira" x="49" y="45" width="9" height="9" rx="1.6"/>`,
+ /* ── las nueve áreas del catálogo ── */
+ Empresas:`<rect class="fl" x="8" y="13" width="24" height="45" rx="3"/>
+  <rect class="ln" x="8" y="13" width="24" height="45" rx="3"/>
+  <circle class="pt" cx="15" cy="24" r="2.2"/><circle class="pt" cx="25" cy="24" r="2.2"/>
+  <circle class="pt" cx="15" cy="35" r="2.2"/><circle class="pt" cx="25" cy="35" r="2.2"/>
+  <rect class="fl2" x="38" y="30" width="19" height="28" rx="2"/>
+  <rect class="ln" x="38" y="30" width="19" height="28" rx="2"/>
+  <circle class="so late" cx="47" cy="17" r="5"/>
+  <path class="ln" d="M4 58h56"/>`,
+ 'Almacenes y catálogos':`<rect class="fl" x="6" y="33" width="25" height="24" rx="2"/>
+  <rect class="ln" x="6" y="33" width="25" height="24" rx="2"/>
+  <path class="ln" d="M18.5 33v24"/>
+  <rect class="fl2" x="34" y="25" width="23" height="32" rx="2" transform="rotate(4 45 41)"/>
+  <rect class="ln" x="34" y="25" width="23" height="32" rx="2" transform="rotate(4 45 41)"/>
+  <path class="ln" d="M45 26v31"/>
+  <path class="lk gira" d="M20 6l8 14H12z"/>
+  <circle class="so late" cx="47" cy="11" r="3.4"/>`,
+ 'Automatización':`<path class="fl" d="M7 13h34a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H23l-11 8v-8H7a4 4 0 0 1-4-4V17a4 4 0 0 1 4-4z"/>
+  <path class="ln" d="M7 13h34a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H23l-11 8v-8H7a4 4 0 0 1-4-4V17a4 4 0 0 1 4-4z"/>
+  <circle class="pt" cx="15" cy="26" r="2.6"/><circle class="pt" cx="24" cy="26" r="2.6"/><circle class="pt" cx="33" cy="26" r="2.6"/>
+  <circle class="fl2" cx="49" cy="48" r="8"/>
+  <path class="ln gira" d="M49 37v22M38 48h22M41.2 40.2l15.6 15.6M56.8 40.2L41.2 55.8"/>
+  <circle class="so late" cx="55" cy="14" r="3.4"/>`,
+ Restaurantes:`<path class="fl" d="M6 25c0-10 9-16 26-16s26 6 26 16z"/>
+  <path class="ln" d="M6 25c0-10 9-16 26-16s26 6 26 16H6z"/>
+  <path class="ln" d="M19 10v15M32 9v16M45 10v15"/>
+  <circle class="fl2" cx="26" cy="44" r="12"/>
+  <circle class="ln" cx="26" cy="44" r="12"/>
+  <circle class="so late" cx="26" cy="44" r="4"/>
+  <path class="lk mece" d="M50 33v25M45 33v7a5 5 0 0 0 10 0v-7"/>`,
+ Hoteles:`<rect class="fl" x="9" y="15" width="30" height="43" rx="3"/>
+  <rect class="ln" x="9" y="15" width="30" height="43" rx="3"/>
+  <path class="ln" d="M18 58V45a6 6 0 0 1 12 0v13"/>
+  <circle class="pt" cx="17" cy="26" r="2.2"/><circle class="pt" cx="31" cy="26" r="2.2"/>
+  <path class="fl2" d="M43 47a9 9 0 0 1 18 0z"/>
+  <path class="ln" d="M43 47a9 9 0 0 1 18 0H43zM52 38v-5"/>
+  <circle class="so late" cx="52" cy="55" r="2.8"/>
+  <path class="lk gira" d="M51 13l7 12H44z"/>`,
+ Eventos:`<path class="fl" d="M15 11h39l-9 11 9 11H15z"/>
+  <path class="ln" d="M15 11h39l-9 11 9 11H15z"/>
+  <path class="ln" d="M15 6v52"/>
+  <path class="lk" d="M7 58h50"/>
+  <circle class="so late" cx="45" cy="45" r="4"/>
+  <rect class="so gira" x="28" y="41" width="9" height="9" rx="1.6"/>
+  <circle class="pt" cx="55" cy="52" r="2.6"/><circle class="pt" cx="23" cy="52" r="2.6"/>`,
+ Creadores:`<circle class="fl" cx="25" cy="26" r="16"/>
+  <circle class="ln" cx="25" cy="26" r="16"/>
+  <circle class="fl2" cx="25" cy="22" r="5.5"/>
+  <path class="ln" d="M16 37a10 10 0 0 1 18 0"/>
+  <path class="so mece" d="M43 40l15 8-15 8z"/>
+  <path class="lk" d="M7 51c7 7 16 9 25 6"/>
+  <circle class="so late" cx="51" cy="15" r="3.4"/>`,
+ Productora:`<rect class="fl" x="5" y="20" width="33" height="24" rx="4"/>
+  <rect class="ln" x="5" y="20" width="33" height="24" rx="4"/>
+  <circle class="fl2" cx="21" cy="32" r="8"/>
+  <circle class="ln" cx="21" cy="32" r="8"/>
+  <path class="ln" d="M38 27l13-6v22l-13-6z"/>
+  <path class="lk" d="M21 44v8M11 59l10-7 10 7"/>
+  <circle class="so late" cx="33" cy="26" r="2.6"/>
+  <path class="lk gira" d="M53 44l6 12H47z"/>`,
+ Express:`<rect class="fl" x="7" y="7" width="29" height="42" rx="3" transform="rotate(-4 22 28)"/>
+  <rect class="ln" x="7" y="7" width="29" height="42" rx="3" transform="rotate(-4 22 28)"/>
+  <path class="ln" d="M13 19h17M13 28h18M13 37h11"/>
+  <path class="so mece" d="M46 10l-11 23h8l-4 19 17-25h-9z"/>
+  <circle class="so late" cx="13" cy="55" r="3.2"/>
+  <path class="ln" d="M23 57h35"/>`,
+ 'Ropa y merch':`<path class="fl" d="M24 11c2 6 14 6 16 0l8 4 9 9-7 8-4-3v25H22V29l-4 3-7-8 9-9z"/>
+  <path class="ln" d="M24 11c2 6 14 6 16 0l8 4 9 9-7 8-4-3v25H22V29l-4 3-7-8 9-9z"/>
+  <path class="ln" d="M28 40h8M28 47h8"/>
+  <rect class="so gira" x="50" y="46" width="9" height="9" rx="1.6"/>
+  <circle class="so late" cx="9" cy="47" r="3.2"/>`,
+ 'Joyería':`<circle class="fl" cx="25" cy="41" r="16"/>
+  <circle class="ln" cx="25" cy="41" r="16"/>
+  <circle class="ln" cx="25" cy="41" r="8"/>
+  <path class="so" d="M25 5l9 11-9 11-9-11z"/>
+  <path class="lk gira" d="M51 11v15M43.5 18.5h15"/>
+  <circle class="so late" cx="54" cy="46" r="3.2"/>`
+};
+/* el dibujo de un área o de una puerta, listo para pegar en una plantilla.
+   Si falta, no se pinta nada: nunca un rectángulo gris de relleno. */
+function ilu(k,extra){
+ const d=ILU[k];if(!d)return '';
+ return `<svg class="ilu${extra?' '+extra:''}" viewBox="0 0 64 64" aria-hidden="true" focusable="false">${d}</svg>`;
+}
+
+/* El puente: lo que el filtro dejó fuera, nombrado al cierre del recorrido.
+   Esconder vende mejor, pero también pierde ventas — si entras por «tengo un
+   local» y nunca ves que también hacemos uniformes, esa venta no existió.
+   Esto la recupera sin reabrir el catálogo entero. */
+const PUENTES={
+ empresa:['Muchas empresas llegan por la marca y vuelven por la cara de quien la dirige.',['Creadores','Ropa y merch']],
+ local:['Distrito Perú entró por la carta y salió con los uniformes de cocina.',['Ropa y merch','Empresas']],
+ creador:['Cuando la audiencia ya está, lo que sigue suele ser merch propio y un WhatsApp que conteste solo.',['Ropa y merch','Automatización']],
+ marca:['Una marca que vende por mensaje directo termina necesitando que el mensaje se conteste solo.',['Automatización','Empresas']]
+};
+/* ¿a qué nichos sirve un área? Devuelve '' cuando sirve a todos: eso la
    vuelve común y ninguna regla del filtro la toca. */
 function clavesDe(area){
- const k=CLIENTES.filter(c=>c[4].indexOf(area)>-1).map(c=>c[0]);
- return k.length===CLIENTES.length?'':k.join(' ');
+ const k=NCLAVES.filter(n=>NICHOS[n][3].indexOf(area)>-1);
+ return k.length===NCLAVES.length?'':k.join(' ');
 }
 function clavesDeVarias(areas){
- const k=CLIENTES.filter(c=>areas.some(a=>c[4].indexOf(a)>-1)).map(c=>c[0]);
- return k.length===CLIENTES.length?'':k.join(' ');
+ const k=NCLAVES.filter(n=>areas.some(a=>NICHOS[n][3].indexOf(a)>-1));
+ return k.length===NCLAVES.length?'':k.join(' ');
 }
 /* atributo listo para pegar en una plantilla */
 function attrC(areas){
@@ -1671,7 +1918,7 @@ const AREAS_FAM=k=>FICHAS.filter(f=>f[7]===k).map(f=>f[0]);
    dominante, subordinada y acento es el peso visual, nunca la información. */
 function panelArea([t,sub,d,para,ficha,muestra,c],peso){
  return `<div class="area ${peso}${ficha?'':' pend'}" style="--ac:${c}"${attrC(t)}>
-  <span class="tagd">${sub}</span><h3>${t}</h3><p>${d}</p>
+  <span class="cab">${ilu(t)}<span class="tagd">${sub}</span></span><h3>${t}</h3><p>${d}</p>
   <p class="para"><span>Para</span> ${para}</p>
   <div class="lks">${ficha
    ? `<a class="lk pri" href="${ficha}" data-demo="${ficha}" data-titulo="${t} · ${sub}">Ver la ficha de ${t}
@@ -1732,35 +1979,40 @@ document.addEventListener('click',e=>{
   if(d)d.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
  },RM?0:340);
 });
-/* ═══ las ocho puertas ═══
-   La única pregunta de la portada. Cada puerta es una semilla del mismo
-   léxico orgánico: contorno y color, sin campo de relleno detrás. */
-document.getElementById('puertas').innerHTML=CLIENTES.map(([k,tit,gan,col],i)=>
- `<button class="pue" type="button" data-soy="${k}" style="--ac:${col}">
-   <svg class="sem" viewBox="0 0 64 64" aria-hidden="true">
-    <path class="cuerpo" d="${SEM8[i][0]}"/><path class="veta" d="${SEM8[i][1]}"/></svg>
+/* ═══ PASO 1 · las cuatro puertas ═══
+   La única pregunta de la portada. Cada puerta lleva su ilustración: cuatro
+   piezas grandes, cómodas de tocar, y nada más en la pantalla. */
+document.getElementById('puertas').innerHTML=PUERTAS.map(([k,tit,gan,col])=>
+ `<button class="pue" type="button" data-soy="${k}" style="--ac:${col}"
+   aria-controls="paso2" aria-expanded="false">
+   ${ilu('p-'+k)}
    <span class="tx"><b>${tit}</b><em>${gan}</em></span>
   </button>`).join('');
 /* ═══ el conmutador de la barra ═══ */
-document.getElementById('soyM').innerHTML=CLIENTES.map(([k,tit,gan,col])=>
+document.getElementById('soyM').innerHTML=PUERTAS.map(([k,tit,gan,col])=>
  `<button type="button" role="menuitem" data-soy="${k}" style="--sc:${col}"><i></i>${tit}</button>`).join('')
  +`<button type="button" role="menuitem" class="todo-b" data-soy=""><i></i>Ver todo</button>`;
 /* ═══ los puentes ═══
-   Se pintan los ocho; el filtro deja visible sólo el del cliente activo, y
-   sin filtro ninguno (regla .puente en la hoja de estilo). Los enlaces abren
-   la ficha en el visor: nombran lo que quedó fuera sin deshacer el filtro. */
+   Sólo se pinta el de la puerta activa —sin puerta, ninguno (regla .puente
+   en la hoja de estilo). Los enlaces abren la ficha en el visor: nombran lo
+   que quedó fuera sin deshacer el filtro. */
 const FICHA_DE={};FICHAS.forEach(f=>{FICHA_DE[f[0]]=[f[4],f[6],f[1]];});
+const PUENTE_NODOS=[];
 function pintaPuente(nodo,cierre){
  if(!nodo)return;
- nodo.innerHTML=CLIENTES.map(([k])=>{
-  const p=PUENTES[k];if(!p)return '';
+ PUENTE_NODOS.push([nodo,cierre]);
+}
+function refrescarPuentes(){
+ PUENTE_NODOS.forEach(([nodo,cierre])=>{
+  const p=PUENTES[CLIENTE];
+  if(!p){nodo.innerHTML='';return;}
   const lks=p[1].map(a=>{const f=FICHA_DE[a]||['','',''];
    return f[0]
     ? `<a style="--ac:${f[1]}" href="${f[0]}" data-demo="${f[0]}" data-titulo="${a} · ${f[2]}">${a}</a>`
     : `<a style="--ac:${f[1]}" data-go="cotizar">${a}</a>`;}).join('');
-  return `<div data-c="${k}"><p><b>${cierre}</b> ${p[0]}</p><div class="tira">${lks}
-   <a data-soy="">Ver todo el catálogo</a></div></div>`;
- }).join('');
+  nodo.innerHTML=`<p><b>${cierre}</b> ${p[0]}</p><div class="tira">${lks}
+   <a data-soy="">Ver todo el catálogo</a></div>`;
+ });
 }
 pintaPuente(document.getElementById('puenteServ'),'No termina ahí.');
 pintaPuente(document.getElementById('puenteMue'),'También puedes tocar esto.');
@@ -2388,11 +2640,11 @@ async function cargarCatalogo(){
   uniSel=b.dataset.u;marcarChips();cargarPaquetes();});
  marcarChips();
 }
-/* ¿qué universos le sirven al cliente activo? */
+/* ¿qué universos le sirven a lo que el visitante tiene marcado? */
 function unisPermitidos(){
- const c=datosDe(CLIENTE);
- if(!c)return null;
- return UNIS.filter(u=>c[4].indexOf(u.categoria)>-1).map(u=>u.id);
+ const as=areasActivas();
+ if(!as)return null;
+ return UNIS.filter(u=>as.indexOf(u.categoria)>-1).map(u=>u.id);
 }
 function cargarPaquetes(){
  const box=document.getElementById('paks');
@@ -2559,7 +2811,7 @@ function datosProp(url){
          :{tit:'Tu propuesta completa',des:'Alcance, cronograma y precio cerrado.',col:'#e6c877'};
 }
 function propuestaTras(uni){
- const porCliente=propuestaDe(CLIENTE);
+ const porCliente=propuestaDe();
  if(porCliente)return porCliente;
  const u=PROP_UNI[uni];
  if(u&&u.indexOf('catalogos.html')>-1&&CAT_OK===false)return null;
@@ -3024,31 +3276,74 @@ const ORG=(function(){
 /* ═══════════════════════════════════════════════════════════════════════
    PONER Y QUITAR EL FILTRO
 
-   Un solo atributo en :root manda sobre todo el sitio. Viaja en la URL
-   (?soy=hotel), se recuerda en localStorage y se cambia desde la barra.
-   Prioridad al arrancar: URL > localStorage > ninguno.
+   Dos datos mandan sobre todo el sitio: la puerta (`data-cliente` en :root)
+   y los nichos marcados en el paso 2 (`NSEL`). Los dos viajan en la URL
+   —`?soy=local&busco=hoteles,eventos`—, se recuerdan en localStorage y se
+   cambian desde la barra. Prioridad al arrancar: URL > localStorage > nada.
 
-   «Ninguno» no es un valor: es la ausencia del atributo. Por eso el estado
-   por defecto muestra el sitio completo y no depende de que este código
-   llegue a correr.
+   «Nada» no es un valor: es la ausencia del atributo y una hoja de filtro
+   vacía. Por eso el estado por defecto muestra el sitio completo y no
+   depende de que este código llegue a correr.
+
+   Las claves viejas de `?soy=` siguen resolviendo: cada una entra por su
+   puerta y, cuando existe el nicho equivalente, lo deja marcado — así un
+   enlace a `?soy=restaurante` sigue mostrando exactamente lo que mostraba.
    ═══════════════════════════════════════════════════════════════════════ */
-const LLAVE_C='lqs_cliente';
-let CLIENTE=null, CAT_OK=null;   /* CAT_OK: ¿existe propuestas/catalogos.html? */
+const LLAVE_C='lqs_cliente', LLAVE_N='lqs_nichos';
+let CLIENTE=null, NSEL=[], CAT_OK=null;  /* CAT_OK: ¿existe propuestas/catalogos.html? */
 
+/* clave vieja o plural → puerta. Las cuatro claves nuevas pasan derecho. */
+const A_PUERTA={
+ restaurante:'local',restaurantes:'local',resto:'local',hotel:'local',hoteles:'local',
+ evento:'local',eventos:'local',local:'local',
+ empresa:'empresa',empresas:'empresa',negocio:'empresa',almacen:'empresa',almacenes:'empresa',
+ bodega:'empresa',bodegas:'empresa',distribuidora:'empresa',catalogos:'empresa',
+ automatizacion:'empresa',
+ creador:'creador',creadores:'creador',creator:'creador',productora:'creador',express:'creador',
+ marca:'marca',ropa:'marca',moda:'marca','marca-de-ropa':'marca',joyeria:'marca'
+};
+/* clave vieja → nicho que deja marcado. Las cuatro claves de puerta NO están
+   aquí a propósito: entrar por una puerta abre su catálogo sin nada marcado. */
+const A_NICHO={
+ restaurante:'restaurantes',restaurantes:'restaurantes',resto:'restaurantes',
+ hotel:'hoteles',hoteles:'hoteles',evento:'eventos',eventos:'eventos',
+ empresas:'empresas',negocio:'empresas',
+ almacen:'almacenes',almacenes:'almacenes',bodega:'almacenes',bodegas:'almacenes',
+ distribuidora:'almacenes',catalogos:'almacenes',automatizacion:'automatizacion',
+ creadores:'creadores',productora:'productora',express:'express',
+ ropa:'ropa',moda:'ropa','marca-de-ropa':'ropa',joyeria:'joyeria'
+};
 function normSoy(v){
  if(!v)return null;
  v=String(v).toLowerCase().trim();
  if(v==='todo'||v==='todos'||v==='ninguno')return null;
- if(CLAVES.indexOf(v)>-1)return v;
- /* sinónimos: los nombres viejos y los plurales no deben romper un enlace */
- const S={restaurantes:'restaurante',resto:'restaurante',hoteles:'hotel',
-  empresas:'empresa',negocio:'empresa',creadores:'creador',creator:'creador',
-  moda:'ropa','marca-de-ropa':'ropa',bodega:'almacenes',bodegas:'almacenes',
-  distribuidora:'almacenes',almacen:'almacenes',catalogos:'almacenes',
-  evento:'eventos',joyeria:'joyeria',joyeria_:'joyeria'};
- return S[v]||null;
+ return A_PUERTA[v]||null;
 }
-const datosDe=k=>CLIENTES.find(c=>c[0]===k);
+const datosDe=k=>puertaDe(k);
+/* los nichos que valen dentro de una puerta, en su orden */
+function nichosDe(k){const p=puertaDe(k);return p?p[4]:[];}
+/* lo que está activo ahora: lo marcado, o la puerta entera si no hay nada */
+function nichosActivos(){
+ if(!CLIENTE)return null;
+ return NSEL.length?NSEL.slice():nichosDe(CLIENTE).slice();
+}
+function areasActivas(){
+ const n=nichosActivos();
+ return n?areasDeNichos(n):null;
+}
+
+/* ═══ la regla que esconde ═══
+   Una sola regla generada, porque la lista de nichos activos cambia con lo
+   que el visitante marque. Sólo esconde: sin nichos activos la hoja queda
+   vacía y se ve el sitio entero. */
+const hojaFiltro=document.createElement('style');
+hojaFiltro.id='hojaFiltro';document.head.appendChild(hojaFiltro);
+function aplicarFiltro(){
+ const n=nichosActivos();
+ hojaFiltro.textContent=n&&n.length
+  ? '[data-c]'+n.map(k=>`:not([data-c~="${k}"])`).join('')+'{display:none}'
+  : '';
+}
 
 /* el catálogo de propuestas todavía se está construyendo por otro lado: si
    el archivo no está, el enlace no se ofrece — no se rompe nada ni se manda
@@ -3062,74 +3357,146 @@ async function chequeaCatalogos(){
  }catch(e){CAT_OK=false;}
  return CAT_OK;
 }
-function propuestaDe(k){
- const c=datosDe(k);if(!c||!c[5])return null;
- if(c[5].indexOf('catalogos.html')>-1&&CAT_OK===false)return null;
- return c[5];
+/* la propuesta ya armada que corresponde: la del primer nicho activo que
+   tenga una. Sin nada marcado, la del primer nicho de la puerta. */
+function propuestaDe(){
+ const n=nichosActivos();if(!n)return null;
+ for(const k of n){
+  const u=NICHOS[k]&&NICHOS[k][4];
+  if(!u)continue;
+  if(u.indexOf('catalogos.html')>-1&&CAT_OK===false)continue;
+  return u;
+ }
+ return null;
+}
+/* ¿alguna de las propuestas en juego vive en catalogos.html? */
+function usaCatalogos(){
+ const n=nichosActivos()||[];
+ return n.some(k=>((NICHOS[k]&&NICHOS[k][4])||'').indexOf('catalogos.html')>-1);
 }
 
+/* ═══ PASO 2 · el catálogo seleccionable ═══
+   Se pinta entero al elegir puerta y se vuelve a pintar sólo la
+   confirmación al marcar o desmarcar: así el foco no salta y marcar tres
+   cosas seguidas no repinta tres veces la rejilla. */
 let SUB_BASE=null;
-function pintarElegido(){
- const box=document.getElementById('elegido');if(!box)return;
- const c=datosDe(CLIENTE);
+function pintarPaso2(){
+ const caja=document.getElementById('paso2'), dentro=document.getElementById('paso2In');
+ if(!caja||!dentro)return;
+ const p=puertaDe(CLIENTE);
+ caja.classList.toggle('on',!!p);
+ if(!p){dentro.innerHTML='';return;}
+ const nics=p[4].map(k=>{const n=NICHOS[k];
+  return `<button class="nic" type="button" data-nicho="${k}" style="--ac:${n[2]}"
+    aria-pressed="${NSEL.indexOf(k)>-1}">
+    ${ilu(n[0])}
+    <span class="tx"><b>${n[0]}</b><em>${n[1]}</em></span>
+    <span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l5 5L19 7"/></svg></span>
+   </button>`;}).join('');
+ dentro.innerHTML=`<div class="paso2-cab">
+   <p class="p2q">${p[5]}</p>
+   <p class="p2a">Marca lo que te sirva: puedes marcar varios. O sigue de largo y te mostramos todo lo que hay para tu caso.</p>
+   <div class="nics">${nics}</div>
+   <div class="elegido" id="elegido"></div>
+  </div>`;
+ refrescarElegido();
+}
+function refrescarElegido(){
+ const box=document.getElementById('elegido');
+ const as=areasActivas(), p=puertaDe(CLIENTE);
  /* Servicios dice en su primera línea qué está viendo el visitante y qué no:
     un filtro que no se anuncia se lee como un catálogo pobre. */
  const sub=document.getElementById('servSub');
  if(sub){
   if(SUB_BASE===null)SUB_BASE=sub.innerHTML;
-  sub.innerHTML=c
-   ? `Estás viendo las <b style="color:var(--ink)">${c[4].length} áreas</b> que trabajamos con ${c[1].toLowerCase()}, ordenadas en sus familias. Las demás siguen ahí: cambia el filtro en la barra de arriba.`
+  sub.innerHTML=as
+   ? `Estás viendo las <b style="color:var(--ink)">${as.length} áreas</b> que trabajamos con ${etiquetaSel()}, ordenadas en sus familias. Las demás siguen ahí: cambia el filtro en la barra de arriba.`
    : SUB_BASE;
  }
- if(!c){box.innerHTML='';return;}
+ if(!box||!p||!as)return;
  /* La propuesta completa ya no se ofrece aquí. Antes esta pantalla era la
     puerta trasera a `propuestas/*.html`: el visitante entraba por «soy
     restaurante» y caía en un documento de 3.700 líneas antes de haber visto
     una sola ficha. Ahora la puerta sólo hace su trabajo —decir qué quedó a la
     vista— y la propuesta se entrega al cotizar. */
- box.innerHTML=`<p class="eq">Listo: el sitio quedó armado para <span class="gold">${c[1].toLowerCase()}</span>.</p>
-  <p class="ea">Te dejamos ${c[4].length} áreas a la vista — ${c[4].join(' · ')} —, cada una con su ficha: qué incluye, cuánto vale y una muestra que puedes tocar. El resto sigue ahí, a un toque de la barra de arriba.</p>
+ box.innerHTML=`<p class="eq">${NSEL.length?'Listo':'Así como está'}: te quedan <b>${as.length} áreas</b> a la vista — ${as.join(' · ')}.</p>
   <div class="hbtns">
    <a class="btn gold" data-go="servicios">Ver mis áreas <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-   <a class="btn g" data-go="cotizar">Pedir mi cotización</a>
-   <a class="btn g" data-soy="">Ver todo</a>
+   <a class="btn g" data-cotizo>Cotizar con esto</a>
+   <a class="vt" data-soy="">Ver todo el catálogo</a>
   </div>
-  <p class="ea" style="margin-top:10px;font-size:.86rem;color:var(--faint)">La propuesta completa —alcance, cronograma y precio para ${c[1].toLowerCase()}— te llega al pedir la cotización. Antes de eso, mira las áreas y toca las muestras.</p>`;
+  <p class="ea">Cada área trae su ficha: qué incluye, cuánto vale y una muestra que puedes tocar. La propuesta completa —alcance, cronograma y precio— llega al pedir la cotización.</p>`;
+}
+/* cómo se nombra lo elegido en el copy: lo marcado si hay algo, y si no el
+   plural de la puerta — «que trabajamos con locales», no «con tengo un local» */
+function etiquetaSel(){
+ if(NSEL.length)return NSEL.map(k=>NICHOS[k][0].toLowerCase()).join(', ');
+ const p=puertaDe(CLIENTE);
+ return p?p[6]:'';
 }
 
 function pintarBarra(){
- const c=datosDe(CLIENTE), b=document.getElementById('soyB');
- document.getElementById('soy').classList.toggle('eleg',!!c);document.getElementById('soyTx').textContent=c?c[1]:'Ver todo';
+ const c=puertaDe(CLIENTE), b=document.getElementById('soyB');
+ document.getElementById('soy').classList.toggle('eleg',!!c);
+ document.getElementById('soyTx').textContent=NSEL.length&&NSEL.length<3
+  ? NSEL.map(k=>NICHOS[k][0]).join(' + ')
+  : (c?c[1]:'Ver todo');
  b.style.setProperty('--sc',c?c[3]:'var(--faint)');
- b.setAttribute('title',c?'Estás viendo el sitio para '+c[1].toLowerCase():'Estás viendo el sitio completo');
+ b.setAttribute('title',c?'Estás viendo el sitio para '+etiquetaSel():'Estás viendo el sitio completo');
  document.querySelectorAll('#soyM [data-soy]').forEach(x=>
   x.classList.toggle('on',(x.dataset.soy||null)===CLIENTE));
- document.querySelectorAll('#puertas [data-soy]').forEach(x=>
-  x.classList.toggle('on',x.dataset.soy===CLIENTE));
+ document.querySelectorAll('#puertas [data-soy]').forEach(x=>{
+  const on=x.dataset.soy===CLIENTE;
+  x.classList.toggle('on',on);x.setAttribute('aria-expanded',on?'true':'false');});
 }
 
-function setCliente(k,guardar){
+function setCliente(k,guardar,nichos){
  k=normSoy(k);
  CLIENTE=k;
+ NSEL=(k&&nichos?nichos:[]).filter(n=>nichosDe(k).indexOf(n)>-1);
  if(k)document.documentElement.setAttribute('data-cliente',k);
  else document.documentElement.removeAttribute('data-cliente');
+ aplicarFiltro();
  /* si el chip de precios que estaba puesto ya no se ve, se vuelve a Todos */
  const chip=document.querySelector('.chip[data-u="'+uniSel+'"]');
  if(chip&&!chip.getClientRects().length)uniSel='todos';
- pintarBarra();pintarElegido();
+ pintarBarra();pintarPaso2();refrescarPuentes();
  if(UNIS.length)cargarPaquetes();
  marcarChips();
- if(guardar){
-  try{k?localStorage.setItem(LLAVE_C,k):localStorage.removeItem(LLAVE_C);}catch(e){}
-  try{
-   const u=new URL(location.href);
-   if(k)u.searchParams.set('soy',k);else u.searchParams.delete('soy');
-   history.replaceState(history.state,'',u);
-  }catch(e){}
- }
+ if(guardar)guardaFiltro();
  armar();   /* cambió lo que se ve: hay que volver a medir las capas */
- if(datosDe(k)&&(datosDe(k)[5]||'').indexOf('catalogos.html')>-1)
-  chequeaCatalogos().then(()=>{if(CLIENTE===k)pintarElegido();});
+ if(usaCatalogos())chequeaCatalogos().then(()=>{if(CLIENTE===k)refrescarElegido();});
+}
+/* marcar o desmarcar un nicho: el mismo filtro, más fino. No repinta la
+   rejilla —sólo el botón y la confirmación—, así el foco no salta. */
+function toggleNicho(k,btn){
+ if(!CLIENTE||nichosDe(CLIENTE).indexOf(k)<0)return;
+ const i=NSEL.indexOf(k);
+ if(i>-1)NSEL.splice(i,1);else NSEL.push(k);
+ /* se conserva el orden del catálogo: leer «hoteles, eventos» y ver la
+    rejilla en otro orden se siente como si el sitio hubiera entendido mal */
+ NSEL.sort((a,b)=>nichosDe(CLIENTE).indexOf(a)-nichosDe(CLIENTE).indexOf(b));
+ if(btn)btn.setAttribute('aria-pressed',NSEL.indexOf(k)>-1?'true':'false');
+ aplicarFiltro();
+ const chip=document.querySelector('.chip[data-u="'+uniSel+'"]');
+ if(chip&&!chip.getClientRects().length)uniSel='todos';
+ pintarBarra();refrescarElegido();refrescarPuentes();
+ if(UNIS.length)cargarPaquetes();
+ marcarChips();
+ guardaFiltro();
+ armar();
+}
+function guardaFiltro(){
+ try{
+  if(CLIENTE)localStorage.setItem(LLAVE_C,CLIENTE);else localStorage.removeItem(LLAVE_C);
+  if(NSEL.length)localStorage.setItem(LLAVE_N,NSEL.join(','));else localStorage.removeItem(LLAVE_N);
+ }catch(e){}
+ try{
+  const u=new URL(location.href);
+  if(CLIENTE)u.searchParams.set('soy',CLIENTE);else u.searchParams.delete('soy');
+  if(NSEL.length)u.searchParams.set('busco',NSEL.join(','));else u.searchParams.delete('busco');
+  history.replaceState(history.state,'',u);
+ }catch(e){}
 }
 function marcarChips(){
  document.querySelectorAll('.chip').forEach(x=>{
@@ -3139,7 +3506,7 @@ function marcarChips(){
   x.style.color=on?'var(--gold)':'';});
 }
 
-/* un solo oyente para las ocho puertas, el menú de la barra y los enlaces
+/* un solo oyente para las cuatro puertas, el menú de la barra y los enlaces
    de «ver todo» que aparecen en los puentes */
 document.addEventListener('click',e=>{
  const el=e.target.closest('[data-soy]');if(!el)return;
@@ -3148,10 +3515,30 @@ document.addEventListener('click',e=>{
  document.getElementById('soy').classList.remove('on');
  document.getElementById('soyB').setAttribute('aria-expanded','false');
  setCliente(k,true);
- if(el.classList.contains('pue')){
-  const d=document.getElementById('elegido');
-  if(d&&k)setTimeout(()=>d.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'}),RM?0:60);
+ /* el paso 2 se despliega debajo de la puerta que se acaba de tocar: no se
+    cambia de pantalla, se acompaña la mirada hasta donde creció el sitio */
+ if(el.classList.contains('pue')&&k){
+  const d=document.getElementById('paso2');
+  if(d)setTimeout(()=>d.scrollIntoView({behavior:RM?'auto':'smooth',block:'nearest'}),RM?0:80);
  }
+});
+/* marcar y desmarcar en el paso 2 */
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-nicho]');if(!el)return;
+ e.preventDefault();
+ toggleNicho(el.dataset.nicho,el);
+});
+/* salir a cotizar con lo marcado puesto en el mensaje */
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-cotizo]');if(!el)return;
+ e.preventDefault();
+ const as=areasActivas(), p=puertaDe(CLIENTE);
+ go('cotizar');
+ setTimeout(()=>{
+  const f=document.getElementById('fSol');if(!f)return;
+  if(as&&as.length&&p)f.detalle.value=`${p[1]}${NSEL.length?' — '+NSEL.map(k=>NICHOS[k][0].toLowerCase()).join(', '):''}.\nMe interesa: ${as.join(', ')}.\n\n`;
+  f.detalle.focus();
+ },RM?0:420);
 });
 (function(){
  const soy=document.getElementById('soy'), b=document.getElementById('soyB');
@@ -3173,12 +3560,26 @@ document.addEventListener('click',e=>{
 /* ═══ arranque ═══ */
 (async function init(){
  setModo('in');pintarSesion();armar();verPromo();
- let ini=null;
- try{ini=normSoy(new URLSearchParams(location.search).get('soy'));}catch(e){}
- if(!ini){try{ini=normSoy(localStorage.getItem(LLAVE_C));}catch(e){}}
+ let ini=null,crudo=null,nic=[];
+ try{
+  const q=new URLSearchParams(location.search);
+  crudo=q.get('soy');ini=normSoy(crudo);
+  nic=(q.get('busco')||'').split(',').map(s=>s.trim()).filter(Boolean);
+ }catch(e){}
+ if(!ini){
+  try{crudo=localStorage.getItem(LLAVE_C);ini=normSoy(crudo);
+   if(ini&&!nic.length)nic=(localStorage.getItem(LLAVE_N)||'').split(',').filter(Boolean);
+  }catch(e){}
+ }
+ /* una clave vieja (?soy=restaurante) entra por su puerta con su nicho ya
+    marcado: el enlace compartido hace tres meses sigue mostrando lo mismo */
+ if(ini&&!nic.length){
+  const n=A_NICHO[String(crudo||'').toLowerCase().trim()];
+  if(n)nic=[n];
+ }
  /* se guarda sólo si había algo: así un enlace compartido con ?soy= queda
     recordado, y el sitio sin filtro no escribe nada en el navegador */
- setCliente(ini,!!ini);
+ setCliente(ini,!!ini,nic);
  try{
   sesion=await API.yo();
   if(!sesion&&API.tok()){await API.refrescar();sesion=await API.yo();}
