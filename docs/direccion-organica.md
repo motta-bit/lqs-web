@@ -231,9 +231,17 @@ profundidad y el único que puede salirse del encuadre.
 | Video / apaisada | **Losa** | en vertical |
 | Foto solapada, detalle | **Hoja** | suelta |
 | Campo de color, corte de sección | **Cresta** | con texto encima del borde |
-| Texto, precio, lista | **Cuña** | como marco de foto |
+| Texto, precio, lista | **Esquina ancla** (§7) | ~~Cuña~~ |
 | Acento de color | **Guijarro** | con contenido dentro |
 | Filamento | **Astilla** | completa dentro del encuadre |
+
+> **Corrección de agosto de 2026.** El dueño vio las cuatro puertas de la
+> portada y pidió ese lenguaje para el resto de botones y recuadros. Gana el
+> cliente, así que la **Cuña deja de ser el contenedor de contenido** y el
+> oficio pasa a la esquina ancla del §7. Las siete formas del léxico siguen
+> vivas donde una curva SVG sí aporta —atmósfera, cortes de sección,
+> acentos—: Cresta, Guijarro y Astilla no se tocan. La Cuña queda disponible
+> para piezas de fondo, no para cajas con texto.
 
 ### 2.2 Los tres tríos que funcionan
 
@@ -468,7 +476,89 @@ Además de las prohibiciones del protocolo:
 
 ---
 
-## 7. De dónde sale esto
+## 7. La esquina ancla — el sistema de contenedores
+
+Nació en las cuatro puertas de la portada (`.pue`) y hoy gobierna **todo
+botón, todo recuadro y todo campo** de `index.html` y de los doce
+`mundos/*.html`. Tres reglas:
+
+1. **UNA esquina es mucho mayor que las otras tres.** Es lo único que hace que
+   una caja deje de leerse como caja.
+2. **Cuál lo es rota con la posición.** `nth-child(4n+1)` ancla arriba-
+   izquierda, `4n+2` arriba-derecha, `4n+3` abajo-derecha, `4n` abajo-
+   izquierda. Ninguna pieza repite la esquina de su vecina.
+3. **El tamaño lo pone la pieza, no el perfil.** `--anc` es el radio del ancla
+   y `--men` el de las otras tres, en proporción 2,5:1.
+
+### 7.1 La escala
+
+| Pieza | `--anc`/`--men` | Dónde |
+| --- | --- | --- |
+| grande | 40 / 16 px | paneles de 230px+ — `.card` `.proj` `.fase` `.todo` `.empty` `.area` `.modal` `#promo`, y en mundos `.plan` `.final` `.panel` `.vivo` |
+| media | 26 / 10 px | 150–230px — `.galf` `.ficha` `.propq` `.msg`, el acento de la composición, `.ico` `.mini` |
+| control | 16 / 6 px | 44–56px de alto — `.btn` `.nbtn` `.inp` `select` `textarea` `.soy-b` `.vback` `.tabs button`, y en mundos `.cta` `.back` `.plan .go` |
+| píldora | 11 / 4 px | menos de 36px — `.lk` `.tira a` `.abrir` |
+
+Un botón de 44px con el radio de 46px de una puerta es una pastilla: por eso
+el radio baja con la pieza en vez de repetir el número de las puertas. La
+dominante de una composición sube a 46/18.
+
+### 7.2 Por qué el ancla no se derrite con `--curva`
+
+El radio se calcula así:
+
+```css
+ancla:  calc(var(--men)*.35 + var(--anc) * (.25 + .75*var(--curva)))
+menor:  calc(var(--men)*K   * (.45 + .55*var(--curva)))   /* K = .62 · 1 · .8 */
+```
+
+El ancla **conserva un cuarto de su tamaño** aunque `--curva` baje a 0,20, y
+las otras tres encogen con ella. Si el radio menor llevara una base fija —como
+en la primera versión de `.pue`— en `trama` (0,34) y en `hielo` (0,20) la
+esquina ancla dejaría de ser la mayor de las cuatro y el lenguaje entero
+desaparecería justo donde más se nota. `--curva` sigue mandando sobre cuánto
+se curva el sitio; lo que ya no puede es borrar la jerarquía entre esquinas.
+
+### 7.3 Lo que NO la lleva
+
+Si todo lleva la misma esquina, la esquina deja de decir algo:
+
+- **Micro-rótulos que no se tocan** — `.tagd` `.st` `.badge` `.tag` `.pill`
+  siguen siendo píldoras de 999px.
+- **Controles redondos** — `.luz` y `.burger` siguen siendo guijarros.
+- **Las siete formas del léxico** — se quedan en la atmósfera.
+
+### 7.4 Los otros dos gestos que vienen de la puerta
+
+- **Desfase de media fila.** Las piezas pares bajan `clamp(8px,1.1vw,18px)`.
+  Va en la propiedad `translate` y no en `transform`, porque la coreografía de
+  scroll ya usa `transform` y se comería el desfase. **Los paquetes de precio
+  no se desfasan**: una comparación pide bases alineadas.
+- **Movimiento contenido.** `translate:0 -2px` al pasar el puntero, `scale:.98`
+  al pulsar, la esquina ancla se ahonda (`--anc:24px`) en botones y en el campo
+  con foco. Nada más.
+
+### 7.5 El acento medido
+
+El acento vive en el **borde** y en el **título**, nunca en un relleno grande.
+Sobre papel, la arena (`#b6ad98`), el oro (`#e6c877`) y el turquesa
+(`#3fd0e6`) medían 1,4:1 y desaparecían. Dos tokens lo resuelven:
+
+```css
+*{--ac-tx:var(--ac,var(--gold));--ac-bd:var(--ac,var(--gold))}
+:root[data-tema="claro"] *{
+ --ac-tx:color-mix(in oklab,var(--ac,var(--gold)) 45%,#0c0e18);   /* texto, ≥4,5:1 */
+ --ac-bd:color-mix(in oklab,var(--ac,var(--gold)) 62%,#0c0e18)}   /* borde, ≥3:1  */
+```
+
+Van en `*` y no en `:root` **a propósito**: `--ac` lo pone cada pieza en su
+`style`, y un custom property declarado en `:root` se sustituye una sola vez,
+allí donde `--ac` ni siquiera existe. Medido en el navegador: mínimo 6,21:1 en
+oscuro y 5,87:1 en claro sobre 156 textos por tema.
+
+---
+
+## 8. De dónde sale esto
 
 Investigación hecha para este documento. Se anota qué se pudo leer y qué no,
 porque la segunda lista importa para la próxima sesión.
