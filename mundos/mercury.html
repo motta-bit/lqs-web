@@ -71,7 +71,7 @@ h1{font-family:var(--pix);font-size:clamp(1.4rem,5.2vw,2.5rem);line-height:1.3;m
 .cta.ghost{background:none;color:var(--txt);border:1px solid var(--line);box-shadow:none}
 .cta.ghost:hover{border-color:var(--acc);color:var(--acc)}
 .panel{position:relative;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.015));padding:16px;overflow:hidden}
-.panel::before{content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;border:2px solid var(--acc);opacity:.3;animation:scr 2.4s steps(6) infinite}
+.panel::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:2px solid var(--acc);opacity:.3;animation:scr 2.4s steps(6) infinite}
 @keyframes scr{0%{opacity:.2}30%{opacity:.55}52%{opacity:.24}74%{opacity:.5}100%{opacity:.22}}
 .panel canvas{width:100%;height:auto;display:block;border-radius:14px;image-rendering:pixelated;background:#080a14}
 .panel .cap{font-family:var(--pix);font-size:.5rem;letter-spacing:.16em;color:var(--mut);text-align:center;margin-top:12px}
@@ -105,7 +105,7 @@ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 .plan.pop .go:hover{filter:brightness(1.08);color:#06120c}
 .note{font-size:.8rem;color:var(--mut);margin-top:18px;line-height:1.6}
 .final{text-align:center;border:1px solid var(--line);border-radius:26px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012));padding:clamp(30px,5.5vw,54px) clamp(20px,4vw,42px);position:relative;overflow:hidden}
-.final::before{content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
+.final::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;border:2px solid var(--acc);opacity:.26;animation:scr 3.1s steps(6) infinite}
 .final p{color:var(--mut);max-width:52ch;margin:0 auto 24px}
 .final .btns{justify-content:center}
 footer{border-top:1px solid var(--line);padding:28px 0 44px;position:relative;z-index:2}
@@ -114,6 +114,73 @@ footer a:hover{color:var(--acc)}
 @media(max-width:860px){.hero{grid-template-columns:1fr;gap:28px}.panel{order:-1}}
 @media(max-width:600px){.brand{font-size:.58rem}.back{padding:8px 13px;font-size:.75rem}.cta{width:100%}.btns{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* ══ LA ESQUINA ANCLA ═══════════════════════════════════════════════════
+   El lenguaje de las cuatro puertas de la portada, traído a la ficha. Tres
+   reglas: UNA esquina es mucho mayor que las otras tres; CUÁL lo es rota con
+   la posición (4n+1 arriba-izquierda … 4n abajo-izquierda), así una fila de
+   piezas iguales deja de leerse como rejilla; y el tamaño lo pone la pieza,
+   no el perfil — --anc es el radio del ancla y --men el de las otras tres,
+   en proporción 2,5:1.
+
+   ESCALA, la misma de index.html:
+     grande   40/16px   paneles y tarjetas de 230px+
+     media    26/10px   cajas de 150–230px
+     control  16/6px    44–56px de alto (botones y campos)
+     píldora  11/4px    menos de 36px
+   Un botón de 44px con el radio de 46px de una puerta es una pastilla.
+
+   --curva manda: esta página vive en pulso (familia Marca), 0,64.
+   Los micro-rótulos que no se tocan (.badge .tag .pill) siguen siendo
+   píldoras de 999px: si todo lleva la misma esquina, la esquina no dice nada. */
+:root{--curva:.64}
+.card,.plan,.final,.panel,.prev,.cuenta{--anc:40px;--men:16px}
+.ico{--anc:26px;--men:10px}
+.cta,.back,.plan .go,.opt{--anc:16px;--men:6px}
+/* perfil 1 · ancla arriba-izquierda */
+.card,.card:nth-child(4n+1),.plan,.plan:nth-child(4n+1),.opt,.opt:nth-child(4n+1),.final,.ico{border-radius:
+ calc(var(--men)*.35 + var(--anc)*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))}
+/* perfil 2 · ancla arriba-derecha */
+.card:nth-child(4n+2),.plan:nth-child(4n+2),.opt:nth-child(4n+2),.panel,.cta{border-radius:
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.05*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))}
+/* perfil 3 · ancla abajo-derecha */
+.card:nth-child(4n+3),.plan:nth-child(4n+3),.opt:nth-child(4n+3),.prev,.back{border-radius:
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*.97*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))}
+/* perfil 4 · ancla abajo-izquierda */
+.card:nth-child(4n),.plan:nth-child(4n),.opt:nth-child(4n),.cuenta,.plan .go{border-radius:
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.02*(.25 + .75*var(--curva)))}
+/* área táctil: una esquina ancla grande no puede comerse el sitio donde se
+   toca. En táctil ningún control baja de 44px de alto. */
+@media(max-width:760px),(pointer:coarse){
+ .cta,.back,.plan .go,.opt{min-height:44px}
+ .cta,.back,.plan .go,.opt{display:inline-flex;align-items:center;justify-content:center}
+}
+/* los controles que quedaban por debajo del pulgar: migas, interruptores
+   y muestrarios de color. Ninguno baja de 44px en tactil. */
+@media(max-width:760px),(pointer:coarse){
+ .miga a{min-height:44px}
+ .miga a{display:flex;align-items:center}
+}
+/* el desfase de media fila: las piezas pares bajan un paso corto y la fila
+   deja de leerse como rejilla. Va en `translate` para no pelear con el
+   `transform` del hover. Los paquetes NO se desfasan: son para comparar
+   precios y una comparación pide bases alineadas. */
+@media(min-width:601px){
+ .grid>*:nth-child(2n){translate:0 clamp(8px,1vw,16px)}
+ .grid{padding-bottom:clamp(8px,1vw,16px)}
+}
 </style></head><body>
 <canvas id="stars"></canvas><div class="bgglow"></div>
 <nav><div class="in">

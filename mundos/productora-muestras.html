@@ -118,6 +118,65 @@ footer a:hover{color:var(--acc)}
 @media(max-width:880px){.sb{grid-template-columns:repeat(3,1fr)}.sbinfo{grid-template-columns:auto 1fr}.sbprev{display:none}}
 @media(max-width:560px){.sb{grid-template-columns:repeat(2,1fr)}.sbinfo{grid-template-columns:1fr;gap:10px}.ctrls{gap:10px}.tm{font-size:.4rem}.fmt{gap:10px;--fh:clamp(112px,30vw,150px)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* ══ LA ESQUINA ANCLA ═══════════════════════════════════════════════════
+   El lenguaje de las cuatro puertas de la portada, traído a la ficha. Tres
+   reglas: UNA esquina es mucho mayor que las otras tres; CUÁL lo es rota con
+   la posición (4n+1 arriba-izquierda … 4n abajo-izquierda), así una fila de
+   piezas iguales deja de leerse como rejilla; y el tamaño lo pone la pieza,
+   no el perfil — --anc es el radio del ancla y --men el de las otras tres,
+   en proporción 2,5:1.
+
+   ESCALA, la misma de index.html:
+     grande   40/16px   paneles y tarjetas de 230px+
+     media    26/10px   cajas de 150–230px
+     control  16/6px    44–56px de alto (botones y campos)
+     píldora  11/4px    menos de 36px
+   Un botón de 44px con el radio de 46px de una puerta es una pastilla.
+
+   --curva manda: esta página vive en brasa (familia Producción), 0,82.
+   Los micro-rótulos que no se tocan (.badge .tag .pill) siguen siendo
+   píldoras de 999px: si todo lleva la misma esquina, la esquina no dice nada. */
+:root{--curva:.82}
+.card,.final,.player,.cmpwrap,.sbinfo{--anc:40px;--men:16px}
+.sbprev{--anc:26px;--men:10px}
+.cta,.back,.tg,.sb button{--anc:16px;--men:6px}
+/* perfil 1 · ancla arriba-izquierda */
+.card,.card:nth-child(4n+1),.tg,.tg:nth-child(4n+1),.final,.sbprev{border-radius:
+ calc(var(--men)*.35 + var(--anc)*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))}
+/* perfil 2 · ancla arriba-derecha */
+.card:nth-child(4n+2),.tg:nth-child(4n+2),.player,.cta{border-radius:
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.05*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))}
+/* perfil 3 · ancla abajo-derecha */
+.card:nth-child(4n+3),.tg:nth-child(4n+3),.cmpwrap,.back{border-radius:
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*.97*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))}
+/* perfil 4 · ancla abajo-izquierda */
+.card:nth-child(4n),.tg:nth-child(4n),.sbinfo,.sb button{border-radius:
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.02*(.25 + .75*var(--curva)))}
+/* área táctil: una esquina ancla grande no puede comerse el sitio donde se
+   toca. En táctil ningún control baja de 44px de alto. */
+@media(max-width:760px),(pointer:coarse){
+ .cta,.back,.tg,.sb button{min-height:44px}
+ .cta,.back,.tg{display:inline-flex;align-items:center;justify-content:center}
+}
+/* los controles que quedaban por debajo del pulgar: migas, interruptores
+   y muestrarios de color. Ninguno baja de 44px en tactil. */
+@media(max-width:760px),(pointer:coarse){
+ .miga a{min-height:44px}
+ .miga a{display:flex;align-items:center}
+}
 </style></head><body>
 <div class="bgglow"></div><div class="grain"></div>
 
