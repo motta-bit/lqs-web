@@ -52,6 +52,19 @@
  --grain:.028;--atm:.17;
  --velo:246,244,238;
 }
+/* ── el acento, medido ───────────────────────────────────────────────
+   Al pasar el acento al borde y al título, los acentos claros (arena
+   #b6ad98, oro #e6c877, turquesa #3fd0e6) se borran sobre papel: 1,4:1.
+   --ac-tx los hunde hacia la tinta hasta pasar 4,5:1 sin perder el matiz
+   —el mismo rubro sigue siendo del mismo color en las dos luces— y
+   --ac-bd hace lo propio con el borde, que sólo necesita 3:1.
+   Va en `*` y no en `:root`: --ac lo pone cada pieza en su style, y un
+   custom property de :root se resolvería una sola vez, allí donde --ac
+   ni siquiera existe. */
+*{--ac-tx:var(--ac,var(--gold));--ac-bd:var(--ac,var(--gold))}
+:root[data-tema="claro"] *{
+ --ac-tx:color-mix(in oklab,var(--ac,var(--gold)) 45%,#0c0e18);
+ --ac-bd:color-mix(in oklab,var(--ac,var(--gold)) 62%,#0c0e18)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
@@ -77,7 +90,7 @@ nav .in{max-width:1280px;margin:0 auto;padding:14px var(--pad);display:flex;alig
 .nlinks a:hover,.nlinks a.on{color:var(--ink)}
 .nlinks a::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--gold);transition:right var(--dur-ui) var(--ease-out)}
 .nlinks a:hover::after,.nlinks a.on::after{right:0}
-.nbtn{border:1px solid var(--line2);border-radius:999px;padding:9px 17px;color:var(--ink);transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease;white-space:nowrap}
+.nbtn{border:1px solid var(--line2);padding:10px 17px;display:inline-flex;align-items:center;color:var(--ink);transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease;white-space:nowrap}
 .nbtn:hover{background:var(--ink);color:#06070f;border-color:var(--ink)}
 .nbtn.gold{background:var(--gold);border-color:var(--gold);color:#1a1408}
 .burger{display:none;width:42px;height:42px;border:1px solid var(--line2);border-radius:11px;background:none;cursor:pointer;place-items:center}
@@ -107,7 +120,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .sec{padding:clamp(64px,8vw,110px) 0;position:relative;z-index:2}
 .head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-end;margin-bottom:40px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--tech);font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;
- padding:15px 25px;border-radius:999px;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,transform 90ms var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);border:1px solid transparent;cursor:pointer}
+ padding:15px 25px;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,transform 90ms var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);border:1px solid transparent;cursor:pointer}
 .btn.p{background:var(--ink);color:#06070f}
 /* el movimiento de hover solo donde hay mouse: en táctil se queda pegado */
 @media (hover:hover) and (pointer:fine){
@@ -221,7 +234,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 @media (hover:hover) and (pointer:fine){
  .fam:hover .sem{transform:rotate(-8deg) scale(1.07)}
  .fam:hover .sem .cuerpo{fill:color-mix(in oklab,var(--ac) 46%,transparent)}
- .fam:hover b{color:var(--ac)}
+ .fam:hover b{color:var(--ac-tx)}
 }
 .fam:active .sem{transform:scale(.95);transition:transform 180ms var(--ease-out)}
 
@@ -357,11 +370,11 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    con --faint se perdía por completo contra la mancha turquesa */
 .pue em{display:block;font-family:var(--tech);font-style:normal;font-size:.68rem;letter-spacing:.09em;
  text-transform:uppercase;color:var(--dim);margin-top:8px;line-height:1.35}
-.pue.on{border-color:var(--ac)}
-.pue.on b{color:var(--ac)}
+.pue.on{border-color:var(--ac-bd)}
+.pue.on b{color:var(--ac-tx)}
 @media (hover:hover) and (pointer:fine){
- .pue:hover{border-color:var(--ac);translate:0 -2px}
- .pue:hover b{color:var(--ac)}
+ .pue:hover{border-color:var(--ac-bd);translate:0 -2px}
+ .pue:hover b{color:var(--ac-tx)}
  .pue:hover .ilu{transform:rotate(-4deg) scale(1.05)}
 }
 .pue:active{scale:.98;translate:0 0}
@@ -411,13 +424,13 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .nic .mk svg{width:11px;height:11px;stroke:#06070f;fill:none;stroke-width:3;stroke-linecap:round;
  stroke-linejoin:round;opacity:0;transform:scale(.5);
  transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
-.nic[aria-pressed="true"]{border-color:var(--ac);background:color-mix(in oklab,var(--ac) 10%,transparent)}
-.nic[aria-pressed="true"] b{color:var(--ac)}
+.nic[aria-pressed="true"]{border-color:var(--ac-bd);background:color-mix(in oklab,var(--ac) 10%,transparent)}
+.nic[aria-pressed="true"] b{color:var(--ac-tx)}
 .nic[aria-pressed="true"] .mk{background:var(--ac);border-color:var(--ac)}
 .nic[aria-pressed="true"] .mk svg{opacity:1;transform:none}
 @media (hover:hover) and (pointer:fine){
- .nic:hover{border-color:var(--ac)}
- .nic:hover b{color:var(--ac)}
+ .nic:hover{border-color:var(--ac-bd)}
+ .nic:hover b{color:var(--ac-tx)}
 }
 .nic:active{scale:.985}
 @media(prefers-reduced-motion:reduce){
@@ -446,8 +459,9 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 /* áreas: cada una con su ficha propia */
 .tira{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
 .tira a{font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
- border:1px solid var(--line);border-radius:999px;padding:9px 15px;color:var(--dim);transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease;cursor:pointer}
-@media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac);color:var(--ac)}}
+ border:1px solid var(--line);padding:9px 15px;color:var(--dim);display:inline-flex;align-items:center;
+ transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,border-radius 520ms var(--ease-out);cursor:pointer}
+@media (hover:hover) and (pointer:fine){.tira a:hover{border-color:var(--ac-bd);color:var(--ac-tx)}}
 .tira a.soon{opacity:.5}
 /* ── EL CATÁLOGO ABIERTO ──────────────────────────────────────────────
    La cabecera va a dos columnas desiguales —titular y aclaración a su
@@ -504,7 +518,11 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    abajo a un costado—, y el acento va más angosto y pegado al borde exterior.
    Medido en el navegador a 1440: 58% · 27% · 15% del área de la composición. */
 .comp{display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(14px,1.9vw,26px)}
-.comp>.dom{flex:60 1 min(100%,28rem);align-self:flex-start;min-height:clamp(300px,35vw,504px)}
+/* la dominante manda por ancho y por escala tipográfica, no por aire: con
+   504px de alto mínimo el panel quedaba hueco abajo, y una caja con un
+   cuarto vacío adentro es justo el relleno que estamos evitando. El cuarto
+   de silencio va FUERA de la pieza, a un costado de la composición. */
+.comp>.dom{flex:60 1 min(100%,28rem);align-self:flex-start;min-height:clamp(260px,26vw,392px)}
 .comp>.par{flex:40 1 min(100%,18rem);display:flex;flex-direction:column;gap:clamp(12px,1.4vw,19px);min-width:0}
 .comp>.par>.sub{min-height:clamp(214px,20vw,288px)}
 .comp>.par>.acc{width:84%;align-self:flex-end}
@@ -516,9 +534,11 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    panel sino sobre una capa de fondo — así el copy no se puede recortar por
    accidente, y de paso se gana un filo de universo de 1,4px que ninguna caja
    rectangular puede tener. */
-.area{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;
- border:0;min-width:0;
- padding:clamp(22px,2.2vw,28px) clamp(28px,3.4vw,44px) clamp(24px,2.4vw,30px) clamp(18px,2vw,26px)}
+.area{position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;
+ border:1px solid var(--line2);
+ background:linear-gradient(152deg,color-mix(in oklab,var(--ac) 10%,var(--bg2)),var(--bg2) 70%);
+ transition:border-color var(--dur-ui) var(--ease-out),border-radius 520ms var(--ease-out);
+ padding:clamp(22px,2.2vw,28px) clamp(24px,2.8vw,34px) clamp(24px,2.4vw,30px)}
 /* la dominante no es «el mismo panel más grande»: es otro trato. El nombre
    ocupa el ancho entero, la frase y el «para quién» se reparten en dos
    columnas desiguales debajo, y el contenido se estira de arriba abajo en vez
@@ -541,33 +561,17 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  .comp>.dom .para{margin-top:10px;padding-top:0}
  .comp>.dom .lks{margin-top:16px}
 }
-/* el desfase medido: la silueta se inclina entre 2° y 7°, nunca 0° dos piezas
-   seguidas. Se inclina la capa de fondo, no el texto — un párrafo torcido no
-   se lee. */
-.area::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:var(--rad);
- transform:rotate(var(--gi,0deg));
- background:radial-gradient(118% 88% at 86% 14%,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%),
-  linear-gradient(150deg,color-mix(in oklab,var(--ac) 13%,var(--bg2)),var(--bg2) 62%)}
-/* el filo: 1,4px del universo, nunca un borde de color grueso al costado */
-.area::after{content:'';position:absolute;inset:-1.4px;z-index:-2;border-radius:var(--rad);pointer-events:none;
- transform:rotate(var(--gi,0deg));
- background:linear-gradient(148deg,color-mix(in oklab,var(--ac) 52%,transparent),transparent 62%)}
-/* radios asimétricos y generosos: la curva nace del tamaño de la caja, así que
-   nunca se cizalla. Cuatro perfiles para que dos piezas seguidas no rimen. */
-.area{--rad:38% 14% 30% 12% / 22% 34% 16% 28%}
-.comp>.par>.sub{--rad:16% 34% 12% 30% / 30% 18% 32% 20%}
-.comp>.par>.acc{--rad:30% 12% 36% 16% / 18% 30% 20% 34%}
-.tramo:nth-of-type(2) .comp>.dom{--rad:14% 32% 16% 34% / 32% 16% 30% 18%}
-.tramo:nth-of-type(3) .comp>.dom{--rad:34% 16% 28% 14% / 20% 32% 18% 30%}
-@media(max-width:700px){.area{--rad:26% 12% 22% 10% / 14% 24% 12% 20%}}
-.comp>.dom{--gi:-1.1deg}
-.comp>.par>.sub{--gi:1.3deg}
-.comp>.par>.acc{--gi:-1.4deg}
-.tramo:nth-of-type(2) .comp>.dom{--gi:1.2deg}
-.tramo:nth-of-type(2) .comp>.par>.sub{--gi:-2.9deg;--esp:1}
-.tramo:nth-of-type(3) .comp>.dom{--gi:-3deg;--esp:-1}
-.tramo:nth-of-type(3) .comp>.par>.acc{--gi:2.7deg;--esp:-1}
-.area>*{position:relative;z-index:2}
+/* la esquina ancla del panel rota DOS veces: entre las tres piezas de una
+   composición (dominante, subordinada, acento) y entre las tres familias —
+   cada tramo desplaza el ciclo un puesto. Nueve paneles y ninguno repite la
+   esquina de su vecino. Los perfiles viven en el bloque ESQUINA ANCLA. */
+.area>*{position:relative}
+@media(min-width:901px){
+ /* el desfase de media fila, en el eje que le queda a la composición: la
+    columna subordinada baja un paso corto respecto de la dominante */
+ .comp>.par{padding-top:clamp(10px,1.6vw,26px)}
+ .tramo:nth-of-type(2) .comp>.par{padding-top:0;padding-bottom:clamp(10px,1.6vw,26px)}
+}
 @supports (animation-timeline:view()){
  @media not (prefers-reduced-motion:reduce){
   .area{animation:aparece linear both;animation-timeline:view();animation-range:entry 3% entry 88%}
@@ -585,10 +589,12 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
   padding:clamp(24px,5.4vw,34px) clamp(30px,7vw,44px) clamp(30px,6vw,40px) clamp(20px,5vw,30px)}
  .comp>.par>.sub{min-height:0}
  .comp>.par>.acc{width:100%;align-self:stretch}
- .area{padding:clamp(20px,4.6vw,28px) clamp(26px,6.4vw,38px) clamp(24px,5vw,32px) clamp(18px,4.4vw,26px)}
- .comp>.dom,.tramo:nth-of-type(2) .comp>.dom,.tramo:nth-of-type(3) .comp>.dom{--gi:0deg}
- .comp>.par>.sub{--gi:2.4deg}
- .comp>.par>.acc,.tramo:nth-of-type(3) .comp>.par>.acc{--gi:-3.2deg}
+ .area{padding:clamp(20px,4.6vw,28px) clamp(22px,5.4vw,30px) clamp(24px,5vw,32px)}
+ /* en una columna la pieza es más angosta: el ancla baja de escala o se come
+    la esquina entera y el panel se lee como una pastilla */
+ .comp>.dom{--anc:34px;--men:14px}
+ .comp>.par>.sub{--anc:30px;--men:12px}
+ .comp>.par>.acc{--anc:24px;--men:10px}
  /* los Guijarros del encabezado viven en el cuarto vacío de su franja. En una
     columna ese cuarto no existe: caerían encima del texto del grupo o del
     panel de arriba, así que no se pintan. */
@@ -605,7 +611,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .area .cab .ilu{width:34px;height:34px}
 .comp>.dom .cab .ilu{width:clamp(52px,6vw,104px);height:clamp(52px,6vw,104px)}
 .comp>.par>.sub .cab .ilu{width:clamp(38px,3.9vw,54px);height:clamp(38px,3.9vw,54px)}
-.area .tagd{border-color:var(--ac);color:var(--ac);align-self:center;margin-bottom:0}
+.area .tagd{border-color:var(--ac-bd);color:var(--ac-tx);align-self:center;margin-bottom:0}
 .area h3{font-family:var(--sport);line-height:.9;letter-spacing:-.03em;text-transform:uppercase;
  color:var(--ink);margin:5px 0 7px;hyphens:auto;overflow-wrap:break-word;
  font-size:clamp(1.25rem,2vw,1.48rem)}
@@ -624,39 +630,39 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .comp>.par>.sub .para{margin-top:9px;font-size:.82rem;max-width:38ch;line-height:1.45}
 .comp>.dom .para{margin-top:11px;font-size:.85rem;max-width:34ch;line-height:1.5}
 .area .para span{font-family:var(--tech);font-size:.62rem;font-weight:700;letter-spacing:.15em;
- text-transform:uppercase;color:var(--ac);margin-right:7px}
+ text-transform:uppercase;color:var(--ac-tx);margin-right:7px}
 .area .lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .comp>.par>.sub .lks{margin-top:14px}
 .comp>.dom .lks{margin-top:18px}
 .area .lk{font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
- border:1px solid var(--line2);border-radius:999px;padding:8px 13px;color:var(--dim);cursor:pointer;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease,transform 90ms var(--ease-out);white-space:nowrap}
+ border:1px solid var(--line2);padding:8px 13px;color:var(--dim);cursor:pointer;display:inline-flex;align-items:center;
+ transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,background var(--dur-fast) ease,
+  border-radius 520ms var(--ease-out),transform 90ms var(--ease-out);white-space:nowrap}
 /* el único botón del panel: se nombra entero («Ver la ficha de Express») para
    que quien lo toca sepa a dónde va antes de tocarlo */
-.area .lk.pri{border-color:var(--ac);color:var(--ac);display:inline-flex;align-items:center;gap:7px;padding:8px 13px;font-size:.64rem}
+.area .lk.pri{border-color:var(--ac-bd);color:var(--ac-tx);display:inline-flex;align-items:center;gap:7px;padding:8px 13px;font-size:.64rem}
 .comp>.par>.sub .lk.pri{padding:9px 15px;font-size:.68rem}
 .comp>.dom .lk.pri{padding:11px 18px;font-size:.72rem}
 .area .lk.pri svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
  transition:transform var(--dur-fast) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
- .area .lk:hover{border-color:var(--ac);color:var(--ac)}
+ .area .lk:hover{border-color:var(--ac-bd);color:var(--ac-tx)}
  .area .lk.pri:hover{background:var(--ac);color:#06070f}
  .area .lk.pri:hover svg{transform:translateX(3px)}}
 .area .lk:active{transform:scale(.96)}
 @media(prefers-reduced-motion:reduce){.area .lk.pri:hover svg{transform:none}}
-/* área sin página todavía: se ve, pero no promete lo que no hay */
-.area.pend{background:rgba(255,255,255,.015)}
+/* área sin página todavía: el acento se apaga, la pieza se queda */
+.area.pend{background:color-mix(in oklab,var(--bg2) 90%,transparent);border-color:var(--line)}
 .area.pend h3,.area.pend .tagd{opacity:.55}
 .area .lk.mudo{border-style:dashed;color:var(--faint);cursor:default}
 .area .lk.mudo:hover{border-color:var(--line2);color:var(--faint)}
 /* los precios no golpean de entrada: se piden */
-.todo{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
- margin-top:56px;padding:clamp(30px,3.2vw,38px) clamp(38px,4.4vw,58px) clamp(34px,3.6vw,44px) clamp(28px,3vw,36px);
- border:0;background:none;scroll-margin-top:92px}
-.todo::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- background:linear-gradient(148deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
-.todo::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- background:linear-gradient(148deg,color-mix(in oklab,var(--u2) 46%,transparent),transparent 62%)}
-@media(max-width:640px){.todo{padding:26px 34px 32px 24px}#btnPrecios{width:100%;justify-content:center}}
+.todo{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+ margin-top:56px;padding:clamp(26px,2.8vw,34px) clamp(28px,3vw,38px);
+ border:1px solid var(--line2);scroll-margin-top:92px;
+ background:linear-gradient(152deg,color-mix(in oklab,var(--u2) 9%,var(--bg2)),var(--bg2) 68%);
+ transition:border-radius 520ms var(--ease-out)}
+@media(max-width:640px){.todo{padding:24px 22px 26px}#btnPrecios{width:100%;justify-content:center}}
 #btnPrecios svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4;transition:transform var(--dur-ui) var(--ease-out)}
 #btnPrecios.abierto svg{transform:rotate(180deg)}
 #precios{display:grid;grid-template-rows:0fr;opacity:0;
@@ -666,20 +672,24 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 /* franja datos */
 /* tarjetas genéricas */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px}
-.card{position:relative;isolation:isolate;border:0;background:none;
- padding:clamp(24px,2.6vw,30px) clamp(30px,3.4vw,42px) clamp(30px,3vw,36px) clamp(22px,2.4vw,28px);
- transition:translate var(--dur-ui) var(--ease-out)}
-.card::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- background:linear-gradient(148deg,rgba(255,255,255,.085),rgba(255,255,255,.016) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
-.card::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- background:linear-gradient(148deg,color-mix(in oklab,var(--u1) 42%,transparent),transparent 62%);
- opacity:.75;transition:opacity var(--dur-ui) var(--ease-out)}
-.cards>.card:nth-child(even)::before,.cards>.card:nth-child(even)::after{scale:-1 1}
-@media (hover:hover) and (pointer:fine){.card:hover{translate:0 -3px}.card:hover::after{opacity:1}}
+/* la tarjeta habla el idioma de las puertas: un filo de 1px, la esquina ancla
+   que rota con la posición y el acento reservado al borde y al título. El
+   relleno es una insinuación del universo activo, nunca un campo de color. */
+.card{position:relative;border:1px solid var(--line2);
+ background:linear-gradient(152deg,color-mix(in oklab,var(--ac,var(--u1)) 8%,var(--bg2)),var(--bg2) 68%);
+ padding:clamp(20px,2.3vw,26px) clamp(22px,2.5vw,28px);
+ transition:border-color var(--dur-ui) var(--ease-out),translate var(--dur-ui) var(--ease-out),
+  border-radius 520ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+ .card[data-demo]:hover{border-color:var(--ac-bd);translate:0 calc(var(--dsf,0px) - 2px)}
+ .card[data-demo]:hover h3{color:var(--ac-tx)}}
 .card h3{font-family:var(--disp);font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .card p{font-size:.87rem;color:var(--dim);line-height:1.55}
 .card .pz{font-family:var(--sport);font-size:1.5rem;margin:12px 0 4px}
-.card .un{font-family:var(--tech);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+/* el gancho de la tarjeta, en la tipografía de datos y bajo el título: la
+   misma jerarquía de las puertas. Va en --dim y no en --faint porque sobre
+   el relleno nuevo --faint medía 3,47:1 en oscuro y 2,72:1 en claro. */
+.card .un{font-family:var(--tech);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .card ul{list-style:none;margin:14px 0 0;display:flex;flex-direction:column;gap:7px}
 .card li{font-size:.83rem;color:var(--dim);display:flex;gap:8px;align-items:flex-start;line-height:1.45}
 .card li::before{content:'';flex:none;width:13px;height:13px;margin-top:4px;border-radius:4px;background:rgba(230,200,119,.16);border:1px solid rgba(230,200,119,.5);
@@ -694,35 +704,37 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .gal-tit h3{font-family:var(--disp);font-variation-settings:'wdth' 84,'wght' 700;
  font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.06;letter-spacing:-.015em}
 .gal-tit p{color:var(--dim);max-width:56ch;margin-top:12px;font-size:.95rem}
-.gal{margin-top:clamp(22px,3vw,32px);border-top:1px solid var(--line)}
+/* el renglón toma la esquina ancla en escala media: sigue siendo un renglón
+   —ancho completo, tres columnas, nada de rejilla— pero ya es una pieza con
+   filo propio en vez de una fila separada por una raya. */
+.gal{margin-top:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:clamp(8px,1.1vw,12px)}
 .galf{position:relative;isolation:isolate;display:grid;
  grid-template-columns:minmax(0,8.5rem) minmax(0,1fr) auto;
  gap:clamp(10px,2vw,26px);align-items:baseline;width:100%;text-align:left;
- padding:clamp(18px,2.2vw,26px) clamp(12px,1.6vw,20px);
- border-bottom:1px solid var(--line);cursor:pointer;
- transition:translate var(--dur-ui) var(--ease-out)}
-.galf::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-losa);
- background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 22%,transparent),transparent 62%);
+ padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px);
+ border:1px solid var(--line);cursor:pointer;background:none;
+ transition:translate var(--dur-ui) var(--ease-out),border-color var(--dur-ui) var(--ease-out),
+  border-radius 520ms var(--ease-out)}
+.galf::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;
+ background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 16%,transparent),transparent 62%);
  opacity:0;transition:opacity var(--dur-ui) var(--ease-out)}
+/* los colores de cliente están calibrados contra el fondo oscuro: sobre papel
+   la arena y el oro se borran, y por eso el rótulo usa --ac-tx */
 .galf .q{font-family:var(--tech);font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;
- font-weight:700;color:var(--ac)}
-/* los colores de cliente están calibrados contra el fondo oscuro: sobre papel,
-   la arena y el oro se borran. Se hunden hacia la tinta sin perder el matiz que
-   los identifica —el mismo rubro tiene que seguir siendo del mismo color en las
-   dos luces. */
-:root[data-tema="claro"] .galf .q{color:color-mix(in oklab,var(--ac) 55%,#0c0e18)}
+ font-weight:700;color:var(--ac-tx)}
 :root[data-tema="claro"] .galf::before{
- background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 30%,transparent),transparent 62%)}
+ background:linear-gradient(100deg,color-mix(in oklab,var(--ac) 24%,transparent),transparent 62%)}
 .galf h4{font-family:var(--disp);font-variation-settings:'wdth' 90,'wght' 600;
  font-size:clamp(1.08rem,2.2vw,1.42rem);line-height:1.16;letter-spacing:.005em}
 .galf p{font-size:.85rem;color:var(--dim);line-height:1.5;margin-top:5px}
 .galf .ir{align-self:center;font-family:var(--tech);font-size:.66rem;letter-spacing:.12em;
  text-transform:uppercase;color:var(--dim);white-space:nowrap}
 @media (hover:hover) and (pointer:fine){
- .galf:hover{translate:5px 0}
+ .galf:hover{translate:0 -2px;border-color:var(--ac-bd)}
  .galf:hover::before{opacity:1}
- .galf:hover .ir{color:var(--ac)}}
-.galf:active{translate:2px 0;opacity:.84}
+ .galf:hover h4{color:var(--ac-tx)}
+ .galf:hover .ir{color:var(--ac-tx)}}
+.galf:active{scale:.99;opacity:.84}
 .galf:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media(max-width:700px){
  .galf{grid-template-columns:1fr;gap:6px}
@@ -733,13 +745,19 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
    sigue a la vista debajo de su propia confirmación */
 .form[hidden]{display:none}
 .fld label{display:block;font-family:var(--tech);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:7px}
-.inp{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:13px;color:var(--ink);padding:13px 15px;font-size:.94rem;transition:border-color var(--dur-fast) ease,background var(--dur-fast) ease}
-.inp:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.07)}
+.inp{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);padding:13px 15px;
+ min-height:48px;font-size:.94rem;
+ transition:border-color var(--dur-fast) ease,background var(--dur-fast) ease,box-shadow var(--dur-fast) ease,
+  border-radius 520ms var(--ease-out)}
+/* el foco toma el acento y ahonda la esquina ancla: el campo activo se
+   distingue por forma y por color, no sólo por color */
+.inp:focus{outline:none;border-color:var(--ac-bd);background:rgba(255,255,255,.07);--anc:24px;
+ box-shadow:0 0 0 3px color-mix(in oklab,var(--ac,var(--gold)) 20%,transparent)}
 textarea.inp{min-height:104px;resize:vertical}
 select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0b8' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:40px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:600px){.two{grid-template-columns:1fr}}
-.msg{border-radius:13px;padding:13px 16px;font-size:.88rem;display:none}
+.msg{padding:13px 16px;font-size:.88rem;display:none}
 .msg.on{display:block}
 .msg.ok{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);color:#a7f3c4}
 .msg.er{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);color:#ffb3b3}
@@ -747,28 +765,25 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 #cotOk[hidden]{display:none}
 .eq-ok{font-family:var(--edit);font-style:italic;font-size:clamp(1.15rem,2.4vw,1.75rem);line-height:1.25;color:var(--ink)}
 .ea-ok{margin-top:10px;font-size:.9rem;color:var(--dim);max-width:56ch}
-.propq{display:block;max-width:620px;margin-top:22px;border:1px solid var(--line);border-radius:18px;
+.propq{display:block;max-width:620px;margin-top:22px;border:1px solid var(--line);
  background:rgba(255,255,255,.045);padding:20px 22px;position:relative;overflow:hidden;
  transition:border-color var(--dur-fast) ease,transform 90ms var(--ease-out)}
-.propq::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ac,var(--gold))}
+.propq::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ac-bd)}
+.propq{transition:border-color var(--dur-fast) ease,transform 90ms var(--ease-out),border-radius 520ms var(--ease-out)}
 .propq h4{font-family:var(--disp);font-size:1.35rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:6px}
 .propq p{font-size:.88rem;color:var(--dim);line-height:1.55}
 .propq .ir{display:inline-flex;align-items:center;gap:7px;margin-top:14px;
- font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac,var(--gold))}
-@media(hover:hover) and (pointer:fine){.propq:hover{border-color:var(--ac,var(--gold))}}
+ font-family:var(--tech);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac-tx)}
+@media(hover:hover) and (pointer:fine){.propq:hover{border-color:var(--ac-bd)}}
 .propq:active{transform:scale(.99)}
 .propq-alt{margin-top:18px;font-size:.88rem;color:var(--faint);max-width:56ch;line-height:1.6}
 /* portal */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
-.proj{position:relative;isolation:isolate;border:0;background:none;
- padding:clamp(26px,2.8vw,32px) clamp(32px,3.6vw,44px) clamp(30px,3vw,38px) clamp(24px,2.6vw,30px)}
-.proj::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- background:linear-gradient(148deg,rgba(255,255,255,.07),rgba(255,255,255,.012) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
-.proj::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- background:linear-gradient(148deg,color-mix(in oklab,var(--u2) 40%,transparent),transparent 62%);
- opacity:.7;transition:opacity var(--dur-ui) var(--ease-out)}
-.pgrid>.proj:nth-child(even)::before,.pgrid>.proj:nth-child(even)::after{scale:-1 1}
-@media (hover:hover) and (pointer:fine){.proj:hover::after{opacity:1}}
+.proj{position:relative;border:1px solid var(--line2);
+ background:linear-gradient(152deg,color-mix(in oklab,var(--u2) 8%,var(--bg2)),var(--bg2) 68%);
+ padding:clamp(22px,2.4vw,28px) clamp(24px,2.6vw,30px);
+ transition:border-color var(--dur-ui) var(--ease-out),translate var(--dur-ui) var(--ease-out),
+  border-radius 520ms var(--ease-out)}
 .proj .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
 .proj h3{font-family:var(--disp);font-size:1.7rem;letter-spacing:.02em;text-transform:uppercase;line-height:1}
 .st{font-family:var(--tech);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:999px;white-space:nowrap}
@@ -787,14 +802,11 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .hit li.listo i{background:var(--ok);border-color:var(--ok)}
 .hit li.en_curso i{background:var(--warn);border-color:var(--warn)}
 .hit li.listo{color:var(--ink);text-decoration:line-through;text-decoration-color:var(--faint)}
-.empty{position:relative;isolation:isolate;padding:48px 34px 52px 30px;text-align:center;color:var(--dim)}
-.empty::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- background:color-mix(in oklab,var(--bg2) 62%,transparent)}
-.empty::after{content:'';position:absolute;inset:-1.2px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- background:linear-gradient(148deg,var(--line2),transparent 68%)}
+.empty{position:relative;padding:44px 30px 48px;text-align:center;color:var(--dim);
+ border:1px solid var(--line);background:color-mix(in oklab,var(--bg2) 62%,transparent)}
 /* banner suscripción */
 #promo{position:fixed;right:18px;bottom:18px;z-index:75;width:min(340px,calc(100vw - 36px));
- background:linear-gradient(165deg,#141829,#0a0c17);border:1px solid var(--line2);border-radius:20px;padding:22px;
+ background:linear-gradient(165deg,#141829,#0a0c17);border:1px solid var(--line2);padding:22px;
  box-shadow:0 26px 70px -24px #000;transform:translateY(140%);transition:transform 420ms var(--ease-drawer)}
 #promo.on{transform:none}
 #promo .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;font-size:1rem;line-height:1;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease}
@@ -815,9 +827,10 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .modal.on{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
 .modal h3{font-family:var(--disp);font-size:2rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:6px;line-height:1}
 .modal .sub{font-size:.88rem;color:var(--dim);margin-bottom:20px}
-.tabs{display:flex;gap:6px;margin-bottom:20px;background:rgba(255,255,255,.04);padding:4px;border-radius:13px}
+.tabs{display:flex;gap:6px;margin-bottom:20px;background:rgba(255,255,255,.04);padding:4px}
 .tabs button{flex:1;padding:10px;border:none;background:none;color:var(--dim);font-family:var(--tech);font-size:.72rem;font-weight:700;
- letter-spacing:.1em;text-transform:uppercase;border-radius:10px;cursor:pointer;transition:background var(--dur-fast) ease,color var(--dur-fast) ease}
+ letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:42px;
+ transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-radius 480ms var(--ease-out)}
 .tabs button.on{background:var(--ink);color:#06070f}
 .modal .x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer}
 /* footer */
@@ -842,7 +855,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 #visor .vraiz,#visor .vsep{color:var(--faint)}
 #visor .vback{display:inline-flex;align-items:center;gap:7px;flex:none;cursor:pointer;
  font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
- color:var(--ink);background:none;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;
+ color:var(--ink);background:none;border:1px solid var(--line2);padding:8px 14px;min-height:40px;
  transition:border-color var(--dur-fast) ease,color var(--dur-fast) ease,transform 90ms var(--ease-out)}
 #visor .vback[hidden]{display:none}
 #visor .vback svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
@@ -863,20 +876,18 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .wa-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,58px);align-items:center;margin-bottom:56px}
 @media(max-width:900px){.wa-hero{grid-template-columns:1fr}}
 .fases{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;position:relative}
-.fase{position:relative;isolation:isolate;border:0;background:none;
- padding:clamp(24px,2.6vw,30px) clamp(30px,3.4vw,42px) clamp(30px,3vw,36px) clamp(22px,2.4vw,28px);
- transition:translate var(--dur-ui) var(--ease-out)}
-.fase::before{content:'';position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
- background:linear-gradient(148deg,rgba(255,255,255,.075),rgba(255,255,255,.014) 58%),color-mix(in oklab,var(--bg2) 84%,transparent)}
-.fase::after{content:'';position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);pointer-events:none;
- background:linear-gradient(148deg,color-mix(in oklab,var(--u1) 44%,transparent),transparent 62%);opacity:.72}
-.fases>.fase:nth-child(even)::before,.fases>.fase:nth-child(even)::after{scale:-1 1}
-@media (hover:hover) and (pointer:fine){.fase:hover{translate:0 -3px}}
+.fase{position:relative;border:1px solid var(--line2);
+ background:linear-gradient(152deg,color-mix(in oklab,var(--u1) 8%,var(--bg2)),var(--bg2) 68%);
+ padding:clamp(20px,2.3vw,26px) clamp(22px,2.5vw,28px);
+ transition:border-color var(--dur-ui) var(--ease-out),translate var(--dur-ui) var(--ease-out),
+  border-radius 520ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.fase:hover{translate:0 calc(var(--dsf,0px) - 2px)}}
 .fase .fn{font-family:var(--sport);font-size:2rem;line-height:1;color:var(--gold);opacity:.5;margin-bottom:10px}
 .fase h4{font-family:var(--disp);font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;margin-bottom:7px}
 .fase p{font-size:.85rem;color:var(--dim);line-height:1.5}
-.fase .dur{font-family:var(--tech);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:11px}
-.ficha{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.022);overflow:hidden;margin-top:14px}
+.fase .dur{font-family:var(--tech);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:11px}
+.ficha{border:1px solid var(--line);background:rgba(255,255,255,.022);overflow:hidden;margin-top:14px;
+ transition:border-radius 520ms var(--ease-out)}
 .ficha>summary{padding:20px 24px;cursor:pointer;font-family:var(--tech);font-size:.76rem;letter-spacing:.14em;
  text-transform:uppercase;font-weight:700;color:var(--dim);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:color var(--dur-fast) ease}
 .ficha>summary::-webkit-details-marker{display:none}
@@ -958,37 +969,135 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .tramo{position:relative;display:block}
 .tramo .guijarro,.tramo .estrato,.tramo .astilla{z-index:0}
 
-/* ── botón orgánico ─────────────────────────────────────────────────────
-   El radio no es decorativo: al pasar el puntero la forma se reacomoda, que
+/* ══ LA ESQUINA ANCLA ═══════════════════════════════════════════════════
+   Las cuatro puertas de la portada hechas sistema. Tres reglas, ni una más:
+
+   1· UNA esquina es mucho mayor que las otras tres. Es lo que hace que una
+      caja deje de leerse como caja.
+   2· CUÁL lo es ROTA con la posición — 4n+1 arriba-izquierda, 4n+2 arriba-
+      derecha, 4n+3 abajo-derecha, 4n abajo-izquierda. Dos piezas hermanas
+      nunca repiten la esquina de su vecina, y por eso cuatro cajas iguales
+      dejan de leerse como rejilla.
+   3· El tamaño lo pone la PIEZA, no el perfil: --anc es el radio del ancla
+      y --men el de las otras tres. La proporción del sistema es 2,5:1, y se
+      sostiene en TODOS los universos: el ancla conserva un cuarto de su
+      tamaño aunque --curva baje a 0,20, y las otras tres encogen con ella.
+      Si el ancla se derritiera con la curva —como pasa cuando el radio menor
+      lleva una base fija—, en trama y en hielo la esquina dejaría de ser la
+      mayor y el lenguaje entero desaparecería justo donde más se nota.
+
+   ESCALA — un botón de 44px con el radio de 46px de una puerta es una
+   pastilla, así que el radio baja con la pieza en vez de repetir el número:
+
+     grande   --anc:40px --men:16px   piezas de 230px+: .card .proj .fase
+                                      .todo .empty .area .modal #promo
+     media    --anc:26px --men:10px   150–230px: .galf .ficha .propq .msg
+                                      y el acento de la composición
+     control  --anc:16px --men:6px    44–56px de alto: .btn .nbtn .inp
+                                      select textarea .soy-b .vback .tabs
+     píldora  --anc:11px --men:4px    menos de 36px: .lk .tira a
+
+   Lo que NO la lleva, para que la esquina siga diciendo algo: los micro-
+   rótulos que no se tocan (.tagd .st) siguen siendo píldoras de 999px, los
+   controles redondos (.luz .burger) siguen siendo guijarros, y las siete
+   formas del léxico orgánico (cresta, astilla, guijarro, losa) se quedan
+   en la atmósfera, que es donde una curva SVG sí aporta.
+
+   Y --curva manda sobre todo: flujo 1,00 · brasa 0,82 · pulso 0,64 ·
+   trama 0,34 · hielo 0,20. El temperamento del universo activo decide
+   cuánto se curva el sitio entero, botones incluidos. */
+.card,.proj,.fase,.todo,.empty,.modal,#promo,.comp>.dom,.comp>.par>.sub{--anc:40px;--men:16px}
+.comp>.dom{--anc:46px;--men:18px}
+.galf,.ficha,.propq,.msg,.comp>.par>.acc,.soy-m{--anc:26px;--men:10px}
+.btn,.nbtn,.inp,.soy-b,.tabs button,.tabs,#visor .vback,.load-box{--anc:16px;--men:6px}
+.lk,.tira a,.elegido .vt,.abrir{--anc:11px;--men:4px}
+/* perfil 1 · ancla arriba-izquierda */
+.card,.proj,.fase,.galf,.btn,.nbtn,.inp,.lk,.tira a,.tabs button,.modal,.ficha,
+.card:nth-child(4n+1),.proj:nth-child(4n+1),.fase:nth-child(4n+1),.galf:nth-child(4n+1),
+.btn:nth-child(4n+1),.lk:nth-child(4n+1),.tira a:nth-child(4n+1),.tabs button:nth-child(4n+1),.abrir,
+.fld:nth-child(4n+1) .inp,.comp>.dom,.tramo:nth-of-type(3) .comp>.par>.acc{border-radius:
+ calc(var(--men)*.35 + var(--anc)*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))}
+/* perfil 2 · ancla arriba-derecha */
+.todo,.msg,
+.card:nth-child(4n+2),.proj:nth-child(4n+2),.fase:nth-child(4n+2),.galf:nth-child(4n+2),
+.btn:nth-child(4n+2),.lk:nth-child(4n+2),.tira a:nth-child(4n+2),.tabs button:nth-child(4n+2),
+.fld:nth-child(4n+2) .inp,.comp>.par>.sub,.tramo:nth-of-type(2) .comp>.dom{border-radius:
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.05*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))}
+/* perfil 3 · ancla abajo-derecha */
+.empty,.soy-b,.soy-m,#promo,
+.card:nth-child(4n+3),.proj:nth-child(4n+3),.fase:nth-child(4n+3),.galf:nth-child(4n+3),
+.btn:nth-child(4n+3),.lk:nth-child(4n+3),.tira a:nth-child(4n+3),.tabs button:nth-child(4n+3),
+.fld:nth-child(4n+3) .inp,.comp>.par>.acc,.tramo:nth-of-type(2) .comp>.par>.sub,
+.tramo:nth-of-type(3) .comp>.dom{border-radius:
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*.97*(.25 + .75*var(--curva)))
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))}
+/* perfil 4 · ancla abajo-izquierda */
+.propq,#visor .vback,.elegido .vt,
+.card:nth-child(4n),.proj:nth-child(4n),.fase:nth-child(4n),.galf:nth-child(4n),
+.btn:nth-child(4n),.lk:nth-child(4n),.tira a:nth-child(4n),.tabs button:nth-child(4n),
+.fld:nth-child(4n) .inp,.tramo:nth-of-type(2) .comp>.par>.acc,
+.tramo:nth-of-type(3) .comp>.par>.sub{border-radius:
+ calc(var(--men)*.62*(.45 + .55*var(--curva)))
+ calc(var(--men)*1*(.45 + .55*var(--curva)))
+ calc(var(--men)*.8*(.45 + .55*var(--curva)))
+ calc(var(--men)*.35 + var(--anc)*1.02*(.25 + .75*var(--curva)))}
+/* el radio no es decorativo: al pasar el puntero la forma se reacomoda, que
    es la manera de que un control se sienta vivo sin desplazarse. */
-.btn{border-radius:
- calc(14px + 16px * var(--curva)) calc(24px - 5px * var(--curva))
- calc(12px + 14px * var(--curva)) calc(22px - 7px * var(--curva));
- transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
+.btn{transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
   border-radius 520ms var(--ease-out),translate 90ms var(--ease-out),scale 90ms var(--ease-out),
   box-shadow var(--dur-fast) var(--ease-out)}
-.nbtn{border-radius:calc(10px + 14px * var(--curva)) calc(20px - 5px * var(--curva))
- calc(9px + 12px * var(--curva)) calc(18px - 6px * var(--curva));
- transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
+.nbtn{transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
   border-radius 480ms var(--ease-out)}
+/* ── el desfase de media fila ───────────────────────────────────────────
+   Lo segundo que hace que cuatro piezas iguales dejen de ser una rejilla:
+   las pares bajan un paso corto. Va en `translate` y no en `transform`
+   porque la coreografía de scroll ya usa transform — si compartieran
+   propiedad, la animación se comería el desfase. */
+@media(min-width:601px){
+ .cards>.card:nth-child(2n),.fases>.fase:nth-child(2n),.pgrid>.proj:nth-child(2n){--dsf:clamp(8px,1.1vw,18px)}
+ .cards,.fases,.pgrid{padding-bottom:clamp(8px,1.1vw,18px)}
+}
+.card,.fase,.proj{translate:0 var(--dsf,0px)}
 .luz,.burger{border-radius:
  calc(38% + 16% * var(--curva)) calc(54% - 12% * var(--curva))
  calc(42% + 10% * var(--curva)) calc(50% - 8% * var(--curva)) /
  calc(50% + 8% * var(--curva)) calc(40% + 12% * var(--curva))
  calc(52% - 10% * var(--curva)) calc(44% + 6% * var(--curva));
  transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,border-radius 520ms var(--ease-out)}
-.inp{border-radius:calc(8px + 9px * var(--curva)) calc(15px - 5px * var(--curva))
- calc(7px + 8px * var(--curva)) calc(14px - 5px * var(--curva))}
-.tabs{border-radius:16px 10px 16px 10px}
-.tabs button{border-radius:12px 7px 12px 7px}
-.ficha{border-radius:calc(12px + 14px * var(--curva)) calc(26px - 8px * var(--curva))
- calc(14px + 12px * var(--curva)) calc(24px - 7px * var(--curva));border-color:var(--line)}
-.modal{border-radius:calc(16px + 18px * var(--curva)) calc(32px - 9px * var(--curva))
- calc(18px + 16px * var(--curva)) calc(30px - 8px * var(--curva))}
-#promo{border-radius:calc(14px + 16px * var(--curva)) calc(28px - 8px * var(--curva))
- calc(16px + 14px * var(--curva)) calc(26px - 7px * var(--curva))}
+.tabs{border-radius:calc(var(--men)*.5 + var(--anc)*.7*(.25 + .75*var(--curva))) calc(var(--men)*.9)
+ calc(var(--men)*.5 + var(--anc)*.7*(.25 + .75*var(--curva))) calc(var(--men)*.9)}
+.ficha{border-color:var(--line)}
 .hit i{border-radius:60% 40% 52% 48% / 55% 50% 50% 45%}
 .card li::before{border-radius:58% 42% 50% 50% / 52% 48% 52% 48%}
+
+.abrir{color:inherit;padding:3px 9px;border:1px solid var(--line2);
+ display:inline-flex;align-items:center;justify-content:center;
+ transition:border-color var(--dur-fast) ease,color var(--dur-fast) ease,border-radius 520ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.abrir:hover{border-color:var(--ac-bd);color:var(--ac-tx)}}
+.abrir:active{scale:.94}
+/* ── área táctil ────────────────────────────────────────────────────────
+   Una esquina ancla grande se come el borde de un control chico, y varias de
+   estas píldoras ya venían en 33px de alto. En táctil ninguna baja de 44px:
+   el radio crece con la pieza, nunca a costa del sitio donde se toca. */
+@media(max-width:760px),(pointer:coarse){
+ .btn,.nbtn,.inp,select.inp,.soy-b,.soy-m button,.tabs button,#visor .vback,
+ .lk,.tira a,.chip,.elegido .vt,.abrir,.fam,.fc a,.nlinks a{min-height:44px}
+ .lk,.tira a,.chip,.elegido .vt,.abrir{display:inline-flex;align-items:center}
+ .abrir{min-width:44px;justify-content:center}
+ .nlinks a{display:flex;align-items:center;justify-content:center}
+ .luz{width:44px;height:44px}
+ .burger{width:44px;height:44px}
+ #promo .x,.modal .x{width:44px;height:44px}
+ .fc a,.puerta-pie a{min-height:44px;display:flex;align-items:center}
+}
 
 /* ── coreografía por scroll, con líneas de tiempo nativas ────────────────
    El estado por defecto es el VISIBLE: si el navegador no las soporta, la
@@ -1009,17 +1118,15 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
    Se mueven con `translate`/`scale`, no con `transform`: así el hover y la
    coreografía de scroll no se pisan la misma propiedad. */
 @media (hover:hover) and (pointer:fine){
- .btn:hover{border-radius:
-  calc(24px - 6px * var(--curva)) calc(14px + 16px * var(--curva))
-  calc(22px - 8px * var(--curva)) calc(12px + 15px * var(--curva))}
+ /* la esquina ancla se ahonda bajo el puntero: la forma se reacomoda sin que
+    el control se mueva de sitio, y cada botón conserva SU esquina */
+ .btn:hover{--anc:24px}
  .btn.p:hover,.btn.gold:hover{translate:0 -2px}
- .nbtn:hover{border-radius:calc(20px - 6px * var(--curva)) calc(10px + 14px * var(--curva))
-  calc(18px - 5px * var(--curva)) calc(9px + 13px * var(--curva))}
+ .nbtn:hover{--anc:23px}
  .luz:hover{border-radius:54% 40% 46% 52% / 42% 52% 44% 56%}
  /* el panel no es pulsable —lo es su botón—, así que no se levanta: lo que
-    responde es el filo de universo, que se enciende bajo el puntero */
- .area::after{transition:filter var(--dur-ui) var(--ease-out)}
- .area:hover::after{filter:brightness(1.55) saturate(1.2)}
+    responde es el filo, que toma el acento del área bajo el puntero */
+ .area:hover{border-color:var(--ac-bd)}
 }
 /* respuesta al pulsar: en táctil es el único feedback que existe */
 .btn:active{translate:0 1px;scale:.97}
@@ -1320,7 +1427,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     </div>
     <div class="fld"><label>Cuéntanos tu idea *</label><textarea class="inp" name="detalle" required maxlength="1200" placeholder="Qué necesitas, para cuándo, y cualquier detalle que nos sirva…"></textarea></div>
     <label style="display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--dim);cursor:pointer;line-height:1.5">
-      <input type="checkbox" name="acepta" required style="margin-top:4px;width:17px;height:17px;accent-color:var(--gold);flex:none">
+      <input type="checkbox" name="acepta" required style="margin-top:4px;width:24px;height:24px;accent-color:var(--gold);flex:none">
       <span>Autorizo el tratamiento de mis datos personales conforme a la
       <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a> de LQS.</span>
     </label>
@@ -1547,7 +1654,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
     <div class="fld"><label>Correo</label><input class="inp" type="email" name="email" required placeholder="tucorreo@ejemplo.com"></div>
     <div class="fld"><label>Contraseña</label><input class="inp" type="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres"></div>
     <label id="wLegal" style="display:none;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--dim);cursor:pointer;line-height:1.5">
-      <input type="checkbox" name="acepta" style="margin-top:3px;width:16px;height:16px;accent-color:var(--gold);flex:none">
+      <input type="checkbox" name="acepta" style="margin-top:3px;width:24px;height:24px;accent-color:var(--gold);flex:none">
       <span>Acepto los <a href="legal.html#terminos" target="_blank" rel="noopener" style="color:var(--gold)">términos</a>
       y la <a href="legal.html#politica" target="_blank" rel="noopener" style="color:var(--gold)">política de datos</a>.</span>
     </label>
@@ -2033,7 +2140,7 @@ document.getElementById('demos').innerHTML=DEMOS.map(([tag,t,d,u,c])=>
  `<div class="card" data-demo="${u}" data-titulo="${tag} · ${t}" style="cursor:pointer"${attrC(tag)}>
   <span class="tagd" style="color:${c}">${tag}</span><h3>${t}</h3><p>${d}</p>
   <div class="un" style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;color:${c}">Abrir →
-   <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" style="color:inherit;padding:2px 8px;border:1px solid var(--line2);border-radius:999px">↗</a>
+   <a href="${u}" target="_blank" rel="noopener" title="Abrir en una pestaña nueva" onclick="event.stopPropagation()" class="abrir">↗</a>
   </div></div>`).join('');
 
 /* ═══ las propuestas · CAPA 3 ═══
