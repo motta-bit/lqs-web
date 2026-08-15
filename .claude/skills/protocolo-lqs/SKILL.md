@@ -79,6 +79,29 @@ digital. Al añadir una vista nueva, añade su clima.
 Bricolage es variable: usa `font-variation-settings` para apretar títulos largos
 en vez de bajarles el tamaño. Ese eje es la razón por la que se eligió.
 
+### La esquina ancla
+
+El lenguaje visual del sitio. Cada caja lleva **una esquina mucho más redonda
+que las otras tres**, y cuál es **rota con la posición** (`nth-child(4n+1..4n)`).
+Eso es lo que impide que un grupo de piezas iguales se lea como rejilla: ninguna
+repite la esquina de su vecina.
+
+- El radio lo gobierna `--curva`, el temperamento del universo activo:
+  flujo 1,00 · brasa 0,82 · pulso 0,64 · trama 0,34 · hielo 0,20.
+- Cuatro escalas, proporción ancla/menor de 2,5:1 — grande 40/16, media 26/10,
+  control 16/6, píldora 11/4. Un botón chico con radio de caja grande se
+  convierte en pastilla.
+- **El acento vive en el borde y en el título**, nunca en un relleno grande:
+  `--ac-bd` para el borde, `--ac-tx` para el texto. Esos dos tokens van en `*`
+  y no en `:root`, porque `--ac` lo pone cada pieza en su `style`.
+- Movimiento contenido: `translate:0 -2px` en hover, `scale:.98` en `:active`.
+
+Quedan fuera a propósito, para que la esquina siga significando algo: las
+pastillas de etiqueta (`.tagd`, `.st`, `.badge`), los controles redondos
+(`.luz`, `.burger`) y las formas del léxico orgánico en la atmósfera.
+
+Detalle completo en `docs/direccion-organica.md` §7.
+
 ### Claro y oscuro
 
 Son **dos paletas**, no un filtro. Se conmutan con `data-tema` en `:root`.
@@ -197,4 +220,3 @@ Se mantiene aquí para no volver a descubrirla:
 - Restaurantes y Hoteles son áreas sin ficha a propósito: la ruta va vacía en
   `FICHAS` y la tarjeta muestra "Ficha en camino".
 - `legal.html` tiene datos por completar (razón social, NIT, dirección).
-- Las páginas de `mundos/` todavía usan el sistema visual anterior.
