@@ -1,0 +1,1611 @@
+<!doctype html>
+<html lang="es" data-tema="oscuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pesquería El Sol · Catálogo y pedidos por WhatsApp — Propuesta LQS</title>
+<meta name="theme-color" content="#03101b">
+<meta name="description" content="Propuesta de LQS para Pesquería El Sol: un catálogo real con precios, unidades y disponibilidad, que arma el pedido y lo manda a WhatsApp en un solo toque.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+<style>
+/* ══════════════════════════════════════════════════════════════════════
+   PROPUESTA · PESQUERÍA EL SOL  ·  LQS
+   Un solo archivo. Cero librerías, cero CDN, cero fuentes remotas.
+   Sistema de formas y esquina ancla: docs/direccion-organica.md §7
+   Voz y paleta: .claude/skills/protocolo-lqs/SKILL.md
+   El universo `flujo` va adaptado a paleta marina; los otros cuatro
+   conservan sus colores de casa.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  --bg:#03101b; --bg2:#071a2a; --bg3:#0c2438;
+  --ink:#eaf4f6; --dim:#9fb4c4; --faint:#7d95a6;
+  --gold:#e6c877; --line:rgba(178,214,232,.13); --line2:rgba(178,214,232,.26);
+  --ok:#4ade80; --warn:#f0b34a; --err:#ff6b6b;
+  --grain:.05; --atm:.26; --cau:.17; --ray:.42; --mota:rgba(200,245,255,.55);
+  --velo:3,16,27;
+
+  --disp:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
+  --sport:'Anton','Arial Narrow',Impact,sans-serif;
+  --edit:'Instrument Serif',Georgia,serif;
+  --tech:'Chakra Petch',ui-monospace,monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+
+  --pad:clamp(20px,5vw,62px);
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --ease-in-out:cubic-bezier(.77,0,.175,1);
+  --dur-fast:160ms; --dur-ui:200ms; --dur-panel:300ms;
+
+  --curva:1; --u1:#2ee0cf; --u2:#3aa6ff; --u3:#7c5cff;
+
+  /* la esquina ancla · cuatro escalas, ancla/menor 2,5:1 (protocolo §2) */
+  --ga:calc(14px + 26px * var(--curva)); --gm:calc(6px + 10px * var(--curva));
+  --ma:calc(9px + 17px * var(--curva));  --mm:calc(3.5px + 6.5px * var(--curva));
+  --ca:calc(6px + 10px * var(--curva));  --cm:calc(2px + 4px * var(--curva));
+}
+/* que --curva se interpole: sin esto una sección se vuelve la siguiente de golpe */
+@property --curva{syntax:'<number>';inherits:true;initial-value:1}
+:root{transition:--curva 900ms var(--ease-out)}
+
+/* los cinco universos. Uno nunca se mezcla con otro dentro del mismo elemento.
+   `flujo` va en clave marina: turquesa, azul de profundidad y violeta de fondo. */
+[data-universo="flujo"]{--curva:1;  --u1:#2ee0cf;--u2:#3aa6ff;--u3:#7c5cff}
+[data-universo="brasa"]{--curva:.82;--u1:#ff8a3d;--u2:#ffd166;--u3:#e0264a}
+[data-universo="trama"]{--curva:.34;--u1:#4ade80;--u2:#2fb8a3;--u3:#0f5132}
+[data-universo="hielo"]{--curva:.20;--u1:#dff6ff;--u2:#5b8def;--u3:#1b3fb8}
+[data-universo="pulso"]{--curva:.64;--u1:#e6c877;--u2:#d98aa6;--u3:#8b5cf6}
+
+/* el mismo mar con la luz encendida: otra paleta, no un filtro */
+:root[data-tema="claro"]{
+  --bg:#eef3f2; --bg2:#f7faf9; --bg3:#e2eae9;
+  --ink:#062030; --dim:#3f5a6b; --faint:#4e6675;
+  --gold:#7d5a0c; --line:rgba(6,32,48,.14); --line2:rgba(6,32,48,.27);
+  /* sobre papel el verde, el ámbar y el rojo de la casa se caen por debajo de
+     4,5:1 — no es el mismo color con menos luz, es otro color */
+  --ok:#0f6340; --warn:#8a5a06; --err:#c02436;
+  --grain:.024; --atm:.16; --cau:.11; --ray:.3; --mota:rgba(16,72,96,.3);
+  --velo:247,250,249;
+}
+:root[data-tema="claro"] .bur.yo{background:color-mix(in srgb,var(--ok) 14%,var(--bg2))}
+/* un color de universo puesto sobre papel es un color distinto: se le mete
+   tinta hasta que el texto se lea, y solo donde el color ES texto */
+:root[data-tema="claro"] .req>b,
+:root[data-tema="claro"] .chat-paso b{color:color-mix(in srgb,var(--u1) 46%,var(--ink))}
+:root[data-tema="claro"] .msj-url b{color:color-mix(in srgb,var(--u1) 42%,var(--ink))}
+:root[data-tema="claro"] .marca i:nth-child(1){color:color-mix(in srgb,var(--u1) 45%,var(--ink))}
+:root[data-tema="claro"] .marca i:nth-child(2){color:color-mix(in srgb,var(--u2) 45%,var(--ink))}
+:root[data-tema="claro"] .marca i:nth-child(3){color:color-mix(in srgb,var(--u3) 45%,var(--ink))}
+:root[data-tema="claro"] .clima{filter:blur(110px) saturate(1.5) brightness(1.5)}
+:root[data-tema="claro"] .clima b{mix-blend-mode:normal}
+:root[data-tema="claro"] .luz .sol{display:block} :root[data-tema="claro"] .luz .luna{display:none}
+/* con la luz encendida el papel y los paneles casi coinciden: el filo de 1px
+   no basta, así que los paneles se despegan con una sombra difusa (nunca dura) */
+:root[data-tema="claro"] .bolsa::before,:root[data-tema="claro"] .fi::before,
+:root[data-tema="claro"] .cesta::before,:root[data-tema="claro"] .tabla-org::before,
+:root[data-tema="claro"] .req::before,:root[data-tema="claro"] .tel{
+  box-shadow:inset 0 0 0 1px rgba(6,32,48,.16),0 12px 28px -20px rgba(6,32,48,.55)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scrollbar-color:var(--line2) var(--bg);scrollbar-width:thin;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background var(--dur-panel) var(--ease-out),color var(--dur-panel) var(--ease-out)}
+a{color:inherit;text-decoration:none}
+svg{display:block} img{max-width:100%}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--gold);color:#04121e}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:5px}
+.n,.pz,.pzs{font-variant-numeric:tabular-nums}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── capa 0 · clima (masas de agua profunda) ────────────────────── */
+.clima{position:fixed;inset:-30vh -22vw;z-index:0;pointer-events:none;filter:blur(96px);opacity:var(--atm);
+  transition:opacity var(--dur-panel) var(--ease-out)}
+.clima b{position:absolute;display:block;border-radius:50%;mix-blend-mode:screen;
+  transition:background 900ms var(--ease-out)}
+.clima b:nth-child(1){width:56vw;height:56vw;background:var(--u1);left:-8vw;top:2vh}
+.clima b:nth-child(2){width:44vw;height:44vw;background:var(--u2);right:-6vw;top:36vh}
+.clima b:nth-child(3){width:38vw;height:38vw;background:var(--u3);left:34vw;top:70vh}
+
+/* ── capa 1 · caustics ──────────────────────────────────────────────
+   El ruido y el recorte en crestas vienen COCIDOS dentro del data-URI:
+   el navegador pinta un mapa de bits estático y solo anima `transform`.
+   Un feTurbulence vivo a pantalla completa costaría un cuadro entero. */
+.caustica{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:var(--cau);
+  transition:opacity var(--dur-panel) var(--ease-out);
+  /* la luz entra por arriba: abajo el agua ya está oscura */
+  -webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 46%,rgba(0,0,0,.16) 82%);
+  mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.5) 46%,rgba(0,0,0,.16) 82%)}
+/* la capa se desborda 900px por lado: al desplazarse una baldosa entera
+   (760px como mucho) nunca queda a la vista el borde del elemento */
+.caustica b{position:absolute;inset:-900px;display:block;mix-blend-mode:screen;background-repeat:repeat;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.62 0 0 0 0 0.93 0 0 0 0 1 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0.14 0.92 0.14 0 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23c)'/%3E%3C/svg%3E")}
+.caustica b:nth-child(1){background-size:520px 520px;opacity:.62;animation:cau1 44s linear infinite}
+.caustica b:nth-child(2){background-size:760px 760px;opacity:.44;animation:cau2 67s linear infinite;filter:blur(2px)}
+@keyframes cau1{to{transform:translate3d(520px,520px,0)}}
+@keyframes cau2{to{transform:translate3d(-760px,760px,0)}}
+:root[data-tema="claro"] .caustica b{mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.3 0 0 0 0 0.38 1 0 0 0 0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0 0.14 0.92 0.14 0 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23c)'/%3E%3C/svg%3E")}
+
+/* ── capa 1b · la luz que cae desde arriba ──────────────────────── */
+.rayos{position:fixed;top:-12vh;left:-30vw;right:-30vw;height:130vh;z-index:1;pointer-events:none;
+  opacity:var(--ray);transform-origin:50% 0;
+  background:repeating-linear-gradient(99deg,transparent 0 46px,rgba(190,240,255,.06) 46px 64px,
+    transparent 64px 96px,rgba(190,240,255,.035) 96px 106px,transparent 106px 150px);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.38) 44%,transparent 80%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.38) 44%,transparent 80%);
+  animation:rayo 30s var(--ease-in-out) infinite alternate}
+@keyframes rayo{to{transform:translate3d(4.5vw,0,0) skewX(-2.6deg)}}
+:root[data-tema="claro"] .rayos{background:repeating-linear-gradient(99deg,transparent 0 46px,
+  rgba(255,252,220,.5) 46px 64px,transparent 64px 96px,rgba(255,252,220,.3) 96px 106px,transparent 106px 150px)}
+
+/* ── capa 2 · motas en suspensión ───────────────────────────────── */
+.motas{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.motas i{position:absolute;bottom:-4vh;display:block;width:var(--s,3px);height:var(--s,3px);border-radius:50%;
+  background:var(--mota);animation:sube var(--t,34s) linear var(--d,0s) infinite}
+@keyframes sube{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  12%{opacity:1} 88%{opacity:1}
+  100%{transform:translate3d(3vw,-112vh,0);opacity:0}}
+
+/* ── capa 4 · grano ─────────────────────────────────────────────── */
+.grano{position:fixed;inset:0;z-index:95;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* la profundidad: se nota, pero no le come contraste al texto */
+.velo{position:fixed;inset:0;z-index:94;pointer-events:none;
+  background:radial-gradient(130% 78% at 50% -14%,rgba(130,225,255,.07),transparent 58%),
+             linear-gradient(180deg,rgba(0,44,74,.10),transparent 26%,rgba(0,18,36,.15))}
+:root[data-tema="claro"] .velo{background:radial-gradient(130% 78% at 50% -14%,rgba(255,250,205,.34),transparent 58%),
+             linear-gradient(180deg,rgba(120,190,205,.10),transparent 30%,rgba(60,110,130,.09))}
+
+/* ── barra ──────────────────────────────────────────────────────── */
+.barra{position:fixed;top:0;left:0;right:0;z-index:70;padding:12px var(--pad)}
+.barra-in{position:relative;max-width:1320px;margin:0 auto;display:flex;align-items:center;
+  justify-content:space-between;gap:14px;padding:10px clamp(16px,3vw,28px)}
+.barra-in::before{content:"";position:absolute;inset:0;z-index:-1;clip-path:url(#f-barra);
+  background:rgba(var(--velo),.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 var(--line)}
+.marca{font-family:var(--disp);font-size:1.45rem;letter-spacing:.05em;line-height:1;font-weight:800;display:flex}
+.marca i{font-style:normal}
+.marca i:nth-child(1){color:var(--u1)} .marca i:nth-child(2){color:var(--u2)} .marca i:nth-child(3){color:var(--u3)}
+.marca em{font-style:normal;font-family:var(--tech);font-size:.62rem;letter-spacing:.17em;color:var(--faint);
+  align-self:center;margin-left:11px;padding-left:11px;border-left:1px solid var(--line);text-transform:uppercase;
+  white-space:nowrap}
+/* a 390px el nombre del cliente parte en dos renglones y descuadra la barra */
+@media(max-width:430px){.marca em{display:none}}
+.enl{display:flex;align-items:center;gap:clamp(10px,1.8vw,22px)}
+.enl a{font-family:var(--tech);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);
+  padding:6px 2px;position:relative;transition:color var(--dur-ui) var(--ease-out)}
+.enl a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1px;background:var(--u1);
+  transition:right var(--dur-ui) var(--ease-out)}
+.enl a.act{color:var(--ink)} .enl a.act::after{right:0}
+.chico-no{display:none}
+@media(min-width:900px){.chico-no{display:inline-block}}
+.luz{width:38px;height:38px;display:grid;place-items:center;border:0;background:transparent;cursor:pointer;
+  color:var(--dim);border-radius:52% 48% 44% 56% / 50% 54% 46% 50%;
+  transition:color var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out)}
+.luz svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.luz .sol{display:none}
+.luz:active{transform:scale(.92)}
+/* en teléfono la barra no cabe: el resto vive en un panel lateral */
+.hamb{display:grid;place-items:center;gap:4px;width:38px;height:38px;padding:0;border:1px solid var(--line2);
+ border-radius:var(--ca) var(--cm) var(--cm) var(--cm);background:none;cursor:pointer}
+.hamb span{display:block;width:16px;height:1.6px;background:var(--ink);border-radius:2px;
+ transition:transform var(--dur-ui) var(--ease-out),opacity var(--dur-ui) var(--ease-out)}
+.hamb[aria-expanded="true"] span:first-child{transform:translateY(3px) rotate(45deg)}
+.hamb[aria-expanded="true"] span:last-child{transform:translateY(-2.6px) rotate(-45deg)}
+@media(min-width:900px){.hamb{display:none}}
+.lat-velo{position:fixed;inset:0;z-index:90;background:rgba(2,10,18,.62);backdrop-filter:blur(4px);
+ opacity:0;transition:opacity var(--dur-panel) var(--ease-out)}
+.lat-velo.on{opacity:1}
+.menu-lat{position:fixed;top:0;right:0;bottom:0;z-index:91;width:min(80vw,300px);
+ padding:88px 24px 32px 46px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;
+ background:var(--bg2);border-left:1px solid var(--line2);
+ clip-path:polygon(11% 0,100% 0,100% 100%,0 100%);
+ transform:translateX(102%);transition:transform 320ms cubic-bezier(.32,.72,0,1)}
+.menu-lat.on{transform:none}
+.menu-lat a{padding:13px 4px;font-family:var(--tech);font-size:.82rem;font-weight:700;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);transition:color var(--dur-fast) ease}
+.menu-lat a:last-child{border-bottom:0}
+.menu-lat a:active{color:var(--ink)}
+@media (hover:hover) and (pointer:fine){.menu-lat a:hover{color:var(--ink)}}
+
+/* ── escenas ────────────────────────────────────────────────────── */
+/* overflow:clip y no hidden — hidden convierte la sección en contenedor de
+   scroll y eso rompe el position:sticky de la cesta. */
+.esc{position:relative;z-index:3;padding:clamp(74px,11vh,148px) var(--pad);overflow:hidden;overflow:clip}
+.marco{position:relative;width:100%;max-width:1320px;margin:0 auto;z-index:3}
+/* el estrato lo recorta el overflow:clip de su sección, y ese recorte se ve
+   como una línea recta entre dos secciones. La máscara lo apaga por su cuenta
+   antes de que el clip llegue a notarse. */
+.estrato{position:absolute;z-index:1;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 76%,transparent);
+  mask-image:linear-gradient(180deg,transparent,#000 20%,#000 76%,transparent)}
+
+/* ── el léxico de formas ────────────────────────────────────────── */
+.guijarro{position:absolute;pointer-events:none;opacity:var(--o,.5);
+  border-radius:
+    calc(50% + 24% * var(--curva)) calc(50% - 24% * var(--curva))
+    calc(50% + 9%  * var(--curva)) calc(50% - 9%  * var(--curva)) /
+    calc(50% + 11% * var(--curva)) calc(50% - 5%  * var(--curva))
+    calc(50% + 5%  * var(--curva)) calc(50% - 11% * var(--curva));
+  animation:respira 15s var(--ease-in-out) infinite alternate}
+@keyframes respira{to{border-radius:
+    calc(50% - 20% * var(--curva)) calc(50% + 20% * var(--curva))
+    calc(50% - 13% * var(--curva)) calc(50% + 13% * var(--curva)) /
+    calc(50% - 8%  * var(--curva)) calc(50% + 14% * var(--curva))
+    calc(50% - 14% * var(--curva)) calc(50% + 8%  * var(--curva))}}
+.astilla{position:absolute;pointer-events:none;opacity:var(--o,.2);clip-path:url(#f-astilla)}
+@media(max-width:760px){
+  .guijarro{opacity:calc(var(--o,.5) * .55)}
+  .astilla{opacity:calc(var(--o,.2) * .6)}
+}
+
+/* Cuña: la máscara va en una capa de fondo, jamás sobre el texto */
+.cuna{position:relative;padding:clamp(26px,4.4vw,46px) clamp(30px,6vw,64px) clamp(32px,5vw,52px) clamp(24px,3.6vw,42px)}
+.cuna::before{content:"";position:absolute;inset:0;z-index:-1;clip-path:url(#f-cuna);
+  background:linear-gradient(148deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 58%),var(--bg2)}
+.cuna::after{content:"";position:absolute;inset:-1.4px;z-index:-2;clip-path:url(#f-cuna);
+  background:linear-gradient(148deg,color-mix(in srgb,var(--u1) 46%,transparent),transparent 62%)}
+:root[data-tema="claro"] .cuna::before{background:linear-gradient(148deg,rgba(255,255,255,.94),rgba(255,255,255,.55) 58%),var(--bg2)}
+
+/* Bolsa: contenedor de propósito general, con esquina ancla rotando */
+.bolsa{position:relative;padding:clamp(22px,3vw,32px) clamp(20px,2.8vw,30px) clamp(26px,3.2vw,34px)}
+.bolsa::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(152deg,rgba(255,255,255,.07),rgba(255,255,255,.014) 60%),var(--bg2);
+  box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--ga) var(--gm) var(--gm) var(--gm);
+  transition:border-radius 560ms var(--ease-out),background var(--dur-panel) var(--ease-out)}
+.bolsa:nth-child(4n+2)::before{border-radius:var(--gm) var(--ga) var(--gm) var(--gm)}
+.bolsa:nth-child(4n+3)::before{border-radius:var(--gm) var(--gm) var(--ga) var(--gm)}
+.bolsa:nth-child(4n)::before{border-radius:var(--gm) var(--gm) var(--gm) var(--ga)}
+:root[data-tema="claro"] .bolsa::before{background:linear-gradient(152deg,rgba(255,255,255,.94),rgba(255,255,255,.55) 60%),var(--bg2)}
+
+/* ── tipografía ─────────────────────────────────────────────────── */
+.tit{font-family:var(--disp);font-weight:800;line-height:.96;letter-spacing:-.028em;
+  font-variation-settings:'opsz' 40,'wdth' calc(80 + var(--p,1) * 20),'wght' calc(580 + var(--p,1) * 220)}
+.tit em{font-family:var(--edit);font-style:italic;font-weight:400;letter-spacing:-.01em;
+  line-height:1.1;padding-bottom:.06em;display:inline-block}
+.h1{font-size:clamp(2.3rem,5.6vw,4.4rem);max-width:14em}
+.h2{font-size:clamp(1.95rem,4.4vw,3.3rem);max-width:16em}
+.h3{font-size:clamp(1.32rem,2.4vw,1.95rem);line-height:1.04}
+.h4{font-family:var(--disp);font-weight:800;font-size:clamp(1.02rem,1.5vw,1.2rem);line-height:1.16;letter-spacing:-.015em}
+.cuerpo{color:var(--dim);font-size:clamp(1rem,1.2vw,1.1rem);max-width:56ch}
+.chico{color:var(--dim);font-size:.95rem;max-width:52ch}
+.mini{color:var(--faint);font-size:.83rem;line-height:1.65;max-width:74ch}
+.dato{font-family:var(--tech);font-size:.72rem;letter-spacing:.19em;text-transform:uppercase;color:var(--gold)}
+.pz{font-family:var(--sport);font-size:clamp(2.1rem,4.4vw,3.4rem);line-height:1;letter-spacing:.01em}
+.pzs{font-family:var(--sport);font-size:clamp(1.5rem,2.4vw,2rem);line-height:1}
+mark{background:none;color:var(--ink);font-weight:700}
+.res{color:var(--ink);font-weight:700}
+
+/* ── botón ──────────────────────────────────────────────────────── */
+.bot{display:inline-flex;align-items:center;gap:11px;padding:15px 28px 16px;background:var(--ink);color:var(--bg);
+  font-family:var(--tech);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  border:0;cursor:pointer;border-radius:30px 20px 26px 16px;
+  transition:border-radius 520ms var(--ease-out),transform var(--dur-ui) var(--ease-out),
+             background var(--dur-ui) var(--ease-out),color var(--dur-ui) var(--ease-out),opacity var(--dur-ui) var(--ease-out)}
+.bot svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform var(--dur-ui) var(--ease-out)}
+.bot.hueca{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line2)}
+.bot.wa{background:#25d366;color:#03210f}
+.bot.wa svg{stroke-width:1.9}
+.bot:active{transform:scale(.965)}
+.bot[aria-disabled="true"]{opacity:.42;pointer-events:none}
+.bots{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(26px,3.4vw,38px)}
+
+/* ── listas ─────────────────────────────────────────────────────── */
+.lista{list-style:none;display:grid;gap:11px}
+.lista li{display:flex;gap:12px;align-items:flex-start;color:var(--dim);font-size:.95rem}
+.lista i{flex:0 0 auto;width:10px;height:10px;margin-top:7px;background:var(--u1);
+  border-radius:60% 40% 52% 48% / 55% 50% 50% 45%}
+.lista.no i{background:var(--faint)}
+.lista.si i{background:var(--ok)}
+
+/* ── tablas ─────────────────────────────────────────────────────── */
+.tabla-org{position:relative;padding:clamp(16px,2.4vw,26px) clamp(4px,1.4vw,20px);overflow:hidden;
+  border-radius:var(--ga) var(--gm) var(--gm) var(--gm)}
+.tabla-org::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line)}
+.tabla-sc{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:.9rem}
+th{text-align:left;font-family:var(--tech);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);font-weight:600;padding:0 14px 12px;white-space:nowrap;vertical-align:bottom}
+td{padding:13px 14px;color:var(--dim);border-top:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600}
+td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+th.n{text-align:right}
+tr.dest td{background:color-mix(in srgb,var(--u1) 9%,transparent)}
+tr.dest td:first-child{color:var(--ink)}
+.pista{display:none;font-family:var(--tech);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin-top:12px;align-items:center;gap:9px}
+.pista svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:900px){.pista{display:flex}}
+
+/* ── suelo de ancho de los items de rejilla ──────────────────────
+   Un item de grid tiene min-width:auto = el min-content de lo que lleva
+   dentro. Una tira que se desplaza sola mide en min-content lo que mide
+   entera y revienta la columna hacia afuera. Con min-width:0 la columna
+   puede encogerse y el desplazamiento queda donde debe estar. */
+.port-red>*,.edi-red>*,.no-red>*,.escalera>*,.tienda>*,.chat-red>*,.msj-red>*,
+.precio-red>*,.reqs>*,.fotos-red>*,.fila-l>*,.cesta>*,.fi>*,
+.tabla-org,.tabla-sc,.cats,.cesta-l{min-width:0}
+
+/* ── coreografía de entrada · el estado por defecto es el VISIBLE ─ */
+[data-rev]{opacity:calc(.12 + var(--p,1) * .88);
+  transform:translate3d(0,calc((1 - var(--p,1)) * 40px),0) scale(calc(.976 + var(--p,1) * .024));
+  transform-origin:50% 70%}
+[data-rev="lat"]{transform:translate3d(calc((1 - var(--p,1)) * -34px),0,0)}
+[data-vel]{will-change:transform}
+
+@media (hover:hover) and (pointer:fine){
+  .enl a:hover{color:var(--ink)} .enl a:hover::after{right:0}
+  .bot:hover{border-radius:18px 30px 16px 28px;transform:translateY(-2px)}
+  .bot:hover svg{transform:translateX(4px)}
+  .bot.hueca:hover{background:color-mix(in srgb,var(--ink) 7%,transparent)}
+  .luz:hover{color:var(--gold);background:color-mix(in srgb,var(--ink) 8%,transparent)}
+}
+@media (prefers-reduced-motion:reduce){
+  /* la media query no suma especificidad: para apagar `.caustica b:nth-child(1)`
+     hay que igualarle el selector, no basta con `.caustica b` */
+  .guijarro,.rayos,.motas i,
+  .caustica b:nth-child(1),.caustica b:nth-child(2){animation:none}
+  [data-rev]{transform:none;opacity:1}
+  :root{transition:none}
+  html{scroll-behavior:auto}
+  .menu-lat,.lat-velo,.hamb span{transition-duration:1ms}
+}
+</style>
+<style>
+/* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
+
+/* ── portada ────────────────────────────────────────────────────── */
+.portada{min-height:100svh;display:flex;align-items:center;padding-top:clamp(112px,15vh,170px)}
+.port-red{display:grid;gap:clamp(38px,5vw,56px);grid-template-columns:1fr}
+@media(min-width:960px){.port-red{grid-template-columns:7fr 5fr;align-items:center;gap:clamp(28px,4vw,60px)}}
+.port-ficha{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:clamp(28px,3.4vw,40px);padding-top:20px;position:relative}
+.port-ficha::before{content:"";position:absolute;top:0;left:0;width:min(100%,420px);height:1px;
+  background:linear-gradient(90deg,var(--line2),transparent)}
+.port-ficha div{min-width:118px}
+.port-ficha dt{font-family:var(--tech);font-size:.66rem;letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
+.port-ficha dd{font-family:var(--disp);font-weight:700;font-size:1.02rem;margin-top:2px}
+.pac1{right:7%;top:15%;width:9vw;height:9vw;max-width:112px;max-height:112px;background:var(--u1);--o:.3;z-index:1}
+.pac2{right:23%;top:31%;width:4.4vw;height:4.4vw;max-width:54px;max-height:54px;background:var(--u2);--o:.4;z-index:1}
+.pac3{left:-9vw;bottom:8%;width:30vw;height:20vw;background:var(--u2);--o:.16;z-index:1}
+@media(max-width:959px){
+  .pac1{right:5%;top:auto;bottom:5%;width:80px;height:80px;--o:.24}
+  .pac2{display:none}
+  .pac3{left:-26vw;bottom:auto;top:72%;width:60vw;height:34vw;--o:.13}
+}
+/* el cardumen de portada: dibujo, no hueco de foto */
+.cardumen{position:relative;width:100%;max-width:440px;margin-inline:auto;aspect-ratio:1/1}
+.cardumen svg{width:100%;height:auto}
+.cd-agua{fill:none;stroke:color-mix(in srgb,var(--u2) 40%,transparent);stroke-width:1.1}
+.cd-pez{fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cd-glow{fill:url(#g-hondo)}
+.cd-nada{animation:nada 9s var(--ease-in-out) infinite alternate}
+.cd-nada2{animation:nada 11s var(--ease-in-out) .8s infinite alternate}
+.cd-nada3{animation:nada 13s var(--ease-in-out) 1.6s infinite alternate}
+@keyframes nada{to{transform:translate(9px,-7px)}}
+@media(prefers-reduced-motion:reduce){.cd-nada,.cd-nada2,.cd-nada3{animation:none}}
+
+/* ── editorial ──────────────────────────────────────────────────── */
+.edi-red{display:grid;gap:clamp(30px,4vw,56px);grid-template-columns:1fr}
+@media(min-width:960px){.edi-red{grid-template-columns:3.4fr 8.6fr;gap:clamp(26px,4vw,64px);align-items:start}}
+.edi-lat dl{display:grid;gap:20px;margin-top:22px}
+.edi-lat dt{font-family:var(--tech);font-size:.68rem;letter-spacing:.17em;text-transform:uppercase;color:var(--faint)}
+.edi-lat dd{font-family:var(--disp);font-size:1.2rem;font-weight:700;line-height:1.2;margin-top:3px}
+.edi-cue{max-width:66ch}
+.edi-cue p{margin-top:20px;color:var(--dim);font-size:clamp(1rem,1.18vw,1.08rem)}
+.quiebre{font-family:var(--edit);font-style:italic;font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1.18;
+  color:var(--ink);margin:clamp(30px,4vw,48px) 0 clamp(26px,3.4vw,40px);padding-bottom:.1em;max-width:22ch}
+
+/* ── el chat de hoy: doce reenvíos y una lista pegada ───────────── */
+.chat-red{display:grid;gap:clamp(26px,3.6vw,48px);grid-template-columns:1fr;margin-top:clamp(38px,5vw,58px)}
+@media(min-width:920px){.chat-red{grid-template-columns:340px 1fr;align-items:start}}
+.tel{position:relative;width:100%;max-width:340px;margin-inline:auto;padding:14px 10px 16px;
+  border-radius:38px;background:var(--bg3);box-shadow:inset 0 0 0 1px var(--line2)}
+.tel-top{display:flex;align-items:center;gap:10px;padding:2px 10px 12px;border-bottom:1px solid var(--line)}
+.tel-av{width:32px;height:32px;flex:none;border-radius:54% 46% 50% 50% / 48% 52% 48% 52%;
+  background:linear-gradient(140deg,var(--u1),var(--u3));display:grid;place-items:center;
+  font-family:var(--disp);font-weight:800;font-size:.74rem;color:#04121e}
+.tel-top b{font-size:.88rem;display:block;line-height:1.25}
+.tel-top span{font-family:var(--tech);font-size:.62rem;letter-spacing:.1em;color:var(--faint)}
+.tel-log{height:440px;overflow-y:auto;padding:14px 8px 10px;display:flex;flex-direction:column;gap:9px}
+.bur{max-width:88%;padding:9px 12px 10px;font-size:.85rem;line-height:1.45;
+  border-radius:16px 16px 16px 5px;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line)}
+.bur.yo{align-self:flex-end;border-radius:16px 16px 5px 16px;
+  background:color-mix(in srgb,var(--ok) 20%,var(--bg2));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ok) 32%,transparent)}
+.bur small{display:block;font-family:var(--tech);font-size:.58rem;letter-spacing:.1em;color:var(--faint);margin-top:5px}
+/* sobre la burbuja verde el gris tenue se cae: ahí la marca de tiempo sube un peldaño */
+.bur.yo small{color:var(--dim)}
+.bur pre{font-family:inherit;font-size:.8rem;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--dim)}
+/* los doce collages reenviados, dibujados: marcos disparejos y marca de agua ajena */
+.collages{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:100%}
+.cg{position:relative;aspect-ratio:1;border-radius:4px;overflow:hidden;border:3px solid var(--cgc,#888);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--cgc,#888) 26%,var(--bg3)),var(--bg3) 72%)}
+.cg svg{position:absolute;inset:0;width:100%;height:100%}
+.cg .cg-p{fill:none;stroke:color-mix(in srgb,var(--cgc,#888) 78%,var(--ink));stroke-width:2.4;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.cg .cg-w{fill:color-mix(in srgb,var(--ink) 62%,transparent);font-family:var(--tech);font-size:9px;
+  font-weight:700;letter-spacing:.06em}
+.cg-nota{font-family:var(--tech);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--warn);
+  margin-top:8px;display:block}
+.chat-pasos{display:grid;gap:16px;margin-top:clamp(22px,2.8vw,30px)}
+.chat-paso{display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start}
+.chat-paso b{font-family:var(--sport);font-size:1.2rem;line-height:1.1;min-width:24px;
+  color:color-mix(in srgb,var(--u1) 78%,var(--ink))}
+.chat-paso p{color:var(--dim);font-size:.93rem}
+.chat-paso p strong{color:var(--ink);font-weight:700}
+
+/* ── el catálogo en vivo ────────────────────────────────────────── */
+.tienda{position:relative;margin-top:clamp(34px,4.4vw,52px);display:grid;gap:clamp(20px,2.6vw,30px);grid-template-columns:1fr}
+@media(min-width:1020px){.tienda{grid-template-columns:1fr 372px;align-items:start}}
+.cats{display:flex;gap:9px;overflow-x:auto;padding:4px 2px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.cat{flex:0 0 auto;padding:9px 18px;background:transparent;border:0;cursor:pointer;white-space:nowrap;
+  font-family:var(--tech);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;color:var(--dim);
+  box-shadow:inset 0 0 0 1px var(--line);border-radius:52% 48% 46% 54% / 50% 52% 48% 50%;
+  transition:color var(--dur-ui) var(--ease-out),box-shadow var(--dur-ui) var(--ease-out),
+             background var(--dur-ui) var(--ease-out),border-radius 500ms var(--ease-out)}
+.cat[aria-selected="true"]{color:var(--bg);background:var(--ink);box-shadow:none;
+  border-radius:44% 56% 52% 48% / 54% 46% 54% 46%}
+.cat:active{transform:scale(.96)}
+.fila-l{display:grid;gap:clamp(11px,1.5vw,15px)}
+/* la ficha de producto · la esquina ancla rota con la posición */
+.fi{position:relative;display:grid;grid-template-columns:56px 1fr;gap:12px 14px;align-items:center;
+  padding:clamp(13px,1.8vw,17px) clamp(14px,2vw,20px)}
+@media(min-width:600px){.fi{grid-template-columns:74px 1fr auto auto;gap:18px}}
+.fi::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--ma) var(--mm) var(--mm) var(--mm);
+  transition:box-shadow var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out),
+             border-radius 500ms var(--ease-out)}
+.fi:nth-child(4n+2)::before{border-radius:var(--mm) var(--ma) var(--mm) var(--mm)}
+.fi:nth-child(4n+3)::before{border-radius:var(--mm) var(--mm) var(--ma) var(--mm)}
+.fi:nth-child(4n)::before{border-radius:var(--mm) var(--mm) var(--mm) var(--ma)}
+.fi.viva::before{background:color-mix(in srgb,var(--ac) 12%,var(--bg2));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 52%,transparent)}
+.fi.ago{opacity:.62}
+/* la ilustración: dibujo de línea sobre agua tintada. Nunca un rectángulo gris. */
+.dib{width:56px;height:56px;display:grid;place-items:center;position:relative;overflow:hidden;
+  border-radius:58% 42% 46% 54% / 50% 56% 44% 50%;
+  background:linear-gradient(152deg,color-mix(in srgb,var(--ac) 30%,transparent),color-mix(in srgb,var(--ac) 7%,transparent) 70%),var(--bg3)}
+@media(min-width:600px){.dib{width:74px;height:74px}}
+.dib svg{width:78%;height:auto;fill:none;stroke:color-mix(in srgb,var(--ac) 88%,var(--ink));
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fi-t h3{font-family:var(--disp);font-weight:800;font-size:1.03rem;line-height:1.2;letter-spacing:-.012em}
+.fi-t p{color:var(--dim);font-size:.84rem;margin-top:3px;line-height:1.5}
+.st{display:inline-flex;align-items:center;gap:5px;font-family:var(--tech);font-size:.58rem;letter-spacing:.11em;
+  text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-top:7px;
+  color:var(--ok);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ok) 40%,transparent)}
+.st.promo{color:var(--gold);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 46%,transparent)}
+.st.ago{color:var(--err);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--err) 42%,transparent)}
+.fi-pz{font-family:var(--sport);font-size:1.28rem;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fi-pz em{display:block;font-style:normal;font-family:var(--tech);font-size:.62rem;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint);margin-top:5px}
+/* en teléfono el precio y el contador comparten el renglón bajo el nombre */
+.fi-lado{grid-column:2;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:4px}
+@media(min-width:600px){.fi-lado{grid-column:auto;margin-top:0;display:contents}}
+.cont{display:inline-flex;align-items:center;gap:4px;padding:4px;
+  border-radius:var(--ca) var(--cm) var(--ca) var(--cm);box-shadow:inset 0 0 0 1px var(--line2)}
+.cont button{width:32px;height:32px;display:grid;place-items:center;border:0;cursor:pointer;background:transparent;
+  color:var(--dim);border-radius:50%;
+  transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.cont button svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.cont button:active{transform:scale(.88)}
+.cont button[disabled]{opacity:.3;cursor:default}
+.cont output{font-family:var(--tech);font-size:.86rem;font-weight:700;min-width:5.4ch;text-align:center;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.cont.viva{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 60%,transparent);
+  background:color-mix(in srgb,var(--ac) 10%,transparent)}
+@media (hover:hover) and (pointer:fine){
+  .cont button:hover:not([disabled]){background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink)}
+}
+.tienda-nota{margin-top:clamp(18px,2.4vw,24px)}
+/* el interruptor del demo de agotado */
+.demo-sw{display:inline-flex;align-items:center;gap:11px;margin-top:16px;padding:10px 16px 11px;cursor:pointer;
+  font-size:.85rem;color:var(--dim);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--cm) var(--ca) var(--cm) var(--cm)}
+.demo-sw input{position:absolute;opacity:0;width:0;height:0}
+.demo-sw i{width:34px;height:19px;flex:none;border-radius:999px;background:var(--bg3);position:relative;
+  box-shadow:inset 0 0 0 1px var(--line2);transition:background var(--dur-ui) var(--ease-out)}
+.demo-sw i::after{content:"";position:absolute;top:3px;left:3px;width:13px;height:13px;border-radius:50%;
+  background:var(--faint);transition:transform var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out)}
+.demo-sw.on{color:var(--ink)}
+.demo-sw.on i{background:color-mix(in srgb,var(--err) 32%,transparent)}
+.demo-sw.on i::after{transform:translateX(15px);background:var(--err)}
+
+/* ── la cesta ───────────────────────────────────────────────────── */
+.cesta{position:relative;padding:clamp(22px,2.6vw,28px) clamp(20px,2.4vw,26px) clamp(24px,2.8vw,30px)}
+.cesta::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--gm) var(--ga) var(--gm) var(--gm);transition:border-radius 560ms var(--ease-out)}
+@media(min-width:1020px){.cesta{position:sticky;top:96px}}
+.cesta-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:15px}
+.cesta-t h3{font-family:var(--disp);font-weight:800;font-size:1.14rem}
+.cesta-n{font-family:var(--tech);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.cesta-l{display:grid;gap:11px;max-height:min(44vh,340px);overflow-y:auto;padding-right:4px}
+.cl{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.cl:last-child{border-bottom:0;padding-bottom:0}
+.cl b{font-weight:700;font-size:.92rem;line-height:1.3}
+/* `.cl .n` gana en especificidad pero no declara grid-column, así que sin el
+   :not() el precio se iría al renglón del detalle */
+.cl span:not(.n){font-size:.78rem;color:var(--faint);grid-column:1/2}
+.cl .n{grid-column:2/3;grid-row:1;font-family:var(--tech);font-size:.9rem;
+  font-variant-numeric:tabular-nums;white-space:nowrap;align-self:start}
+.cesta-vac{color:var(--faint);font-size:.9rem;padding:16px 0;text-align:center;line-height:1.6}
+.sumas{margin-top:16px;padding-top:15px;border-top:1px solid var(--line);display:grid;gap:9px}
+.sumas[hidden]{display:none}   /* display:grid le gana al [hidden] del navegador */
+.sm{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--dim)}
+.sm.tot{font-size:1.06rem;color:var(--ink);font-weight:700;padding-top:9px;border-top:1px solid var(--line)}
+.sm .n{font-variant-numeric:tabular-nums;font-family:var(--tech)}
+.cesta .bot{width:100%;justify-content:center;margin-top:16px}
+.cesta-pie{margin-top:12px;font-size:.78rem;color:var(--faint);line-height:1.55;text-align:center}
+.limpiar{display:block;margin:10px auto 0;background:none;border:0;cursor:pointer;font-family:var(--tech);
+  font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding:6px 10px;
+  transition:color var(--dur-ui) var(--ease-out)}
+.limpiar:active{opacity:.6}
+@media (hover:hover) and (pointer:fine){.limpiar:hover{color:var(--ink)}}
+
+/* ── el mensaje que le llega ────────────────────────────────────── */
+.msj-red{display:grid;gap:clamp(28px,3.8vw,52px);grid-template-columns:1fr;margin-top:clamp(36px,4.6vw,54px)}
+@media(min-width:920px){.msj-red{grid-template-columns:1fr 340px;align-items:start}}
+.msj-caja{position:relative;padding:clamp(20px,2.6vw,28px) clamp(18px,2.4vw,26px)}
+.msj-caja::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--gm) var(--gm) var(--gm) var(--ga)}
+.msj-caja h4{margin-bottom:12px}
+.msj-txt{font-family:var(--tech);font-size:.86rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;
+  color:var(--dim);padding:16px 18px;border-radius:var(--ca) var(--cm) var(--cm) var(--cm);
+  background:rgba(var(--velo),.55);box-shadow:inset 0 0 0 1px var(--line);min-height:180px}
+.msj-txt b{color:var(--ink);font-weight:700}
+.msj-url{margin-top:14px;font-family:var(--tech);font-size:.72rem;line-height:1.6;color:var(--faint);
+  word-break:break-all;padding:12px 14px;border-radius:var(--cm) var(--cm) var(--ca) var(--cm);
+  box-shadow:inset 0 0 0 1px var(--line)}
+.msj-url b{color:var(--u1);font-weight:700}
+.msj-tel .tel-log{height:380px}
+.msj-tel .bur{max-width:92%}
+
+/* ── las fotos ──────────────────────────────────────────────────── */
+.fotos-red{display:grid;gap:clamp(22px,3vw,38px);grid-template-columns:1fr;margin-top:clamp(34px,4.4vw,52px)}
+@media(min-width:820px){.fotos-red{grid-template-columns:1fr 1fr}}
+.fcaja{position:relative;padding:clamp(20px,2.6vw,28px) clamp(18px,2.4vw,26px) clamp(24px,3vw,30px)}
+.fcaja::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--ga) var(--gm) var(--gm) var(--gm)}
+.fcaja:nth-child(2)::before{border-radius:var(--gm) var(--ga) var(--gm) var(--gm)}
+.fcaja h4{margin-bottom:9px}
+.fcaja>p{color:var(--dim);font-size:.92rem}
+.fmuestra{aspect-ratio:16/10;margin-bottom:18px;border-radius:var(--ca) var(--cm) var(--ca) var(--cm);overflow:hidden;
+  position:relative;background:linear-gradient(155deg,var(--bg3),var(--bg2) 72%)}
+.fmuestra svg{width:100%;height:100%}
+.fm-mala{border:3px solid #d84a8a}
+.fm-mala .fm-w{fill:color-mix(in srgb,var(--ink) 55%,transparent);font-family:var(--tech);font-size:15px;
+  font-weight:700;letter-spacing:.1em}
+.fm-l{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── precio ─────────────────────────────────────────────────────── */
+.precio-red{display:grid;gap:clamp(28px,4vw,52px);grid-template-columns:1fr;margin-top:clamp(34px,4.4vw,52px)}
+@media(min-width:980px){.precio-red{grid-template-columns:6.2fr 5.8fr;align-items:start;gap:clamp(24px,3.4vw,52px)}}
+.precio-big{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:16px}
+.precio-big small{font-family:var(--tech);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.desglose{margin-top:20px}
+.desglose .sm{padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.desglose .sm:last-child{border-bottom:0}
+.desglose .sm b{color:var(--ink);font-weight:600}
+.gratis{margin-top:20px;padding:16px 18px;border-radius:var(--cm) var(--ca) var(--cm) var(--cm);
+  background:color-mix(in srgb,var(--ok) 11%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ok) 32%,transparent)}
+/* solo el rótulo del bloque, no cualquier <b> que caiga dentro del párrafo */
+.gratis>b{display:block;font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ok);margin-bottom:7px}
+.gratis p{font-size:.9rem;color:var(--dim);line-height:1.62}
+.no-red{display:grid;gap:clamp(24px,3.4vw,46px);grid-template-columns:1fr;margin-top:clamp(30px,4vw,46px)}
+@media(min-width:900px){.no-red{grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,58px)}}
+
+/* ── tu parte ───────────────────────────────────────────────────── */
+.reqs{display:grid;gap:clamp(14px,1.8vw,20px);margin-top:clamp(34px,4.4vw,52px)}
+@media(min-width:780px){.reqs{grid-template-columns:repeat(3,1fr)}}
+.req{position:relative;display:grid;grid-template-columns:auto 1fr;gap:15px;padding:clamp(18px,2.2vw,24px)}
+.req::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bg2);box-shadow:inset 0 0 0 1px var(--line);
+  border-radius:var(--ma) var(--mm) var(--mm) var(--mm)}
+.req:nth-child(4n+2)::before{border-radius:var(--mm) var(--ma) var(--mm) var(--mm)}
+.req:nth-child(4n+3)::before{border-radius:var(--mm) var(--mm) var(--ma) var(--mm)}
+.req>b{font-family:var(--sport);font-size:1.3rem;line-height:1;color:color-mix(in srgb,var(--u1) 76%,var(--ink))}
+.req h4{margin-bottom:6px}
+.req p{color:var(--dim);font-size:.9rem}
+
+/* ── cierre ─────────────────────────────────────────────────────── */
+.cierre{min-height:82svh;display:flex;align-items:center}
+.firma{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:center;justify-content:space-between;
+  margin-top:clamp(50px,7vw,88px);padding-top:24px;position:relative}
+.firma::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line2) 16%,var(--line2) 84%,transparent)}
+.firma span{font-family:var(--tech);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+/* el camino de vuelta. target="_top" para que, cuando la propuesta va dentro
+   del visor de index.html, el clic saque al visitante del iframe. */
+.firma a.volver{font-family:var(--tech);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid transparent;padding-bottom:2px;
+  transition:color var(--dur-ui) ease,border-color var(--dur-ui) ease}
+@media (hover:hover) and (pointer:fine){.firma a.volver:hover{color:var(--ink);border-bottom-color:var(--line2)}}
+.firma a.volver:active{opacity:.66}
+</style>
+</head>
+<body>
+
+<!-- ═══ el léxico de formas y los dibujos de producto.
+     objectBoundingBox: el trazo vive entre 0 y 1 y el navegador lo estira ═══ -->
+<svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <clipPath id="f-cuna" clipPathUnits="objectBoundingBox">
+      <path d="M0 .06C.3 0 .62 .02 .82 .07C.96 .1 1 .22 .99 .4C.98 .62 .94 .83 .86 .94C.77 1 .3 1 .12 .98C.02 .96 0 .88 0 .76Z"/>
+    </clipPath>
+    <clipPath id="f-astilla" clipPathUnits="objectBoundingBox">
+      <path d="M.02 .4C.2 .12 .58 0 .92 .04C.99 .05 1 .12 .95 .15C.62 .13 .28 .26 .13 .48C.07 .58 .11 .76 .21 .88C.24 .93 .17 .97 .12 .92C0 .78 0 .56 .02 .4Z"/>
+    </clipPath>
+    <clipPath id="f-barra" clipPathUnits="objectBoundingBox">
+      <path d="M.03 .05C.05 0 .13 .02 .31 .015C.56 .008 .86 0 .95 .025C.99 .06 1 .3 .998 .55C.996 .8 .987 .95 .958 .988C.79 1 .4 1 .18 .994C.058 .988 .012 .9 .006 .64C0 .38 .013 .12 .03 .05Z"/>
+    </clipPath>
+
+    <!-- los ocho dibujos. Trazo, no relleno: pesan bytes, no kilobytes -->
+    <symbol id="s-pez" viewBox="0 0 64 40">
+      <path d="M4 8 14.5 20 4 32Z"/>
+      <path d="M13 20C18 8 34 5 46 10c8 3 13 7 14 10-1 3-6 7-14 10-12 5-28 2-33-10Z"/>
+      <path d="M24 8.6C28 2 36 2 39 6"/><path d="M28 31.6C30 37 35 37 37.5 34"/>
+      <path d="M44 12c-3 4-3 12 0 16"/><path d="M20 20c10-2 22-2 32-1"/>
+      <circle cx="51" cy="16.6" r="1.4"/>
+    </symbol>
+    <symbol id="s-filete" viewBox="0 0 64 40">
+      <path d="M6 26C10 14 22 8 36 8c12 0 22 5 24 12-2 8-14 13-28 13-14 0-23-2-26-7Z"/>
+      <path d="M13 25c8-5 20-9.5 33-11"/><path d="M17 29c8-5 19-9 32-10.5"/><path d="M23 31.5c8-5 18-8 31-9.5"/>
+    </symbol>
+    <symbol id="s-camaron" viewBox="0 0 64 40">
+      <path d="M16 10C30 5 46 12 50 22c3 9-4 13-12 12-7-1-12-5-15-10 4 4 9 7 14 6 5-1 7-4 6-8-4-7-15-11-27-12Z"/>
+      <path d="M25 7.6c1.5 2.4 2.4 4.4 2.6 6.4M32 8.6c1.6 2.4 2.6 4.8 2.8 7M39 12c1.4 2 2.2 4 2.2 6.4"/>
+      <path d="M16 10 9 3M16 10 6 7M16 10l-9 3M9 3C6 6 5.5 10 7 13"/>
+      <path d="M29 29.5 27.5 34.5M33 31l-1 5M37 31.4v5"/>
+      <path d="M38 34c8 2 16 3 24 2M38 34c3 2.5 5 4 6 5.5"/>
+      <circle cx="39" cy="29.6" r="1.1"/>
+    </symbol>
+    <symbol id="s-langostino" viewBox="0 0 64 40">
+      <path d="M9 17C18 9 36 8 48 14c7 3.5 12 8 14 13-5 3-13 3-22 0C28 24 15 22 9 17Z"/>
+      <path d="M9 17 4 13M9 17H3M9 17l-5 4M4 13c-2 2-2 6 0 8"/>
+      <path d="M19 10.6c.6 2.4 1.2 4 2 5.4M26 9.6c.6 2.4 1.2 4.2 2 5.6M33 10c.6 2.4 1.4 4.2 2.2 5.8M40 11.4c.8 2.4 1.6 4 2.4 5.6"/>
+      <path d="M60 25c2-.5 3.4-1.6 4-3"/>
+      <path d="M59 27.5c0 5-2.4 8.6-6.4 11M57 28c-2 4.4-6 7.4-11 9.4"/>
+      <path d="m20 20.6-1.6 5m8-3-1.6 5m7.6-3.6-1.4 5m7.4-3.4-1.2 5"/>
+      <circle cx="53" cy="21" r="1.1"/>
+    </symbol>
+    <symbol id="s-bagre" viewBox="0 0 64 40">
+      <path d="M3 11 12 20 3 29Z"/>
+      <path d="M11 20C16 12 27 9 38 12c8 2 14 5 16 8-2 3-8 6-16 8-11 3-22-1-27-8Z"/>
+      <path d="M24 10.5C27 5 33 5 36 8.5"/><path d="M26 30C28 34 33 34 35 31"/>
+      <path d="M53 18c3-2 5-4.4 5.6-7.4M54.2 19.6c3.2-1 5.8-2.4 7.8-4.2"/>
+      <path d="M53.6 22.8c2.6 2.4 4.2 5.4 4.6 8.6M52.6 23.8c1.8 3 2.6 6.2 2.4 9.4"/>
+      <path d="M18 21c9-2 20-2 29-1"/>
+      <circle cx="46.5" cy="17" r="1.3"/>
+    </symbol>
+    <symbol id="s-trucha" viewBox="0 0 64 40">
+      <path d="M4 12c3 4 3 12 0 16l9-8Z"/>
+      <path d="M12 20C17 13 30 9 42 12c9 2 16 5 19 8-3 3-10 6-19 8-12 3-25-1-30-8Z"/>
+      <path d="M29 10.5C32 6 37 6 39 9"/><path d="M20 13.5C22 10 25 10 26 12.5"/>
+      <path d="M30 30C31 34 35 34 37 32"/>
+      <circle cx="28" cy="17" r="1"/><circle cx="34" cy="20.5" r="1"/><circle cx="40" cy="17.5" r="1"/>
+      <circle cx="31" cy="24" r="1"/><circle cx="38" cy="24.5" r="1"/>
+      <circle cx="53" cy="17.5" r="1.2"/>
+    </symbol>
+    <symbol id="s-atun" viewBox="0 0 64 40">
+      <path d="M3 9c5 5 5 17 0 22 5-3 8-7 9-11-1-4-4-8-9-11Z"/>
+      <path d="M12 20C18 12 30 8 42 10c10 2 17 6 19 10-2 4-9 8-19 10-12 2-24-2-30-10Z"/>
+      <path d="M29 8.6C32 3 38 4 39.5 8"/><path d="M22 12.6C24 10 26 10.4 27 12"/>
+      <path d="M28 31c2 4 7 3 8 0"/>
+      <path d="M45 21.6c4 3.4 6 6.4 5 9"/><path d="M49 12.8c-3 3.2-3 11.2 0 14.4"/>
+      <circle cx="54" cy="17.5" r="1.3"/>
+    </symbol>
+    <symbol id="s-salmon" viewBox="0 0 64 40">
+      <path d="M4 12 13 20 4 28Z"/>
+      <path d="M12 20C17 13 29 9 41 11c10 2 17 5 20 8-3 4-10 7-20 9-12 2-24-1-29-8Z"/>
+      <path d="M28 10C31 5 36 6 38 9"/><path d="M20 13C22 10 24 10 25 12"/>
+      <path d="M30 30c1 4 5 4 7 1"/>
+      <path d="M18 20c12-2 26-2 37-1"/>
+      <circle cx="53" cy="17" r="1.2"/>
+    </symbol>
+    <symbol id="s-mixtura" viewBox="0 0 64 40">
+      <circle cx="17" cy="21" r="8.5"/><circle cx="17" cy="21" r="3.6"/>
+      <path d="M31 31c0-10 8-17 17-16 3 8-3 17-13 18Z"/><path d="M33.5 30c2-6 7-12 14-14"/>
+      <path d="M48 11c5-4 10-3 12 1-3 2-8 2-12-1Z"/><path d="M60 12c1 3 0 6-2 8"/>
+    </symbol>
+    <symbol id="s-hueso" viewBox="0 0 64 40">
+      <path d="M9 20h44"/><path d="M53 20c4-6 9-4 8 0 1 4-4 6-8 0Z"/>
+      <path d="M9 20 2 13M9 20l-7 7M2 13v14"/>
+      <path d="M16 20c-1-4-3-7-5-9M22 20c-1-4-3-7-5-9M28 20c-1-4-3-7-5-9M34 20c-1-4-3-7-5-9M40 20c-1-4-3-7-5-9"/>
+      <path d="M16 20c-1 4-3 7-5 9M22 20c-1 4-3 7-5 9M28 20c-1 4-3 7-5 9M34 20c-1 4-3 7-5 9M40 20c-1 4-3 7-5 9"/>
+      <circle cx="57.6" cy="19" r="1"/>
+    </symbol>
+    <symbol id="s-palmito" viewBox="0 0 64 40">
+      <path d="M12 13v14c0 2.4 4.5 4.4 10 4.4s10-2 10-4.4V13"/>
+      <ellipse cx="22" cy="13" rx="10" ry="4.2"/><ellipse cx="22" cy="13" rx="4.3" ry="1.8"/>
+      <path d="M37 21v9c0 2 3.6 3.6 8 3.6s8-1.6 8-3.6v-9"/>
+      <ellipse cx="45" cy="21" rx="8" ry="3.4"/><ellipse cx="45" cy="21" rx="3.4" ry="1.4"/>
+    </symbol>
+    <symbol id="s-coco" viewBox="0 0 64 40">
+      <path d="M20 9h24a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H20a3 3 0 0 1-3-3V12a3 3 0 0 1 3-3Z"/>
+      <path d="M17 14.6h30"/>
+      <path d="M20 27.5c3-2.5 6-2.5 9 0s6 2.5 9 0 4.6-2 6-.6"/>
+      <circle cx="32" cy="20.4" r="3.6"/>
+      <path d="M30.6 19.3v.5M33.4 19.3v.5M32 21.7v.5"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="clima" aria-hidden="true"><b></b><b></b><b></b></div>
+<div class="caustica" aria-hidden="true"><b></b><b></b></div>
+<div class="rayos" aria-hidden="true"></div>
+<div class="motas" id="motas" aria-hidden="true"></div>
+<div class="velo" aria-hidden="true"></div>
+<div class="grano" aria-hidden="true"></div>
+
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="#portada" aria-label="LQS, inicio de la propuesta"><i>L</i><i>Q</i><i>S</i><em>Pesquería El Sol</em></a>
+    <nav class="enl" aria-label="Secciones de la propuesta">
+      <a href="#problema" class="chico-no">El problema</a>
+      <a href="#catalogo" class="chico-no">Catálogo</a>
+      <a href="#mensaje" class="chico-no">El mensaje</a>
+      <a href="#precio">Precio</a>
+      <button class="hamb" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menuLat">
+        <span></span><span></span></button>
+      <button class="luz" type="button" aria-label="Cambiar entre tema claro y oscuro">
+        <svg class="luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="lat-velo" id="latVelo" hidden></div>
+<nav class="menu-lat" id="menuLat" aria-label="Secciones" hidden>
+  <a href="#problema">El problema</a>
+  <a href="#catalogo">El catálogo</a>
+  <a href="#mensaje">El mensaje</a>
+  <a href="#fotos">Las fotos</a>
+  <a href="#precio">Precio</a>
+  <a href="#tuparte">Tu parte</a>
+  <a href="#cierre">Cierre</a>
+</nav>
+
+<main id="lienzo">
+<!-- ══════════ 1 · PORTADA ══════════ universo flujo ══════════ -->
+<section class="esc portada" id="portada" data-universo="flujo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-16vw;right:-16vw;bottom:3%;height:84%;
+              background:radial-gradient(56% 60% at 32% 76%,color-mix(in srgb,var(--u1) 26%,transparent),transparent 70%)"></div>
+  <div class="guijarro pac1" data-vel="1.16" aria-hidden="true"></div>
+  <div class="guijarro pac2" data-vel="1.24" aria-hidden="true"></div>
+  <div class="astilla pac3" data-vel="1.34" aria-hidden="true"></div>
+
+  <div class="marco port-red">
+    <div>
+      <h1 class="tit h1" data-rev>Un link reemplaza <em>doce reenvíos</em>.</h1>
+      <p class="cuerpo" style="margin-top:clamp(20px,2.6vw,28px)" data-rev>
+        Tus trece productos con su precio, su unidad y su disponibilidad, en una sola página que abre
+        en cualquier celular. El cliente marca cantidades, ve el total <mark>antes</mark> de escribir,
+        y el pedido te llega a WhatsApp ya redactado. Sin collages, sin listas pegadas, sin cuentas de cabeza.
+      </p>
+
+      <dl class="port-ficha" data-rev>
+        <div><dt>Para</dt><dd>Pesquería El Sol</dd></div>
+        <div><dt>Qué</dt><dd>Catálogo con pedido</dd></div>
+        <div><dt>Fecha</dt><dd>20 de agosto de 2026</dd></div>
+        <div><dt>Vigencia</dt><dd>30 días</dd></div>
+        <div><dt>De</dt><dd>LQS · estudio</dd></div>
+      </dl>
+
+      <div class="bots" data-rev>
+        <a class="bot" href="#catalogo">Probar el catálogo
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="bot hueca" href="#precio">Ir al precio</a>
+      </div>
+    </div>
+
+    <div class="cardumen" data-rev aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <radialGradient id="g-hondo" cx="50%" cy="46%" r="50%">
+            <stop offset="0" stop-color="var(--u1)" stop-opacity=".2"/>
+            <stop offset=".55" stop-color="var(--u1)" stop-opacity=".08"/>
+            <stop offset="1" stop-color="var(--u1)" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse class="cd-glow" cx="205" cy="215" rx="175" ry="175"/>
+        <path class="cd-agua" d="M30 66c40-22 80-22 120 0s80 22 120 0 70-18 100 2"/>
+        <path class="cd-agua" d="M20 100c40-22 80-22 120 0s80 22 120 0 80-20 120 2" opacity=".7"/>
+        <path class="cd-agua" d="M40 348c40-20 80-20 120 0s80 20 120 0 60-16 90 2" opacity=".5"/>
+        <g class="cd-nada"><use href="#s-pez" x="72" y="140" width="180" height="112"
+             class="cd-pez" style="stroke:var(--u1)"/></g>
+        <g class="cd-nada2"><use href="#s-atun" x="222" y="88" width="112" height="70"
+             class="cd-pez" style="stroke:var(--u2)"/></g>
+        <g class="cd-nada3"><use href="#s-trucha" x="196" y="248" width="140" height="88"
+             class="cd-pez" style="stroke:var(--u3);opacity:.85"/></g>
+        <g class="cd-nada2"><use href="#s-camaron" x="52" y="272" width="92" height="58"
+             class="cd-pez" style="stroke:var(--u1);opacity:.8"/></g>
+        <g fill="none" stroke="color-mix(in srgb,var(--u1) 55%,transparent)" stroke-width="1.4">
+          <circle cx="316" cy="196" r="6"/><circle cx="336" cy="168" r="4"/><circle cx="326" cy="142" r="2.6"/>
+          <circle cx="120" cy="96" r="4.6"/><circle cx="138" cy="72" r="3"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 2 · EL PROBLEMA ══════════ universo brasa ══════════ -->
+<section class="esc" id="problema" data-universo="brasa">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-12vw;top:3%;width:60vw;height:60vw;max-height:760px;
+              background:radial-gradient(circle at 44% 46%,color-mix(in srgb,var(--u3) 24%,transparent),transparent 66%)"></div>
+  <div class="guijarro" data-vel="1.2" aria-hidden="true"
+       style="right:8%;bottom:14%;width:6.5vw;height:6.5vw;max-width:84px;max-height:84px;background:var(--u1);--o:.36;z-index:1"></div>
+
+  <div class="marco edi-red">
+    <aside class="edi-lat" data-vel=".9" data-rev="lat">
+      <h2 class="tit h3">Lo que pasa hoy</h2>
+      <dl>
+        <div><dt>El catálogo</dt><dd>Doce collages reenviados</dd></div>
+        <div><dt>Los precios</dt><dd>Un texto pegado en el chat</dd></div>
+        <div><dt>Las fotos</dt><dd>De banco, con marca ajena</dd></div>
+        <div><dt>El pedido</dt><dd>Lo arma el cliente de cabeza</dd></div>
+      </dl>
+    </aside>
+
+    <div class="edi-cue" data-rev>
+      <p style="margin-top:0">Le escribimos a Pesquería El Sol como le escribe cualquier cliente: «¿tienen catálogo?».
+        Lo que llegó de vuelta no fue un catálogo. Fueron doce imágenes reenviadas y, detrás, la lista de precios
+        pegada como texto. Nada de eso está mal hecho — es lo que se puede hacer con un chat. El problema es que
+        el chat no fue hecho para esto.</p>
+
+      <p><strong class="res">Doce collages no son un catálogo.</strong> Son doce archivos que el cliente tiene que
+        abrir uno por uno, con marcos de colores distintos, pescados que no son los tuyos y —en varias— la marca de
+        agua de otra tienda. Nadie compara precios ahí adentro.</p>
+
+      <p><strong class="res">La lista se pierde en el hilo.</strong> El texto con los trece productos queda enterrado
+        bajo los saludos del día siguiente. Cuando subes la libra de camarón, tienes que volver a pegarla, y
+        conviven dos listas distintas en dos conversaciones distintas.</p>
+
+      <p><strong class="res">El pedido lo arma el cliente.</strong> Tiene que acordarse de qué había, escribir a mano
+        qué quiere y cuánto, y hacer la cuenta él. Cada paso de esos es una oportunidad de que se aburra y no pida.</p>
+
+      <p class="quiebre">No te falta más contenido. Te falta un lugar donde el pedido se arme solo.</p>
+
+      <p>Lo que proponemos no reemplaza tu WhatsApp: lo alimenta. Un solo enlace que muestra lo que hay, cobra lo
+        que vale y te manda el pedido escrito y sumado. Tú sigues cerrando por chat, como siempre — pero llegas a esa
+        conversación con el pedido ya hecho.</p>
+
+      <div class="chat-red">
+        <div class="tel" data-rev>
+          <div class="tel-top">
+            <span class="tel-av">ES</span>
+            <div><b>Pesquería El Sol</b><span>Así llega hoy</span></div>
+          </div>
+          <div class="tel-log">
+            <div class="bur yo">¿Tienen catálogo?<small>ENVIADO</small></div>
+            <div class="bur">
+              <div class="collages" id="collages"></div>
+              <span class="cg-nota">12 imágenes reenviadas</span>
+              <small>PESQUERÍA EL SOL</small>
+            </div>
+            <div class="bur"><pre>🐟 LISTA DE PRECIOS 🐟
+• Tilapia $9.000 libra
+• Bagre Basa $7.000 libra
+• Filete de Tilapia $19.000 kilo
+• Camarones $17.000 libra
+• Langostino $24.000 libra
+• Filete de Basa $14.000 paquete
+• Atún Importado $25.000 libra
+• Hueso de Bagre $10.000 paq. 1 kilo 🔥 promoción
+• Trucha 2 por libra $14.000
+• Mixtura $22.000 kilo
+• Palmitos $8.000 paquete
+• Salmón $29.000 libra
+• Leche de Coco $3.000 bolsa</pre><small>PESQUERÍA EL SOL</small></div>
+            <div class="bur yo">Ah… ok. ¿Y cuánto me sale 2 libras de camarón y un kilo de mixtura?<small>ENVIADO</small></div>
+          </div>
+        </div>
+
+        <div data-rev>
+          <h3 class="h4">Los cuatro pasos que hoy hace el cliente</h3>
+          <div class="chat-pasos">
+            <div class="chat-paso"><b>1</b><p>Pregunta si hay catálogo y <strong>espera</strong>.</p></div>
+            <div class="chat-paso"><b>2</b><p>Abre <strong>doce imágenes</strong> una por una para ver qué venden.</p></div>
+            <div class="chat-paso"><b>3</b><p>Busca hacia arriba la <strong>lista de precios</strong> pegada en texto.</p></div>
+            <div class="chat-paso"><b>4</b><p>Escribe a mano qué quiere y <strong>hace la cuenta él</strong>.</p></div>
+          </div>
+          <p class="mini" style="margin-top:26px">Las miniaturas de arriba son un dibujo de lo que recibimos: marcos de
+            colores distintos, imágenes de banco y marca de agua de otra tienda en varias de ellas. De eso hablamos
+            más abajo, con calma y sin drama — tiene arreglo, y es barato.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 3 · EL CATÁLOGO, EN VIVO ══════════ universo flujo ══════════ -->
+<section class="esc" id="catalogo" data-universo="flujo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-18vw;right:-18vw;top:3%;height:72%;
+              background:radial-gradient(52% 58% at 42% 32%,color-mix(in srgb,var(--u1) 24%,transparent),transparent 68%)"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Esto no es una maqueta. <em>Es tu catálogo</em>, corriendo.</h2>
+    <p class="cuerpo" style="margin-top:18px" data-rev>Tus trece productos, con los precios y las unidades que nos
+      pasaste. Marca cantidades —media libra también cuenta— y mira cómo se arma el pedido a la derecha.
+      Cuando termines, el botón abre tu WhatsApp con todo escrito.</p>
+
+    <div class="tienda">
+      <div>
+        <div class="cats" id="cats" role="tablist" aria-label="Categorías del catálogo"></div>
+        <div class="fila-l" id="filas"></div>
+
+        <label class="demo-sw" id="swAgo">
+          <input type="checkbox">
+          <i aria-hidden="true"></i>
+          Ver qué pasa cuando algo se agota
+        </label>
+
+        <p class="mini tienda-nota">Los precios, las unidades y la promoción del hueso de bagre son los tuyos, tal
+          como los tienes hoy. Las descripciones de una línea son de ejemplo: las escribes tú, o las escribimos
+          nosotros con lo que nos cuentes.</p>
+        <p class="mini" style="margin-top:10px"><b class="res">Cada producto tiene tres estados</b> — disponible,
+          en promoción y agotado. Los cambias desde tu celular en un segundo; lo agotado deja de sumar y no llega
+          a tu WhatsApp. Prueba el interruptor de arriba y míralo.</p>
+      </div>
+
+      <aside class="cesta" aria-label="Tu pedido">
+        <div class="cesta-t">
+          <h3>Tu pedido</h3>
+          <span class="cesta-n" id="cestaN">vacío</span>
+        </div>
+        <div class="cesta-l" id="cestaL"><p class="cesta-vac">Marca cantidades en el catálogo<br>y aparecen aquí.</p></div>
+        <div class="sumas" id="sumas" hidden>
+          <div class="sm tot"><span>Total</span><span class="n" id="sTot">$0</span></div>
+        </div>
+        <a class="bot wa" id="btnWa" href="https://wa.me/573044740534" target="_blank" rel="noopener"
+           aria-disabled="true">Enviar por WhatsApp
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5 5 16.4a8.5 8.5 0 1 1 3.2 3.1l-4.7 1Z"/><path d="M8.7 9.2c.3 2.6 3.5 5.6 6.1 5.9l1.2-1.5 2 1-.6 1.7c-2.6.9-6.9-2-8.6-4.9l-1.2-2 1.6-1 1.4 1.4-1.9-.6"/></svg></a>
+        <p class="cesta-pie" id="cestaPie">El domicilio y la forma de pago los acuerdas tú en el chat, como siempre.</p>
+        <button class="limpiar" type="button" id="btnLimpiar" hidden>Vaciar el pedido</button>
+      </aside>
+    </div>
+
+    <p class="mini" style="margin-top:clamp(24px,3vw,32px)">Un detalle que importa: la página no cobra ni guarda
+      tarjetas. Solo arma el pedido y te lo entrega redactado en WhatsApp. Es lo más barato de montar y lo más
+      rápido de adoptar — el cliente no aprende nada nuevo, y tú tampoco.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 4 · EL MENSAJE ══════════ universo trama ══════════ -->
+<section class="esc" id="mensaje" data-universo="trama">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="right:-18vw;top:3%;width:62vw;height:62vw;max-height:820px;
+              background:radial-gradient(circle at 46% 44%,color-mix(in srgb,var(--u2) 22%,transparent),transparent 66%)"></div>
+  <div class="astilla" data-vel="1.34" aria-hidden="true"
+       style="left:-8vw;bottom:8%;width:28vw;height:18vw;background:var(--u1);--o:.18;z-index:1"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Y esto es <em>exactamente</em> lo que te llega.</h2>
+    <p class="cuerpo" style="margin-top:18px" data-rev>El mismo pedido de arriba, ya escrito, sumado y listo para
+      contestar. Se actualiza mientras marcas cantidades. Sin plataformas nuevas: llega a tu WhatsApp de siempre,
+      al 304 474 0534.</p>
+
+    <div class="msj-red">
+      <div>
+        <div class="msj-caja" data-rev>
+          <h4 class="h4">El texto del mensaje</h4>
+          <div class="msj-txt" id="msjTxt"></div>
+          <div class="msj-url">Se abre con <b id="msjUrl">https://wa.me/573044740534?text=…</b></div>
+        </div>
+
+        <div class="chat-pasos" data-rev style="margin-top:clamp(26px,3.4vw,36px)">
+          <div class="chat-paso"><b>1</b><p>El cliente marca cantidades y <strong>ve el total</strong> antes de escribirte.</p></div>
+          <div class="chat-paso"><b>2</b><p>Toca el botón: se abre su WhatsApp con el <strong>pedido ya redactado</strong>.</p></div>
+          <div class="chat-paso"><b>3</b><p>Solo le queda darle enviar. Tú recibes <strong>producto, cantidad, precio unitario y total</strong>.</p></div>
+          <div class="chat-paso"><b>4</b><p>Respondes el domicilio y la forma de pago. <strong>Ahí sigues mandando tú.</strong></p></div>
+        </div>
+      </div>
+
+      <div class="tel msj-tel" data-rev>
+        <div class="tel-top">
+          <span class="tel-av">ES</span>
+          <div><b>Pesquería El Sol</b><span>304 474 0534</span></div>
+        </div>
+        <div class="tel-log" id="msjLog"></div>
+      </div>
+    </div>
+
+    <p class="mini" style="margin-top:clamp(26px,3.4vw,36px)">Nota honesta sobre el alcance: esto arma y entrega el
+      pedido, no lo cobra ni lo responde solo. Si más adelante quieres que el WhatsApp conteste por su cuenta
+      —horarios, disponibilidad, confirmación automática— existe y lo montamos, pero es otro proyecto con otro
+      precio y con costos mensuales de por medio. No te lo metemos aquí para inflar la cifra.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 5 · LAS FOTOS ══════════ universo pulso ══════════ -->
+<section class="esc" id="fotos" data-universo="pulso">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-16vw;right:-16vw;top:3%;height:66%;
+              background:radial-gradient(50% 56% at 58% 38%,color-mix(in srgb,var(--u3) 20%,transparent),transparent 68%)"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Hablemos de <em>las fotos</em>.</h2>
+    <p class="cuerpo" style="margin-top:18px" data-rev>Esto te lo decimos porque preferimos decírtelo nosotros:
+      varias de las imágenes que estás reenviando son de banco, y por lo menos tres traen la marca de agua de otra
+      tienda. Entendemos por qué pasó —arrancar sin material propio es normal— pero conviene arreglarlo pronto.</p>
+
+    <div class="fotos-red">
+      <div class="fcaja" data-rev>
+        <div class="fmuestra fm-mala">
+          <svg viewBox="0 0 240 150" aria-hidden="true">
+            <rect x="0" y="0" width="120" height="75" fill="none" stroke="#d84a8a" stroke-width="2"/>
+            <rect x="120" y="0" width="120" height="75" fill="none" stroke="#f0b34a" stroke-width="2"/>
+            <rect x="0" y="75" width="120" height="75" fill="none" stroke="#4ade80" stroke-width="2"/>
+            <rect x="120" y="75" width="120" height="75" fill="none" stroke="#5b8def" stroke-width="2"/>
+            <g class="fm-l" stroke="#d84a8a"><use href="#s-pez" x="26" y="18" width="68" height="42"/></g>
+            <g class="fm-l" stroke="#f0b34a"><use href="#s-camaron" x="146" y="18" width="68" height="42"/></g>
+            <g class="fm-l" stroke="#4ade80"><use href="#s-filete" x="26" y="93" width="68" height="42"/></g>
+            <g class="fm-l" stroke="#5b8def"><use href="#s-mixtura" x="146" y="93" width="68" height="42"/></g>
+            <text class="fm-w" x="120" y="82" text-anchor="middle" transform="rotate(-16 120 82)">MARISCOS LA COSTA</text>
+          </svg>
+        </div>
+        <h4 class="h4">Lo que circula hoy</h4>
+        <p>Cuatro fotos ajenas por imagen, cada marco de un color, un pescado que no es el que vendes y la marca de
+          otra tienda encima. Dos costos: uno legal —el banco o el dueño de la foto puede reclamar— y otro más caro,
+          que es la credibilidad. Si la foto es de otro, el cliente duda de si el pescado también.</p>
+      </div>
+
+      <div class="fcaja" data-rev>
+        <div class="fmuestra" style="border:1px solid var(--line2)">
+          <svg viewBox="0 0 240 150" aria-hidden="true">
+            <defs>
+              <radialGradient id="g-luz" cx="42%" cy="26%" r="72%">
+                <stop offset="0" stop-color="var(--u1)" stop-opacity=".28"/>
+                <stop offset="1" stop-color="var(--u1)" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="150" fill="url(#g-luz)"/>
+            <g class="fm-l" stroke="var(--ink)" opacity=".9"><use href="#s-pez" x="46" y="42" width="150" height="94"/></g>
+            <path d="M30 122h180" stroke="var(--line2)" stroke-width="1.4" fill="none"/>
+            <g fill="none" stroke="var(--u1)" stroke-width="1.2" opacity=".7">
+              <circle cx="196" cy="44" r="5"/><circle cx="210" cy="28" r="3"/>
+            </g>
+          </svg>
+        </div>
+        <h4 class="h4">Lo que deberías tener</h4>
+        <p>Tu pescado, tu mesón, tu luz. Una foto por producto, todas con el mismo fondo y el mismo encuadre, para
+          que el catálogo se lea como un catálogo y no como un álbum de recortes. Son tuyas para siempre: sirven en
+          la página, en el estado de WhatsApp y en cualquier volante.</p>
+        <div class="gratis" style="background:color-mix(in srgb,var(--gold) 11%,transparent);
+             box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 34%,transparent)">
+          <b style="color:var(--gold)">Opcional, no obligatorio</b>
+          <p><b class="res">Sesión de foto de producto · $360.000</b> por las 20 fotos, que cubren tus trece
+            productos y sobran siete para lo que sumes después. Suelta cuesta <b class="res">$22.000</b> cada una.
+            Media jornada en tu local, entrega en 5 días hábiles.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="mini" style="margin-top:clamp(26px,3.4vw,36px)">Mientras tanto, la página no depende de fotos. El
+      catálogo que probaste arriba funciona con los dibujos que ves — están hechos a mano para esta propuesta, no son
+      de banco, y son tuyos. Cuando tengas fotos reales, se reemplazan producto por producto sin rehacer nada.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 6 · EL PRECIO ══════════ universo hielo ══════════ -->
+<section class="esc" id="precio" data-universo="hielo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="right:-16vw;top:0;width:64vw;height:64vw;max-height:840px;
+              background:radial-gradient(circle at 46% 42%,color-mix(in srgb,var(--u2) 24%,transparent),transparent 66%)"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Precio de entrada, <em>porque están empezando</em>.</h2>
+
+    <div class="precio-red">
+      <div data-rev>
+        <p class="cuerpo">Un solo pago. Sin mensualidad, sin plataforma que renovar, sin comisión por pedido. La
+          página queda montada, publicada y funcionando en tu dominio.</p>
+
+        <div class="precio-big">
+          <span class="pz" style="color:var(--ink)">$650.000</span>
+          <small>pago único · IVA no aplica</small>
+        </div>
+
+        <p class="chico" style="margin-top:14px">No es un precio inventado hacia abajo para pescarte. Es nuestro piso
+          de costo más el margen más bajo con el que podemos trabajar. Te mostramos las dos cifras porque preferimos
+          que sepas de dónde sale.</p>
+
+        <div class="tabla-org" style="margin-top:clamp(24px,3vw,32px)">
+          <div class="tabla-sc">
+            <table>
+              <caption class="oculto">Cómo se calcula el precio</caption>
+              <thead><tr><th>Concepto</th><th class="n">Tiempo</th><th class="n">Costo</th></tr></thead>
+              <tbody>
+                <tr><td>Diseño de la página · claro, oscuro y celular</td><td class="n">8 h</td><td class="n">$240.000</td></tr>
+                <tr><td>Catálogo armable y pedido a WhatsApp</td><td class="n">5 h</td><td class="n">$150.000</td></tr>
+                <tr><td>Los trece dibujos de producto</td><td class="n">2 h</td><td class="n">$60.000</td></tr>
+                <tr><td>Dominio propio, primer año</td><td class="n">—</td><td class="n">$60.000</td></tr>
+                <tr class="dest"><td>Piso de costo</td><td class="n">15 h</td><td class="n">$510.000</td></tr>
+                <tr class="dest"><td>Precio final · margen 27 %</td><td class="n">—</td><td class="n">$650.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="pista"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>Desliza la tabla</p>
+        </div>
+
+        <div class="gratis">
+          <b>La carga del catálogo va gratis</b>
+          <p>Cargar trece productos con precio, unidad y estado se cobra <b class="res">$280.000</b> cuando lo
+            digitamos nosotros. <b class="res">Si nos entregas la lista en la plantilla de Excel que te pasamos,
+            no cuesta nada</b> — la plantilla trae las columnas listas, la llenas y la importamos. Con trece
+            productos es media hora de tu tiempo.</p>
+        </div>
+
+        <p class="mini" style="margin-top:20px">Formas de pago: 50 % para arrancar y 50 % contra entrega. Si prefieres
+          pagar todo al final, también, pero entonces arrancamos cuando esté firmado.</p>
+      </div>
+
+      <div data-rev>
+        <div class="no-red" style="margin-top:0;grid-template-columns:1fr;gap:clamp(24px,3vw,34px)">
+          <div>
+            <h3 class="h4" style="margin-bottom:14px">Qué incluye</h3>
+            <ul class="lista si">
+              <li><i></i>La página completa, con tus trece productos, precios, unidades y estados</li>
+              <li><i></i>El armador de pedido con cantidades por libra, kilo, paquete y bolsa</li>
+              <li><i></i>El botón que abre WhatsApp con el pedido escrito y sumado</li>
+              <li><i></i>Los trece dibujos de producto, hechos para ti y tuyos</li>
+              <li><i></i>Tema claro y oscuro, y diseño pensado primero para el celular</li>
+              <li><i></i>Dominio propio y publicación · primer año incluido</li>
+              <li><i></i>Dos rondas de ajustes sobre lo entregado</li>
+              <li><i></i>Una actualización de precios al mes durante los primeros tres meses</li>
+              <li><i></i>Te enseñamos a cambiar precios y estados tú mismo, en una llamada de 30 minutos</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="h4" style="margin-bottom:14px">Qué no incluye</h3>
+            <ul class="lista no">
+              <li><i></i>Pago en línea. No hay pasarela ni comisiones: cobras como cobras hoy</li>
+              <li><i></i>Respuesta automática en WhatsApp. Eso es automatización y cuesta aparte</li>
+              <li><i></i>Inventario en vivo. Los estados los cambias tú, no se descuentan solos</li>
+              <li><i></i>Fotos de producto. Van aparte, si las quieres: $360.000 las 20</li>
+              <li><i></i>Logo ni identidad de marca. Si te interesa, el logo básico son $220.000</li>
+              <li><i></i>Contenido para redes ni pauta</li>
+            </ul>
+            <p class="mini" style="margin-top:18px">A partir del cuarto mes, si prefieres no tocar nada tú, el soporte
+              y mantenimiento cuesta <b class="res">$260.000 al mes</b> e incluye cambios de precios, productos nuevos
+              y estar pendientes de que la página siga arriba. No es obligatorio y puedes empezarlo cuando quieras.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 7 · TU PARTE ══════════ universo trama ══════════ -->
+<section class="esc" id="tuparte" data-universo="trama">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-18vw;right:-18vw;top:3%;height:64%;
+              background:radial-gradient(50% 56% at 38% 36%,color-mix(in srgb,var(--u1) 20%,transparent),transparent 68%)"></div>
+
+  <div class="marco">
+    <h2 class="tit h2" data-rev>Lo que necesitamos <em>de tu lado</em>.</h2>
+    <p class="cuerpo" style="margin-top:18px" data-rev>Tres cosas, y ninguna te toma más de una tarde. Con eso
+      entregamos en <mark>siete días hábiles</mark> desde que arrancamos.</p>
+
+    <div class="reqs">
+      <div class="req" data-rev>
+        <b>1</b>
+        <div><h4 class="h4">La lista, en la plantilla</h4>
+          <p>Te mandamos un Excel con las columnas listas: producto, precio, unidad, estado y una línea de
+            descripción. La llenas con los trece que ya tienes y nos la devuelves. Así la carga no te cuesta nada.</p></div>
+      </div>
+      <div class="req" data-rev>
+        <b>2</b>
+        <div><h4 class="h4">Confirmar el número y el horario</h4>
+          <p>El 304 474 0534 es el que pusimos en el botón. Si los pedidos entran por otro número, dínoslo. Y
+            necesitamos tus días y horas de atención para ponerlas en la página.</p></div>
+      </div>
+      <div class="req" data-rev>
+        <b>3</b>
+        <div><h4 class="h4">Decidir el nombre del enlace</h4>
+          <p>El dominio es tuyo y lo eliges tú: algo corto y fácil de dictar por teléfono. Nosotros lo registramos,
+            lo configuramos y te entregamos las claves.</p></div>
+      </div>
+    </div>
+
+    <p class="mini" style="margin-top:clamp(28px,3.6vw,40px)">Si algo de esta propuesta no aplica a como trabajan
+      ustedes, dínoslo y lo cambiamos. Preferimos ajustar el alcance antes que venderte algo que no vas a usar.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 8 · CIERRE ══════════ universo flujo ══════════ -->
+<section class="esc cierre" id="cierre" data-universo="flujo">
+  <div class="estrato" data-vel=".42" aria-hidden="true"
+       style="left:-16vw;right:-16vw;top:3%;height:90%;
+              background:radial-gradient(52% 58% at 46% 40%,color-mix(in srgb,var(--u1) 26%,transparent),transparent 70%)"></div>
+  <div class="guijarro" data-vel="1.2" aria-hidden="true"
+       style="right:10%;top:14%;width:8vw;height:8vw;max-width:100px;max-height:100px;background:var(--u2);--o:.3;z-index:1"></div>
+
+  <div class="marco">
+    <h2 class="tit h1" data-rev>Doce reenvíos, o <em>un link</em>.</h2>
+    <p class="cuerpo" style="margin-top:clamp(20px,2.6vw,28px)" data-rev>Ya viste el catálogo funcionando con tus
+      precios y ya viste el mensaje que te llegaría. Si te sirve, arrancamos con la plantilla de Excel esta misma
+      semana y en siete días hábiles tienes el enlace para mandar en vez de las doce imágenes.</p>
+
+    <div class="bots" data-rev>
+      <a class="bot" href="https://wa.me/573332791710?text=Hola%20LQS%2C%20vi%20la%20propuesta%20de%20Pesquer%C3%ADa%20El%20Sol%20y%20quiero%20arrancar."
+         target="_blank" rel="noopener">Escribirle a LQS
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="bot hueca" href="#catalogo">Volver al catálogo</a>
+    </div>
+
+    <div class="firma" data-rev>
+      <span>LQS · Medellín · WhatsApp +57 333 279 1710 · cdparravargas@gmail.com</span>
+      <a class="volver" href="../index.html" target="_top">Ir al sitio de LQS</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════ utilidades ═══════════════ */
+function fmt(n){ return '$' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+function num(q){ return (q % 1 === 0) ? String(q) : String(q).replace('.', ','); }
+function pinza(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+function el(sel,ctx){ return (ctx||document).querySelector(sel); }
+function todos(sel,ctx){ return Array.prototype.slice.call((ctx||document).querySelectorAll(sel)); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+var mQuieto = matchMedia('(prefers-reduced-motion: reduce)');
+var quieto  = mQuieto.matches;
+
+/* ═══════════════ 1 · luz (claro / oscuro) ═══════════════ */
+var LLAVE = 'lqs_tema';
+function tema(t, guardar){
+  document.documentElement.setAttribute('data-tema', t);
+  var m = el('meta[name=theme-color]');
+  if(m) m.setAttribute('content', t === 'claro' ? '#eef3f2' : '#03101b');
+  if(guardar){ try{ localStorage.setItem(LLAVE, t); }catch(e){} }
+}
+try{ var g = localStorage.getItem(LLAVE); if(g) tema(g, false); }catch(e){}
+document.addEventListener('click', function(e){
+  if(!e.target.closest || !e.target.closest('.luz')) return;
+  tema(document.documentElement.getAttribute('data-tema') === 'claro' ? 'oscuro' : 'claro', true);
+});
+
+/* ═══════════════ 2 · motas en suspensión ═══════════════ */
+(function(){
+  var caja = el('#motas'); if(!caja) return;
+  var h = '';
+  for(var i=0;i<12;i++){
+    var izq = (i * 8.3 + (i % 3) * 4) % 98;
+    var s = 2 + (i % 3);
+    var t = 26 + (i % 5) * 7;
+    var d = -(i * 3.4);
+    h += '<i style="left:' + izq.toFixed(1) + '%;--s:' + s + 'px;--t:' + t + 's;--d:' + d.toFixed(1) + 's"></i>';
+  }
+  caja.innerHTML = h;
+})();
+
+/* ═══════════════ 3 · los doce collages reenviados ═══════════════
+   Dibujados, no rellenos: marcos disparejos, pescados que no son suyos
+   y marca de agua ajena. Es el retrato del problema, no decoración. */
+(function(){
+  var caja = el('#collages'); if(!caja) return;
+  var col = ['#d84a8a','#f0b34a','#4ade80','#5b8def','#ff6b6b','#8b5cf6',
+             '#2fb8a3','#e6c877','#ff8a3d','#38bdf8','#c084fc','#84cc16'];
+  var ico = ['s-pez','s-camaron','s-filete','s-mixtura','s-langostino','s-hueso',
+             's-atun','s-palmito','s-trucha','s-coco','s-salmon','s-bagre'];
+  var conAgua = {1:1, 5:1, 8:1};
+  var h = '';
+  for(var i=0;i<12;i++){
+    h += '<div class="cg" style="--cgc:' + col[i] + '"><svg viewBox="0 0 40 40" aria-hidden="true">' +
+      '<use class="cg-p" href="#' + ico[i] + '" x="4" y="3" width="32" height="20"/>' +
+      '<use class="cg-p" href="#' + ico[(i+3)%12] + '" x="7" y="21" width="26" height="16" opacity=".6"/>' +
+      (conAgua[i] ? '<text class="cg-w" x="20" y="24" text-anchor="middle" transform="rotate(-18 20 24)">LA COSTA</text>' : '') +
+      '</svg></div>';
+  }
+  caja.innerHTML = h;
+})();
+
+/* ═══════════════ 4 · profundidad y coreografía ═══════════════
+   Scroll nativo a propósito: la cesta usa position:sticky, y un lienzo
+   con transform fijo rompe sticky. */
+var capas = [], actos = [], escenas = [], vh = innerHeight;
+var climas = todos('.clima b');
+var enlaces = todos('.enl a[href^="#"]');
+
+function topDoc(nodo){
+  var y = 0;
+  while(nodo){ y += nodo.offsetTop; nodo = nodo.offsetParent; }
+  return y;
+}
+function medir(){
+  vh = innerHeight;
+  capas = todos('[data-vel]').map(function(n){
+    return { el:n, vel: quieto ? 1 : parseFloat(n.getAttribute('data-vel')),
+             top: topDoc(n), alto: n.offsetHeight, ult:null };
+  });
+  /* lo que ya está sobre el pliegue no tiene entrada: nace visible */
+  actos = todos('[data-rev]').map(function(n){
+    var t = topDoc(n);
+    return { el:n, top:t, fijo: t < vh * 0.94, ult:-1 };
+  });
+  escenas = todos('.esc').map(function(n){ return { el:n, top: topDoc(n), alto:n.offsetHeight, id:n.id }; });
+}
+
+var universoActivo = '', seccionActiva = '';
+function pinta(y){
+  var centro = y + vh * 0.42, mando = escenas[0];
+  for(var i=0;i<escenas.length;i++){ if(centro >= escenas[i].top) mando = escenas[i]; }
+  if(!mando) return;
+  var u = mando.el.getAttribute('data-universo');
+  if(u !== universoActivo){
+    universoActivo = u;
+    var cs = getComputedStyle(mando.el);
+    var col = [cs.getPropertyValue('--u1'), cs.getPropertyValue('--u2'), cs.getPropertyValue('--u3')];
+    for(var j=0;j<climas.length;j++){ climas[j].style.background = col[j].trim(); }
+    document.documentElement.style.setProperty('--curva', cs.getPropertyValue('--curva'));
+  }
+  if(mando.id !== seccionActiva){
+    seccionActiva = mando.id;
+    for(var k=0;k<enlaces.length;k++){
+      enlaces[k].classList.toggle('act', enlaces[k].getAttribute('href') === '#' + seccionActiva);
+    }
+  }
+}
+
+function cuadro(){
+  var y = window.scrollY || window.pageYOffset || 0;
+  for(var i=0;i<capas.length;i++){
+    var c = capas[i];
+    if(c.vel === 1) continue;
+    var rel = (y + vh * 0.5) - (c.top + c.alto * 0.5);
+    if(rel < -(vh + c.alto) || rel > (vh + c.alto)) continue;
+    var t = 'translate3d(0,' + (rel * (1 - c.vel)).toFixed(2) + 'px,0)';
+    if(t !== c.ult){ c.el.style.transform = t; c.ult = t; }
+  }
+  for(var k=0;k<actos.length;k++){
+    var a = actos[k];
+    var p = (quieto || a.fijo) ? 1 : pinza((y + vh - a.top) / (vh * 0.55));
+    var r = Math.round(p * 100) / 100;
+    if(r !== a.ult){ a.el.style.setProperty('--p', r); a.ult = r; }
+  }
+  pinta(y);
+  requestAnimationFrame(cuadro);
+}
+
+addEventListener('resize', medir, {passive:true});
+addEventListener('load', medir);
+if(window.ResizeObserver){ new ResizeObserver(medir).observe(document.body); }
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if(!a) return;
+  var destino = document.querySelector(a.getAttribute('href'));
+  if(!destino) return;
+  e.preventDefault();
+  scrollTo({ top: topDoc(destino) - 74, behavior: quieto ? 'auto' : 'smooth' });
+});
+mQuieto.addEventListener && mQuieto.addEventListener('change', function(){ quieto = mQuieto.matches; medir(); });
+
+/* ═══════════════ 5 · el catálogo ═══════════════
+   Precios, unidades y la promoción del hueso de bagre: los reales de
+   Pesquería El Sol. Las descripciones de una línea son de ejemplo. */
+var WA = '573044740534';
+var UNI = {                      /* unidad → artículo, plural y paso */
+  libra:   {art:'la', pl:'libras',   paso:0.5},
+  kilo:    {art:'el', pl:'kilos',    paso:0.5},
+  paquete: {art:'el', pl:'paquetes', paso:1},
+  bolsa:   {art:'la', pl:'bolsas',   paso:1}
+};
+
+var CAT = [
+ { n:'Pescado entero', its:[
+   {id:'tilapia', n:'Tilapia',          p:9000,  u:'libra', ic:'s-pez',   ac:'#3fd6c2', d:'Entera y fresca, por libra.'},
+   {id:'bagre',   n:'Bagre basa',       p:7000,  u:'libra', ic:'s-bagre',   ac:'#63a4e0', d:'El más económico de la lista.'},
+   {id:'trucha',  n:'Trucha',           p:14000, u:'libra', ic:'s-trucha',   ac:'#ef8fa0', d:'Dos truchas por libra.'},
+   {id:'atun',    n:'Atún importado',   p:25000, u:'libra', ic:'s-atun',   ac:'#d2637d', d:'Importado, corte para plancha.'},
+   {id:'salmon',  n:'Salmón',           p:29000, u:'libra', ic:'s-salmon',   ac:'#f79167', d:'Lo más fino del catálogo.'}
+ ]},
+ { n:'Filetes y cortes', its:[
+   {id:'filtil',  n:'Filete de tilapia',p:19000, u:'kilo',    ic:'s-filete', ac:'#5ed7c4', d:'Sin espinas, por kilo.'},
+   {id:'filbasa', n:'Filete de basa',   p:14000, u:'paquete', ic:'s-filete', ac:'#7fb0e4', d:'Paquete de filetes.'},
+   {id:'hueso',   n:'Hueso de bagre',   p:10000, u:'paquete', ic:'s-hueso',  ac:'#9db6d0', d:'Paquete de 1 kilo. Para el caldo.', promo:true}
+ ]},
+ { n:'Mariscos', its:[
+   {id:'camaron', n:'Camarones',        p:17000, u:'libra', ic:'s-camaron',    ac:'#f7845f', d:'Por libra.'},
+   {id:'langost', n:'Langostino',       p:24000, u:'libra', ic:'s-langostino', ac:'#f2695c', d:'Tamaño grande, por libra.'},
+   {id:'mixtura', n:'Mixtura',          p:22000, u:'kilo',  ic:'s-mixtura',    ac:'#a582ea', d:'Mezcla de mariscos, por kilo.'}
+ ]},
+ { n:'Para acompañar', its:[
+   {id:'palmito', n:'Palmitos',         p:8000,  u:'paquete', ic:'s-palmito', ac:'#9fc95f', d:'Paquete en conserva.'},
+   {id:'coco',    n:'Leche de coco',    p:3000,  u:'bolsa',   ic:'s-coco',    ac:'#d4b783', d:'Bolsa sellada.'}
+ ]}
+];
+
+var TODO = {};                   /* id → producto, para no recorrer siempre */
+CAT.forEach(function(c){ c.its.forEach(function(p){ TODO[p.id] = p; }); });
+
+var catAct = 0, cesta = {}, agotado = null;
+var catsBox = el('#cats'), filasBox = el('#filas');
+
+var MENOS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>';
+var MAS   = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+
+function cant(q,u){ return num(q) + ' ' + (q === 1 ? u : UNI[u].pl); }
+function unidadPz(u){ return UNI[u].art + ' ' + u; }
+
+function pintarCats(){
+  catsBox.innerHTML = CAT.map(function(c,i){
+    return '<button class="cat" type="button" role="tab" data-c="' + i + '" aria-selected="' +
+      (i === catAct) + '">' + esc(c.n) + '</button>';
+  }).join('');
+}
+
+function estado(p){
+  if(agotado === p.id) return '<span class="st ago">Agotado hoy</span>';
+  if(p.promo)          return '<span class="st promo">En promoción</span>';
+  return '<span class="st">Disponible hoy</span>';
+}
+
+function pintarFilas(){
+  filasBox.innerHTML = CAT[catAct].its.map(function(p){
+    var q = cesta[p.id] || 0, ago = (agotado === p.id);
+    return '<article class="fi' + (ago ? ' ago' : (q ? ' viva' : '')) + '" data-id="' + p.id + '" style="--ac:' + p.ac + '">' +
+      '<div class="dib" aria-hidden="true"><svg viewBox="0 0 64 40"><use href="#' + p.ic + '"/></svg></div>' +
+      '<div class="fi-t"><h3>' + esc(p.n) + '</h3><p>' + esc(p.d) + '</p>' + estado(p) + '</div>' +
+      '<div class="fi-lado">' +
+        '<span class="fi-pz">' + fmt(p.p) + '<em>' + unidadPz(p.u) + '</em></span>' +
+        '<div class="cont' + (q ? ' viva' : '') + '">' +
+          '<button type="button" data-menos="' + p.id + '" aria-label="Quitar de ' + esc(p.n) + '"' +
+            ((q <= 0 || ago) ? ' disabled' : '') + '>' + MENOS + '</button>' +
+          '<output aria-live="polite">' + (q ? cant(q, p.u) : '0') + '</output>' +
+          '<button type="button" data-mas="' + p.id + '" aria-label="Agregar ' + esc(p.n) + '"' +
+            (ago ? ' disabled' : '') + '>' + MAS + '</button>' +
+        '</div>' +
+      '</div></article>';
+  }).join('');
+  medir();
+}
+
+catsBox.addEventListener('click', function(e){
+  var b = e.target.closest('[data-c]');
+  if(!b) return;
+  catAct = +b.getAttribute('data-c');
+  todos('.cat', catsBox).forEach(function(c){ c.setAttribute('aria-selected', c === b); });
+  pintarFilas();
+});
+
+filasBox.addEventListener('click', function(e){
+  var m = e.target.closest('[data-menos]'), p = e.target.closest('[data-mas]');
+  var id = m ? m.getAttribute('data-menos') : (p ? p.getAttribute('data-mas') : null);
+  if(!id || agotado === id) return;
+  var paso = UNI[TODO[id].u].paso;
+  var q = (cesta[id] || 0) + (m ? -paso : paso);
+  q = Math.round(q * 2) / 2;             /* medias unidades exactas, sin coma flotante suelta */
+  if(q <= 0) delete cesta[id]; else cesta[id] = q;
+  pintarFilas(); pintarCesta();
+});
+
+/* ── el interruptor de agotado ── */
+(function(){
+  var sw = el('#swAgo'); if(!sw) return;
+  sw.querySelector('input').addEventListener('change', function(){
+    sw.classList.toggle('on', this.checked);
+    agotado = this.checked ? 'langost' : null;
+    if(agotado) delete cesta[agotado];
+    if(this.checked && catAct !== 2){ catAct = 2; pintarCats(); }
+    pintarFilas(); pintarCesta();
+  });
+})();
+
+/* ═══════════════ 6 · la cesta y el total ═══════════════ */
+function lineas(){
+  var l = [];
+  CAT.forEach(function(c){ c.its.forEach(function(p){
+    var q = cesta[p.id];
+    if(!q || agotado === p.id) return;
+    l.push({ n:p.n, q:q, u:p.u, p:p.p, sub:p.p * q });
+  }); });
+  return l;
+}
+function total(l){ return l.reduce(function(t,r){ return t + r.sub; }, 0); }
+
+function textoPedido(l){
+  var s = 'Hola, Pesquería El Sol. Quiero hacer este pedido:\n\n';
+  l.forEach(function(r){
+    s += '- ' + r.n + ' · ' + cant(r.q, r.u) + ' · ' + fmt(r.p) + ' ' + unidadPz(r.u) + ' · ' + fmt(r.sub) + '\n';
+  });
+  s += '\nTotal: ' + fmt(total(l)) + '\n\nLo armé en el catálogo en línea.';
+  return s;
+}
+function enlaceWa(txt){ return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(txt); }
+
+var EJEMPLO = [{id:'camaron',q:2},{id:'tilapia',q:3},{id:'coco',q:2}].map(function(r){
+  var p = TODO[r.id];
+  return { n:p.n, q:r.q, u:p.u, p:p.p, sub:p.p * r.q };
+});
+
+function pintarCesta(){
+  var l = lineas(), caja = el('#cestaL'), sumas = el('#sumas'), bot = el('#btnWa'), lim = el('#btnLimpiar');
+
+  if(!l.length){
+    caja.innerHTML = '<p class="cesta-vac">Marca cantidades en el catálogo<br>y aparecen aquí.</p>';
+    sumas.hidden = true; lim.hidden = true;
+    el('#cestaN').textContent = 'vacío';
+    bot.setAttribute('aria-disabled','true');
+    bot.href = enlaceWa('Hola, Pesquería El Sol. Quiero hacer un pedido.');
+  }else{
+    caja.innerHTML = l.map(function(r){
+      return '<div class="cl"><b>' + esc(r.n) + '</b><span class="n">' + fmt(r.sub) + '</span>' +
+        '<span>' + esc(cant(r.q, r.u)) + ' · ' + fmt(r.p) + ' ' + esc(unidadPz(r.u)) + '</span></div>';
+    }).join('');
+    sumas.hidden = false; lim.hidden = false;
+    el('#cestaN').textContent = l.length + (l.length === 1 ? ' producto' : ' productos');
+    el('#sTot').textContent = fmt(total(l));
+    bot.setAttribute('aria-disabled','false');
+    bot.href = enlaceWa(textoPedido(l));
+  }
+  pintarMensaje(l);
+}
+
+el('#btnLimpiar').addEventListener('click', function(){ cesta = {}; pintarFilas(); pintarCesta(); });
+
+/* ═══════════════ 7 · el mensaje que le llega ═══════════════ */
+function pintarMensaje(l){
+  var real = l.length > 0, ls = real ? l : EJEMPLO, txt = textoPedido(ls);
+  var caja = el('#msjTxt'), url = el('#msjUrl'), log = el('#msjLog');
+  if(!caja) return;
+
+  caja.innerHTML = (real ? '' : '<b>Con un pedido de ejemplo — marca cantidades arriba y cambia solo:</b>\n\n') +
+    esc(txt);
+  url.textContent = enlaceWa(txt).slice(0, 74) + '…';
+
+  log.innerHTML =
+    '<div class="bur">' + esc(txt).replace(/\n/g,'<br>') + '<small>CLIENTE</small></div>' +
+    '<div class="bur yo">Perfecto, lo tengo listo. ¿Te lo mando a domicilio o pasas por él?<small>TÚ</small></div>';
+}
+
+/* ═══════════════ arranque ═══════════════ */
+pintarCats();
+pintarFilas();
+pintarCesta();
+medir();
+requestAnimationFrame(cuadro);
+})();
+
+/* panel lateral en teléfono */
+(function(){
+ var b = document.querySelector('.hamb'),
+     m = document.getElementById('menuLat'),
+     v = document.getElementById('latVelo');
+ if(!b||!m||!v) return;
+ var abierto = false;
+ function pon(x){
+  abierto = x; b.setAttribute('aria-expanded', x ? 'true' : 'false');
+  if(x){ m.hidden=false; v.hidden=false; requestAnimationFrame(function(){ m.classList.add('on'); v.classList.add('on'); }); }
+  else { m.classList.remove('on'); v.classList.remove('on');
+         setTimeout(function(){ if(!abierto){ m.hidden=true; v.hidden=true; } }, 330); }
+  document.body.style.overflow = x ? 'hidden' : '';
+ }
+ b.addEventListener('click', function(){ pon(!abierto); });
+ v.addEventListener('click', function(){ pon(false); });
+ m.addEventListener('click', function(e){ if(e.target.tagName === 'A') pon(false); });
+ addEventListener('keydown', function(e){ if(e.key === 'Escape' && abierto) pon(false); });
+})();
+</script>
+
+</body>
+</html>
