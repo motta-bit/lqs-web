@@ -355,6 +355,22 @@ tr.dest td:first-child{color:var(--ink)}
   html{scroll-behavior:auto}
   .menu-lat,.lat-velo,.hamb span{transition-duration:1ms}
 }
+
+.frio{font-family:var(--tech);font-size:.78rem;line-height:1.65;letter-spacing:.02em;color:var(--dim);
+ max-width:52ch;margin-bottom:clamp(18px,2.4vw,26px);padding-left:14px;
+ border-left:1px solid color-mix(in oklab,var(--u1) 45%,transparent)}
+.gana{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:clamp(12px,1.6vw,20px);margin-top:clamp(24px,3vw,34px)}
+.gana .g{padding:clamp(18px,2vw,24px);border:1px solid var(--line2);
+ background:linear-gradient(150deg,color-mix(in oklab,var(--u1) 10%,var(--bg2)),var(--bg2) 70%)}
+.gana .g:nth-child(4n+1){border-radius:38px 14px 16px 12px}
+.gana .g:nth-child(4n+2){border-radius:14px 40px 12px 18px}
+.gana .g:nth-child(4n+3){border-radius:18px 12px 38px 14px}
+.gana .g:nth-child(4n){border-radius:12px 16px 14px 40px}
+.gana .g b{display:block;font-family:var(--disp);font-size:clamp(1.05rem,1.7vw,1.3rem);
+ color:var(--ink);margin-bottom:7px;line-height:1.15}
+.gana .g span{display:block;font-size:.9rem;color:var(--dim);line-height:1.6}
+
 </style>
 <style>
 /* ══════════ COMPONENTES DE LA PROPUESTA ══════════ */
@@ -765,7 +781,7 @@ tr.dest td:first-child{color:var(--ink)}
   <a href="#mensaje">El mensaje</a>
   <a href="#fotos">Las fotos</a>
   <a href="#precio">Precio</a>
-  <a href="#tuparte">Tu parte</a>
+  <a href="#tuparte">Qué ganan</a>
   <a href="#cierre">Cierre</a>
 </nav>
 
@@ -781,11 +797,14 @@ tr.dest td:first-child{color:var(--ink)}
 
   <div class="marco port-red">
     <div>
+      <p class="frio" data-rev>Somos LQS, un estudio de Medellín. Les escribimos sin que nos conozcan
+        porque les pedimos el catálogo por WhatsApp y nos llegaron doce reenvíos.</p>
       <h1 class="tit h1" data-rev>Un link reemplaza <em>doce reenvíos</em>.</h1>
       <p class="cuerpo" style="margin-top:clamp(20px,2.6vw,28px)" data-rev>
-        Tus trece productos con su precio, su unidad y su disponibilidad, en una sola página que abre
+        Sus trece productos con su precio, su unidad y su disponibilidad, en una sola página que abre
         en cualquier celular. El cliente marca cantidades, ve el total <mark>antes</mark> de escribir,
-        y el pedido te llega a WhatsApp ya redactado. Sin collages, sin listas pegadas, sin cuentas de cabeza.
+        y el pedido les llega a WhatsApp ya redactado. Antes de leer nada más, bajen y ármenlo:
+        <mark>está funcionando con sus propios precios</mark>.
       </p>
 
       <dl class="port-ficha" data-rev>
@@ -1189,43 +1208,25 @@ tr.dest td:first-child{color:var(--ink)}
 </section>
 
 
-<!-- ══════════ 7 · TU PARTE ══════════ universo trama ══════════ -->
+<!-- ══════════ 7 · QUÉ GANAN ══════════ universo trama ══════════ -->
 <section class="esc" id="tuparte" data-universo="trama">
-  <div class="estrato" data-vel=".42" aria-hidden="true"
-       style="left:-18vw;right:-18vw;top:3%;height:64%;
-              background:radial-gradient(50% 56% at 38% 36%,color-mix(in srgb,var(--u1) 20%,transparent),transparent 68%)"></div>
-
   <div class="marco">
-    <h2 class="tit h2" data-rev>Lo que necesitamos <em>de tu lado</em>.</h2>
-    <p class="cuerpo" style="margin-top:18px" data-rev>Tres cosas, y ninguna te toma más de una tarde. Con eso
-      entregamos en <mark>siete días hábiles</mark> desde que arrancamos.</p>
-
-    <div class="reqs">
-      <div class="req" data-rev>
-        <b>1</b>
-        <div><h4 class="h4">La lista, en la plantilla</h4>
-          <p>Te mandamos un Excel con las columnas listas: producto, precio, unidad, estado y una línea de
-            descripción. La llenas con los trece que ya tienes y nos la devuelves. Así la carga no te cuesta nada.</p></div>
-      </div>
-      <div class="req" data-rev>
-        <b>2</b>
-        <div><h4 class="h4">Confirmar el número y el horario</h4>
-          <p>El 304 474 0534 es el que pusimos en el botón. Si los pedidos entran por otro número, dínoslo. Y
-            necesitamos tus días y horas de atención para ponerlas en la página.</p></div>
-      </div>
-      <div class="req" data-rev>
-        <b>3</b>
-        <div><h4 class="h4">Decidir el nombre del enlace</h4>
-          <p>El dominio es tuyo y lo eliges tú: algo corto y fácil de dictar por teléfono. Nosotros lo registramos,
-            lo configuramos y te entregamos las claves.</p></div>
-      </div>
+    <h2 class="tit h2" data-rev>Qué ganan.</h2>
+    <div class="gana" data-rev>
+      <div class="g"><b>Un mensaje</b><span>en vez de trece. El pedido llega escrito, con cantidades
+        y total. Nadie transcribe nada.</span></div>
+      <div class="g"><b>Cero pedidos perdidos</b><span>por un «¿cuánto era la libra?» que nadie
+        alcanzó a contestar.</span></div>
+      <div class="g"><b>Precios al día</b><span>en un solo sitio. Se cambian una vez y quedan
+        cambiados para todos.</span></div>
+      <div class="g"><b>Un link que se dicta</b><span>por teléfono, se pega en el estado y se manda
+        una sola vez.</span></div>
     </div>
-
-    <p class="mini" style="margin-top:clamp(28px,3.6vw,40px)">Si algo de esta propuesta no aplica a como trabajan
-      ustedes, dínoslo y lo cambiamos. Preferimos ajustar el alcance antes que venderte algo que no vas a usar.</p>
+    <p class="cuerpo" style="margin-top:clamp(26px,3.2vw,36px)" data-rev>Si les sirve, respondan a este
+      mismo WhatsApp. Nos pasan la lista en un Excel que les mandamos y <mark>entregamos en siete días
+      hábiles</mark>. Si no les sirve, díganlo sin pena y no volvemos a escribir.</p>
   </div>
 </section>
-
 
 <!-- ══════════ 8 · CIERRE ══════════ universo flujo ══════════ -->
 <section class="esc cierre" id="cierre" data-universo="flujo">
