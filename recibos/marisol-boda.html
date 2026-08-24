@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Recibo · Marisol — Boda</title>
+<title>Recibo · Marisol y Alejo — Boda</title>
 <style>
 :root{
  --tinta:#14161f; --suave:#5a5f70; --tenue:#8b90a0;
@@ -73,6 +73,16 @@ td small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5}
 .total b{font-family:var(--disp);font-size:clamp(1.6rem,4vw,2.1rem);letter-spacing:-.02em;
  font-variant-numeric:tabular-nums}
 
+
+/* opcional: se ve claro que no está en el total */
+.opcional{margin-top:18px;padding:20px 22px;border:1px dashed var(--linea2);
+ border-radius:10px 26px 8px 22px}
+.opcional h3{font-family:var(--tech);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+ color:var(--tenue);margin-bottom:14px}
+.op{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+.op b{display:block;font-size:1rem;margin-bottom:3px}
+.op small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5;max-width:46ch}
+
 /* pago */
 .pago{margin-top:30px;padding:20px 22px;border:1px solid var(--linea);
  border-radius:8px 24px 7px 20px;background:var(--papel)}
@@ -121,7 +131,7 @@ td small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5}
   <p class="sub">Cobertura de matrimonio civil y ceremonia religiosa.</p>
 
   <dl class="datos">
-    <div><dt>Cliente</dt><dd>Marisol</dd></div>
+    <div><dt>Clientes</dt><dd>Marisol y Alejo</dd></div>
     <div><dt>Servicio</dt><dd>Fotografía y video de boda</dd></div>
     <div><dt>Estado</dt><dd>Por confirmar</dd></div>
   </dl>
@@ -159,26 +169,32 @@ td small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5}
         </td>
         <td class="n">$170.000</td>
       </tr>
-      <tr>
-        <td>
-          <b>Video de apertura de ceremonia</b>
-          <small>Grabación y edición de la pieza de entrada.</small>
-        </td>
-        <td class="n">$130.000</td>
-      </tr>
     </tbody>
   </table>
 
   <div class="total">
     <span>Total</span>
-    <b>$820.000</b>
+    <b>$690.000</b>
+  </div>
+
+  <div class="opcional">
+    <h3>Si lo quieren añadir</h3>
+    <div class="op">
+      <div>
+        <b>Video de apertura de ceremonia</b>
+        <small>Grabación y edición de la pieza de entrada. Se puede decidir
+          hasta una semana antes del 10 de octubre.</small>
+      </div>
+      <span class="n">$130.000</span>
+    </div>
   </div>
 
   <div class="pago">
     <h3>Forma de pago</h3>
     <ul>
-      <li><span><b>50 % al confirmar</b> — $410.000. Con esto quedan reservadas las dos fechas.</span></li>
-      <li><span><b>50 % contra entrega</b> — $410.000, al entregar el material editado.</span></li>
+      <li><span><b>50 % al confirmar</b> — $345.000. Con esto quedan reservadas las dos fechas.</span></li>
+      <li><span><b>50 % contra entrega</b> — $345.000, al entregar el material editado.</span></li>
+      <li><span>Si añaden el video, sus $130.000 se suman al pago final.</span></li>
       <li><span>Medios: transferencia, Nequi o efectivo.</span></li>
     </ul>
   </div>
@@ -194,7 +210,7 @@ td small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5}
     </div>
   </div>
 
-  <p class="gracias">Gracias, Marisol. Nos vemos el 1 de septiembre.</p>
+  <p class="gracias">Gracias, Marisol y Alejo. Nos vemos el 1 de septiembre.</p>
 
 </div>
 </body>
