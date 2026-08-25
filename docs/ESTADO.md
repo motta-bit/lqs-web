@@ -166,6 +166,16 @@ contestas a mano, migrarlo significa que dejas de contestar desde el celular.
 plantillas básicas enviadas a aprobación. Sin escribir código. Aquí decides lo
 del número.
 
+> Estado 25-ago-2026: las cuentas de Facebook e Instagram ya están vinculadas
+> entre sí. Falta la **verificación de empresa** del portafolio (necesita NIT y
+> cámara de comercio) y la decisión del número.
+
+**Categoría de la página.** Principal: *Agencia de publicidad* — es la que Meta
+reconoce para estudios que hacen marca, contenido y web, y la que habilita
+botón de contacto, servicios y catálogo. Secundarias: *Diseñador gráfico* y
+*Servicio de marketing*. En Instagram, categoría profesional *Agencia de
+publicidad* también, para que ambas coincidan.
+
 **Fase 2 — el puente.** Una Edge Function en Supabase que reciba el webhook,
 guarde los mensajes y responda. Las tablas de `docs/FACTURACION.md` y las del
 esquema de Distrito Perú ya sirven de base.
