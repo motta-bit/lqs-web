@@ -123,7 +123,7 @@ Las propuestas **no aparecen sueltas navegando**: se entregan al pedir cotizaci�
 
 | Qué | Esfuerzo | Bloqueado por |
 | --- | --- | --- |
-| Unión con Meta / WhatsApp Business | ver §4 | número ya disponible |
+| Unión con Meta / WhatsApp Business | ver §4 | verificación de empresa (NIT) |
 | Facturación interna, Fase 1 | 24 h | nada |
 | Hojas de impresión para los PDF de automatización y Distrito Perú | 4 h | nada |
 | Actualizar Notion con las tareas | 2 h | nada |
@@ -145,9 +145,18 @@ un sistema conteste solo. **Un número no puede estar en las dos a la vez**: al
 registrarlo en la API, deja de funcionar en la app del celular. Es reversible,
 pero toma días.
 
-Por eso la primera decisión es: **¿el número que tienes es el que quieres
-automatizar, o conviene uno nuevo?** Si es el que le das a tus clientes hoy y lo
-contestas a mano, migrarlo significa que dejas de contestar desde el celular.
+**Decidido (25-ago-2026): el número es el `+57 333 279 1710`** — el mismo que
+ya aparece en todo el sitio (873 enlaces `wa.me`) y en las propuestas. No hay
+número nuevo, así que no hay nada que cambiar en el código.
+
+La consecuencia es que ese número **hoy se contesta a mano** desde el celular.
+Por eso el alta tiene que hacerse con **Coexistence** activado, no con la
+migración normal: Coexistence deja el número en la Business App del celular *y*
+en la Cloud API al mismo tiempo. Se pierden algunas funciones de la app —
+principalmente los catálogos y las listas de difusión nativas, que pasan a
+manejarse desde la API— pero se conserva lo importante: poder abrir el chat y
+escribir a mano cuando la conversación lo pida. Sin Coexistence, registrar el
+número en la API lo saca de la app y quedas sin forma manual de contestar.
 
 ### Lo que se necesita
 
@@ -166,9 +175,10 @@ contestas a mano, migrarlo significa que dejas de contestar desde el celular.
 plantillas básicas enviadas a aprobación. Sin escribir código. Aquí decides lo
 del número.
 
-> Estado 25-ago-2026: las cuentas de Facebook e Instagram ya están vinculadas
-> entre sí. Falta la **verificación de empresa** del portafolio (necesita NIT y
-> cámara de comercio) y la decisión del número.
+> Estado 25-ago-2026: cuentas de Facebook e Instagram vinculadas y número
+> decidido (`+57 333 279 1710`, con Coexistence). Lo único que falta para
+> empezar es la **verificación de empresa** del portafolio, que necesita NIT y
+> cámara de comercio.
 
 **Categoría de la página.** Principal: *Agencia de publicidad* — es la que Meta
 reconoce para estudios que hacen marca, contenido y web, y la que habilita
@@ -190,7 +200,8 @@ días y semanas y depende de ellos. Conviene arrancarla antes que el código.
 
 ## 5. Lo que hay que decidir
 
-1. **¿Ese número o uno nuevo?** Es la decisión con consecuencia real.
+1. ~~**¿Ese número o uno nuevo?**~~ Resuelto: `+57 333 279 1710`, con
+   Coexistence. Ver §4.
 2. **¿Se mezcla a `master` ya**, o se sigue revisando en la copia?
 3. **¿Los precios se quedan como están** o se hace la actualización global que
    quedó anotada en `docs/PRECIOS.md`?
