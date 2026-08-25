@@ -180,6 +180,20 @@ del número.
 > empezar es la **verificación de empresa** del portafolio, que necesita NIT y
 > cámara de comercio.
 
+**La página de Facebook.** ID `1228070560397914`. El 25-ago-2026 se llenaron
+por API el «acerca de», la descripción, el sitio, el teléfono y el correo, con
+la voz de marca. Lo que **no** se puede hacer por API y queda a mano:
+
+- **Cambiar la categoría.** Hoy está en *Solo por diversión*, que es categoría
+  de afición: bloquea servicios, catálogo y botón de contacto, y fue la que
+  rechazó el campo `general_info`. Es el arreglo más urgente de la página.
+- **Cambiar el nombre.** Está como «lo que sea», en minúscula. Conviene
+  *LQS · Lo Que Sea*: es el nombre que verá el cliente y el que después tiene
+  que parecerse al nombre para mostrar del número en WhatsApp Manager, o Meta
+  lo rechaza.
+- **Reclamar el usuario** (`@…`). Sin él la URL es un número de 16 dígitos y no
+  se puede compartir de forma legible.
+
 **Categoría de la página.** Principal: *Agencia de publicidad* — es la que Meta
 reconoce para estudios que hacen marca, contenido y web, y la que habilita
 botón de contacto, servicios y catálogo. Secundarias: *Diseñador gráfico* y
