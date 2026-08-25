@@ -15,7 +15,13 @@ Estudio creativo en Medellín, Colombia. Resuelve marca, sitio web,
 automatización, audiovisual y producto. Vende a empresas, restaurantes, hoteles,
 creadores y marcas propias.
 
-- **Contacto:** WhatsApp +57 333 279 1710 · cdparravargas@gmail.com
+- **Contacto:** WhatsApp +57 333 279 1710 · loqueseaproductionsp1@gmail.com
+  (correo del negocio; el sitio todavía publica `cdparravargas@gmail.com`)
+- **Redes:** Instagram `@loquesea.tv` · TikTok `@loquesea_tv` ·
+  YouTube `@LQSloquesea` · X `@LoQueSea_TV_` ·
+  Facebook, página ID `1228070560397914`
+  Los handles **no son consistentes entre sí**. Al escribirlos, cópialos tal
+  cual de esta lista: no son deducibles unos de otros.
 - **Tagline:** *Creamos lo que sea. Resolvemos lo que venga.*
 - **Concepto central:** Caos Creativo Organizado. El caos es la masa madre —
   energía pura antes de ser idea. LQS es el catalizador que la vuelve solución
