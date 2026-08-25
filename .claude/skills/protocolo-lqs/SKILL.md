@@ -16,7 +16,11 @@ automatización, audiovisual y producto. Vende a empresas, restaurantes, hoteles
 creadores y marcas propias.
 
 - **Contacto:** WhatsApp +57 333 279 1710 · loqueseaproductionsp1@gmail.com
-  (correo del negocio; el sitio todavía publica `cdparravargas@gmail.com`)
+  Es el correo del negocio y **el único** que va publicado: sitio, fichas,
+  propuestas, recibos y la página de Facebook. Provisional — el usuario lo
+  cambiará por uno con dominio propio, así que va siempre como cadena literal,
+  nunca partido ni construido por concatenación, para poder reemplazarlo de una
+  pasada.
 - **Redes:** Instagram `@loquesea.tv` · TikTok `@loquesea_tv` ·
   YouTube `@LQSloquesea` · X `@LoQueSea_TV_` ·
   Facebook, página ID `1228070560397914`

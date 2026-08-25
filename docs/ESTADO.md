@@ -185,8 +185,9 @@ del número.
 descripción, el sitio, el teléfono y el correo, con la voz de marca y hablando
 del mundo LQS: agencia **y** productora, más el canal de YouTube.
 
-- **Correo público:** `loqueseaproductionsp1@gmail.com`. En el sitio todavía
-  aparece `cdparravargas@gmail.com` — hay que decidir si se unifica.
+- **Correo público:** `loqueseaproductionsp1@gmail.com`, ya unificado en los 21
+  archivos del sitio, las fichas, las propuestas y el recibo. Es provisional:
+  se cambiará por uno con dominio propio cuando el dominio exista.
 - **`general_info` no se puede escribir por API** en esta página. Falla con
   `OAuthException code 1` incluso con la categoría de negocio, así que no era
   la categoría: el campo simplemente no acepta escritura. Va a mano o no va.
