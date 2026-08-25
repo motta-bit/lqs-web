@@ -180,13 +180,19 @@ del número.
 > empezar es la **verificación de empresa** del portafolio, que necesita NIT y
 > cámara de comercio.
 
-**La página de Facebook.** ID `1228070560397914`. El 25-ago-2026 se llenaron
-por API el «acerca de», la descripción, el sitio, el teléfono y el correo, con
-la voz de marca. Lo que **no** se puede hacer por API y queda a mano:
+**La página de Facebook.** ID `1228070560397914`. Categoría ya corregida a
+*Agencia de publicidad*. El 25-ago-2026 se llenaron por API el «acerca de», la
+descripción, el sitio, el teléfono y el correo, con la voz de marca y hablando
+del mundo LQS: agencia **y** productora, más el canal de YouTube.
 
-- **Cambiar la categoría.** Hoy está en *Solo por diversión*, que es categoría
-  de afición: bloquea servicios, catálogo y botón de contacto, y fue la que
-  rechazó el campo `general_info`. Es el arreglo más urgente de la página.
+- **Correo público:** `loqueseaproductionsp1@gmail.com`. En el sitio todavía
+  aparece `cdparravargas@gmail.com` — hay que decidir si se unifica.
+- **`general_info` no se puede escribir por API** en esta página. Falla con
+  `OAuthException code 1` incluso con la categoría de negocio, así que no era
+  la categoría: el campo simplemente no acepta escritura. Va a mano o no va.
+
+Lo que **no** se puede hacer por API y queda a mano:
+
 - **Cambiar el nombre.** Está como «lo que sea», en minúscula. Conviene
   *LQS · Lo Que Sea*: es el nombre que verá el cliente y el que después tiene
   que parecerse al nombre para mostrar del número en WhatsApp Manager, o Meta
