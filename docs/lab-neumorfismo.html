@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es" data-tema="oscuro" data-univ="flujo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboratorio · Neumorfismo LQS</title>
+<meta name="description" content="Sistema visual propuesto para LQS: relieve neumórfico con esquina ancla y color Memphis racionado a controles, cargas y microinteracciones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'"
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;700&family=Chakra+Petch:wght@600;700&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   SISTEMA NEUMÓRFICO LQS
+
+   Tres decisiones gobiernan todo lo de abajo:
+
+   1. El relieve nunca es el único portador de significado. El neumorfismo
+      clásico apuesta todo a dos sombras sobre un plano del mismo color, y
+      por eso reprueba contraste. Aquí el relieve da la sensación táctil;
+      el filo de 1px y el contraste real del texto dan la legibilidad.
+      Si apagas las sombras, la interfaz sigue siendo usable.
+
+   2. El fondo es de tono medio, nunca blanco ni negro. El relieve necesita
+      espacio para una sombra más oscura Y una luz más clara. Sobre #000 no
+      hay luz posible; sobre #fff no hay sombra.
+
+   3. La esquina ancla sobrevive. El neumorfismo genérico redondea igual las
+      cuatro esquinas y por eso todos los sitios neumórficos se parecen.
+      Aquí la sombra sigue el radio asimétrico, que es lo que ya distingue
+      a LQS. Es la razón por la que esto no parece una plantilla.
+
+   El color Memphis vive en tres lugares y en ningún otro: el filo de los
+   controles, las cargas, y el hero. Las superficies se quedan neutras.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── paleta: dos mundos, no un filtro ────────────────────────────── */
+:root{
+  /* claro — «papel» */
+  --base:#e7eaf2;  --luz:#fdfefe;  --sombra:#bcc2d4;
+  --tinta:#171b28;  --media:#525872;  --tenue:#828aa5;
+  --filo:rgba(23,27,40,.10);  --filo2:rgba(23,27,40,.20);
+
+  /* memphis — el vocabulario de color, saturado a propósito */
+  --m-violeta:#6d43ff;  --m-cian:#0093b8;  --m-rosa:#e01a63;
+  --m-ambar:#c25a00;    --m-verde:#0f8a4d; --m-azul:#2f5ce0;
+
+  /* profundidad — tres escalas, no más */
+  --d1:3px;  --b1:7px;    /* controles  */
+  --d2:6px;  --b2:15px;   /* piezas     */
+  --d3:11px; --b3:28px;   /* planos     */
+
+  /* esquina ancla — el radio del universo activo */
+  --curva:1;
+  --r-g:calc(40px * var(--curva));  --r-gm:calc(16px * var(--curva));
+  --r-m:calc(26px * var(--curva));  --r-mm:calc(10px * var(--curva));
+  --r-c:calc(16px * var(--curva));  --r-cm:calc(6px  * var(--curva));
+
+  /* movimiento */
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --dur-fast:160ms;  --dur-ui:220ms;
+
+  --disp:'Bricolage Grotesque',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+  --tech:'Chakra Petch',ui-monospace,monospace;
+
+  --ac:var(--m-violeta);
+}
+:root[data-tema="oscuro"]{
+  /* oscuro — «grafito». Dos avisos que costaron una pasada de más:
+     NO es casi-negro (el relieve moriría), y la separación entre luz y
+     sombra tiene que ser MAYOR que en claro. En oscuro el ojo distingue
+     mucho peor los saltos de luminancia, así que copiar el delta del modo
+     claro deja las piezas planas. */
+  --base:#272d3a;  --luz:#3b4455;  --sombra:#11141c;
+  --tinta:#eef1f8;  --media:#a4abc0;  --tenue:#727a92;
+  --filo:rgba(238,241,248,.09);  --filo2:rgba(238,241,248,.18);
+
+  --m-violeta:#a48bff;  --m-cian:#3ddcff;  --m-rosa:#ff5c93;
+  --m-ambar:#ffa14a;    --m-verde:#4ade80; --m-azul:#7ea2ff;
+}
+
+/* el temperamento de cada universo gobierna la curva y el acento */
+:root[data-univ="flujo"]{--curva:1;    --ac:var(--m-violeta)}
+:root[data-univ="brasa"]{--curva:.82;  --ac:var(--m-ambar)}
+:root[data-univ="pulso"]{--curva:.64;  --ac:var(--m-rosa)}
+:root[data-univ="trama"]{--curva:.34;  --ac:var(--m-verde)}
+:root[data-univ="hielo"]{--curva:.20;  --ac:var(--m-azul)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--base);color:var(--tinta);
+  font-family:var(--sans);line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  transition:background var(--dur-ui) var(--ease-out),color var(--dur-ui) var(--ease-out);
+  padding:clamp(20px,4vw,52px) clamp(16px,4vw,40px) 80px;
+}
+.env{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(40px,6vw,72px)}
+
+/* ── las dos primitivas del sistema ──────────────────────────────── */
+/* relieve: la pieza sale del plano */
+.rel{
+  background:var(--base);
+  box-shadow:
+    var(--d2) var(--d2) var(--b2) var(--sombra),
+    calc(var(--d2) * -1) calc(var(--d2) * -1) var(--b2) var(--luz);
+  border:1px solid var(--filo);
+}
+/* incrustado: la pieza se hunde en el plano. Es lo que te gustó. */
+.inc{
+  background:var(--base);
+  box-shadow:
+    inset var(--d2) var(--d2) var(--b2) var(--sombra),
+    inset calc(var(--d2) * -1) calc(var(--d2) * -1) var(--b2) var(--luz);
+  border:1px solid var(--filo);
+}
+
+/* ── la esquina ancla, en relieve ────────────────────────────────── */
+.anc          {border-radius:var(--r-m) var(--r-mm) var(--r-m) var(--r-mm)}
+.anc:nth-child(4n+1){border-radius:var(--r-m) var(--r-mm) var(--r-mm) var(--r-mm)}
+.anc:nth-child(4n+2){border-radius:var(--r-mm) var(--r-m) var(--r-mm) var(--r-mm)}
+.anc:nth-child(4n+3){border-radius:var(--r-mm) var(--r-mm) var(--r-m) var(--r-mm)}
+.anc:nth-child(4n)  {border-radius:var(--r-mm) var(--r-mm) var(--r-mm) var(--r-m)}
+
+/* ── tipografía ──────────────────────────────────────────────────── */
+h1{font-family:var(--disp);font-size:clamp(2.2rem,5.6vw,3.6rem);font-weight:800;
+   line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
+h2{font-family:var(--disp);font-size:clamp(1.4rem,3vw,1.95rem);font-weight:700;
+   letter-spacing:-.02em}
+h3{font-family:var(--disp);font-size:1.06rem;font-weight:700;letter-spacing:-.01em}
+.lede{color:var(--media);font-size:clamp(1rem,1.7vw,1.12rem);max-width:60ch}
+.nota{color:var(--media);font-size:.9rem;max-width:64ch}
+.dato{font-family:var(--tech);font-size:.66rem;font-weight:700;letter-spacing:.2em;
+      text-transform:uppercase;color:var(--tenue)}
+code{font-family:var(--tech);font-size:.86em;color:var(--ac)}
+
+/* ── cabecera ────────────────────────────────────────────────────── */
+header{display:flex;flex-direction:column;gap:16px}
+.mandos{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+
+/* ── secciones ───────────────────────────────────────────────────── */
+section{display:flex;flex-direction:column;gap:20px}
+.sec-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:18px}
+
+/* ── piezas de muestra ───────────────────────────────────────────── */
+.pieza{padding:22px;display:flex;flex-direction:column;gap:7px}
+.pieza b{font-family:var(--disp);font-size:1rem;font-weight:700}
+.pieza small{color:var(--media);font-size:.86rem;line-height:1.55}
+
+/* ── BOTONES ─────────────────────────────────────────────────────────
+   El relieve da el volumen. El color Memphis entra solo por el filo y,
+   al presionar, por la sombra interior teñida. La superficie nunca se
+   llena de color: por eso una página entera de botones no cansa.      */
+.bt{
+  font:700 .92rem/1 var(--sans);color:var(--tinta);
+  padding:14px 22px;cursor:pointer;position:relative;
+  background:var(--base);
+  border:1px solid var(--filo2);
+  border-radius:var(--r-c) var(--r-cm) var(--r-c) var(--r-cm);
+  box-shadow:
+    var(--d1) var(--d1) var(--b1) var(--sombra),
+    calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz);
+  transition:box-shadow var(--dur-fast) var(--ease-out),
+             translate var(--dur-fast) var(--ease-out),
+             border-color var(--dur-fast) var(--ease-out),
+             color var(--dur-fast) var(--ease-out);
+}
+/* el acento vive en el filo, no en el relleno */
+.bt.pri{border-color:var(--ac);color:var(--ac)}
+.bt.pri::after{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;
+  border:1px solid var(--ac);opacity:.35;pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  .bt:hover{translate:0 -2px;border-color:var(--ac);color:var(--ac);
+    box-shadow:
+      calc(var(--d1) + 2px) calc(var(--d1) + 2px) calc(var(--b1) + 4px) var(--sombra),
+      calc((var(--d1) + 2px) * -1) calc((var(--d1) + 2px) * -1) calc(var(--b1) + 4px) var(--luz);}
+}
+/* presionado: la pieza se hunde de verdad, y ahí sí aparece el color */
+.bt:active{
+  translate:0 0;
+  box-shadow:
+    inset var(--d1) var(--d1) var(--b1) var(--sombra),
+    inset calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz),
+    inset 0 0 0 2px color-mix(in oklab, var(--ac) 34%, transparent);
+}
+.bt:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.bt[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;
+  background:transparent;border-color:var(--filo)}
+.bt.chico{padding:9px 15px;font-size:.82rem;
+  border-radius:11px 4px 11px 4px}
+.bt.redondo{width:44px;height:44px;padding:0;border-radius:50%;
+  display:grid;place-items:center;font-size:1rem}
+.fila{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* ── CARGAS ──────────────────────────────────────────────────────────
+   Aquí es donde el color explota. Es el único momento en que la interfaz
+   se pone Memphis entera, y dura lo que dura la espera.                */
+.cargas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.carga{padding:26px 22px;display:flex;flex-direction:column;gap:16px;align-items:center}
+.carga span{font-family:var(--tech);font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--tenue)}
+
+/* 1 · barras que rebotan, cada una su color */
+.barras{display:flex;gap:6px;align-items:flex-end;height:38px}
+.barras i{width:8px;border-radius:4px 1px 4px 1px;height:100%;
+  transform-origin:bottom;animation:brinca 1.05s var(--ease-out) infinite}
+.barras i:nth-child(1){background:var(--m-violeta);animation-delay:0s}
+.barras i:nth-child(2){background:var(--m-rosa);animation-delay:.1s}
+.barras i:nth-child(3){background:var(--m-ambar);animation-delay:.2s}
+.barras i:nth-child(4){background:var(--m-verde);animation-delay:.3s}
+.barras i:nth-child(5){background:var(--m-cian);animation-delay:.4s}
+@keyframes brinca{0%,100%{scale:1 .28}50%{scale:1 1}}
+
+/* 2 · surco incrustado con una veta de color corriendo dentro */
+.surco{width:100%;height:14px;border-radius:7px;overflow:hidden;position:relative;
+  background:var(--base);
+  box-shadow:inset 2px 2px 5px var(--sombra),inset -2px -2px 5px var(--luz);}
+.surco i{position:absolute;inset:0;border-radius:7px;
+  background:linear-gradient(90deg,var(--m-violeta),var(--m-rosa),var(--m-ambar),var(--m-verde),var(--m-cian));
+  background-size:260% 100%;
+  animation:corre 1.7s linear infinite, ancho 2.4s var(--ease-out) infinite}
+@keyframes corre{to{background-position:260% 0}}
+@keyframes ancho{0%{clip-path:inset(0 100% 0 0)}55%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+
+/* 3 · pastilla que late — para «guardando» */
+.late{width:46px;height:46px;border-radius:50%;background:var(--base);
+  box-shadow:inset 3px 3px 7px var(--sombra),inset -3px -3px 7px var(--luz);
+  display:grid;place-items:center}
+.late i{width:16px;height:16px;border-radius:50%;background:var(--ac);
+  animation:latido 1.25s var(--ease-out) infinite}
+@keyframes latido{0%,100%{scale:.55;opacity:.5}50%{scale:1;opacity:1}}
+
+/* ── CAMPOS: lo incrustado en su hábitat natural ─────────────────── */
+.campos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.campo{display:flex;flex-direction:column;gap:7px}
+.campo label{font-size:.84rem;font-weight:700;color:var(--media)}
+.campo input,.campo select{
+  font:500 .95rem/1 var(--sans);color:var(--tinta);
+  padding:14px 16px;width:100%;
+  background:var(--base);border:1px solid var(--filo);
+  border-radius:var(--r-c) var(--r-cm) var(--r-c) var(--r-cm);
+  box-shadow:inset var(--d1) var(--d1) var(--b1) var(--sombra),
+             inset calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz);
+  transition:border-color var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-fast) var(--ease-out);
+}
+.campo input::placeholder{color:var(--tenue)}
+.campo input:focus,.campo select:focus{
+  outline:none;border-color:var(--ac);
+  box-shadow:inset var(--d1) var(--d1) var(--b1) var(--sombra),
+             inset calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz),
+             0 0 0 3px color-mix(in oklab, var(--ac) 26%, transparent);
+}
+.campo .ayuda{font-size:.8rem;color:var(--tenue)}
+.campo.mal input{border-color:var(--m-rosa)}
+.campo.mal .ayuda{color:var(--m-rosa);font-weight:600}
+
+/* interruptor */
+.sw{display:flex;align-items:center;gap:11px;cursor:pointer;font-size:.9rem;font-weight:600}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw i{width:50px;height:28px;border-radius:14px;position:relative;flex:none;
+  background:var(--base);
+  box-shadow:inset 2px 2px 5px var(--sombra),inset -2px -2px 5px var(--luz);
+  transition:box-shadow var(--dur-ui) var(--ease-out)}
+.sw i::after{content:"";position:absolute;top:4px;left:4px;width:20px;height:20px;
+  border-radius:50%;background:var(--base);
+  box-shadow:2px 2px 4px var(--sombra),-2px -2px 4px var(--luz);
+  transition:translate var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out)}
+.sw input:checked + i::after{translate:22px 0;background:var(--ac)}
+.sw input:focus-visible + i{outline:2px solid var(--ac);outline-offset:3px}
+
+/* ── FICHA DE PLANETA ────────────────────────────────────────────── */
+.planetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(266px,1fr));gap:20px}
+.planeta{padding:0;overflow:hidden;display:flex;flex-direction:column;
+  transition:box-shadow var(--dur-ui) var(--ease-out),translate var(--dur-ui) var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+  .planeta:hover{translate:0 -3px;
+    box-shadow:
+      calc(var(--d2) + 3px) calc(var(--d2) + 3px) calc(var(--b2) + 7px) var(--sombra),
+      calc((var(--d2) + 3px) * -1) calc((var(--d2) + 3px) * -1) calc(var(--b2) + 7px) var(--luz);}
+}
+/* el disco: lo único con color pleno de toda la pieza */
+.disco{height:118px;position:relative;overflow:hidden;background:var(--base);
+  box-shadow:inset 0 -1px 0 var(--filo)}
+.disco b{position:absolute;border-radius:50%;filter:blur(19px);opacity:.85}
+.disco b:nth-child(1){width:112px;height:112px;left:-16px;top:-24px;background:var(--c1)}
+.disco b:nth-child(2){width:96px;height:96px;right:14px;top:8px;background:var(--c2)}
+.disco b:nth-child(3){width:74px;height:74px;left:44%;bottom:-30px;background:var(--c3)}
+.pl-cuerpo{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pl-cuerpo h3{color:var(--tinta)}
+.pl-cuerpo p{font-size:.88rem;color:var(--media);line-height:1.55;flex:1}
+.pl-pie{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:12px;margin-top:4px;border-top:1px solid var(--filo)}
+.precio{font-family:var(--tech);font-size:.92rem;font-weight:700;color:var(--tinta)}
+
+/* ── contraste: la prueba, no la promesa ─────────────────────────── */
+.prueba{padding:24px;display:flex;flex-direction:column;gap:12px}
+.prueba ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.prueba li{display:flex;gap:11px;align-items:baseline;font-size:.9rem;color:var(--media)}
+.prueba li b{font-family:var(--tech);font-size:.78rem;color:var(--m-verde);
+  flex:none;min-width:60px;font-weight:700}
+
+/* ── movimiento reducido ─────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .barras i,.surco i,.late i{animation:none}
+  .barras i{scale:1 .7}
+  .surco i{clip-path:none;opacity:.75}
+  .late i{scale:.8;opacity:.9}
+  .bt,.planeta,.campo input,.campo select,.sw i,.sw i::after,body{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+<div class="env">
+
+<header>
+  <div class="dato">LQS · propuesta de sistema visual</div>
+  <h1>Relieve, y el color donde se nota</h1>
+  <p class="lede">Neumorfismo para la superficie y el tacto. Memphis para los
+    controles, las cargas y el hero. Las dos cosas conviven porque nunca
+    ocupan el mismo sitio.</p>
+  <div class="mandos">
+    <button class="bt chico" id="bTema" type="button">Cambiar a claro</button>
+    <button class="bt chico" data-u="flujo" type="button">flujo</button>
+    <button class="bt chico" data-u="brasa" type="button">brasa</button>
+    <button class="bt chico" data-u="pulso" type="button">pulso</button>
+    <button class="bt chico" data-u="trama" type="button">trama</button>
+    <button class="bt chico" data-u="hielo" type="button">hielo</button>
+  </div>
+  <p class="nota">El universo activo cambia dos cosas a la vez: el acento y
+    <code>--curva</code>, que es cuánto se redondea la esquina ancla. En
+    <code>hielo</code> las piezas casi no tienen curva; en <code>flujo</code>
+    son gotas. Es el mismo sistema, con otro temperamento.</p>
+</header>
+
+<!-- ── 1 · las dos primitivas ─────────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Las dos primitivas</h2><span class="dato">Relieve · Incrustado</span></div>
+  <p class="nota">Todo el sistema se construye con estas dos. Nada sale de aquí.</p>
+  <div class="rejilla">
+    <div class="pieza rel anc"><b>Relieve</b>
+      <small>La pieza sale del plano. Para lo que se puede tocar: tarjetas, botones en reposo, paneles.</small></div>
+    <div class="pieza inc anc"><b>Incrustado</b>
+      <small>La pieza se hunde. Para lo que recibe: campos, surcos de progreso, un botón presionado.</small></div>
+    <div class="pieza rel anc"><b>El filo de 1px</b>
+      <small>Va en las dos. Es el seguro: si el monitor aplasta las sombras, la pieza sigue teniendo borde.</small></div>
+    <div class="pieza inc anc"><b>Fondo de tono medio</b>
+      <small>Ni blanco ni negro. El relieve necesita sitio para una sombra más oscura y una luz más clara.</small></div>
+  </div>
+</section>
+
+<!-- ── 2 · botones ────────────────────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Botones</h2><span class="dato">El color entra por el filo</span></div>
+  <p class="nota">La superficie del botón nunca se llena de color. El acento vive
+    en el borde, y al presionar aparece por dentro, teñido. Por eso una pantalla
+    con ocho botones no cansa: son ocho piezas neutras con un filo de color.</p>
+  <div class="fila">
+    <button class="bt pri" type="button">Cotizar mi proyecto</button>
+    <button class="bt" type="button">Ver las muestras</button>
+    <button class="bt chico" type="button">Secundario</button>
+    <button class="bt redondo" type="button" aria-label="Cambiar tema">◐</button>
+    <button class="bt" type="button" disabled>No disponible</button>
+  </div>
+  <p class="nota">Presiónalos. El hundido no es una animación de adorno: es la
+    misma pieza con las sombras invertidas, que es exactamente lo que hace un
+    botón físico.</p>
+</section>
+
+<!-- ── 3 · cargas ─────────────────────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Cargas</h2><span class="dato">Aquí sí explota</span></div>
+  <p class="nota">Es el único momento en que la interfaz se pone Memphis entera.
+    Dura lo que dura la espera y luego desaparece, así que puede ser tan fuerte
+    como quiera sin volverse agotadora.</p>
+  <div class="cargas">
+    <div class="carga rel anc">
+      <div class="barras"><i></i><i></i><i></i><i></i><i></i></div>
+      <span>Cargando muestras</span>
+    </div>
+    <div class="carga rel anc">
+      <div class="surco"><i></i></div>
+      <span>Subiendo archivo</span>
+    </div>
+    <div class="carga rel anc">
+      <div class="late"><i></i></div>
+      <span>Guardando</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4 · campos ─────────────────────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Campos</h2><span class="dato">Lo incrustado en su casa</span></div>
+  <p class="nota">Un campo de texto es un hueco. El neumorfismo lo dice sin
+    explicarlo, y de paso resuelve el peor problema de los formularios: saber
+    dónde se puede escribir.</p>
+  <div class="campos">
+    <div class="campo">
+      <label for="c1">Cómo te llamas</label>
+      <input id="c1" type="text" placeholder="Tu nombre">
+    </div>
+    <div class="campo">
+      <label for="c2">Qué necesitas</label>
+      <select id="c2">
+        <option>Marca desde cero</option><option>Sitio web</option>
+        <option>Automatización de WhatsApp</option><option>Video y foto</option>
+      </select>
+    </div>
+    <div class="campo mal">
+      <label for="c3">Tu WhatsApp</label>
+      <input id="c3" type="tel" value="300 12" aria-describedby="a3">
+      <span class="ayuda" id="a3">Faltan dígitos. Son diez, empezando por 3.</span>
+    </div>
+  </div>
+  <div class="fila" style="margin-top:4px">
+    <label class="sw"><input type="checkbox" checked><i></i>Quiero el resumen por correo</label>
+    <label class="sw"><input type="checkbox"><i></i>Tengo material listo</label>
+  </div>
+</section>
+
+<!-- ── 5 · fichas de planeta ──────────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Fichas de planeta</h2><span class="dato">La pieza que más se repite</span></div>
+  <p class="nota">El disco de arriba es lo único con color pleno de toda la
+    tarjeta, y lleva la paleta de su universo. El resto es relieve neutro. Fíjate
+    en que ninguna vecina repite esquina: eso es lo que impide que nueve
+    tarjetas se lean como una rejilla de PowerPoint.</p>
+  <div class="planetas">
+    <article class="planeta rel anc" style="--c1:#6d43ff;--c2:#00b4d8;--c3:#e01a63">
+      <div class="disco"><b></b><b></b><b></b></div>
+      <div class="pl-cuerpo">
+        <h3>Marca para empresas</h3>
+        <p>Identidad, aplicaciones y el manual para que nadie la rompa después.</p>
+        <div class="pl-pie"><span class="precio">desde $1.850.000</span>
+          <button class="bt chico" type="button">Ver ficha</button></div>
+      </div>
+    </article>
+    <article class="planeta rel anc" style="--c1:#ff8a3d;--c2:#ffd166;--c3:#e0264a">
+      <div class="disco"><b></b><b></b><b></b></div>
+      <div class="pl-cuerpo">
+        <h3>Automatización</h3>
+        <p>Tu WhatsApp contesta la carta, toma la reserva y cobra. También un domingo.</p>
+        <div class="pl-pie"><span class="precio">desde $2.400.000</span>
+          <button class="bt chico" type="button">Ver ficha</button></div>
+      </div>
+    </article>
+    <article class="planeta rel anc" style="--c1:#4ade80;--c2:#2fb8a3;--c3:#0f5132">
+      <div class="disco"><b></b><b></b><b></b></div>
+      <div class="pl-cuerpo">
+        <h3>Productora</h3>
+        <p>Video y foto con equipo propio. Comerciales, videoclips y contenido para redes.</p>
+        <div class="pl-pie"><span class="precio">desde $980.000</span>
+          <button class="bt chico" type="button">Ver ficha</button></div>
+      </div>
+    </article>
+    <article class="planeta rel anc" style="--c1:#e6c877;--c2:#d98aa6;--c3:#8b5cf6">
+      <div class="disco"><b></b><b></b><b></b></div>
+      <div class="pl-cuerpo">
+        <h3>Express</h3>
+        <p>Piezas sueltas resueltas rápido, cuando el trabajo no da para un proyecto entero.</p>
+        <div class="pl-pie"><span class="precio">desde $95.000</span>
+          <button class="bt chico" type="button">Ver ficha</button></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 6 · la prueba de contraste ─────────────────────────────── -->
+<section>
+  <div class="sec-t"><h2>Por qué esto sí se lee</h2><span class="dato">El punto débil, resuelto</span></div>
+  <div class="prueba inc anc">
+    <p class="nota" style="max-width:none">El neumorfismo tiene fama de ilegible,
+      y es merecida: el estilo clásico pone texto gris claro sobre fondo gris
+      claro y confía todo a dos sombras. Tres reglas lo evitan aquí.</p>
+    <ul>
+      <li><b>12,7:1</b><span>El texto principal contra el fondo en oscuro, y 14,3:1 en claro. Medidos en el navegador, no estimados. El mínimo exigido es 4,5:1.</span></li>
+      <li><b>1px</b><span>Todo lo interactivo lleva filo. Si las sombras no se ven, el borde sí.</span></li>
+      <li><b>Nunca solo</b><span>El relieve acompaña, no informa. Un error dice qué pasó con palabras y color, no hundiéndose.</span></li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<script>
+/* Tema y universo. Sin dependencias: es la misma regla del sitio. */
+const raiz = document.documentElement, bt = document.getElementById('bTema');
+const rotulo = () => bt.textContent =
+  raiz.dataset.tema === 'oscuro' ? 'Cambiar a claro' : 'Cambiar a oscuro';
+bt.addEventListener('click', () => {
+  raiz.dataset.tema = raiz.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+  rotulo();
+});
+document.querySelectorAll('[data-u]').forEach(b =>
+  b.addEventListener('click', () => raiz.dataset.univ = b.dataset.u));
+rotulo();
+</script>
+</body>
+</html>
