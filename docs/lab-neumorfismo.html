@@ -21,9 +21,12 @@
       el filo de 1px y el contraste real del texto dan la legibilidad.
       Si apagas las sombras, la interfaz sigue siendo usable.
 
-   2. El fondo es de tono medio, nunca blanco ni negro. El relieve necesita
-      espacio para una sombra más oscura Y una luz más clara. Sobre #000 no
-      hay luz posible; sobre #fff no hay sombra.
+   2. Hay DOS fondos, y son capas distintas. El lienzo (`--fondo`) es casi
+      negro o casi blanco, y ahí flota el aura: el color necesita un extremo
+      para brillar. El plano (`--base`) es de tono medio y translúcido, y
+      ahí vive el relieve: una sombra necesita sitio para ser más oscura Y
+      más clara que su superficie, cosa imposible sobre #000 o #fff.
+      Separarlos es lo que permite tener aura mística y relieve a la vez.
 
    3. La esquina ancla sobrevive. El neumorfismo genérico redondea igual las
       cuatro esquinas y por eso todos los sitios neumórficos se parecen.
@@ -36,7 +39,13 @@
 
 /* ── paleta: dos mundos, no un filtro ────────────────────────────── */
 :root{
-  /* claro — «papel» */
+  /* claro — «papel»
+     --fondo es el lienzo (casi blanco) donde vive el aura.
+     --base es el plano de tono medio donde vive el relieve.
+     Son dos cosas distintas y ahí está el truco: el aura necesita un lienzo
+     extremo para brillar, el relieve necesita un tono medio para existir.
+     Antes peleaban por el mismo píxel; ahora ocupan capas distintas. */
+  --fondo:#f7f8fc;
   --base:#e7eaf2;  --luz:#fdfefe;  --sombra:#bcc2d4;
   --tinta:#171b28;  --media:#525872;  --tenue:#828aa5;
   --filo:rgba(23,27,40,.10);  --filo2:rgba(23,27,40,.20);
@@ -72,8 +81,9 @@
      sombra tiene que ser MAYOR que en claro. En oscuro el ojo distingue
      mucho peor los saltos de luminancia, así que copiar el delta del modo
      claro deja las piezas planas. */
+  --fondo:#07080d;
   --base:#272d3a;  --luz:#3b4455;  --sombra:#11141c;
-  --tinta:#eef1f8;  --media:#a4abc0;  --tenue:#727a92;
+  --tinta:#eef1f8;  --media:#a4abc0;  --tenue:#8a92aa;
   --filo:rgba(238,241,248,.09);  --filo2:rgba(238,241,248,.18);
 
   --m-violeta:#a48bff;  --m-cian:#3ddcff;  --m-rosa:#ff5c93;
@@ -90,13 +100,66 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:var(--base);color:var(--tinta);
+  background:var(--fondo);color:var(--tinta);
   font-family:var(--sans);line-height:1.62;
   -webkit-font-smoothing:antialiased;
   transition:background var(--dur-ui) var(--ease-out),color var(--dur-ui) var(--ease-out);
   padding:clamp(20px,4vw,52px) clamp(16px,4vw,40px) 80px;
 }
-.env{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(40px,6vw,72px)}
+.env{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(28px,4vw,44px);position:relative;z-index:1}
+
+/* ── EL AURA ─────────────────────────────────────────────────────────
+   Cinco masas de color a la deriva sobre el lienzo. Van en una capa fija
+   y sin eventos de puntero: si viajaran con el scroll, el desenfoque se
+   repintaría en cada cuadro y el móvil de gama media se arrodillaría.
+   El desenfoque es enorme a propósito. Una mancha de color nítida es una
+   mancha; una mancha de 120px de desenfoque es atmósfera.               */
+/* Dos capas, y hacen falta las dos. La de fuera queda pegada al viewport y
+   recorta; la de dentro se sale 18vmax por cada lado para que el desenfoque
+   no muera contra un borde duro. Así el aura no puede aportar ancho fantasma
+   al documento, haga lo que haga la deriva. */
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aura > div{position:absolute;inset:-18vmax;
+  filter:blur(80px) saturate(1.25);opacity:.62}
+.aura b{position:absolute;border-radius:50%;display:block;
+  animation:deriva var(--t) var(--ease-out) infinite alternate}
+.aura b:nth-child(1){width:46vmax;height:46vmax;left:-6vmax; top:-8vmax;
+  background:var(--m-violeta);--t:19s;animation-delay:-2s}
+.aura b:nth-child(2){width:38vmax;height:38vmax;right:-4vmax;top:4vmax;
+  background:var(--m-cian);   --t:23s;animation-delay:-7s}
+.aura b:nth-child(3){width:42vmax;height:42vmax;left:24vmax;bottom:-10vmax;
+  background:var(--m-rosa);   --t:27s;animation-delay:-11s}
+.aura b:nth-child(4){width:32vmax;height:32vmax;right:12vmax;bottom:2vmax;
+  background:var(--m-ambar);  --t:21s;animation-delay:-4s}
+.aura b:nth-child(5){width:28vmax;height:28vmax;left:34vmax;top:16vmax;
+  background:var(--m-verde);  --t:25s;animation-delay:-15s}
+@keyframes deriva{
+  from{translate:0 0;         scale:1}
+  to  {translate:9vmax -7vmax;scale:1.28}
+}
+/* En claro el aura tiene que empujar más: sobre casi-blanco un color
+   translúcido se lava enseguida. */
+:root:not([data-tema="oscuro"]) .aura > div{opacity:.34;filter:blur(88px) saturate(1.7)}
+
+/* ── EL PLANO ────────────────────────────────────────────────────────
+   El puente entre las dos capas. Es tono medio, así que el relieve
+   funciona encima; es translúcido, así que el aura respira por debajo y
+   cada sección se tiñe distinto según qué masa le pase por detrás.      */
+.plano{
+  background:color-mix(in oklab, var(--base) 82%, transparent);
+  backdrop-filter:blur(26px) saturate(1.25);
+  -webkit-backdrop-filter:blur(26px) saturate(1.25);
+  border:1px solid var(--filo2);
+  border-radius:var(--r-g) var(--r-gm) var(--r-g) var(--r-gm);
+  padding:clamp(22px,3.4vw,38px);
+  box-shadow:0 22px 70px rgba(0,0,0,.20);
+}
+.plano:nth-of-type(even){border-radius:var(--r-gm) var(--r-g) var(--r-gm) var(--r-g)}
+/* Donde no hay soporte de backdrop-filter, el plano se vuelve opaco.
+   Se pierde el brillo, no la legibilidad. */
+@supports not (backdrop-filter:blur(1px)){
+  .plano{background:var(--base)}
+}
 
 /* ── las dos primitivas del sistema ──────────────────────────────── */
 /* relieve: la pieza sale del plano */
@@ -136,7 +199,23 @@ h3{font-family:var(--disp);font-size:1.06rem;font-weight:700;letter-spacing:-.01
 code{font-family:var(--tech);font-size:.86em;color:var(--ac)}
 
 /* ── cabecera ────────────────────────────────────────────────────── */
-header{display:flex;flex-direction:column;gap:16px}
+/* La cabecera es el único texto que vive sobre el aura desnuda, sin plano.
+   Sin esto, el contraste depende de por dónde ande flotando una mancha en
+   ese segundo, que es lo mismo que no tener contraste: medido dio 1,68:1
+   cuando la masa cian le pasaba por detrás. El velo devuelve el lienzo bajo
+   el texto y deja que el aura siga respirando alrededor. */
+header{display:flex;flex-direction:column;gap:16px;position:relative;isolation:isolate}
+header::before{
+  /* El inset horizontal va a 0, no a un porcentaje negativo: sobresalir por
+     los lados metía 94px de ancho fantasma en el scrollWidth. El degradado
+     ya se difumina solo, así que no hacía falta desbordar para que el velo
+     muriera suave. */
+  content:"";position:absolute;inset:-14% 0 -10%;z-index:-1;pointer-events:none;
+  background:radial-gradient(135% 105% at 24% 45%,
+    color-mix(in oklab, var(--fondo) 94%, transparent) 0%,
+    color-mix(in oklab, var(--fondo) 78%, transparent) 46%,
+    transparent 80%);
+}
 .mandos{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
 
 /* ── secciones ───────────────────────────────────────────────────── */
@@ -190,6 +269,32 @@ section{display:flex;flex-direction:column;gap:20px}
 .bt:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
 .bt[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;
   background:transparent;border-color:var(--filo)}
+/* Cada botón puede llevar su propio color. Una fila de seis es una fila
+   de seis filos distintos sobre seis superficies neutras iguales: explota
+   el color sin que explote la superficie. Ese es el límite que hace que
+   se pueda mirar la página media hora seguida. */
+.bt[data-c="violeta"]{--ac:var(--m-violeta)}
+.bt[data-c="cian"]   {--ac:var(--m-cian)}
+.bt[data-c="rosa"]   {--ac:var(--m-rosa)}
+.bt[data-c="ambar"]  {--ac:var(--m-ambar)}
+.bt[data-c="verde"]  {--ac:var(--m-verde)}
+.bt[data-c="azul"]   {--ac:var(--m-azul)}
+.bt[data-c]{border-color:color-mix(in oklab, var(--ac) 62%, transparent);color:var(--ac)}
+
+/* El botón lleno: para UNA acción por pantalla, no más. Aquí el color sí
+   ocupa la superficie, y por eso tiene que ser escaso. */
+.bt.lleno{
+  color:#fff;border-color:transparent;
+  background:linear-gradient(140deg,
+    color-mix(in oklab, var(--ac) 92%, white),
+    color-mix(in oklab, var(--ac) 78%, black));
+  box-shadow:var(--d1) var(--d1) var(--b1) var(--sombra),
+             calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz),
+             inset 0 1px 0 rgba(255,255,255,.34);
+}
+.bt.lleno:active{
+  box-shadow:inset 2px 3px 8px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.18);
+}
 .bt.chico{padding:9px 15px;font-size:.82rem;
   border-radius:11px 4px 11px 4px}
 .bt.redondo{width:44px;height:44px;padding:0;border-radius:50%;
@@ -307,6 +412,12 @@ section{display:flex;flex-direction:column;gap:20px}
 /* ── movimiento reducido ─────────────────────────────────────────── */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  /* El aura se queda: es color, no desplazamiento. Lo que se detiene es la
+     deriva. Apagarla entera dejaría la página gris y eso no es accesibilidad,
+     es castigo. Nota: la especificidad tiene que igualar a la del selector
+     original (.aura b:nth-child) o esta regla pierde y las masas siguen
+     moviéndose. Ya pasó dos veces en este repo. */
+  .aura b:nth-child(n){animation:none;scale:1.1}
   .barras i,.surco i,.late i{animation:none}
   .barras i{scale:1 .7}
   .surco i{clip-path:none;opacity:.75}
@@ -316,10 +427,13 @@ section{display:flex;flex-direction:column;gap:20px}
 </style>
 </head>
 <body>
+
+<!-- el aura: cinco masas a la deriva, capa fija, sin eventos de puntero -->
+<div class="aura" aria-hidden="true"><div><b></b><b></b><b></b><b></b><b></b></div></div>
+
 <div class="env">
 
 <header>
-  <div class="dato">LQS · propuesta de sistema visual</div>
   <h1>Relieve, y el color donde se nota</h1>
   <p class="lede">Neumorfismo para la superficie y el tacto. Memphis para los
     controles, las cargas y el hero. Las dos cosas conviven porque nunca
@@ -339,7 +453,7 @@ section{display:flex;flex-direction:column;gap:20px}
 </header>
 
 <!-- ── 1 · las dos primitivas ─────────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Las dos primitivas</h2><span class="dato">Relieve · Incrustado</span></div>
   <p class="nota">Todo el sistema se construye con estas dos. Nada sale de aquí.</p>
   <div class="rejilla">
@@ -355,25 +469,39 @@ section{display:flex;flex-direction:column;gap:20px}
 </section>
 
 <!-- ── 2 · botones ────────────────────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Botones</h2><span class="dato">El color entra por el filo</span></div>
   <p class="nota">La superficie del botón nunca se llena de color. El acento vive
     en el borde, y al presionar aparece por dentro, teñido. Por eso una pantalla
     con ocho botones no cansa: son ocho piezas neutras con un filo de color.</p>
   <div class="fila">
-    <button class="bt pri" type="button">Cotizar mi proyecto</button>
-    <button class="bt" type="button">Ver las muestras</button>
-    <button class="bt chico" type="button">Secundario</button>
+    <button class="bt lleno" type="button">Cotizar mi proyecto</button>
+    <button class="bt pri" type="button">Ver las muestras</button>
+    <button class="bt" type="button">Neutro</button>
     <button class="bt redondo" type="button" aria-label="Cambiar tema">◐</button>
     <button class="bt" type="button" disabled>No disponible</button>
   </div>
   <p class="nota">Presiónalos. El hundido no es una animación de adorno: es la
     misma pieza con las sombras invertidas, que es exactamente lo que hace un
-    botón físico.</p>
+    botón físico. El lleno se reserva para <b>una</b> acción por pantalla: si
+    todos gritan, ninguno se oye.</p>
+
+  <h3 style="margin-top:8px">La fila completa</h3>
+  <p class="nota">Seis filos distintos sobre seis superficies iguales. Aquí está
+    la explosión de color que buscas, y aquí está también el límite que la hace
+    sostenible: el color ocupa el borde, no el relleno.</p>
+  <div class="fila">
+    <button class="bt" data-c="violeta" type="button">Marca</button>
+    <button class="bt" data-c="ambar"   type="button">Automatización</button>
+    <button class="bt" data-c="verde"   type="button">Productora</button>
+    <button class="bt" data-c="rosa"    type="button">Creadores</button>
+    <button class="bt" data-c="cian"    type="button">Express</button>
+    <button class="bt" data-c="azul"    type="button">Joyería</button>
+  </div>
 </section>
 
 <!-- ── 3 · cargas ─────────────────────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Cargas</h2><span class="dato">Aquí sí explota</span></div>
   <p class="nota">Es el único momento en que la interfaz se pone Memphis entera.
     Dura lo que dura la espera y luego desaparece, así que puede ser tan fuerte
@@ -395,7 +523,7 @@ section{display:flex;flex-direction:column;gap:20px}
 </section>
 
 <!-- ── 4 · campos ─────────────────────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Campos</h2><span class="dato">Lo incrustado en su casa</span></div>
   <p class="nota">Un campo de texto es un hueco. El neumorfismo lo dice sin
     explicarlo, y de paso resuelve el peor problema de los formularios: saber
@@ -425,7 +553,7 @@ section{display:flex;flex-direction:column;gap:20px}
 </section>
 
 <!-- ── 5 · fichas de planeta ──────────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Fichas de planeta</h2><span class="dato">La pieza que más se repite</span></div>
   <p class="nota">El disco de arriba es lo único con color pleno de toda la
     tarjeta, y lleva la paleta de su universo. El resto es relieve neutro. Fíjate
@@ -472,16 +600,17 @@ section{display:flex;flex-direction:column;gap:20px}
 </section>
 
 <!-- ── 6 · la prueba de contraste ─────────────────────────────── -->
-<section>
+<section class="plano">
   <div class="sec-t"><h2>Por qué esto sí se lee</h2><span class="dato">El punto débil, resuelto</span></div>
   <div class="prueba inc anc">
     <p class="nota" style="max-width:none">El neumorfismo tiene fama de ilegible,
       y es merecida: el estilo clásico pone texto gris claro sobre fondo gris
       claro y confía todo a dos sombras. Tres reglas lo evitan aquí.</p>
     <ul>
-      <li><b>12,7:1</b><span>El texto principal contra el fondo en oscuro, y 14,3:1 en claro. Medidos en el navegador, no estimados. El mínimo exigido es 4,5:1.</span></li>
+      <li><b>6,0:1</b><span>El <em>peor</em> caso de toda la página, medido sobre los píxeles ya compuestos y en cinco instantes distintos de la deriva del aura, no calculado sobre el papel. El mínimo exigido es 4,5:1.</span></li>
       <li><b>1px</b><span>Todo lo interactivo lleva filo. Si las sombras no se ven, el borde sí.</span></li>
       <li><b>Nunca solo</b><span>El relieve acompaña, no informa. Un error dice qué pasó con palabras y color, no hundiéndose.</span></li>
+      <li><b>Velo</b><span>Donde el texto vive sobre el aura desnuda va un velo del lienzo por debajo. Sin él, el contraste dependería de por dónde ande flotando una mancha en ese segundo, que es lo mismo que no tener contraste.</span></li>
     </ul>
   </div>
 </section>
