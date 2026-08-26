@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es" data-tema="oscuro" data-univ="flujo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inicio en bento · LQS</title>
+<meta name="description" content="Propuesta del Inicio de LQS en composición bento: nueve áreas con arte Memphis por universo, relieve neumórfico y muy poco texto que leer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'"
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;700&family=Chakra+Petch:wght@600;700&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   INICIO EN BENTO
+
+   El mismo sistema del laboratorio (aura, plano, relieve, esquina ancla)
+   aplicado a la página real. Lo que cambia es la organización.
+
+   La regla del bento aquí: UNA celda, UNA idea, y el arte hace el trabajo
+   que antes hacía el párrafo. Ninguna celda pide más de doce palabras.
+   Si una celda necesita explicarse, no es una celda: es una ficha, y la
+   ficha se abre al tocarla.
+
+   El tamaño de la celda ES la jerarquía. No hay tarjetas destacadas ni
+   bordes de color: lo importante ocupa más sitio, y ya.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --fondo:#f7f8fc;
+  --base:#e7eaf2;  --luz:#fdfefe;  --sombra:#bcc2d4;
+  --tinta:#171b28;  --media:#525872;  --tenue:#828aa5;
+  --filo:rgba(23,27,40,.10);  --filo2:rgba(23,27,40,.20);
+  --m-violeta:#6d43ff;  --m-cian:#0093b8;  --m-rosa:#e01a63;
+  --m-ambar:#c25a00;    --m-verde:#0f8a4d; --m-azul:#2f5ce0;
+  --d1:3px;  --b1:7px;   --d2:6px;  --b2:15px;
+  --curva:1;
+  --r-g:calc(40px * var(--curva));  --r-gm:calc(16px * var(--curva));
+  --r-m:calc(26px * var(--curva));  --r-mm:calc(10px * var(--curva));
+  --r-c:calc(16px * var(--curva));  --r-cm:calc(6px  * var(--curva));
+  --ease-out:cubic-bezier(.23,1,.32,1);
+  --dur-fast:160ms;  --dur-ui:220ms;
+  --disp:'Bricolage Grotesque',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+  --tech:'Chakra Petch',ui-monospace,monospace;
+  --ac:var(--m-violeta);
+}
+:root[data-tema="oscuro"]{
+  --fondo:#07080d;
+  --base:#272d3a;  --luz:#3b4455;  --sombra:#11141c;
+  --tinta:#eef1f8;  --media:#a4abc0;  --tenue:#8a92aa;
+  --filo:rgba(238,241,248,.09);  --filo2:rgba(238,241,248,.18);
+  --m-violeta:#a48bff;  --m-cian:#3ddcff;  --m-rosa:#ff5c93;
+  --m-ambar:#ffa14a;    --m-verde:#4ade80; --m-azul:#7ea2ff;
+}
+:root[data-univ="flujo"]{--curva:1;    --ac:var(--m-violeta)}
+:root[data-univ="brasa"]{--curva:.82;  --ac:var(--m-ambar)}
+:root[data-univ="pulso"]{--curva:.64;  --ac:var(--m-rosa)}
+:root[data-univ="trama"]{--curva:.34;  --ac:var(--m-verde)}
+:root[data-univ="hielo"]{--curva:.20;  --ac:var(--m-azul)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--fondo);color:var(--tinta);font-family:var(--sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  transition:background var(--dur-ui) var(--ease-out),color var(--dur-ui) var(--ease-out);
+  padding:clamp(16px,3vw,36px) clamp(14px,3vw,32px) 72px}
+.env{max-width:1180px;margin:0 auto;position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:clamp(16px,2.4vw,26px)}
+
+/* aura */
+.aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aura > div{position:absolute;inset:-18vmax;filter:blur(80px) saturate(1.25);opacity:.6}
+.aura b{position:absolute;border-radius:50%;display:block;
+  animation:deriva var(--t) var(--ease-out) infinite alternate}
+.aura b:nth-child(1){width:46vmax;height:46vmax;left:-6vmax;top:-8vmax;background:var(--m-violeta);--t:19s;animation-delay:-2s}
+.aura b:nth-child(2){width:38vmax;height:38vmax;right:-4vmax;top:4vmax;background:var(--m-cian);--t:23s;animation-delay:-7s}
+.aura b:nth-child(3){width:42vmax;height:42vmax;left:24vmax;bottom:-10vmax;background:var(--m-rosa);--t:27s;animation-delay:-11s}
+.aura b:nth-child(4){width:32vmax;height:32vmax;right:12vmax;bottom:2vmax;background:var(--m-ambar);--t:21s;animation-delay:-4s}
+.aura b:nth-child(5){width:28vmax;height:28vmax;left:34vmax;top:16vmax;background:var(--m-verde);--t:25s;animation-delay:-15s}
+@keyframes deriva{from{translate:0 0;scale:1}to{translate:9vmax -7vmax;scale:1.28}}
+:root:not([data-tema="oscuro"]) .aura > div{opacity:.32;filter:blur(88px) saturate(1.7)}
+
+/* ── LA REJILLA BENTO ────────────────────────────────────────────────
+   Doce columnas. Cada celda declara cuántas ocupa y cuánto mide de alto.
+   Nada de auto-fit: el auto-fit reparte igual, y repartir igual es
+   exactamente lo que hace que un bento deje de ser un bento.            */
+.bento{display:grid;grid-template-columns:1fr;gap:clamp(12px,1.6vw,18px)}
+@media (min-width:720px){ .bento{grid-template-columns:repeat(12,1fr)} }
+
+/* la celda: relieve sobre el plano, esquina ancla rotando */
+.c{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  background:color-mix(in oklab, var(--base) 86%, transparent);
+  backdrop-filter:blur(22px) saturate(1.2);
+  -webkit-backdrop-filter:blur(22px) saturate(1.2);
+  border:1px solid var(--filo);
+  box-shadow:var(--d2) var(--d2) var(--b2) var(--sombra),
+             calc(var(--d2) * -1) calc(var(--d2) * -1) var(--b2) var(--luz);
+  border-radius:var(--r-m) var(--r-mm) var(--r-m) var(--r-mm);
+  rotate:-.3deg;
+  transition:box-shadow var(--dur-ui) var(--ease-out),
+             translate var(--dur-ui) var(--ease-out),
+             rotate var(--dur-ui) var(--ease-out);
+}
+.c:nth-child(4n+1){border-radius:var(--r-m) var(--r-mm) var(--r-mm) var(--r-mm)}
+.c:nth-child(4n+2){border-radius:var(--r-mm) var(--r-m) var(--r-mm) var(--r-mm);rotate:.35deg}
+.c:nth-child(4n+3){border-radius:var(--r-mm) var(--r-mm) var(--r-m) var(--r-mm);rotate:-.15deg}
+.c:nth-child(4n)  {border-radius:var(--r-mm) var(--r-mm) var(--r-mm) var(--r-m);rotate:.25deg}
+@supports not (backdrop-filter:blur(1px)){ .c{background:var(--base)} }
+@media (hover:hover) and (pointer:fine){
+  .c[data-ir]:hover{translate:0 -4px;rotate:0deg;cursor:pointer;
+    box-shadow:calc(var(--d2) + 3px) calc(var(--d2) + 3px) calc(var(--b2) + 8px) var(--sombra),
+               calc((var(--d2) + 3px) * -1) calc((var(--d2) + 3px) * -1) calc(var(--b2) + 8px) var(--luz)}
+}
+.c[data-ir]:active{translate:0 0;
+  box-shadow:inset var(--d1) var(--d1) var(--b1) var(--sombra),
+             inset calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz)}
+.c:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+
+/* el arte llena la celda; el texto se apoya abajo */
+.art{position:absolute;inset:0;z-index:0}
+.art svg{width:100%;height:100%;display:block}
+.tz{stroke:var(--tz,#07080d);stroke-width:3.4;fill:none;stroke-linecap:round}
+.tz-r{stroke:var(--tz,#07080d);stroke-width:3.4;fill:none;stroke-linecap:round;stroke-dasharray:1 9}
+
+/* el velo: sin él, texto blanco sobre un triángulo amarillo */
+.txt{position:relative;z-index:1;margin-top:auto;padding:16px 18px 17px;
+  /* Los topes van altos a propósito. Con 96/90 la etiqueta más apretada
+     daba 4,56:1 en claro: pasa, pero por dos centésimas y dependiendo de
+     qué forma le tocara debajo. Un contraste que depende de la suerte no
+     sirve, aunque el número diga que pasa. */
+  background:linear-gradient(to top,
+    color-mix(in oklab, var(--base) 99%, transparent) 0%,
+    color-mix(in oklab, var(--base) 95%, transparent) 58%,
+    color-mix(in oklab, var(--base) 62%, transparent) 84%,
+    transparent 100%);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.txt h3{font-family:var(--disp);font-size:1.02rem;font-weight:700;letter-spacing:-.01em}
+.txt p{font-size:.85rem;color:var(--media);line-height:1.45;margin-top:3px}
+.txt .precio{display:block;font-family:var(--tech);font-size:.8rem;font-weight:700;
+  color:var(--tinta);margin-top:7px}
+
+/* tamaños de celda: la jerarquía es el tamaño, no un borde de color */
+.c.alta   {min-height:340px}
+.c.media  {min-height:232px}
+.c.baja   {min-height:168px}
+.c.plana  {min-height:auto}
+@media (min-width:720px){
+  .g3{grid-column:span 3} .g4{grid-column:span 4} .g5{grid-column:span 5}
+  .g6{grid-column:span 6} .g7{grid-column:span 7} .g8{grid-column:span 8}
+  .g12{grid-column:span 12}
+}
+
+/* ── EL HERO ─────────────────────────────────────────────────────────
+   Una celda más, no una franja aparte. Es la única con las tres letras. */
+.hero{justify-content:center;padding:clamp(26px,3.6vw,44px);gap:14px;rotate:0deg}
+.lqs{font-family:var(--disp);font-weight:800;letter-spacing:-.05em;
+  font-size:clamp(3.4rem,11vw,7rem);line-height:.84;display:flex;gap:.02em}
+.lqs span{
+  background:linear-gradient(150deg,var(--a),var(--b));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lqs span:nth-child(1){--a:var(--m-violeta);--b:var(--m-cian)}
+.lqs span:nth-child(2){--a:var(--m-rosa);   --b:var(--m-ambar)}
+.lqs span:nth-child(3){--a:var(--m-verde);  --b:var(--m-azul)}
+.hero p{font-size:clamp(1rem,1.7vw,1.2rem);color:var(--media);max-width:34ch}
+.hero .fila{margin-top:6px}
+
+/* ── controles ───────────────────────────────────────────────────── */
+.bt{font:700 .9rem/1 var(--sans);color:var(--tinta);padding:13px 20px;cursor:pointer;
+  background:var(--base);border:1px solid var(--filo2);
+  border-radius:var(--r-c) var(--r-cm) var(--r-c) var(--r-cm);
+  box-shadow:var(--d1) var(--d1) var(--b1) var(--sombra),
+             calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz);
+  transition:box-shadow var(--dur-fast) var(--ease-out),translate var(--dur-fast) var(--ease-out),
+             border-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
+.bt.lleno{color:#fff;border-color:transparent;
+  background:linear-gradient(140deg,
+    color-mix(in oklab, var(--ac) 92%, white),
+    color-mix(in oklab, var(--ac) 78%, black));
+  box-shadow:var(--d1) var(--d1) var(--b1) var(--sombra),
+             calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz),
+             inset 0 1px 0 rgba(255,255,255,.34)}
+.bt.chico{padding:8px 14px;font-size:.8rem;border-radius:11px 4px 11px 4px}
+@media (hover:hover) and (pointer:fine){
+  .bt:hover{translate:0 -2px;border-color:var(--ac);color:var(--ac)}
+  .bt.lleno:hover{color:#fff}
+}
+.bt:active{translate:0 0;
+  box-shadow:inset var(--d1) var(--d1) var(--b1) var(--sombra),
+             inset calc(var(--d1) * -1) calc(var(--d1) * -1) var(--b1) var(--luz)}
+.bt:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* celda de cifra: cero lectura, puro dato */
+.cifra{justify-content:center;align-items:flex-start;padding:20px;gap:2px;text-align:left}
+.cifra b{font-family:var(--disp);font-size:clamp(2.2rem,4.4vw,3.2rem);font-weight:800;
+  line-height:1;letter-spacing:-.03em;color:var(--ac)}
+.cifra span{font-size:.86rem;color:var(--media);max-width:22ch}
+
+/* barra superior */
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.marca{font-family:var(--disp);font-size:1.15rem;font-weight:800;letter-spacing:-.03em}
+.pie{color:var(--tenue);font-size:.82rem;padding-top:8px}
+
+@media (prefers-reduced-motion:reduce){
+  .aura b:nth-child(n){animation:none;scale:1.1}
+  .c,.bt{transition-duration:1ms}
+}
+</style>
+</head>
+<body>
+
+<div class="aura" aria-hidden="true"><div><b></b><b></b><b></b><b></b><b></b></div></div>
+
+<div class="env">
+
+  <div class="top">
+    <div class="marca">LQS</div>
+    <div class="fila">
+      <button class="bt chico" id="bTema" type="button">Claro</button>
+      <button class="bt chico" data-u="flujo" type="button">flujo</button>
+      <button class="bt chico" data-u="brasa" type="button">brasa</button>
+      <button class="bt chico" data-u="trama" type="button">trama</button>
+      <button class="bt chico" data-u="hielo" type="button">hielo</button>
+    </div>
+  </div>
+
+  <div class="bento">
+
+    <!-- ── hero: ocupa siete columnas y manda ── -->
+    <div class="c hero alta g7">
+      <div class="lqs" aria-label="LQS"><span>L</span><span>Q</span><span>S</span></div>
+      <p>Creamos lo que sea. Resolvemos lo que venga.</p>
+      <div class="fila">
+        <button class="bt lleno" type="button">Cotizar mi proyecto</button>
+        <button class="bt" type="button">Ver muestras</button>
+      </div>
+    </div>
+
+    <!-- ── cifra: el dato que reemplaza un párrafo entero ── -->
+    <div class="c cifra media g5">
+      <b>48 h</b>
+      <span>Desde que nos cuentas hasta que tienes propuesta con precio cerrado.</span>
+    </div>
+
+    <!-- ── marca · flujo ── -->
+    <div class="c alta g5" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="400" height="340" fill="#1b1150"/>
+        <circle cx="118" cy="104" r="76" fill="#6d43ff"/>
+        <rect x="228" y="40" width="118" height="118" fill="#00b4d8"/>
+        <path d="M0 214q40-40 80 0t80 0 80 0 80 0 80 0" class="tz"/>
+        <circle cx="316" cy="236" r="44" fill="#e01a63"/>
+        <path d="M40 268h96" class="tz-r"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Marca</h3>
+        <p>Identidad, aplicaciones y manual.</p>
+        <span class="precio">desde $1.850.000</span>
+      </div>
+    </div>
+
+    <!-- ── automatización · trama ── -->
+    <div class="c alta g4" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 320 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="340" fill="#04331f"/>
+        <g fill="#4ade80">
+          <rect x="26" y="30" width="38" height="38"/><rect x="102" y="30" width="38" height="38"/>
+          <rect x="64" y="68" width="38" height="38"/><rect x="140" y="68" width="38" height="38"/>
+          <rect x="26" y="106" width="38" height="38"/><rect x="102" y="106" width="38" height="38"/>
+        </g>
+        <rect x="196" y="46" width="100" height="100" fill="#2fb8a3"/>
+        <path d="M196 79h100M196 112h100M229 46v100M262 46v100" stroke="#04331f" stroke-width="3.4" fill="none"/>
+        <path d="M40 190h240" class="tz"/>
+        <rect x="40" y="216" width="150" height="10" fill="#2fb8a3"/>
+        <circle cx="252" cy="230" r="22" fill="#4ade80"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Automatización</h3>
+        <p>Tu WhatsApp contesta, reserva y cobra.</p>
+        <span class="precio">desde $2.400.000</span>
+      </div>
+    </div>
+
+    <!-- ── productora · pulso ── -->
+    <div class="c alta g3" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 240 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="240" height="340" fill="#2b1338"/>
+        <circle cx="120" cy="118" r="82" fill="none" stroke="#8b5cf6" stroke-width="14"/>
+        <circle cx="120" cy="118" r="46" fill="none" stroke="#d98aa6" stroke-width="14"/>
+        <circle cx="120" cy="118" r="16" fill="#e6c877"/>
+        <path d="M36 234h168" class="tz"/>
+        <circle cx="66" cy="270" r="20" fill="#e6c877"/>
+        <path d="M120 252v44" class="tz"/>
+        <circle cx="184" cy="272" r="26" fill="none" stroke="#d98aa6" stroke-width="10"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Productora</h3>
+        <p>Video y foto, equipo propio.</p>
+        <span class="precio">desde $980.000</span>
+      </div>
+    </div>
+
+    <!-- ── restaurantes · brasa, ancha ── -->
+    <div class="c media g8" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 640 232" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="640" height="232" fill="#4a1704"/>
+        <path d="M92 22 168 154H16z" fill="#ff8a3d"/>
+        <circle cx="270" cy="76" r="50" fill="#ffd166"/>
+        <path d="M270 8v22M322 24l-13 19M344 76h-22M322 128l-13-19" class="tz"/>
+        <path d="M392 128 436 84l44 44z" fill="#e0264a"/>
+        <rect x="510" y="40" width="96" height="96" fill="#ffd166"/>
+        <path d="M20 186h600" class="tz"/>
+        <circle cx="470" cy="186" r="9" fill="#ff8a3d"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Restaurantes</h3>
+        <p>Carta, domicilios y reservas en un solo sitio.</p>
+        <span class="precio">desde $1.400.000</span>
+      </div>
+    </div>
+
+    <!-- ── express · cifra de precio ── -->
+    <div class="c cifra media g4">
+      <b>$95.000</b>
+      <span>Express: piezas sueltas resueltas el mismo día.</span>
+      <div class="fila" style="margin-top:12px">
+        <button class="bt chico" type="button">Ver Express</button>
+      </div>
+    </div>
+
+    <!-- ── hoteles · hielo ── -->
+    <div class="c media g4" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 320 232" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="232" fill="#0a1c4d"/>
+        <path d="M0 0h104l-52 232H0z" fill="#5b8def"/>
+        <path d="M120 0h60l-52 232h-60z" fill="#dff6ff"/>
+        <rect x="212" y="44" width="86" height="42" fill="#2f5ce0"/>
+        <path d="M212 116h86" class="tz"/>
+        <path d="M238 148 262 172" class="tz"/>
+        <path d="M292 148 268 172" class="tz"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Hoteles</h3>
+        <p>Reserva con anticipo y check-in listo.</p>
+        <span class="precio">desde $1.900.000</span>
+      </div>
+    </div>
+
+    <!-- ── creadores · flujo variante ── -->
+    <div class="c media g4" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 320 232" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="232" fill="#1b1150"/>
+        <path d="M0 150q34-34 68 0t68 0 68 0 68 0 68 0" class="tz"/>
+        <circle cx="86" cy="76" r="52" fill="#e01a63"/>
+        <path d="M180 26h96v96h-96z" fill="#6d43ff"/>
+        <path d="M204 50 252 98M252 50 204 98" class="tz"/>
+        <circle cx="52" cy="196" r="16" fill="#00b4d8"/>
+        <path d="M120 196h160" class="tz-r"/>
+      </svg></div>
+      <div class="txt">
+        <h3>Creadores</h3>
+        <p>Marca personal que aguanta crecer.</p>
+        <span class="precio">desde $780.000</span>
+      </div>
+    </div>
+
+    <!-- ── ropa y merch · brasa variante ── -->
+    <div class="c baja g4" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 320 168" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="168" fill="#4a1704"/>
+        <circle cx="70" cy="62" r="46" fill="#ffd166"/>
+        <path d="M148 16 210 116h-124z" fill="#ff8a3d"/>
+        <rect x="230" y="30" width="70" height="70" fill="#e0264a"/>
+        <path d="M20 140h280" class="tz"/>
+      </svg></div>
+      <div class="txt"><h3>Ropa y merch</h3><span class="precio">desde $540.000</span></div>
+    </div>
+
+    <!-- ── joyería · hielo variante ── -->
+    <div class="c baja g5" data-ir tabindex="0" role="link">
+      <div class="art"><svg viewBox="0 0 320 168" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="168" fill="#0a1c4d"/>
+        <path d="M60 20 100 84 60 148 20 84z" fill="#dff6ff"/>
+        <rect x="130" y="34" width="100" height="100" fill="#5b8def"/>
+        <path d="M130 84h100M180 34v100" class="tz"/>
+        <path d="M262 40v88" class="tz"/>
+        <circle cx="290" cy="120" r="14" fill="#2f5ce0"/>
+      </svg></div>
+      <div class="txt"><h3>Joyería</h3><span class="precio">desde $640.000</span></div>
+    </div>
+
+    <!-- ── cierre: una celda ancha, una sola frase, un solo botón ── -->
+    <div class="c plana g7" style="rotate:0deg">
+      <div class="txt" style="background:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+        padding:clamp(20px,3vw,32px);display:flex;flex-wrap:wrap;gap:16px;
+        align-items:center;justify-content:space-between">
+        <div>
+          <h3 style="font-size:clamp(1.2rem,2.4vw,1.6rem)">¿No sabes en cuál encajas?</h3>
+          <p style="max-width:44ch">Escríbenos y te decimos en qué cajón cae lo tuyo, o si no cae en ninguno.</p>
+        </div>
+        <button class="bt lleno" type="button">Escribir por WhatsApp</button>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="pie">Nueve áreas y tres celdas de servicio, ninguna con más de doce palabras.
+    Lo que antes eran párrafos ahora es el tamaño de la celda y el arte que la llena.</p>
+
+</div>
+
+<script>
+const raiz=document.documentElement, bt=document.getElementById('bTema');
+const rot=()=>bt.textContent = raiz.dataset.tema==='oscuro' ? 'Claro' : 'Oscuro';
+bt.addEventListener('click',()=>{raiz.dataset.tema = raiz.dataset.tema==='oscuro'?'claro':'oscuro';rot();});
+document.querySelectorAll('[data-u]').forEach(b=>
+  b.addEventListener('click',()=>raiz.dataset.univ=b.dataset.u));
+/* Las celdas con data-ir son enlaces: el teclado tiene que poder activarlas. */
+document.querySelectorAll('.c[data-ir]').forEach(c=>
+  c.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}
+  }));
+rot();
+</script>
+</body>
+</html>
