@@ -104,7 +104,7 @@ button,input,select,textarea{font-family:inherit}
 html{scrollbar-color:var(--line2) var(--bg);scrollbar-width:thin}
 ::-webkit-scrollbar{width:11px;height:11px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#242a42;border:3px solid var(--bg);border-radius:99px}
+::-webkit-scrollbar-thumb{background:#2a2732;border:3px solid var(--bg);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
 input,textarea{caret-color:var(--gold)}
 .pz,.tbl td,.meta b{font-variant-numeric:tabular-nums}
@@ -2615,7 +2615,7 @@ clima('inicio');
 const TEMAKEY='lqs_tema';
 function tema(t,guardar){
  document.documentElement.setAttribute('data-tema',t);
- document.querySelector('meta[name=theme-color]').setAttribute('content',t==='claro'?'#efece4':'#0d0d0f');
+ document.querySelector('meta[name=theme-color]').setAttribute('content',t==='claro'?'#f5f2ec':'#0d0d0f');
  if(guardar)try{localStorage.setItem(TEMAKEY,t);}catch(e){}
 }
 tema('oscuro',false);

@@ -6,11 +6,11 @@
 <meta property="og:title" content="Muestras · Creadores — LQS"><meta property="og:description" content="Escribe tu nombre de canal y mira el kit completo armarse solo: avatar, banner, miniatura, plantilla y media kit."><meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap"></noscript>
 <style>
-:root{--bg:#06070f;--ink:#f0e9fa;--dim:#a99cc4;--faint:#6b6288;--line:rgba(220,210,245,.12);--line2:rgba(220,210,245,.22);
---acc:#a97bd6;--acc-l:#e8dcfa;--acc-d:#4a2f6b;
---ser:'Instrument Serif',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--pix:'Press Start 2P',monospace;
+:root{--bg:#0d0d0f;--ink:#f0e9fa;--dim:#a99cc4;--faint:#6b6288;--line:rgba(220,210,245,.12);--line2:rgba(220,210,245,.22);
+--acc:#a053fd;--acc-l:#e8dcfa;--acc-d:#4a2f6b;
+--ser:'Newsreader',Georgia,serif;--sans:'Rubik',system-ui,sans-serif;--pix:'Press Start 2P',monospace;
 --pad:clamp(20px,5vw,58px);--ease:cubic-bezier(.23,1,.32,1);--dur:220ms}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -95,7 +95,7 @@ h2.disp{font-size:clamp(1.9rem,4.6vw,3.2rem);margin-bottom:16px}
 .tot .nota{font-size:.75rem;color:var(--faint);margin-top:14px;line-height:1.55}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.94rem;
  padding:14px 24px;border-radius:999px;border:1px solid transparent;cursor:pointer;font-family:inherit;
- background:var(--ink);color:#06070f;width:100%;margin-top:16px;
+ background:var(--ink);color:#0d0d0f;width:100%;margin-top:16px;
  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
 @media (hover:hover) and (pointer:fine){.cta:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(240,233,250,.4)}}
 .cta:active{transform:translateY(0) scale(.99);opacity:.9}
@@ -286,15 +286,15 @@ var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;
    número de decisiones que tomamos en un kit real — más que eso no es un
    sistema, es un catálogo de opciones que después nadie sabe usar. */
 var PAL = [
- ['Brasa',   ['#ff8a3d','#ffd166','#e0264a'], '#1a0d06'],
- ['Selva',   ['#4ade80','#2fb8a3','#0f5132'], '#04140c'],
- ['Noche',   ['#7c5cff','#00d4ff','#ff3d7f'], '#0a0620'],
- ['Arena',   ['#e6c877','#d98aa6','#8b5cf6'], '#171018'],
- ['Hielo',   ['#dff6ff','#5b8def','#1b3fb8'], '#050a1c']
+ ['Brasa',   ['#f47700','#ff9f00','#ff3150'], '#1a0d06'],
+ ['Selva',   ['#74bd00','#439800','#439800'], '#04140c'],
+ ['Noche',   ['#a053fd','#007eff','#ff3150'], '#0a0620'],
+ ['Arena',   ['#ff9f00','#ff3150','#a053fd'], '#171018'],
+ ['Hielo',   ['#007eff','#007eff','#0054cb'], '#050a1c']
 ];
 var TIP = [
- ['Editorial', "'Instrument Serif',Georgia,serif", 400, '-0.02em'],
- ['Directo',   "'Manrope',system-ui,sans-serif",   800, '-0.03em'],
+ ['Editorial', "'Newsreader',Georgia,serif", 400, '-0.02em'],
+ ['Directo',   "'Rubik',system-ui,sans-serif",   800, '-0.03em'],
  ['Píxel',     "'Press Start 2P',monospace",       400, '0em']
 ];
 var FOR = [['Órbita','orbita'],['Onda','onda'],['Astilla','astilla']];
@@ -350,7 +350,7 @@ function pintaKit(){
  document.getElementById('pBan').innerHTML =
   '<svg viewBox="0 0 640 240" role="img" aria-label="Banner del canal para '+esc(nom)+'">'+ fondo('ban',640,240) +
   '<text x="46" y="118" '+tipo()+' font-size="46" fill="#fff">'+esc(nom)+'</text>'+
-  '<text x="48" y="150" font-family="Manrope,sans-serif" font-weight="600" font-size="16" fill="'+p[1]+'" letter-spacing=".04em">'+esc(tg)+'</text>'+
+  '<text x="48" y="150" font-family="Rubik,sans-serif" font-weight="600" font-size="16" fill="'+p[1]+'" letter-spacing=".04em">'+esc(tg)+'</text>'+
   '<rect x="46" y="168" width="86" height="3" rx="1.5" fill="'+p[0]+'"/></svg>';
 
  /* avatar cuadrado con el monograma */
@@ -365,7 +365,7 @@ function pintaKit(){
   '<rect x="0" y="0" width="320" height="180" fill="rgba(0,0,0,.24)"/>'+
   '<text x="24" y="84" '+tipo()+' font-size="30" fill="#fff">'+esc(tg.split(/[,·]/)[0].slice(0,15))+'</text>'+
   '<rect x="24" y="100" width="128" height="26" rx="13" fill="'+p[0]+'"/>'+
-  '<text x="88" y="118" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="12" fill="#101018">EPISODIO 01</text>'+
+  '<text x="88" y="118" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="12" fill="#101018">EPISODIO 01</text>'+
   '<circle cx="272" cy="132" r="26" fill="rgba(255,255,255,.16)"/>'+
   '<path d="M265 120 l20 12 -20 12 Z" fill="#fff"/></svg>';
 
@@ -374,16 +374,16 @@ function pintaKit(){
   '<svg viewBox="0 0 240 240" role="img" aria-label="Plantilla de post cuadrado">'+ fondo('pst',240,240) +
   '<rect x="18" y="18" width="204" height="204" rx="10" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="1.5"/>'+
   '<text x="34" y="112" '+tipo()+' font-size="26" fill="#fff">'+esc(nom.split(' ')[0])+'</text>'+
-  '<text x="34" y="138" font-family="Manrope,sans-serif" font-weight="700" font-size="12" fill="'+p[1]+'" letter-spacing=".1em">'+esc(tg.toUpperCase().slice(0,26))+'</text>'+
+  '<text x="34" y="138" font-family="Rubik,sans-serif" font-weight="700" font-size="12" fill="'+p[1]+'" letter-spacing=".1em">'+esc(tg.toUpperCase().slice(0,26))+'</text>'+
   '<rect x="34" y="152" width="54" height="3" rx="1.5" fill="'+p[0]+'"/>'+
-  '<text x="34" y="204" font-family="Manrope,sans-serif" font-weight="800" font-size="11" fill="rgba(255,255,255,.66)" letter-spacing=".14em">DESLIZA →</text></svg>';
+  '<text x="34" y="204" font-family="Rubik,sans-serif" font-weight="800" font-size="11" fill="rgba(255,255,255,.66)" letter-spacing=".14em">DESLIZA →</text></svg>';
 
  /* portada de destacada: vertical, casi todo aire */
  document.getElementById('pHis').innerHTML =
   '<svg viewBox="0 0 135 240" role="img" aria-label="Portada de historia destacada">'+ fondo('his',135,240) +
   '<circle cx="67.5" cy="104" r="36" fill="rgba(0,0,0,.3)"/>'+
   '<text x="67.5" y="'+(iTip===2?112:118)+'" text-anchor="middle" '+tipo()+' font-size="'+(iTip===2?20:34)+'" fill="#fff">'+esc(ini)+'</text>'+
-  '<text x="67.5" y="176" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.8)" letter-spacing=".18em">RECETAS</text></svg>';
+  '<text x="67.5" y="176" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.8)" letter-spacing=".18em">RECETAS</text></svg>';
 
  pintaMedia();
 }
@@ -394,20 +394,20 @@ function pintaMedia(){
  var seg = val('mSeg','—'), alc = val('mAlc','—'), eng = val('mEng','—'), ciu = val('mCiu','—');
  var cifra = function(x, y, n, et){
   return '<text x="'+x+'" y="'+y+'" '+tipo()+' font-size="26" fill="#fff">'+esc(n)+'</text>'+
-   '<text x="'+x+'" y="'+(y+16)+'" font-family="Manrope,sans-serif" font-weight="700" font-size="9" fill="'+p[1]+'" letter-spacing=".14em">'+esc(et)+'</text>';
+   '<text x="'+x+'" y="'+(y+16)+'" font-family="Rubik,sans-serif" font-weight="700" font-size="9" fill="'+p[1]+'" letter-spacing=".14em">'+esc(et)+'</text>';
  };
  document.getElementById('pMedia').innerHTML =
   '<svg viewBox="0 0 420 297" role="img" aria-label="Media kit de '+esc(nom)+'">'+ fondo('mk',420,297) +
   '<rect x="0" y="92" width="420" height="205" fill="rgba(6,7,15,.82)"/>'+
   '<text x="30" y="50" '+tipo()+' font-size="30" fill="#fff">'+esc(nom)+'</text>'+
-  '<text x="32" y="72" font-family="Manrope,sans-serif" font-weight="600" font-size="12" fill="'+p[1]+'" letter-spacing=".05em">'+esc(tg)+'</text>'+
+  '<text x="32" y="72" font-family="Rubik,sans-serif" font-weight="600" font-size="12" fill="'+p[1]+'" letter-spacing=".05em">'+esc(tg)+'</text>'+
   cifra(30,138,seg,'SEGUIDORES') + cifra(150,138,alc,'ALCANCE / MES') +
   cifra(288,138,eng,'INTERACCIÓN') +
   '<rect x="30" y="172" width="360" height="1" fill="rgba(255,255,255,.16)"/>'+
-  '<text x="30" y="196" font-family="Manrope,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.62)" letter-spacing=".14em">AUDIENCIA PRINCIPAL</text>'+
-  '<text x="30" y="218" font-family="Manrope,sans-serif" font-weight="700" font-size="14" fill="#fff">'+esc(ciu)+' · 25 a 40 años · 68 % mujeres</text>'+
-  '<text x="30" y="248" font-family="Manrope,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.62)" letter-spacing=".14em">FORMATOS QUE ENTREGO</text>'+
-  '<text x="30" y="270" font-family="Manrope,sans-serif" font-weight="700" font-size="14" fill="#fff">Reel · Historia con enlace · Post en carrusel</text>'+
+  '<text x="30" y="196" font-family="Rubik,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.62)" letter-spacing=".14em">AUDIENCIA PRINCIPAL</text>'+
+  '<text x="30" y="218" font-family="Rubik,sans-serif" font-weight="700" font-size="14" fill="#fff">'+esc(ciu)+' · 25 a 40 años · 68 % mujeres</text>'+
+  '<text x="30" y="248" font-family="Rubik,sans-serif" font-weight="800" font-size="10" fill="rgba(255,255,255,.62)" letter-spacing=".14em">FORMATOS QUE ENTREGO</text>'+
+  '<text x="30" y="270" font-family="Rubik,sans-serif" font-weight="700" font-size="14" fill="#fff">Reel · Historia con enlace · Post en carrusel</text>'+
   '<rect x="30" y="278" width="46" height="3" rx="1.5" fill="'+p[0]+'"/></svg>';
 }
 

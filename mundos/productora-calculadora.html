@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Calculadora de rodaje · Productora — LQS</title>
 <meta name="description" content="Calcula en vivo el presupuesto de tu rodaje en Colombia: tipo de proyecto, duración, ubicación, equipo, extras y post. Estimado en COP con desglose por rubro.">
-<meta name="theme-color" content="#06070f">
+<meta name="theme-color" content="#0d0d0f">
 <meta property="og:title" content="Calculadora de rodaje · Productora — LQS">
 <meta property="og:description" content="Estimador de presupuesto audiovisual: duración, ubicación, equipo, extras y postproducción. Desglose claro en pesos colombianos.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <style>
 :root{
-  --bg:#06070f; --bg2:#090b16; --ink:#f2efe8; --dim:#9aa0b8; --faint:#5f6480;
-  --gold:#e6c877; --line:rgba(210,215,240,.11); --line2:rgba(210,215,240,.22);
-  --disp:'Bebas Neue',Impact,sans-serif;
-  --sport:'Anton',Impact,sans-serif;
-  --tech:'Chakra Petch',ui-monospace,monospace;
-  --sans:'Manrope',system-ui,sans-serif;
+  --bg:#0d0d0f; --bg2:#090b16; --ink:#fdfbf7; --dim:#a8a2b2; --faint:#726c7c;
+  --gold:#ff9f00; --line:rgba(210,215,240,.11); --line2:rgba(210,215,240,.22);
+  --disp:'Syne',system-ui,sans-serif;
+  --sport:'Syne',system-ui,sans-serif;
+  --tech:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Rubik',system-ui,sans-serif;
   --pad:clamp(18px,5vw,56px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -28,7 +28,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 svg{display:block;max-width:100%}
-::selection{background:var(--gold);color:#0a0810}
+::selection{background:var(--gold);color:#0d0d0f}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
 .aura{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(58% 44% at 78% 4%,rgba(120,96,200,.20),transparent 62%),
@@ -131,11 +131,11 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .disclaimer{position:relative;margin-top:14px;font-size:.79rem;line-height:1.55;color:var(--dim);border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025);padding:11px 13px}
 .disclaimer b{color:var(--gold);font-weight:700}
 .wa{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:14px;
-  font-family:var(--sans);font-size:.95rem;font-weight:800;color:#0a0810;cursor:pointer;
+  font-family:var(--sans);font-size:.95rem;font-weight:800;color:#0d0d0f;cursor:pointer;
   background:linear-gradient(100deg,#fff1cf,var(--gold) 62%,#d0a844);border:none;border-radius:15px;padding:15px 20px;
   transition:.22s;box-shadow:0 18px 40px -22px var(--gold)}
 .wa:hover{transform:translateY(-2px);filter:brightness(1.06)}
-.wa svg{width:19px;height:19px;fill:#0a0810}
+.wa svg{width:19px;height:19px;fill:#0d0d0f}
 .copyhint{position:relative;text-align:center;font-family:var(--tech);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:10px}
 /* ---------- acordeón ---------- */
 .faq{display:grid;gap:10px}
@@ -182,7 +182,7 @@ footer a:hover{color:var(--gold)}
   .mbar .mt{min-width:0}
   .mbar .mt em{display:block;font-style:normal;font-family:var(--tech);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
   .mbar .mt b{font-family:var(--sport);font-size:1.35rem;font-weight:400;color:var(--gold);letter-spacing:.01em}
-  .mbar button{flex:none;font-family:var(--sans);font-weight:800;font-size:.82rem;color:#0a0810;background:linear-gradient(100deg,#fff1cf,var(--gold));border:none;border-radius:12px;padding:12px 16px;cursor:pointer}
+  .mbar button{flex:none;font-family:var(--sans);font-weight:800;font-size:.82rem;color:#0d0d0f;background:linear-gradient(100deg,#fff1cf,var(--gold));border:none;border-radius:12px;padding:12px 16px;cursor:pointer}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -281,13 +281,13 @@ footer a:hover{color:var(--gold)}
           <stop offset="0" stop-color="#4a5070"/><stop offset=".5" stop-color="#2a2f42"/><stop offset="1" stop-color="#171a26"/>
         </linearGradient>
         <linearGradient id="gld" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#fff3d4"/><stop offset=".5" stop-color="#e6c877"/><stop offset="1" stop-color="#9c7a2c"/>
+          <stop offset="0" stop-color="#fff3d4"/><stop offset=".5" stop-color="#ff9f00"/><stop offset="1" stop-color="#9c7a2c"/>
         </linearGradient>
         <radialGradient id="lens" cx=".38" cy=".33" r=".78">
           <stop offset="0" stop-color="#6f7ea8"/><stop offset=".32" stop-color="#252c3e"/><stop offset=".78" stop-color="#0d101a"/><stop offset="1" stop-color="#05070d"/>
         </radialGradient>
         <radialGradient id="beam" cx=".5" cy=".5" r=".5">
-          <stop offset="0" stop-color="#fff4d8" stop-opacity=".55"/><stop offset=".55" stop-color="#e6c877" stop-opacity=".16"/><stop offset="1" stop-color="#e6c877" stop-opacity="0"/>
+          <stop offset="0" stop-color="#fff4d8" stop-opacity=".55"/><stop offset=".55" stop-color="#ff9f00" stop-opacity=".16"/><stop offset="1" stop-color="#ff9f00" stop-opacity="0"/>
         </radialGradient>
         <linearGradient id="sbx" x1=".1" y1="0" x2=".9" y2="1">
           <stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#f0dfb4"/><stop offset="1" stop-color="#b99e63"/>
@@ -306,7 +306,7 @@ footer a:hover{color:var(--gold)}
 
       <!-- halo de luz -->
       <ellipse cx="446" cy="176" rx="150" ry="150" fill="url(#beam)"/>
-      <path d="M404 190 214 268l0 26 190-70z" fill="#e6c877" opacity=".05"/>
+      <path d="M404 190 214 268l0 26 190-70z" fill="#ff9f00" opacity=".05"/>
 
       <!-- ===== LUZ CON SOFTBOX (derecha) ===== -->
       <g>
@@ -410,7 +410,7 @@ footer a:hover{color:var(--gold)}
           <path d="M62 140v88" stroke="rgba(255,255,255,.1)"/>
           <!-- placa lateral / detalles -->
           <rect x="186" y="182" width="30" height="10" rx="3" fill="#171b28" stroke="rgba(210,215,240,.16)"/>
-          <text x="190" y="190" font-family="'Chakra Petch',monospace" font-size="7" fill="#e6c877" letter-spacing="1.5">4K</text>
+          <text x="190" y="190" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#ff9f00" letter-spacing="1.5">4K</text>
           <circle cx="232" cy="187" r="7" fill="#1c2130" stroke="rgba(210,215,240,.25)"/>
           <path d="M232 182v5l3 3" stroke="rgba(230,200,119,.7)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
           <circle cx="252" cy="187" r="4" fill="#1c2130" stroke="rgba(210,215,240,.25)"/>
@@ -427,18 +427,18 @@ footer a:hover{color:var(--gold)}
           <path d="M8 44h134M8 62h134M8 80h134"/>
           <path d="M52 30v72"/>
         </g>
-        <text x="10" y="40" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">PROD.</text>
-        <text x="58" y="40" font-family="'Chakra Petch',monospace" font-size="9" fill="#e6c877" letter-spacing="1.2">LQS</text>
-        <text x="10" y="58" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">ESC.</text>
-        <text x="58" y="58" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">04</text>
-        <text x="10" y="76" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">TOMA</text>
-        <text x="58" y="76" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">01</text>
-        <text x="10" y="95" font-family="'Chakra Petch',monospace" font-size="9" fill="#9aa0b8" letter-spacing="1.2">DIR.</text>
-        <text x="58" y="95" font-family="'Chakra Petch',monospace" font-size="9" fill="#f2efe8" letter-spacing="1.2">MEDELLÍN</text>
+        <text x="10" y="40" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#a8a2b2" letter-spacing="1.2">PROD.</text>
+        <text x="58" y="40" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#ff9f00" letter-spacing="1.2">LQS</text>
+        <text x="10" y="58" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#a8a2b2" letter-spacing="1.2">ESC.</text>
+        <text x="58" y="58" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#fdfbf7" letter-spacing="1.2">04</text>
+        <text x="10" y="76" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#a8a2b2" letter-spacing="1.2">TOMA</text>
+        <text x="58" y="76" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#fdfbf7" letter-spacing="1.2">01</text>
+        <text x="10" y="95" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#a8a2b2" letter-spacing="1.2">DIR.</text>
+        <text x="58" y="95" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#fdfbf7" letter-spacing="1.2">MEDELLÍN</text>
         <!-- barra superior articulada -->
         <g transform="rotate(-14 6 18)">
           <rect x="0" y="-4" width="150" height="22" rx="5" fill="#0f131d" stroke="rgba(210,215,240,.25)"/>
-          <g fill="#f2efe8">
+          <g fill="#fdfbf7">
             <path d="M6-4l16 0-12 22H0z"/><path d="M38-4l16 0-12 22H26z"/><path d="M70-4l16 0-12 22H58z"/><path d="M102-4l16 0-12 22H90z"/><path d="M134-4l14 0-12 22h-14z"/>
           </g>
           <rect x="0" y="-4" width="150" height="22" rx="5" fill="none" stroke="rgba(210,215,240,.25)"/>

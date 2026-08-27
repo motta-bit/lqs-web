@@ -5,11 +5,11 @@
 <meta name="theme-color" content="#05060f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Press+Start+2P&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap"></noscript>
 <style>
-:root{--bg:#06070f;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.2);
---mer:#d98aa6;--merl:#ffe1ec;--merd:#7a3b53;--fom:#b6ad98;--foml:#f3efe6;--fomd:#5a5346;
---ser:'Instrument Serif',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--pix:'Press Start 2P',monospace;--pad:clamp(20px,5vw,58px)}
+:root{--bg:#0d0d0f;--ink:#fdfbf7;--dim:#a8a2b2;--faint:#726c7c;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.2);
+--mer:#ff3150;--merl:#ffe1ec;--merd:#7a3b53;--fom:#b6ad98;--foml:#f3efe6;--fomd:#5a5346;
+--ser:'Newsreader',Georgia,serif;--sans:'Rubik',system-ui,sans-serif;--pix:'Press Start 2P',monospace;--pad:clamp(20px,5vw,58px)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -61,7 +61,7 @@ h2.disp{font-size:clamp(1.9rem,4.6vw,3.2rem);margin-bottom:16px}
 .tot .r{display:flex;justify-content:space-between;font-size:.87rem;color:var(--dim);padding:5px 0}
 .tot .r.big{border-top:1px solid var(--line);margin-top:9px;padding-top:13px;color:var(--ink);font-size:1.28rem;font-weight:800}
 .tot .r.big span:last-child{color:var(--ac,var(--mer))}
-.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.95rem;padding:15px 26px;border-radius:999px;transition:.3s;border:1px solid transparent;cursor:pointer;font-family:inherit;background:var(--ink);color:#06070f}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;font-size:.95rem;padding:15px 26px;border-radius:999px;transition:.3s;border:1px solid transparent;cursor:pointer;font-family:inherit;background:var(--ink);color:#0d0d0f}
 .cta:hover{transform:translateY(-2px);box-shadow:0 16px 38px -14px rgba(242,239,232,.4)}
 .cta.g{background:none;border-color:var(--line2);color:var(--ink)}
 .cta.g:hover{border-color:var(--ac,var(--mer));color:var(--ac,var(--mer))}
@@ -229,11 +229,11 @@ const fmt=n=>'$'+n.toLocaleString('es-CO');
 /* ---------- SVG joyería ---------- */
 function metalDefs(id,a,b,c){return `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="${a}"/><stop offset=".5" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs>`;}
-const MET={plata:['#f4f6f9','#c3cbd6','#8b94a3'],oro:['#ffeeb8','#e6c877','#a8842f']};
+const MET={plata:['#f4f6f9','#c3cbd6','#8b94a3'],oro:['#ffeeb8','#ff9f00','#a8842f']};
 function joya(tipo,metal,grab,uid){
   const m=MET[metal],g='g'+uid, S=`stroke="url(#${g})"`, F=`fill="url(#${g})"`;
   const d=metalDefs(g,m[0],m[1],m[2]);
-  const eng=grab?`<text x="100" y="163" text-anchor="middle" font-family="Instrument Serif,serif" font-size="11" fill="${m[2]}" opacity=".95">— tu grabado —</text>`:'';
+  const eng=grab?`<text x="100" y="163" text-anchor="middle" font-family="Newsreader,serif" font-size="11" fill="${m[2]}" opacity=".95">— tu grabado —</text>`:'';
   const P={
    anillo:`${d}<ellipse cx="100" cy="112" rx="46" ry="46" fill="none" ${S} stroke-width="13"/>
      <ellipse cx="100" cy="112" rx="46" ry="46" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
@@ -300,7 +300,7 @@ function prenda(tipo,color,logo,uid){
  const sombra='rgba(0,0,0,.22)';
  const mark={
   mono:`<circle cx="100" cy="104" r="17" fill="none" stroke="#1c1a17" stroke-width="3"/><text x="100" y="111" text-anchor="middle" font-family="Press Start 2P,monospace" font-size="11" fill="#1c1a17">L</text>`,
-  texto:`<text x="100" y="108" text-anchor="middle" font-family="Instrument Serif,serif" font-size="24" fill="#1c1a17">foma</text>`,
+  texto:`<text x="100" y="108" text-anchor="middle" font-family="Newsreader,serif" font-size="24" fill="#1c1a17">foma</text>`,
   icono:`<path d="M100 86 l7 16 17 1 -13 11 4 17 -15 -9 -15 9 4 -17 -13 -11 17 -1 Z" fill="#1c1a17"/>`
  }[logo]||'';
  const P={
@@ -324,7 +324,7 @@ function prenda(tipo,color,logo,uid){
  return `<svg viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">${P[tipo]||P.camiseta}</svg>`;
 }
 const FP=[['camiseta','Camiseta',46000],['hoodie','Hoodie',98000],['gorra','Gorra',39000],['tote','Tote bag',26000],['delantal','Delantal',52000]];
-const FC=[['#f2efe8','Hueso','','#f2efe8'],['#1c1c22','Negro','','#1c1c22'],['#b6ad98','Arena','','#b6ad98'],['#2f4a44','Verde','','#2f4a44']];
+const FC=[['#fdfbf7','Hueso','','#fdfbf7'],['#1c1c22','Negro','','#1c1c22'],['#b6ad98','Arena','','#b6ad98'],['#2f4a44','Verde','','#2f4a44']];
 const FL=[['mono','Monograma'],['texto','Texto'],['icono','Ícono']];
 let fP=0,fC=0,fL=0;
 function fRender(){

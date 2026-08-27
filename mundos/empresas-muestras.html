@@ -5,17 +5,17 @@
 <meta property="og:title" content="Muestras · Empresas — LQS"><meta property="og:description" content="Demos interactivas: identidad de marca generada en vivo, sitio web navegable y automatización de WhatsApp funcionando."><meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏢</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap"></noscript>
 <style>
-:root{--bg:#05060f;--acc:#5b8def;--acc-l:#d6e3ff;--acc-d:#1f3f7a;--txt:#e7eeff;--mut:#98a8cc;
+:root{--bg:#05060f;--acc:#007eff;--acc-l:#d6e3ff;--acc-d:#1f3f7a;--txt:#e7eeff;--mut:#98a8cc;
 --glass:rgba(255,255,255,.045);--line:rgba(255,255,255,.12);
---pix:'Press Start 2P',monospace;--sans:'Manrope','Segoe UI',system-ui,sans-serif;}
+--pix:'Press Start 2P',monospace;--sans:'Rubik',system-ui,sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
 a{color:inherit;text-decoration:none}
 img,svg{max-width:100%}
-.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 78% 4%,#1f3f7a3d,transparent 52%),radial-gradient(circle at 4% 62%,#1f3f7a2b,transparent 55%),radial-gradient(circle at 60% 100%,#5b8def1a,transparent 48%)}
+.bgglow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 78% 4%,#1f3f7a3d,transparent 52%),radial-gradient(circle at 4% 62%,#1f3f7a2b,transparent 55%),radial-gradient(circle at 60% 100%,#007eff1a,transparent 48%)}
 .wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(18px,5vw,34px)}
 nav{position:sticky;top:0;z-index:40;background:rgba(5,6,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1120px;margin:0 auto;padding:12px clamp(18px,5vw,34px);display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -402,9 +402,9 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   tienda:{h:288,names:[['Nube Store','Tienda de diseño'],['Punto Ámbar','Objetos para el hogar'],['Vela & Co.','Tienda de barrio']],lab:'Tienda'},
   serv:{h:158,names:[['Nexo Legal','Asesoría jurídica'],['Andes Consultores','Consultoría empresarial'],['Vértice Contable','Contabilidad y nómina']],lab:'Servicios'}};
  var STY={
-  mod:{sat:[62,54,40,22,14],lig:[62,46,30,88,13],rot:0,fam:[["Manrope","Inter"],["Poppins","Work Sans"],["Satoshi","Karla"]],ff:['600 74px Manrope, sans-serif','system'],lab:'Moderno'},
+  mod:{sat:[62,54,40,22,14],lig:[62,46,30,88,13],rot:0,fam:[["Manrope","Inter"],["Poppins","Work Sans"],["Satoshi","Karla"]],ff:['600 74px Rubik, sans-serif','system'],lab:'Moderno'},
   cla:{sat:[38,32,26,16,10],lig:[52,38,26,90,12],rot:0,fam:[["Playfair Display","Lora"],["Cormorant Garamond","Source Serif"],["Libre Baskerville","Karla"]],ff:['400 76px Georgia, serif','serif'],lab:'Clásico'},
-  aud:{sat:[72,64,52,24,16],lig:[56,44,30,92,10],rot:-8,fam:[["Anton","Manrope"],["Archivo Black","Roboto"],["Bebas Neue","Inter"]],ff:['800 80px Manrope, sans-serif','system'],lab:'Audaz'}};
+  aud:{sat:[72,64,52,24,16],lig:[56,44,30,92,10],rot:-8,fam:[["Anton","Manrope"],["Archivo Black","Roboto"],["Bebas Neue","Inter"]],ff:['800 80px Syne, sans-serif','system'],lab:'Audaz'}};
  var ind='rest',sty='mod',seed=7;
  function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
  function hsl(h,s,l){h=(h%360+360)%360;s/=100;l/=100;var a=s*Math.min(l,1-l),f=function(n){var k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(Math.min(k-3,9-k),1))};
@@ -423,7 +423,7 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
    g+='<g transform="translate(150 132)"><rect x="-62" y="-62" width="124" height="124" rx="34" fill="'+c1+'"/>'+
       '<circle cx="26" cy="-26" r="26" fill="'+c2+'" opacity=".9"/>'+
       '<path d="M-62 0 A62 62 0 0 0 0 62 L0 0 Z" fill="'+c3+'" opacity=".55"/>'+
-      '<text x="0" y="16" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="46" fill="'+bg+'">'+ini+'</text></g>';
+      '<text x="0" y="16" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="46" fill="'+bg+'">'+ini+'</text></g>';
   }else if(sty==='cla'){
    g+='<g transform="translate(150 132)"><circle r="64" fill="none" stroke="'+c2+'" stroke-width="2"/><circle r="55" fill="'+c1+'"/>'+
       '<text x="0" y="15" text-anchor="middle" font-family="Georgia,serif" font-size="44" fill="'+bg+'" letter-spacing="2">'+ini+'</text>'+
@@ -433,12 +433,12 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
       '<rect x="-64" y="-64" width="128" height="128" fill="'+c3+'"/>'+
       '<rect x="-52" y="-52" width="128" height="128" fill="'+c1+'"/>'+
       '<rect x="-52" y="-52" width="128" height="26" fill="'+c2+'"/>'+
-      '<text x="12" y="26" text-anchor="middle" font-family="Manrope,sans-serif" font-weight="800" font-size="58" fill="'+bg+'" letter-spacing="-2">'+ini+'</text></g>';
+      '<text x="12" y="26" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="58" fill="'+bg+'" letter-spacing="-2">'+ini+'</text></g>';
   }
-  var ff=sty==='cla'?'Georgia,serif':'Manrope,sans-serif',wm=nm[0].toUpperCase(),n=wm.length,
+  var ff=sty==='cla'?'Georgia,serif':'Rubik,sans-serif',wm=nm[0].toUpperCase(),n=wm.length,
       ls=n>12?1.4:(sty==='aud'?1.8:3),fs=Math.max(12,Math.min(26,(252-n*ls)/(n*.66)));
   g+='<text x="150" y="242" text-anchor="middle" font-family="'+ff+'" font-weight="'+(sty==='cla'?'400':'700')+'" font-size="'+fs.toFixed(1)+'" fill="'+ink+'" letter-spacing="'+ls+'">'+wm+'</text>';
-  g+='<text x="150" y="266" text-anchor="middle" font-family="Manrope,sans-serif" font-size="12" fill="'+ink+'" opacity=".62" letter-spacing="3">'+I.lab.toUpperCase()+' · MEDELLÍN</text>';
+  g+='<text x="150" y="266" text-anchor="middle" font-family="Rubik,sans-serif" font-size="12" fill="'+ink+'" opacity=".62" letter-spacing="3">'+I.lab.toUpperCase()+' · MEDELLÍN</text>';
   document.getElementById('logo').innerHTML=g;
   document.getElementById('bName').textContent=nm[0];
   document.getElementById('bDesc').textContent=I.lab+' · '+nm[1];
@@ -447,8 +447,8 @@ var RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   document.getElementById('pal').innerHTML=ph;
   /* tipografías */
   var pair=S.fam[Math.floor(R()*S.fam.length)],serif=sty==='cla',
-      tw=[{r:'Titulares',n:pair[0],f:serif?'Georgia,serif':'Manrope,sans-serif',w:serif?400:800,d:serif?'Serif editorial, para titulares con carácter.':'Sans geométrica de alto contraste para titulares.'},
-          {r:'Texto',n:pair[1],f:'Manrope,sans-serif',w:500,d:'Sans neutra, legible en pantallas pequeñas.'}];
+      tw=[{r:'Titulares',n:pair[0],f:serif?'Georgia,serif':'Rubik,sans-serif',w:serif?400:800,d:serif?'Serif editorial, para titulares con carácter.':'Sans geométrica de alto contraste para titulares.'},
+          {r:'Texto',n:pair[1],f:'Rubik,sans-serif',w:500,d:'Sans neutra, legible en pantallas pequeñas.'}];
   document.getElementById('typo').innerHTML=tw.map(function(t){
    return '<div class="tp"><em>'+t.r+'</em><div class="aa" style="font-family:'+t.f+';font-weight:'+t.w+'">Aa</div><b>'+t.n+'</b><span>'+t.d+'</span></div>'}).join('');
   /* aplicación */
