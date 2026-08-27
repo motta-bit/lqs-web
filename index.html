@@ -139,6 +139,56 @@ body.menu .burger span::after{top:0;transform:rotate(-45deg)}
 }
 /* layout */
 .wrap{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 var(--pad)}
+
+/* ══ LA PARED · Sistema de marca v1.0 ═══════════════════════════════════
+   El sistema organiza en paredes: un contenedor de radio 28 que agrupa
+   bloques, en vez de secciones a sangre completa.
+
+   Se monta sobre `.wrap`, que ya existía dentro de cada `.sec` y ya envolvía
+   el contenido real de todas las vistas. Por eso la reestructura no toca ni
+   una línea de marcado: el router, el visor, el filtro y el puente de
+   postMessage siguen exactamente como estaban.
+
+   La pared va en TINTA (#1a1720), no en papel. El sistema admite las dos
+   —sus bloques de «Qué es esto» y de «Sí / No» son tinta— y aquí es la
+   única opción sensata: el sitio es oscuro con texto claro, y una pared de
+   papel obligaría a invertir el color de 87 clases de texto. La estructura
+   se gana igual; lo que no se gana es un riesgo de ilegibilidad masiva.  */
+.sec > .wrap,
+#hero > .wrap{
+  background:var(--bg3);
+  border:1px solid var(--line);
+  border-radius:var(--r-pared);
+  padding:clamp(24px,3.4vw,44px);
+  max-width:1320px;
+  isolation:isolate;
+  /* `clip`, no `hidden`: recorta sin crear un contenedor de scroll, así que
+     las pilas con position:sticky de Servicios siguen pegándose al viewport.
+     Con `hidden` dejarían de funcionar y el recorrido se rompería.
+     Lo que recorta es la Cresta, la masa de color de cada acto, que estaba
+     pensada para sangrar de lado a lado: bajo el sistema el límite es la
+     pared, no la pantalla. */
+  overflow:clip;
+}
+/* El hero es la bienvenida y respira distinto: sin pared, a sangre. */
+#hero > .wrap{background:none;border:none;padding:0 var(--pad)}
+
+/* Grano de granito en la superficie de la pared. Regla del sistema: sin él
+   una superficie grande de color plano se ve a plástico. Va en un
+   pseudo-elemento sin eventos de puntero, para no cobrar nada. */
+.sec > .wrap::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  border-radius:inherit;opacity:.22;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#hero > .wrap::before{display:none}
+
+/* Las secciones aprietan su respiración: la pared ya aporta el aire por
+   dentro, así que el hueco de fuera puede bajar sin que se amontone. */
+.sec{padding:clamp(30px,4.4vw,56px) 0}
+@media (max-width:700px){
+  .sec > .wrap{padding:20px 18px;border-radius:var(--r-bloque)}
+}
 h1,h2,h3{font-weight:400}
 .disp{font-family:var(--disp);line-height:.9;letter-spacing:.012em;text-transform:uppercase}
 h1.disp{font-size:clamp(3.2rem,11vw,9rem)}
@@ -511,7 +561,11 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 /* Cresta: la masa de fondo del acto. No lleva contenido, lleva color — es lo
    que hace que el acto se sienta como un estrato y no como un div. Ahora es
    una franja baja detrás del encabezado, no un telón de media pantalla. */
-.acto .cresta{position:absolute;left:-16vw;right:-16vw;top:-46%;height:230%;z-index:0;pointer-events:none;
+/* La Cresta se salía 16vw por cada lado para sangrar de pantalla a pantalla.
+   Dentro de una pared eso ya no tiene sentido: el límite es la pared. Se
+   queda dentro y la onda se sigue leyendo igual, porque lo que la define es
+   el recorte, no la anchura. */
+.acto .cresta{position:absolute;left:0;right:0;top:-46%;height:230%;z-index:0;pointer-events:none;
  clip-path:url(#f-cresta);
  background:radial-gradient(48% 74% at 32% 76%,color-mix(in oklab,var(--u1) 32%,transparent),transparent 72%);
  opacity:.46}
@@ -698,7 +752,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 #precios.on{grid-template-rows:1fr;opacity:1}
 /* franja datos */
 /* tarjetas genéricas */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(232px,100%),1fr));gap:14px}
 /* la tarjeta habla el idioma de las puertas: un filo de 1px, la esquina ancla
    que rota con la posición y el acento reservado al borde y al título. El
    relleno es una insinuación del universo activo, nunca un campo de color. */
@@ -1282,7 +1336,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
        style="right:-8vw;top:44%;width:26vw;height:17vw;background:var(--u2);--o:.14;scale:-1 1"></div>
 <div class="wrap">
   <h2 class="disp" style="max-width:16ch">No somos una agencia.<br>Somos un <span class="gold">taller</span>.</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);margin-top:44px" class="two">
+  <div style="gap:clamp(24px,5vw,64px);margin-top:44px" class="two">
     <div>
       <p class="body-l" style="margin-bottom:18px">LQS nació de una idea simple: <b style="color:var(--ink)">las buenas marcas no deberían costar una fortuna</b>. La mayoría de negocios en Colombia no necesita una agencia con cinco capas de gente — necesita a alguien que entienda, diseñe y entregue.</p>
       <p class="body-l" style="margin-bottom:18px">Por eso trabajamos como estudio compacto: <b style="color:var(--ink)">hablas con quien hace el trabajo</b>. Eso baja el precio y sube la calidad, porque nada se pierde en la traducción.</p>
