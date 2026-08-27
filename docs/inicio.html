@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inicio · LQS</title>
+<meta name="description" content="Inicio de LQS construido sobre el Sistema de marca v1.0: paredes bento de seis columnas, recursos memphis, sombra dura y las cuatro familias tipográficas del sistema.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'"
+  href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   INICIO · sobre el Sistema de marca LQS v1.0
+
+   Implementación de `docs/marca/LQS Brand System.dc.html`. Cuando el
+   sistema y el laboratorio neumórfico se contradicen, gana el sistema.
+   Las tres contradicciones, para que no se reabran por descuido:
+
+   · El sistema prohíbe las sombras suaves difusas. El neumorfismo ES una
+     sombra suave difusa, así que aquí no hay relieve: hay SOMBRA DURA de
+     4px sin desenfoque, y al pasar el cursor la pieza se desplaza 2px y
+     la sombra se acorta. Es un lenguaje físico distinto, no una variante.
+   · Los radios son fijos: 28 pared, 20 bloque, 14 interno, 999 botón. La
+     esquina ancla asimétrica se retira.
+   · La rejilla es de SEIS columnas y los bloques ocupan 1, 2, 3, 4 o 6.
+     Nunca 5. Por eso ninguna pared de aquí usa un span de 5 ni de 7.
+
+   Lo que sí sobrevive del laboratorio, porque el sistema no lo contradice
+   y resolvía problemas reales: el Inicio no lista las nueve áreas, las
+   celdas se acomodan al hacer scroll, y en el teléfono la pared pasa a dos
+   columnas en vez de a una.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* neutros del sistema */
+  --tinta:#1a1720;   --crema:#fdfbf7;   --papel:#f5f2ec;   --lienzo:#0d0d0f;
+
+  /* cinco tonos, misma energía, croma alto */
+  --ambar:oklch(0.78 0.2 75);
+  --verde:oklch(0.72 0.22 130);
+  --rojo:oklch(0.66 0.24 20);
+  --violeta:oklch(0.62 0.24 300);
+  --azul:oklch(0.6 0.23 250);
+
+  /* radios: fijos, del sistema */
+  --r-pared:28px; --r-bloque:20px; --r-interno:14px; --r-pildora:999px;
+
+  /* rejilla */
+  --gap:8px; --fila:132px;
+
+  --display:'Syne',system-ui,sans-serif;
+  --ui:'Rubik',system-ui,sans-serif;
+  --edit:'Newsreader',Georgia,serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--lienzo);color:var(--crema);font-family:var(--ui);
+  font-weight:500;line-height:1.55;-webkit-font-smoothing:antialiased;
+  padding:clamp(10px,2.4vw,28px) clamp(10px,2.4vw,24px) 56px}
+.env{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+
+/* ── GRANO DE GRANITO ────────────────────────────────────────────────
+   Regla del sistema: va en CADA superficie de color. No es textura de
+   adorno, es lo que impide que un degradé de croma alto se vea a plástico.
+   Se genera con feTurbulence en un data URI, así que no pesa ni pide red. */
+.granito{position:absolute;inset:0;opacity:.3;mix-blend-mode:overlay;
+  pointer-events:none;border-radius:inherit;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── LA PARED ────────────────────────────────────────────────────────
+   Seis columnas, gap 8, padding 8, fondo papel, radio 28.               */
+.pared{display:grid;grid-template-columns:repeat(2,1fr);
+  gap:var(--gap);padding:var(--gap);background:var(--papel);
+  border-radius:var(--r-pared)}
+@media (min-width:820px){
+  .pared{grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(var(--fila),auto)}
+  .c1{grid-column:span 1} .c2{grid-column:span 2} .c3{grid-column:span 3}
+  .c4{grid-column:span 4} .c6{grid-column:span 6}
+  .f2{grid-row:span 2}
+}
+/* En móvil el sistema manda «una columna de 2». Los bloques que ocupan
+   media pared allá ocupan una celda aquí; los demás, la pared entera.
+
+   Van encerradas en max-width a propósito. Antes estaban sueltas con un
+   reinicio a `auto` dentro del bloque de escritorio, y como ese reinicio
+   venía después de .c1..c6 y tiene la misma especificidad, las pisaba: en
+   escritorio todos los bloques acababan ocupando una sola columna. */
+@media (max-width:819px){
+  .m1{grid-column:span 1}
+  .m2{grid-column:span 2}
+}
+
+/* ── EL BLOQUE ───────────────────────────────────────────────────── */
+.b{position:relative;overflow:hidden;border-radius:var(--r-bloque);
+  padding:22px 24px;display:flex;flex-direction:column;
+  min-height:var(--fila)}
+.b.crema{background:var(--crema);border:1px solid rgba(26,23,32,.12);color:var(--tinta)}
+.b.tinta{background:var(--tinta);color:var(--crema)}
+.b.papel{background:var(--papel);border:1px solid rgba(26,23,32,.10);color:var(--tinta)}
+
+/* Máximo dos degradados por pared. Están declarados aquí para poder
+   contarlos de un vistazo y no repartirlos a ojo por el marcado. */
+.b.grad-marca{background:linear-gradient(105deg,var(--violeta) 0%,var(--rojo) 48%,var(--ambar) 100%);color:var(--crema)}
+.b.grad-frio {background:linear-gradient(140deg,var(--azul) 0%,var(--violeta) 100%);color:var(--crema)}
+
+/* Sombra dura, sin desenfoque. El sistema lo exige y es lo que da el
+   aire de cartel serigrafiado en vez de tarjeta de aplicación. */
+.b[data-ir]{cursor:pointer;
+  box-shadow:5px 5px 0 rgba(26,23,32,.14);
+  transition:transform .12s ease, box-shadow .12s ease}
+@media (hover:hover) and (pointer:fine){
+  .b[data-ir]:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 rgba(26,23,32,.14)}
+  .b.tinta[data-ir]:hover,.b.grad-marca[data-ir]:hover,.b.grad-frio[data-ir]:hover{
+    box-shadow:3px 3px 0 var(--ambar)}
+}
+.b.tinta[data-ir],.b.grad-marca[data-ir],.b.grad-frio[data-ir]{
+  box-shadow:5px 5px 0 var(--ambar)}
+.b[data-ir]:active{transform:translate(4px,4px);box-shadow:1px 1px 0 rgba(26,23,32,.14)}
+.b:focus-visible{outline:3px solid var(--ambar);outline-offset:3px}
+
+/* ── LAS PIEZAS SE ACOMODAN AL ENTRAR ────────────────────────────────
+   Atado al scroll, sin JavaScript. El estado por defecto es el VISIBLE:
+   si el navegador no soporta la técnica, la pared sale montada y ya.     */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .b{animation:monta linear both;animation-timeline:view();
+       animation-range:entry 0% cover 26%}
+  }
+}
+@keyframes monta{
+  from{opacity:.3;transform:translateY(26px) rotate(-1.1deg)}
+  to  {opacity:1; transform:translateY(0)    rotate(0deg)}
+}
+
+/* ── TIPOGRAFÍA DEL SISTEMA ──────────────────────────────────────── */
+.d1{font-family:var(--display);font-weight:800;font-size:clamp(3rem,9vw,7.5rem);
+    line-height:.78;letter-spacing:-.045em}
+.d2{font-family:var(--display);font-weight:800;font-size:clamp(1.7rem,3.4vw,2.75rem);
+    line-height:.9;letter-spacing:-.04em}
+.d3{font-family:var(--display);font-weight:700;font-size:clamp(1.15rem,2vw,1.55rem);
+    line-height:1;letter-spacing:-.03em}
+.d4{font-family:var(--display);font-weight:600;font-size:1.06rem;
+    line-height:1.15;letter-spacing:-.02em}
+/* Syne nunca en cuerpo de texto. Lo dice el sistema y es la regla que más
+   fácil se rompe sin darse cuenta. */
+.cuerpo{font-weight:500;font-size:.87rem;line-height:1.55}
+.rotulo{font-weight:900;font-size:.69rem;letter-spacing:.2em;text-transform:uppercase}
+.dato{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em}
+.cita{font-family:var(--edit);font-style:italic;font-weight:300;
+      font-size:clamp(1rem,1.7vw,1.3rem);line-height:1.35}
+.tenue{opacity:.62}
+
+/* ── CONTROLES ───────────────────────────────────────────────────────
+   Altura 44, radio 999, mayúsculas, Rubik 900. Sombra dura de 4px; al
+   pasar el cursor se desplaza 2px y la sombra se acorta.                */
+.bt{display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;padding:0 26px;border:none;cursor:pointer;
+  font-family:var(--ui);font-weight:900;font-size:.87rem;
+  text-transform:uppercase;letter-spacing:.02em;
+  border-radius:var(--r-pildora);
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease}
+.bt.oscuro{background:var(--tinta);color:var(--crema);box-shadow:4px 4px 0 var(--ambar)}
+.bt.marca {background:linear-gradient(120deg,var(--violeta),var(--rojo));color:var(--crema)}
+.bt.linea {background:transparent;color:var(--tinta);box-shadow:inset 0 0 0 2px var(--tinta)}
+.bt.claro {background:var(--crema);color:var(--tinta);box-shadow:4px 4px 0 rgba(26,23,32,.28)}
+.bt.chico {min-height:34px;padding:0 18px;font-size:.69rem;letter-spacing:.08em;
+           background:var(--ambar);color:var(--tinta)}
+@media (hover:hover) and (pointer:fine){
+  .bt.oscuro:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ambar)}
+  .bt.claro:hover {transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(26,23,32,.28)}
+  .bt.marca:hover {filter:brightness(1.08)}
+  .bt.linea:hover {background:var(--tinta);color:var(--crema)}
+  .bt.chico:hover {filter:brightness(1.06)}
+}
+.bt:active{transform:translate(4px,4px)}
+.bt:focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+.fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ── INSIGNIA ────────────────────────────────────────────────────────
+   El sistema pide insignias rotadas. Es el único sitio donde queda giro,
+   ahora que las piezas se enderezaron. */
+.insignia{position:absolute;z-index:3;top:14px;right:12px;
+  font-family:var(--ui);font-weight:900;font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:6px 12px;border-radius:var(--r-pildora);
+  background:var(--ambar);color:var(--tinta);rotate:-6deg;
+  box-shadow:3px 3px 0 rgba(26,23,32,.22)}
+
+/* ── RECURSOS MEMPHIS ────────────────────────────────────────────────
+   Formas planas, tramas y granito. Máximo TRES por bloque: pasada esa
+   cuenta el bloque deja de tener un motivo y pasa a tener ruido.        */
+.mem{position:absolute;z-index:0;pointer-events:none}
+.mem.circulo{border-radius:999px}
+.mem.diamante{rotate:45deg}
+.mem.rayas{background:repeating-linear-gradient(45deg,var(--crema) 0 6px,var(--rojo) 6px 12px)}
+.mem.abanico{background:repeating-conic-gradient(from 9deg,var(--verde) 0 12deg,var(--tinta) 0 24deg);
+  border-radius:999px}
+.mem.solar{background:repeating-conic-gradient(from 7.5deg,var(--ambar) 0 9deg,oklch(0.7 0.2 60) 0 18deg);
+  border-radius:999px}
+.mem.tinta{background:var(--tinta)}
+.mem.crema{background:var(--crema)}
+.mem.ambar{background:var(--ambar)}
+.mem.azul{background:var(--azul)}
+.mem.verde{background:var(--verde)}
+.mem.violeta{background:var(--violeta)}
+.mem.rojo{background:var(--rojo)}
+
+/* ── HUECO DE CONTENIDO ──────────────────────────────────────────────
+   Marca dónde va tu material y en qué medida. Mientras no llegue, el
+   bloque enseña su motivo memphis y no se ve incompleto.                */
+.pide{position:absolute;z-index:4;left:12px;bottom:12px;
+  font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 9px;border-radius:var(--r-interno);
+  background:rgba(26,23,32,.82);color:var(--crema);
+  opacity:0;transition:opacity .16s ease;pointer-events:none}
+@media (hover:hover) and (pointer:fine){ .b:hover .pide{opacity:1} }
+@media (hover:none){ .pide{opacity:.92} }
+
+/* ── LA CRIATURA ─────────────────────────────────────────────────── */
+/* El contenedor lleva el tamaño del display para que el `em` de la criatura
+   se resuelva contra las letras y no contra el cuerpo de 16px. Sin esto la
+   criatura salía a 17px, invisible al lado de una L de 120. */
+.marca-lqs{position:relative;width:max-content;
+  font-size:clamp(3rem,9vw,7.5rem);line-height:0}
+.criatura{position:absolute;left:.02em;bottom:.52em;width:.62em;z-index:2;
+  display:block;pointer-events:none;
+  filter:drop-shadow(0 3px 5px rgba(26,23,32,.4));
+  transform-origin:50% 100%;animation:asoma 4.5s cubic-bezier(.23,1,.32,1) infinite}
+.criatura picture{display:block}
+.criatura img{width:100%;height:auto;display:block}
+@keyframes asoma{
+  0%,58%,100%{transform:translateY(0)    rotate(-3deg)}
+  66%        {transform:translateY(-7%)  rotate(2deg)}
+  74%        {transform:translateY(-2%)  rotate(-1deg)}
+}
+@media (prefers-reduced-motion:reduce){ .criatura{animation:none;rotate:-3deg} }
+
+/* separador de sección */
+.titulo{display:flex;align-items:baseline;gap:14px;padding:14px 8px 2px;flex-wrap:wrap}
+.titulo .n{font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;color:var(--ambar)}
+.titulo h2{font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.65rem);
+  letter-spacing:-.03em;color:var(--papel)}
+.titulo span{font-weight:500;font-size:.82rem;color:rgba(245,242,236,.45)}
+
+.pie{color:rgba(245,242,236,.42);font-size:.78rem;padding:10px 8px 0;max-width:78ch}
+.pie b{color:rgba(245,242,236,.7);font-weight:700}
+</style>
+</head>
+<body>
+<div class="env">
+
+<!-- ══════════ PARED 1 · BIENVENIDA ══════════ -->
+<div class="pared">
+
+  <!-- bloque grande: manda la pared. Degradé 1 de 2. -->
+  <div class="b grad-marca c4 f2 m2" style="justify-content:space-between;padding:clamp(24px,3vw,34px)">
+    <div class="granito"></div>
+    <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
+      <div class="rotulo" style="color:rgba(253,251,247,.85)">Estudio creativo<br>Medellín · 2026</div>
+      <div class="cita" style="color:rgba(253,251,247,.92);text-align:right;max-width:15ch">una pared que se mueve</div>
+    </div>
+    <div style="position:relative;display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin-top:26px">
+      <div class="marca-lqs">
+        <span class="criatura">
+          <picture>
+            <source srcset="../img/lqs-criatura-quieta.png" media="(prefers-reduced-motion: reduce)">
+            <img src="../img/lqs-criatura.webp" alt="" width="480" height="272" decoding="async">
+          </picture>
+        </span>
+        <div class="d1" style="color:var(--crema)">LQS</div>
+      </div>
+      <div style="display:flex;gap:6px;padding-bottom:14px">
+        <div style="width:16px;height:16px;background:var(--crema)"></div>
+        <div style="width:16px;height:16px;border-radius:999px;background:var(--crema)"></div>
+        <div style="width:16px;height:16px;background:var(--crema);rotate:45deg"></div>
+      </div>
+    </div>
+    <div class="fila" style="position:relative;margin-top:22px">
+      <button class="bt claro" type="button">Ver lo que hacemos</button>
+      <button class="bt" type="button"
+        style="background:transparent;color:var(--crema);box-shadow:inset 0 0 0 2px rgba(253,251,247,.6)">Hablemos</button>
+    </div>
+  </div>
+
+  <!-- último trabajo: la prueba antes que el catálogo -->
+  <div class="b tinta c2 m1" data-ir tabindex="0" role="link" style="justify-content:flex-end;min-height:200px">
+    <span class="insignia">Nuevo</span>
+    <div class="mem circulo abanico" style="width:150px;height:150px;top:-38px;left:-30px"></div>
+    <div class="mem diamante ambar" style="width:44px;height:44px;top:44px;right:34px"></div>
+    <span class="pide">trabajo reciente · 900×1100</span>
+    <div style="position:relative">
+      <div class="d3">Último trabajo</div>
+      <p class="cuerpo tenue" style="margin-top:4px">Lo más reciente que salió del taller.</p>
+    </div>
+  </div>
+
+  <!-- qué es LQS: corto, en tinta -->
+  <div class="b crema c2 m1" style="justify-content:center;gap:8px">
+    <div class="rotulo" style="color:rgba(26,23,32,.45)">Qué hacemos</div>
+    <p class="cuerpo" style="color:rgba(26,23,32,.78)">Marca, web, automatización, video y producto. Y cuando llega algo que no está en la lista, también.</p>
+  </div>
+
+</div>
+
+<!-- ══════════ PARED 2 · LAS ZONAS ══════════ -->
+<div class="titulo">
+  <span class="n">01</span><h2>Por dónde entras</h2>
+  <span>tres puertas, ningún catálogo todavía</span>
+</div>
+
+<div class="pared">
+
+  <div class="b tinta c3 m2" data-ir tabindex="0" role="link" style="justify-content:flex-end;min-height:212px">
+    <div class="mem circulo solar" style="width:190px;height:190px;top:-58px;right:-42px"></div>
+    <div class="mem verde" style="width:70px;height:70px;bottom:24px;right:60px;border-radius:14px"></div>
+    <div style="position:relative">
+      <div class="d2">Servicios</div>
+      <p class="cuerpo tenue" style="margin-top:6px;max-width:34ch">Las nueve áreas, con su precio y lo que incluye cada una.</p>
+    </div>
+  </div>
+
+  <div class="b crema c2 m1" data-ir tabindex="0" role="link" style="justify-content:flex-end">
+    <div class="mem circulo violeta" style="width:110px;height:110px;top:-26px;left:-20px"></div>
+    <div class="mem rayas" style="width:74px;height:74px;top:22px;right:18px;border-radius:14px"></div>
+    <span class="pide">tres piezas · 800×600</span>
+    <div style="position:relative">
+      <div class="d3">Muestras</div>
+      <p class="cuerpo" style="color:rgba(26,23,32,.65);margin-top:4px">Cosas que puedes tocar.</p>
+    </div>
+  </div>
+
+  <div class="b papel c1 m1" data-ir tabindex="0" role="link" style="justify-content:flex-end">
+    <div class="mem diamante rojo" style="width:56px;height:56px;top:18px;left:50%;translate:-50% 0"></div>
+    <div style="position:relative"><div class="d4">Nosotros</div></div>
+  </div>
+
+</div>
+
+<!-- ══════════ PARED 3 · TU MATERIAL ══════════ -->
+<div class="titulo">
+  <span class="n">02</span><h2>Lo que falta</h2>
+  <span>huecos esperando tu material</span>
+</div>
+
+<div class="pared">
+
+  <!-- degradé 2 de 2: la pared llega al tope y no admite más -->
+  <div class="b grad-frio c4 m2" data-ir tabindex="0" role="link" style="justify-content:flex-end;min-height:212px">
+    <div class="granito"></div>
+    <div class="mem crema" style="width:96px;height:96px;top:-22px;right:56px;rotate:45deg"></div>
+    <div class="mem circulo ambar" style="width:64px;height:64px;bottom:28px;right:34px"></div>
+    <span class="pide">antes y después · 1200×700</span>
+    <div style="position:relative">
+      <div class="d2">Un antes y un después</div>
+      <p class="cuerpo" style="margin-top:6px;max-width:40ch;color:rgba(253,251,247,.86)">La pieza que más convence y todavía no existe.</p>
+    </div>
+  </div>
+
+  <div class="b crema c2 m2" data-ir tabindex="0" role="link" style="justify-content:flex-end">
+    <div class="mem circulo abanico" style="width:120px;height:120px;top:-30px;right:-24px"></div>
+    <span class="pide">foto del taller · 1600×1000</span>
+    <div style="position:relative">
+      <div class="d3">El taller</div>
+      <p class="cuerpo" style="color:rgba(26,23,32,.65);margin-top:4px">Dónde y con qué se hace.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ PARED 4 · CIERRE ══════════ -->
+<div class="pared">
+  <div class="b tinta c6 m2" style="min-height:auto;padding:clamp(22px,3vw,32px)">
+    <div class="mem circulo solar" style="width:220px;height:220px;top:-90px;right:-70px;opacity:.5"></div>
+    <div style="position:relative;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+      <div>
+        <div class="d2">¿No sabes en cuál encajas?</div>
+        <p class="cuerpo tenue" style="margin-top:6px;max-width:46ch">Escríbenos y te decimos en qué cajón cae lo tuyo, o si no cae en ninguno.</p>
+      </div>
+      <button class="bt marca" type="button">Escribir por WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<p class="pie">Construido sobre el <b>Sistema de marca v1.0</b>. Rejilla de seis
+  columnas con spans de 1, 2, 3, 4 o 6, nunca 5. Radios 28 · 20 · 14 · 999.
+  Dos degradados como máximo por pared, granito en cada superficie de color,
+  y sombra dura de cuatro píxeles sin desenfoque. Los bloques con hueco te
+  dicen qué falta y en qué medida al acercar el cursor.</p>
+
+</div>
+
+<script>
+/* Los bloques con data-ir son enlaces: el teclado tiene que activarlos. */
+document.querySelectorAll('.b[data-ir]').forEach(function(b){
+  b.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();b.click();}
+  });
+});
+</script>
+</body>
+</html>

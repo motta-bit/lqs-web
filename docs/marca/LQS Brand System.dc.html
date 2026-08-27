@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #0d0d0f; }
+  a { color: oklch(0.78 0.2 75); text-decoration: none; }
+  a:hover { color: #fdfbf7; }
+</style>
+</helmet>
+
+<div style="padding: 56px; display: flex; flex-direction: column; gap: 14px; width: 1440px; font-family: 'Rubik', sans-serif;">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 132px; gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+    <div style="grid-column: span 4; grid-row: span 2; position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(105deg, oklch(0.62 0.24 300) 0%, oklch(0.66 0.24 20) 48%, oklch(0.78 0.2 75) 100%); padding: 30px 34px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div style="position: absolute; inset: 0; opacity: 0.3; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+      <div style="position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 40px;">
+        <div style="font-weight: 900; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.85);">Sistema de marca<br>v1.0 · 2026</div>
+        <div style="font-family: 'Newsreader', serif; font-style: italic; font-weight: 300; font-size: 20px; line-height: 1.3; color: rgba(253,251,247,0.92); text-align: right; width: 220px;">una pared que se mueve</div>
+      </div>
+      <div style="position: relative; display: flex; align-items: flex-end; gap: 22px;">
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+          <image-slot id="lqs-logo-header" style="width: 132px; height: 88px;" shape="rect" fit="contain" placeholder="Logo"></image-slot>
+          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 132px; line-height: 0.76; letter-spacing: -0.045em; color: #fdfbf7;">LQS</div>
+        </div>
+        <div style="display: flex; gap: 6px; padding-bottom: 12px;">
+          <div style="width: 16px; height: 16px; background: #fdfbf7;"></div>
+          <div style="width: 16px; height: 16px; border-radius: 999px; background: #fdfbf7;"></div>
+          <div style="width: 16px; height: 16px; background: #fdfbf7; transform: rotate(45deg);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #1a1720; padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; gap: 8px;">
+      <div style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Qué es esto</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.5; color: rgba(253,251,247,0.82);">Bloques bento + recursos memphis. Todo se apila, se gira y se vuelve a montar sin romper el sistema.</div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 18px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: center;">
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(26,23,32,0.45);">DISPLAY</div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.03em; color: #1a1720;">Syne 800</div>
+      </div>
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(26,23,32,0.45);">UI</div>
+        <div style="font-weight: 900; font-size: 19px; letter-spacing: -0.01em; color: #1a1720;">Rubik 900</div>
+      </div>
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(26,23,32,0.45);">EDITORIAL</div>
+        <div style="font-family: 'Newsreader', serif; font-style: italic; font-size: 19px; color: #1a1720;">Newsreader</div>
+      </div>
+      <div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: rgba(26,23,32,0.45);">DATOS</div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 17px; color: #1a1720;">Plex Mono</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 01 TIPOGRAFÍA ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">01</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Tipografía</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">redonda, pesada, sin decoración</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+
+    <div style="grid-column: span 4; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 26px 30px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Escala display · Syne</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4);">TRACKING −0.045em → −0.02em</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4); width: 92px; flex: 0 0 auto;">D1 · 96/0.78</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 76px; line-height: 0.78; letter-spacing: -0.045em; color: #1a1720;">Hazlo grande</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4); width: 92px; flex: 0 0 auto;">D2 · 52/0.85</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 44px; line-height: 0.85; letter-spacing: -0.04em; color: #1a1720;">Titular de bloque</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4); width: 92px; flex: 0 0 auto;">D3 · 30/1.0</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px; line-height: 1; letter-spacing: -0.03em; color: #1a1720;">Subtítulo de sección</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4); width: 92px; flex: 0 0 auto;">D4 · 20/1.15</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 600; font-size: 20px; line-height: 1.15; letter-spacing: -0.02em; color: #1a1720;">Etiqueta destacada</span>
+        </div>
+      </div>
+      <div style="height: 1px; background: rgba(26,23,32,0.1);"></div>
+      <div style="display: flex; gap: 26px;">
+        <div style="flex: 1;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: rgba(26,23,32,0.4); margin-bottom: 8px;">SET COMPLETO · SYNE 800</div>
+          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; line-height: 1.25; letter-spacing: -0.02em; color: #1a1720; word-break: break-all;">ABCDEFGHIJKLMNÑOPQRSTUVWXYZ 0123456789 &amp;@#%!?</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #1a1720; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">UI · Rubik</span>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.35);">BTN · 900 · 14 · 0.02em · UPPER</div>
+          <div style="font-weight: 900; font-size: 20px; text-transform: uppercase; color: oklch(0.78 0.2 75);">Empezar ahora</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.35);">LABEL · 900 · 11 · 0.2em · UPPER</div>
+          <div style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #fdfbf7;">Insignia de industria</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.35);">BODY · 500 · 14/1.55</div>
+          <div style="font-weight: 500; font-size: 14px; line-height: 1.55; color: rgba(253,251,247,0.82);">Rubik 500 sostiene todo el cuerpo corto: fichas, tarjetas, formularios y estados.</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.35);">QUOTE · NEWSREADER ITALIC 300 · 20/1.35</div>
+          <div style="font-family: 'Newsreader', serif; font-style: italic; font-weight: 300; font-size: 20px; line-height: 1.35; color: rgba(253,251,247,0.9);">el contrapunto respira, no compite</div>
+        </div>
+      </div>
+      <div style="margin-top: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.35);">NUNCA MEZCLAR SYNE Y RUBIK EN LA MISMA LÍNEA</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 02 COLOR ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">02</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Color</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">cinco tonos, misma energía, croma alto</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+    <div style="grid-column: span 6; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+      <div style="height: 190px; border-radius: 20px; background: oklch(0.62 0.24 300); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 20px; height: 20px; border-radius: 999px; background: rgba(253,251,247,0.9);"></div>
+        <div>
+          <div style="font-weight: 900; font-size: 15px; text-transform: uppercase; color: #fdfbf7;">Violeta</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; color: rgba(253,251,247,0.75);">oklch(.62 .24 300)<br>PRIMARIO · MARCA</div>
+        </div>
+      </div>
+      <div style="height: 190px; border-radius: 20px; background: oklch(0.6 0.23 250); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 20px; height: 20px; border-radius: 5px; background: rgba(253,251,247,0.9);"></div>
+        <div>
+          <div style="font-weight: 900; font-size: 15px; text-transform: uppercase; color: #fdfbf7;">Azul</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; color: rgba(253,251,247,0.75);">oklch(.60 .23 250)<br>DIGITAL · LINKS</div>
+        </div>
+      </div>
+      <div style="height: 190px; border-radius: 20px; background: oklch(0.72 0.22 130); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 18px; height: 18px; background: #1a1720; transform: rotate(45deg);"></div>
+        <div>
+          <div style="font-weight: 900; font-size: 15px; text-transform: uppercase; color: #1a1720;">Lima</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; color: rgba(26,23,32,0.65);">oklch(.72 .22 130)<br>ÉXITO · PROGRESO</div>
+        </div>
+      </div>
+      <div style="height: 190px; border-radius: 20px; background: oklch(0.78 0.2 75); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 20px; height: 20px; border-radius: 999px; border: 5px solid #1a1720;"></div>
+        <div>
+          <div style="font-weight: 900; font-size: 15px; text-transform: uppercase; color: #1a1720;">Ámbar</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; color: rgba(26,23,32,0.65);">oklch(.78 .20 075)<br>ACENTO · ALERTA</div>
+        </div>
+      </div>
+      <div style="height: 190px; border-radius: 20px; background: oklch(0.66 0.24 20); padding: 18px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="width: 20px; height: 10px; border-radius: 999px; background: rgba(253,251,247,0.9);"></div>
+        <div>
+          <div style="font-weight: 900; font-size: 15px; text-transform: uppercase; color: #fdfbf7;">Rojo</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.5; color: rgba(253,251,247,0.75);">oklch(.66 .24 020)<br>URGENCIA · ERROR</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 3; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Neutros</span>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; height: 56px;">
+        <div style="border-radius: 12px; background: #1a1720;"></div>
+        <div style="border-radius: 12px; background: #4a4453;"></div>
+        <div style="border-radius: 12px; background: #f5f2ec;"></div>
+        <div style="border-radius: 12px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12);"></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: rgba(26,23,32,0.5);">
+        <span>TINTA<br>#1A1720</span><span>HUMO<br>#4A4453</span><span>CREMA<br>#F5F2EC</span><span>PAPEL<br>#FDFBF7</span>
+      </div>
+    </div>
+
+    <div style="grid-column: span 3; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Degradados · siempre 2 paradas</span>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; height: 56px;">
+        <div style="border-radius: 12px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));"></div>
+        <div style="border-radius: 12px; background: linear-gradient(120deg, oklch(0.6 0.23 250), oklch(0.72 0.22 130));"></div>
+        <div style="border-radius: 12px; background: linear-gradient(120deg, oklch(0.78 0.2 75), oklch(0.66 0.24 20));"></div>
+      </div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.5);">ÁNGULO 105–160° · GRANO OVERLAY 28–30%<br>NUNCA TRES PARADAS · NUNCA RADIAL</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 03 RECURSO GRÁFICO MEMPHIS ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">03</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Recurso gráfico</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">memphis: formas planas, tramas, granito</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 156px; gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+    <div style="border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); background-image: radial-gradient(oklch(0.62 0.24 300) 2.5px, transparent 2.6px); background-size: 18px 18px; position: relative;">
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(26,23,32,0.55); background: #fdfbf7; padding: 2px 5px; border-radius: 4px;">PUNTOS 18</div>
+    </div>
+    <div style="border-radius: 20px; background: repeating-linear-gradient(45deg, oklch(0.78 0.2 75) 0 12px, #fdfbf7 12px 24px); position: relative;">
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(26,23,32,0.7); background: #fdfbf7; padding: 2px 5px; border-radius: 4px;">RAYAS 45°</div>
+    </div>
+    <div style="border-radius: 20px; background: conic-gradient(oklch(0.66 0.24 20) 0 25%, #fdfbf7 0 50%, oklch(0.66 0.24 20) 0 75%, #fdfbf7 0); background-size: 30px 30px; position: relative;">
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(26,23,32,0.7); background: #fdfbf7; padding: 2px 5px; border-radius: 4px;">DAMERO 30</div>
+    </div>
+    <div style="border-radius: 20px; background: #1a1720; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <div style="width: 56px; height: 56px; border-radius: 999px 0 0 0; background: oklch(0.72 0.22 130);"></div>
+      <div style="width: 56px; height: 56px; border-radius: 0 999px 0 0; background: oklch(0.6 0.23 250);"></div>
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(253,251,247,0.6);">CUARTOS</div>
+    </div>
+    <div style="border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); position: relative; display: flex; align-items: center; justify-content: center;">
+      <div style="width: 80px; height: 40px; border-radius: 999px 999px 0 0; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));"></div>
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(26,23,32,0.55);">ARCO</div>
+    </div>
+    <div style="position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));">
+      <div style="position: absolute; inset: 0; opacity: 0.55; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='5'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+      <div style="position: absolute; bottom: 10px; left: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: rgba(253,251,247,0.9);">GRANITO .55/5</div>
+    </div>
+
+    <div style="grid-column: span 4; grid-row: span 3; border-radius: 20px; background: #1a1720; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Piezas sueltas</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.35);">MÓDULO 44 · TRAZO 6–8 · SIN SOMBRA SUAVE</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: oklch(0.78 0.2 75);">01 SÓLIDAS</span>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: oklch(0.62 0.24 300);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: oklch(0.78 0.2 75);"></div>
+          <div style="width: 40px; height: 40px; background: oklch(0.66 0.24 20); transform: rotate(45deg);"></div>
+          <div style="width: 44px; height: 22px; border-radius: 999px 999px 0 0; background: oklch(0.6 0.23 250);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 999px 0 0 0; background: oklch(0.72 0.22 130);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 999px 0 999px 0; background: oklch(0.62 0.24 300);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 0 999px 0 999px; background: oklch(0.78 0.2 75);"></div>
+          <div style="width: 20px; height: 44px; border-radius: 999px; background: oklch(0.66 0.24 20);"></div>
+          <div style="width: 44px; height: 44px; background: oklch(0.6 0.23 250); clip-path: polygon(50% 0, 100% 100%, 0 100%);"></div>
+          <div style="width: 44px; height: 44px; background: oklch(0.72 0.22 130); clip-path: polygon(0 0, 55% 0, 55% 45%, 100% 45%, 100% 100%, 0 100%);"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: oklch(0.78 0.2 75);">02 CONTORNOS</span>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 999px; border: 8px solid oklch(0.72 0.22 130);"></div>
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 999px; border: 3px solid #fdfbf7;"></div>
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 10px; border: 6px solid oklch(0.78 0.2 75);"></div>
+          <div style="width: 38px; height: 38px; box-sizing: border-box; border: 6px solid oklch(0.66 0.24 20); transform: rotate(45deg);"></div>
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 999px; border: 6px dotted oklch(0.62 0.24 300);"></div>
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 10px; border: 3px dashed rgba(253,251,247,0.7);"></div>
+          <div style="width: 44px; height: 22px; box-sizing: border-box; border: 7px solid oklch(0.6 0.23 250); border-bottom: 0; border-radius: 999px 999px 0 0;"></div>
+          <div style="position: relative; width: 44px; height: 44px;">
+            <div style="position: absolute; top: 18px; width: 44px; height: 8px; border-radius: 999px; background: oklch(0.78 0.2 75);"></div>
+            <div style="position: absolute; left: 18px; width: 8px; height: 44px; border-radius: 999px; background: oklch(0.78 0.2 75);"></div>
+          </div>
+          <div style="width: 60px; height: 30px; box-sizing: border-box; border-radius: 999px; border: 5px solid #fdfbf7;"></div>
+          <div style="width: 44px; height: 44px; box-sizing: border-box; border-radius: 999px; border: 7px solid oklch(0.66 0.24 20); border-right-color: transparent; border-top-color: transparent;"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: oklch(0.78 0.2 75);">03 TRAMADAS</span>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: repeating-linear-gradient(45deg, #fdfbf7 0 6px, oklch(0.66 0.24 20) 6px 12px);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: radial-gradient(#fdfbf7 2px, transparent 2.2px) 0 0/11px 11px, oklch(0.6 0.23 250);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: conic-gradient(oklch(0.78 0.2 75) 0 25%, #fdfbf7 0 50%, oklch(0.78 0.2 75) 0 75%, #fdfbf7 0);"></div>
+          <div style="width: 40px; height: 40px; background: repeating-linear-gradient(90deg, oklch(0.62 0.24 300) 0 5px, #fdfbf7 5px 10px); transform: rotate(45deg);"></div>
+          <div style="position: relative; overflow: hidden; width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));">
+            <div style="position: absolute; inset: 0; opacity: 0.5; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='5'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+          </div>
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: repeating-conic-gradient(from 9deg, oklch(0.72 0.22 130) 0 12deg, #1a1720 0 24deg);"></div>
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: conic-gradient(oklch(0.6 0.23 250), oklch(0.62 0.24 300), oklch(0.66 0.24 20), oklch(0.78 0.2 75), oklch(0.6 0.23 250));"></div>
+          <div style="width: 60px; height: 30px; border-radius: 999px; background: linear-gradient(90deg, oklch(0.78 0.2 75), oklch(0.66 0.24 20));"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: oklch(0.78 0.2 75);">04 COMPUESTAS</span>
+        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="position: relative; width: 60px; height: 44px;">
+            <div style="position: absolute; left: 0; width: 44px; height: 44px; border-radius: 999px; background: oklch(0.62 0.24 300);"></div>
+            <div style="position: absolute; left: 22px; top: 8px; width: 28px; height: 28px; background: oklch(0.78 0.2 75); transform: rotate(45deg);"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="width: 44px; height: 12px; border-radius: 999px 999px 0 0; background: oklch(0.66 0.24 20);"></div>
+            <div style="width: 44px; height: 12px; border-radius: 999px 999px 0 0; background: oklch(0.78 0.2 75);"></div>
+            <div style="width: 44px; height: 12px; border-radius: 999px 999px 0 0; background: oklch(0.72 0.22 130);"></div>
+          </div>
+          <div style="display: flex; align-items: flex-end; gap: 4px; height: 44px;">
+            <div style="width: 9px; height: 20px; border-radius: 999px; background: oklch(0.6 0.23 250);"></div>
+            <div style="width: 9px; height: 34px; border-radius: 999px; background: oklch(0.6 0.23 250);"></div>
+            <div style="width: 9px; height: 44px; border-radius: 999px; background: oklch(0.6 0.23 250);"></div>
+            <div style="width: 9px; height: 28px; border-radius: 999px; background: oklch(0.6 0.23 250);"></div>
+          </div>
+          <div style="width: 44px; height: 44px; border-radius: 999px; background: oklch(0.78 0.2 75); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 26px; height: 26px; border-radius: 999px; background: #1a1720; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 11px; height: 11px; border-radius: 999px; background: oklch(0.78 0.2 75);"></div>
+            </div>
+          </div>
+          <div style="position: relative; width: 50px; height: 50px;">
+            <div style="position: absolute; left: 6px; top: 6px; width: 44px; height: 44px; border-radius: 10px; background: oklch(0.66 0.24 20);"></div>
+            <div style="position: absolute; width: 44px; height: 44px; border-radius: 10px; background: #fdfbf7;"></div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, 22px); grid-template-rows: repeat(2, 22px);">
+            <div style="border-radius: 999px 0 0 0; background: oklch(0.62 0.24 300);"></div>
+            <div style="background: #fdfbf7;"></div>
+            <div style="background: #fdfbf7;"></div>
+            <div style="border-radius: 0 0 999px 0; background: oklch(0.72 0.22 130);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.6; letter-spacing: 0.08em; color: rgba(253,251,247,0.35);">MÁX 3 FORMAS POR BLOQUE · NUNCA TODAS CENTRADAS<br>SE SALEN DEL BLOQUE, NUNCA SE RECORTAN A LA MITAD EXACTA</div>
+    </div>
+
+    <div style="grid-column: span 2; position: relative; overflow: hidden; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between;">
+      <span style="position: relative; font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Ejemplo compuesto</span>
+      <div style="position: absolute; right: -30px; top: 26px; width: 120px; height: 120px; border-radius: 999px; background: oklch(0.78 0.2 75);"></div>
+      <div style="position: absolute; right: 46px; bottom: 18px; width: 54px; height: 54px; background: oklch(0.62 0.24 300); transform: rotate(45deg);"></div>
+      <div style="position: absolute; left: -18px; bottom: -18px; width: 70px; height: 70px; border-radius: 999px; box-sizing: border-box; border: 9px solid oklch(0.72 0.22 130);"></div>
+      <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 34px; line-height: 0.9; letter-spacing: -0.04em; color: #1a1720;">Sin<br>miedo</div>
+    </div>
+
+    <div style="grid-column: span 2; position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(140deg, oklch(0.6 0.23 250), oklch(0.62 0.24 300)); padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div style="position: absolute; inset: 0; opacity: 0.35; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+      <div style="position: absolute; right: -26px; top: -26px; width: 96px; height: 96px; border-radius: 0 0 0 999px; background: oklch(0.78 0.2 75);"></div>
+      <div style="position: absolute; left: 24px; bottom: 22px; display: flex; gap: 5px;">
+        <div style="width: 10px; height: 10px; border-radius: 999px; background: #fdfbf7;"></div>
+        <div style="width: 10px; height: 10px; border-radius: 999px; background: #fdfbf7;"></div>
+        <div style="width: 10px; height: 10px; border-radius: 999px; background: rgba(253,251,247,0.4);"></div>
+      </div>
+      <span style="position: relative; font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.75);">Uso sobre color</span>
+      <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 30px; line-height: 0.92; letter-spacing: -0.04em; color: #fdfbf7; padding-bottom: 34px;">Una forma<br>manda</div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 12px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Escalas del módulo</span>
+      <div style="display: flex; align-items: flex-end; gap: 10px;">
+        <div style="width: 22px; height: 22px; border-radius: 999px; background: oklch(0.62 0.24 300);"></div>
+        <div style="width: 44px; height: 44px; border-radius: 999px; background: oklch(0.66 0.24 20);"></div>
+        <div style="width: 66px; height: 66px; border-radius: 999px; background: oklch(0.78 0.2 75);"></div>
+      </div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.45);">22 · 44 · 66 · 88 — MÚLTIPLOS DE 22<br>NUNCA TAMAÑOS INTERMEDIOS</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 04 MEDALLAS ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">04</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Medallas e insignias</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">reconocimiento, industria y estado</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+
+    <div style="grid-column: span 6; border-radius: 20px; background: #1a1720; padding: 26px 28px; display: flex; flex-direction: column; gap: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Medallas · 3 niveles × 4 detalles</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.35);">Ø 148 / 120 / 96 · BISEL + GRANO + BRILLO</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; gap: 30px; flex-wrap: wrap;">
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 148px; height: 148px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; border-radius: 999px; background: repeating-conic-gradient(from 7.5deg, oklch(0.78 0.2 75) 0 9deg, oklch(0.7 0.2 60) 0 18deg);"></div>
+            <div style="position: absolute; inset: 9px; border-radius: 999px; background: conic-gradient(from 215deg, oklch(0.9 0.13 92), oklch(0.62 0.19 55), oklch(0.88 0.14 88), oklch(0.58 0.2 45), oklch(0.9 0.13 92)); box-shadow: 0 6px 18px rgba(0,0,0,0.45);"></div>
+            <div style="position: absolute; inset: 18px; border-radius: 999px; border: 5px dotted rgba(26,23,32,0.45);"></div>
+            <div style="position: absolute; inset: 30px; border-radius: 999px; background: linear-gradient(150deg, oklch(0.86 0.16 88), oklch(0.68 0.2 48)); box-shadow: inset 0 3px 0 rgba(255,255,255,0.55), inset 0 -5px 0 rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.35);"></div>
+            <div style="position: absolute; inset: 30px; border-radius: 999px; opacity: 0.45; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+            <div style="position: absolute; left: 40px; top: 34px; width: 46px; height: 26px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.75), rgba(255,255,255,0)); transform: rotate(-28deg);"></div>
+            <div style="position: relative; text-align: center;">
+              <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 36px; line-height: 0.82; letter-spacing: -0.05em; color: #2a1c06; text-shadow: 0 1px 0 rgba(255,255,255,0.5);">01</div>
+              <div style="font-weight: 900; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(42,28,6,0.75);">Oro</div>
+            </div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">CORONA + BISEL + STUDS</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(140deg, oklch(0.72 0.2 305), oklch(0.5 0.22 295)); clip-path: polygon(50% 0%, 61% 20%, 83% 15%, 82% 38%, 100% 50%, 82% 62%, 83% 85%, 61% 80%, 50% 100%, 39% 80%, 17% 85%, 18% 62%, 0% 50%, 18% 38%, 17% 15%, 39% 20%);"></div>
+            <div style="position: absolute; inset: 12px; border-radius: 999px; background: conic-gradient(from 200deg, #ffffff, oklch(0.72 0.05 300), #f2eef8, oklch(0.66 0.06 300), #ffffff); box-shadow: 0 5px 14px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; inset: 20px; border-radius: 999px; background: conic-gradient(oklch(0.62 0.24 300) 0 12.5%, transparent 0 25%, oklch(0.62 0.24 300) 0 37.5%, transparent 0 50%, oklch(0.62 0.24 300) 0 62.5%, transparent 0 75%, oklch(0.62 0.24 300) 0 87.5%, transparent 0); opacity: 0.22;"></div>
+            <div style="position: absolute; inset: 20px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.18); box-shadow: inset 0 3px 0 rgba(255,255,255,0.8), inset 0 -4px 0 rgba(26,23,32,0.12);"></div>
+            <div style="position: absolute; left: 32px; top: 28px; width: 38px; height: 20px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.9), rgba(255,255,255,0)); transform: rotate(-25deg);"></div>
+            <div style="position: relative; text-align: center;">
+              <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; line-height: 0.82; letter-spacing: -0.05em; color: oklch(0.5 0.22 295);">02</div>
+              <div style="font-weight: 900; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(26,23,32,0.5);">Plata</div>
+            </div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">ESTRELLA 8 + RAYOS</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: -6px; border-radius: 999px; border: 3px solid oklch(0.72 0.22 130); opacity: 0.3;"></div>
+            <div style="position: absolute; inset: 0; border-radius: 999px; background: repeating-conic-gradient(from 9deg, oklch(0.72 0.22 130) 0 12deg, oklch(0.6 0.2 135) 0 24deg);"></div>
+            <div style="position: absolute; inset: 8px; border-radius: 999px; background: linear-gradient(150deg, oklch(0.82 0.2 128), oklch(0.58 0.2 138)); box-shadow: inset 0 3px 0 rgba(255,255,255,0.5), inset 0 -4px 0 rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.35);"></div>
+            <div style="position: absolute; inset: 8px; border-radius: 999px; opacity: 0.4; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+            <div style="position: absolute; inset: 18px; border-radius: 999px; border: 2px dashed rgba(26,23,32,0.3);"></div>
+            <div style="position: absolute; left: 24px; top: 20px; width: 30px; height: 16px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.7), rgba(255,255,255,0)); transform: rotate(-25deg);"></div>
+            <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.05em; color: #14290a; text-shadow: 0 1px 0 rgba(255,255,255,0.35);">03</div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">DENTADA + HALO</div>
+        </div>
+
+        <div style="width: 1px; align-self: stretch; background: rgba(253,251,247,0.12);"></div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 108px; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: absolute; top: 6px; width: 104px; height: 104px; border-radius: 999px; background: repeating-conic-gradient(from 6deg, oklch(0.6 0.23 250) 0 12deg, oklch(0.48 0.2 258) 0 24deg); opacity: 0.85;"></div>
+            <div style="position: relative; width: 88px; height: 88px; margin-top: 14px; border-radius: 26px; background: linear-gradient(140deg, oklch(0.7 0.2 252), oklch(0.5 0.23 292)); display: flex; align-items: center; justify-content: center; transform: rotate(-4deg); box-shadow: inset 0 3px 0 rgba(255,255,255,0.4), inset 0 -5px 0 rgba(0,0,0,0.3), 0 6px 16px rgba(0,0,0,0.45);">
+              <div style="position: absolute; inset: 0; border-radius: 26px; opacity: 0.4; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+              <div style="position: absolute; inset: 8px; border-radius: 20px; border: 2px solid rgba(253,251,247,0.35);"></div>
+              <div style="position: relative; width: 30px; height: 30px; border-radius: 999px; border: 7px solid #fdfbf7;"></div>
+              <div style="position: absolute; left: 16px; top: 12px; width: 34px; height: 16px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.6), rgba(255,255,255,0)); transform: rotate(-22deg);"></div>
+            </div>
+            <div style="position: relative; display: flex; gap: 4px; margin-top: -10px;">
+              <div style="width: 18px; height: 40px; background: linear-gradient(180deg, oklch(0.7 0.24 22), oklch(0.55 0.22 18)); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);"></div>
+              <div style="width: 18px; height: 40px; background: linear-gradient(180deg, oklch(0.82 0.19 78), oklch(0.66 0.19 68)); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 72%, 0 100%);"></div>
+            </div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">ROSETA + LISTÓN</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 108px; height: 108px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; background: conic-gradient(from 200deg, oklch(0.9 0.16 88), oklch(0.6 0.19 55), oklch(0.88 0.15 82), oklch(0.62 0.2 62), oklch(0.9 0.16 88)); clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%); filter: drop-shadow(0 5px 12px rgba(0,0,0,0.45));"></div>
+            <div style="position: absolute; inset: 8px; background: #1a1720; clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"></div>
+            <div style="position: absolute; inset: 13px; background: repeating-conic-gradient(from 0deg, rgba(230,145,0,0.5) 0 8deg, transparent 0 16deg); clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"></div>
+            <div style="position: absolute; inset: 18px; background: #1a1720; clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%); box-shadow: inset 0 2px 0 rgba(255,255,255,0.12);"></div>
+            <div style="position: absolute; top: 6px; left: 22px; width: 46px; height: 14px; background: linear-gradient(160deg, rgba(255,255,255,0.55), rgba(255,255,255,0)); transform: rotate(-24deg);"></div>
+            <div style="position: relative; text-align: center;">
+              <div style="font-weight: 900; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.82 0.19 78); line-height: 1.15;">Top<br>2026</div>
+              <div style="width: 22px; height: 2px; margin: 5px auto 0; background: oklch(0.82 0.19 78); opacity: 0.6;"></div>
+            </div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">HEXÁGONO GRABADO</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 108px; height: 108px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; border-radius: 999px; background: repeating-conic-gradient(oklch(0.66 0.24 20) 0 15deg, #fdfbf7 0 30deg); box-shadow: 0 5px 14px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; inset: 6px; border-radius: 999px; background: repeating-conic-gradient(from 7.5deg, rgba(26,23,32,0.16) 0 15deg, transparent 0 30deg);"></div>
+            <div style="position: absolute; inset: 18px; border-radius: 999px; background: #fdfbf7; box-shadow: 0 0 0 3px oklch(0.66 0.24 20);"></div>
+            <div style="position: relative; width: 62px; height: 62px; border-radius: 999px; background: linear-gradient(150deg, #3a3346, #14111a); display: flex; align-items: center; justify-content: center; box-shadow: inset 0 3px 0 rgba(255,255,255,0.18), inset 0 -4px 0 rgba(0,0,0,0.5);">
+              <div style="width: 20px; height: 20px; background: oklch(0.72 0.22 130); transform: rotate(45deg); box-shadow: 0 0 0 4px rgba(79,182,44,0.25);"></div>
+            </div>
+            <div style="position: absolute; left: 26px; top: 22px; width: 34px; height: 16px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.6), rgba(255,255,255,0)); transform: rotate(-25deg);"></div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(253,251,247,0.5);">RÁFAGA + NÚCLEO</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 4; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Insignias de industria</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4);">STICKER SET 01 · ROTACIÓN ±2.5°</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: oklch(0.62 0.24 300); transform: rotate(-2deg);">
+          <div style="width: 14px; height: 14px; border-radius: 999px; border: 3px solid #fdfbf7;"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Música</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: oklch(0.78 0.2 75); transform: rotate(1.5deg);">
+          <div style="width: 14px; height: 14px; background: #1a1720;"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #1a1720;">Moda</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: oklch(0.72 0.22 130); transform: rotate(-1deg);">
+          <div style="width: 13px; height: 13px; background: #1a1720; transform: rotate(45deg);"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #1a1720;">Food</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: oklch(0.66 0.24 20); transform: rotate(2deg);">
+          <div style="width: 14px; height: 14px; border-radius: 4px; background: #fdfbf7;"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Deporte</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: oklch(0.6 0.23 250); transform: rotate(-1.5deg);">
+          <div style="width: 14px; height: 7px; border-radius: 999px; background: #fdfbf7;"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Cultura</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; background: #1a1720; transform: rotate(1deg);">
+          <div style="width: 14px; height: 14px; border-radius: 999px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.78 0.2 75));"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Tech</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px; padding: 9px 16px 9px 12px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.3); transform: rotate(-2.5deg);">
+          <div style="width: 12px; height: 12px; border: 3px solid rgba(26,23,32,0.5); transform: rotate(45deg);"></div>
+          <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: rgba(26,23,32,0.8);">Retail</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Estado</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="padding: 5px 11px; border-radius: 999px; background: oklch(0.72 0.22 130); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1720;">Activo</span>
+        <span style="padding: 5px 11px; border-radius: 999px; background: oklch(0.78 0.2 75); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1720;">En curso</span>
+        <span style="padding: 5px 11px; border-radius: 999px; background: oklch(0.66 0.24 20); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #fdfbf7;">Vencido</span>
+        <span style="padding: 5px 11px; border-radius: 999px; background: rgba(26,23,32,0.1); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,23,32,0.6);">Borrador</span>
+        <span style="padding: 5px 11px; border-radius: 999px; background: #1a1720; font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #fdfbf7;">Nuevo</span>
+      </div>
+      <div style="margin-top: auto; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.45);">PÍLDORA 999 · 10/900/0.1em<br>SIN ROTACIÓN EN ESTADOS</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 05 CONTROLES ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">05</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Controles</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">botones, barras, selectores</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+
+    <div style="grid-column: span 3; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Botones</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+        <div style="padding: 14px 26px; border-radius: 999px; background: #1a1720; font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7; cursor: pointer; box-shadow: 4px 4px 0 oklch(0.78 0.2 75); transition: all 0.12s;" style-hover="transform: translate(2px, 2px); box-shadow: 2px 2px 0 oklch(0.78 0.2 75);">Empezar</div>
+        <div style="padding: 14px 26px; border-radius: 999px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20)); font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7; cursor: pointer; transition: all 0.12s;" style-hover="filter: brightness(1.08);">Cotizar</div>
+        <div style="padding: 13px 25px; border-radius: 999px; border: 2px solid #1a1720; font-weight: 900; font-size: 14px; text-transform: uppercase; color: #1a1720; cursor: pointer; transition: all 0.12s;" style-hover="background: #1a1720; color: #fdfbf7;">Ver casos</div>
+        <div style="padding: 14px 20px; font-weight: 900; font-size: 14px; text-transform: uppercase; color: rgba(26,23,32,0.55); cursor: pointer; transition: all 0.12s;" style-hover="color: #1a1720;">Cancelar</div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+        <div style="padding: 9px 18px; border-radius: 999px; background: oklch(0.78 0.2 75); font-weight: 900; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #1a1720; cursor: pointer;">Pequeño</div>
+        <div style="width: 44px; height: 44px; border-radius: 999px; background: #1a1720; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <div style="width: 14px; height: 14px; border-radius: 999px; border: 3px solid #fdfbf7;"></div>
+        </div>
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: oklch(0.6 0.23 250); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <div style="width: 14px; height: 14px; background: #fdfbf7; transform: rotate(45deg);"></div>
+        </div>
+        <div style="padding: 14px 26px; border-radius: 999px; background: rgba(26,23,32,0.12); font-weight: 900; font-size: 14px; text-transform: uppercase; color: rgba(26,23,32,0.35);">Inactivo</div>
+      </div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.45);">ALTURA 44 / 34 · RADIO 999 · SOMBRA DURA 4PX SIN BLUR<br>HOVER: DESPLAZA 2PX Y ACORTA LA SOMBRA</div>
+    </div>
+
+    <div style="grid-column: span 3; border-radius: 20px; background: #1a1720; padding: 24px 26px; display: flex; flex-direction: column; gap: 20px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Barras de carga</span>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);"><span>SÓLIDA</span><span>68%</span></div>
+        <div style="height: 14px; border-radius: 999px; background: rgba(253,251,247,0.12); overflow: hidden;">
+          <div style="width: 68%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);"><span>RAYADA · ACTIVA</span><span>42%</span></div>
+        <div style="height: 14px; border-radius: 999px; background: rgba(253,251,247,0.12); overflow: hidden;">
+          <div style="width: 42%; height: 100%; border-radius: 999px; background: repeating-linear-gradient(45deg, oklch(0.78 0.2 75) 0 8px, oklch(0.72 0.22 130) 8px 16px);"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);"><span>SEGMENTADA · 7/10</span><span>70%</span></div>
+        <div style="display: flex; gap: 4px; height: 14px;">
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+          <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+          <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+          <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 26px;">
+        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);">PASOS</div>
+          <div style="display: flex; align-items: center; gap: 0;">
+            <div style="width: 22px; height: 22px; border-radius: 999px; background: oklch(0.78 0.2 75); flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: oklch(0.78 0.2 75);"></div>
+            <div style="width: 22px; height: 22px; border-radius: 999px; background: oklch(0.78 0.2 75); flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: rgba(253,251,247,0.16);"></div>
+            <div style="width: 22px; height: 22px; border-radius: 999px; border: 4px solid rgba(253,251,247,0.25); flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: rgba(253,251,247,0.16);"></div>
+            <div style="width: 22px; height: 22px; border-radius: 999px; border: 4px solid rgba(253,251,247,0.25); flex: 0 0 auto;"></div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);">ANILLO</div>
+          <div style="width: 58px; height: 58px; border-radius: 999px; background: conic-gradient(oklch(0.6 0.23 250) 0 78%, rgba(253,251,247,0.14) 0); display: flex; align-items: center; justify-content: center;">
+            <div style="width: 40px; height: 40px; border-radius: 999px; background: #1a1720; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; color: #fdfbf7;">78</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Selector segmentado</span>
+      <div style="display: flex; padding: 4px; border-radius: 999px; background: rgba(26,23,32,0.08); gap: 2px;">
+        <div style="flex: 1; text-align: center; padding: 10px 0; border-radius: 999px; background: #1a1720; font-weight: 900; font-size: 12px; text-transform: uppercase; color: #fdfbf7; cursor: pointer;">Marca</div>
+        <div style="flex: 1; text-align: center; padding: 10px 0; border-radius: 999px; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(26,23,32,0.5); cursor: pointer;">Digital</div>
+        <div style="flex: 1; text-align: center; padding: 10px 0; border-radius: 999px; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(26,23,32,0.5); cursor: pointer;">Espacio</div>
+      </div>
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Interruptores</span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 62px; height: 34px; border-radius: 999px; background: oklch(0.72 0.22 130); display: flex; align-items: center; justify-content: flex-end; padding: 0 4px;">
+          <div style="width: 26px; height: 26px; border-radius: 999px; background: #fdfbf7;"></div>
+        </div>
+        <div style="width: 62px; height: 34px; border-radius: 999px; background: rgba(26,23,32,0.14); display: flex; align-items: center; padding: 0 4px;">
+          <div style="width: 26px; height: 26px; border-radius: 999px; background: #fdfbf7;"></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 22px; height: 22px; border-radius: 7px; background: #1a1720; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 9px; height: 9px; background: oklch(0.78 0.2 75);"></div>
+          </div>
+          <div style="width: 22px; height: 22px; border-radius: 7px; border: 2px solid rgba(26,23,32,0.25);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Deslizador</span>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="flex: 1; height: 10px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 58%; border-radius: 999px; background: linear-gradient(90deg, oklch(0.6 0.23 250), oklch(0.62 0.24 300));"></div>
+          <div style="position: absolute; left: 58%; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 999px; background: #1a1720; border: 4px solid #fdfbf7; box-shadow: 0 2px 8px rgba(26,23,32,0.25);"></div>
+        </div>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1a1720;">58</span>
+      </div>
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Chips de filtro</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="padding: 8px 14px; border-radius: 999px; background: #1a1720; font-weight: 900; font-size: 11px; text-transform: uppercase; color: #fdfbf7; cursor: pointer;">Todos</span>
+        <span style="padding: 8px 14px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.2); font-weight: 900; font-size: 11px; text-transform: uppercase; color: rgba(26,23,32,0.65); cursor: pointer;">Branding</span>
+        <span style="padding: 8px 14px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.2); font-weight: 900; font-size: 11px; text-transform: uppercase; color: rgba(26,23,32,0.65); cursor: pointer;">Video</span>
+        <span style="padding: 8px 14px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.2); font-weight: 900; font-size: 11px; text-transform: uppercase; color: rgba(26,23,32,0.65); cursor: pointer;">Web</span>
+      </div>
+    </div>
+
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Campo y menú</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.45);">CORREO</span>
+        <div style="padding: 13px 16px; border-radius: 14px; border: 2px solid #1a1720; font-weight: 500; font-size: 14px; color: #1a1720;">hola@lqs.mx</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.45);">INDUSTRIA</span>
+        <div style="padding: 13px 16px; border-radius: 14px; background: rgba(26,23,32,0.07); display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: #1a1720; cursor: pointer;">
+          <span>Selecciona…</span>
+          <div style="width: 9px; height: 9px; border-right: 2.5px solid #1a1720; border-bottom: 2.5px solid #1a1720; transform: rotate(45deg) translate(-2px, -2px);"></div>
+        </div>
+      </div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.45);">RADIO 14 EN CAMPOS · 999 EN ACCIONES</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 06 CARITAS ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">06</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Caritas</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">gestos sencillos, piezas intercambiables</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+
+    <!-- piezas -->
+    <div style="grid-column: span 3; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Piezas · ojos</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4);">TRAZO 3PX · SIEMPRE TINTA</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;">
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="width: 9px; height: 9px; border-radius: 999px; background: #1a1720;"></div>
+          <div style="width: 9px; height: 9px; border-radius: 999px; background: #1a1720;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="width: 13px; height: 13px; border-radius: 999px; background: #fdfbf7; border: 2px solid #1a1720; display: flex; align-items: flex-end; justify-content: center;"><div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720; margin-bottom: 1px;"></div></div>
+          <div style="width: 13px; height: 13px; border-radius: 999px; background: #fdfbf7; border: 2px solid #1a1720; display: flex; align-items: flex-end; justify-content: center;"><div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720; margin-bottom: 1px;"></div></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="width: 13px; height: 7px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+          <div style="width: 13px; height: 7px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="width: 13px; height: 7px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+          <div style="width: 9px; height: 9px; border-radius: 999px; background: #1a1720;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="width: 14px; height: 3px; border-radius: 999px; background: #1a1720;"></div>
+          <div style="width: 14px; height: 3px; border-radius: 999px; background: #1a1720;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <div style="position: relative; width: 13px; height: 13px;">
+            <div style="position: absolute; top: 5px; width: 13px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(45deg);"></div>
+            <div style="position: absolute; top: 5px; width: 13px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(-45deg);"></div>
+          </div>
+          <div style="position: relative; width: 13px; height: 13px;">
+            <div style="position: absolute; top: 5px; width: 13px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(45deg);"></div>
+            <div style="position: absolute; top: 5px; width: 13px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(-45deg);"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; color: rgba(26,23,32,0.45); text-align: center;">
+        <span>PUNTO</span><span>ABIERTO</span><span>FELIZ</span><span>GUIÑO</span><span>SUEÑO</span><span>UPS</span>
+      </div>
+
+      <div style="height: 1px; background: rgba(26,23,32,0.1);"></div>
+
+      <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Piezas · bocas</span>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;">
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 24px; height: 12px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 24px; height: 13px; background: #1a1720; border-radius: 0 0 999px 999px;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 16px; height: 3px; border-radius: 999px; background: #1a1720;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 13px; height: 16px; border-radius: 999px; background: #1a1720;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 24px; height: 12px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+        </div>
+        <div style="height: 58px; border-radius: 14px; background: #f5f2ec; display: flex; align-items: center; justify-content: center;">
+          <div style="position: relative; width: 24px; height: 16px; display: flex; justify-content: center;">
+            <div style="width: 24px; height: 13px; background: #1a1720; border-radius: 0 0 999px 999px;"></div>
+            <div style="position: absolute; bottom: 0; width: 11px; height: 8px; border-radius: 0 0 999px 999px; background: oklch(0.66 0.24 20);"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; color: rgba(26,23,32,0.45); text-align: center;">
+        <span>SONRISA</span><span>RISA</span><span>NEUTRA</span><span>OH</span><span>MUECA</span><span>LENGUA</span>
+      </div>
+    </div>
+
+    <!-- combinaciones -->
+    <div style="grid-column: span 3; border-radius: 20px; background: #1a1720; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Combinaciones</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.35);">OJOS SEPARADOS 0.28× Ø</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: oklch(0.78 0.2 75); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.14);">
+            <div style="display: flex; gap: 16px;">
+              <div style="width: 10px; height: 10px; border-radius: 999px; background: #1a1720;"></div>
+              <div style="width: 10px; height: 10px; border-radius: 999px; background: #1a1720;"></div>
+            </div>
+            <div style="width: 26px; height: 13px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">CONTENTA</span>
+        </div>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: oklch(0.72 0.22 130); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.14);">
+            <div style="display: flex; gap: 16px; align-items: center;">
+              <div style="width: 14px; height: 3px; border-radius: 999px; background: #1a1720;"></div>
+              <div style="width: 10px; height: 10px; border-radius: 999px; background: #1a1720;"></div>
+            </div>
+            <div style="width: 26px; height: 13px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">GUIÑO</span>
+        </div>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: oklch(0.6 0.23 250); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.14);">
+            <div style="display: flex; gap: 14px;">
+              <div style="width: 14px; height: 14px; border-radius: 999px; background: #fdfbf7; border: 2px solid #1a1720; box-sizing: border-box; display: flex; align-items: center; justify-content: center;"><div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div></div>
+              <div style="width: 14px; height: 14px; border-radius: 999px; background: #fdfbf7; border: 2px solid #1a1720; box-sizing: border-box; display: flex; align-items: center; justify-content: center;"><div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div></div>
+            </div>
+            <div style="width: 13px; height: 16px; border-radius: 999px; background: #1a1720;"></div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">SORPRESA</span>
+        </div>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: oklch(0.62 0.24 300); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.14);">
+            <div style="display: flex; gap: 16px;">
+              <div style="width: 14px; height: 7px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+              <div style="width: 14px; height: 7px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+            </div>
+            <div style="width: 26px; height: 14px; background: #1a1720; border-radius: 0 0 999px 999px;"></div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">RISA</span>
+        </div>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: oklch(0.66 0.24 20); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.14);">
+            <div style="display: flex; gap: 14px;">
+              <div style="position: relative; width: 14px; height: 14px;">
+                <div style="position: absolute; top: 6px; width: 14px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(45deg);"></div>
+                <div style="position: absolute; top: 6px; width: 14px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(-45deg);"></div>
+              </div>
+              <div style="position: relative; width: 14px; height: 14px;">
+                <div style="position: absolute; top: 6px; width: 14px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(45deg);"></div>
+                <div style="position: absolute; top: 6px; width: 14px; height: 3px; border-radius: 999px; background: #1a1720; transform: rotate(-45deg);"></div>
+              </div>
+            </div>
+            <div style="width: 26px; height: 13px; box-sizing: border-box; border-top: 3px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">ERROR</span>
+        </div>
+        <div style="width: 78px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="width: 72px; height: 72px; border-radius: 999px; background: #fdfbf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.08);">
+            <div style="display: flex; gap: 16px;">
+              <div style="width: 14px; height: 7px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+              <div style="width: 14px; height: 7px; box-sizing: border-box; border-bottom: 3px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+            </div>
+            <div style="position: relative; width: 26px; height: 17px; display: flex; justify-content: center;">
+              <div style="width: 26px; height: 14px; background: #1a1720; border-radius: 0 0 999px 999px;"></div>
+              <div style="position: absolute; bottom: 0; width: 12px; height: 9px; border-radius: 0 0 999px 999px; background: oklch(0.66 0.24 20);"></div>
+            </div>
+          </div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">TRAVIESA</span>
+        </div>
+      </div>
+      <div style="margin-top: auto; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.6; letter-spacing: 0.06em; color: rgba(253,251,247,0.35);">UNA CARITA POR PANTALLA · NUNCA EN TEXTO CORRIDO<br>SIN CEJAS, SIN NARIZ, SIN MEJILLAS</div>
+    </div>
+
+    <!-- aplicadas -->
+    <div style="grid-column: span 6; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 26px 28px; display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;">
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Aplicadas a controles</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.4);">LA CARITA REACCIONA AL ESTADO, NO DECORA</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;">
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.45);">BOTONES</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 22px 10px 12px; border-radius: 999px; background: #1a1720; cursor: pointer; box-shadow: 4px 4px 0 oklch(0.78 0.2 75);">
+              <div style="width: 30px; height: 30px; border-radius: 999px; background: oklch(0.78 0.2 75); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                <div style="display: flex; gap: 7px;">
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                </div>
+                <div style="width: 13px; height: 6px; box-sizing: border-box; border-bottom: 2.5px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+              </div>
+              <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Empezar</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 22px 10px 12px; border-radius: 999px; background: rgba(26,23,32,0.1); cursor: default;">
+              <div style="width: 30px; height: 30px; border-radius: 999px; background: rgba(26,23,32,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;">
+                <div style="display: flex; gap: 7px; align-items: center;">
+                  <div style="width: 8px; height: 2.5px; border-radius: 999px; background: rgba(26,23,32,0.45);"></div>
+                  <div style="width: 8px; height: 2.5px; border-radius: 999px; background: rgba(26,23,32,0.45);"></div>
+                </div>
+                <div style="width: 11px; height: 2.5px; border-radius: 999px; background: rgba(26,23,32,0.45);"></div>
+              </div>
+              <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: rgba(26,23,32,0.4);">Inactivo</span>
+            </div>
+            <div style="width: 46px; height: 46px; border-radius: 999px; background: oklch(0.66 0.24 20); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: pointer;">
+              <div style="display: flex; gap: 9px;">
+                <div style="position: relative; width: 10px; height: 10px;">
+                  <div style="position: absolute; top: 4px; width: 10px; height: 2.5px; border-radius: 999px; background: #fdfbf7; transform: rotate(45deg);"></div>
+                  <div style="position: absolute; top: 4px; width: 10px; height: 2.5px; border-radius: 999px; background: #fdfbf7; transform: rotate(-45deg);"></div>
+                </div>
+                <div style="position: relative; width: 10px; height: 10px;">
+                  <div style="position: absolute; top: 4px; width: 10px; height: 2.5px; border-radius: 999px; background: #fdfbf7; transform: rotate(45deg);"></div>
+                  <div style="position: absolute; top: 4px; width: 10px; height: 2.5px; border-radius: 999px; background: #fdfbf7; transform: rotate(-45deg);"></div>
+                </div>
+              </div>
+              <div style="width: 15px; height: 8px; box-sizing: border-box; border-top: 2.5px solid #fdfbf7; border-radius: 999px 999px 0 0;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.45);">DESLIZADOR · LA CARA CAMBIA CON EL VALOR</span>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="flex: 1; height: 12px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+              <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; border-radius: 999px; background: linear-gradient(90deg, oklch(0.6 0.23 250), oklch(0.62 0.24 300));"></div>
+              <div style="position: absolute; left: 72%; top: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 999px; background: #fdfbf7; border: 3px solid #1a1720; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 3px 8px rgba(26,23,32,0.28);">
+                <div style="display: flex; gap: 8px;">
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                </div>
+                <div style="width: 14px; height: 7px; box-sizing: border-box; border-bottom: 2.5px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+              </div>
+            </div>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1a1720;">72</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="flex: 1; height: 12px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+              <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 18%; border-radius: 999px; background: oklch(0.66 0.24 20);"></div>
+              <div style="position: absolute; left: 18%; top: 50%; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 999px; background: #fdfbf7; border: 3px solid #1a1720; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: 0 3px 8px rgba(26,23,32,0.28);">
+                <div style="display: flex; gap: 8px;">
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                  <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+                </div>
+                <div style="width: 14px; height: 7px; box-sizing: border-box; border-top: 2.5px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+              </div>
+            </div>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #1a1720;">18</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px; margin-top: 2px;">
+            <div style="width: 64px; height: 34px; border-radius: 999px; background: oklch(0.72 0.22 130); display: flex; align-items: center; justify-content: flex-end; padding: 0 4px;">
+              <div style="width: 26px; height: 26px; border-radius: 999px; background: #fdfbf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;">
+                <div style="display: flex; gap: 6px;">
+                  <div style="width: 4px; height: 4px; border-radius: 999px; background: #1a1720;"></div>
+                  <div style="width: 4px; height: 4px; border-radius: 999px; background: #1a1720;"></div>
+                </div>
+                <div style="width: 11px; height: 5px; box-sizing: border-box; border-bottom: 2px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+              </div>
+            </div>
+            <div style="width: 64px; height: 34px; border-radius: 999px; background: rgba(26,23,32,0.14); display: flex; align-items: center; padding: 0 4px;">
+              <div style="width: 26px; height: 26px; border-radius: 999px; background: #fdfbf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                <div style="display: flex; gap: 6px;">
+                  <div style="width: 8px; height: 4px; box-sizing: border-box; border-top: 2px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+                  <div style="width: 8px; height: 4px; box-sizing: border-box; border-top: 2px solid #1a1720; border-radius: 999px 999px 0 0;"></div>
+                </div>
+                <div style="width: 9px; height: 2px; border-radius: 999px; background: #1a1720;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.45);">CARGA · LA CARA VA EN LA PUNTA</span>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <div style="height: 34px; display: flex; align-items: center;">
+              <div style="flex: 1; height: 16px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 46%; border-radius: 999px; background: repeating-linear-gradient(45deg, oklch(0.78 0.2 75) 0 8px, oklch(0.72 0.22 130) 8px 16px);"></div>
+                <div style="position: absolute; left: 46%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 999px; background: #1a1720; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                  <div style="display: flex; gap: 7px; align-items: center;">
+                    <div style="width: 9px; height: 2.5px; border-radius: 999px; background: #fdfbf7;"></div>
+                    <div style="width: 5px; height: 5px; border-radius: 999px; background: #fdfbf7;"></div>
+                  </div>
+                  <div style="width: 12px; height: 6px; box-sizing: border-box; border-bottom: 2.5px solid #fdfbf7; border-radius: 0 0 999px 999px;"></div>
+                </div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(26,23,32,0.55); width: 42px; text-align: right;">46%</span>
+            </div>
+            <div style="height: 34px; display: flex; align-items: center;">
+              <div style="flex: 1; height: 16px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 999px; background: oklch(0.72 0.22 130);"></div>
+                <div style="position: absolute; left: 100%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 999px; background: #1a1720; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                  <div style="display: flex; gap: 7px;">
+                    <div style="width: 9px; height: 5px; box-sizing: border-box; border-bottom: 2.5px solid #fdfbf7; border-radius: 0 0 999px 999px;"></div>
+                    <div style="width: 9px; height: 5px; box-sizing: border-box; border-bottom: 2.5px solid #fdfbf7; border-radius: 0 0 999px 999px;"></div>
+                  </div>
+                  <div style="width: 14px; height: 7px; background: #fdfbf7; border-radius: 0 0 999px 999px;"></div>
+                </div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(26,23,32,0.55); width: 42px; text-align: right;">100%</span>
+            </div>
+            <div style="height: 34px; display: flex; align-items: center;">
+              <div style="flex: 1; height: 16px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 27%; border-radius: 999px; background: oklch(0.66 0.24 20);"></div>
+                <div style="position: absolute; left: 27%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 999px; background: #1a1720; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+                  <div style="display: flex; gap: 8px;">
+                    <div style="width: 10px; height: 10px; border-radius: 999px; background: #fdfbf7; display: flex; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; border-radius: 999px; background: #1a1720;"></div></div>
+                    <div style="width: 10px; height: 10px; border-radius: 999px; background: #fdfbf7; display: flex; align-items: center; justify-content: center;"><div style="width: 4px; height: 4px; border-radius: 999px; background: #1a1720;"></div></div>
+                  </div>
+                  <div style="width: 8px; height: 9px; border-radius: 999px; background: #fdfbf7;"></div>
+                </div>
+              </div>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(26,23,32,0.55); width: 42px; text-align: right;">27%</span>
+            </div>
+          </div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1.6; color: rgba(26,23,32,0.45);">0–33 SORPRESA · 34–99 GUIÑO · 100 RISA<br>ERROR: OJOS EN X Y MUECA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 07 TELÉFONO ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">07</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Formato teléfono</span>
+    <span style="font-weight: 500; font-size: 13px; color: rgba(245,242,236,0.45);">390 × 844 · el bento pasa a una columna de 2</span>
+  </div>
+
+  <div style="display: flex; gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+
+    <!-- pantalla 1 · home -->
+    <div style="width: 390px; flex: 0 0 auto; height: 844px; box-sizing: border-box; border-radius: 20px; background: #1a1720; padding: 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 2px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(253,251,247,0.6);">9:41</span>
+        <div style="display: flex; gap: 5px; align-items: center;">
+          <div style="width: 16px; height: 8px; border-radius: 2px; border: 1.5px solid rgba(253,251,247,0.5);"></div>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; position: relative; overflow: hidden; border-radius: 18px; background: linear-gradient(105deg, oklch(0.62 0.24 300) 0%, oklch(0.66 0.24 20) 48%, oklch(0.78 0.2 75) 100%); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="position: absolute; inset: 0; opacity: 0.3; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+        <div style="position: relative; display: flex; justify-content: space-between; align-items: flex-start;">
+          <image-slot id="lqs-logo-phone" style="width: 74px; height: 52px;" shape="rect" fit="contain" placeholder="Logo"></image-slot>
+          <div style="width: 34px; height: 34px; border-radius: 999px; background: rgba(253,251,247,0.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+            <div style="display: flex; gap: 7px;">
+              <div style="width: 5px; height: 5px; border-radius: 999px; background: #fdfbf7;"></div>
+              <div style="width: 5px; height: 5px; border-radius: 999px; background: #fdfbf7;"></div>
+            </div>
+            <div style="width: 13px; height: 6px; box-sizing: border-box; border-bottom: 2.5px solid #fdfbf7; border-radius: 0 0 999px 999px;"></div>
+          </div>
+        </div>
+        <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 68px; line-height: 0.76; letter-spacing: -0.05em; color: #fdfbf7;">LQS</div>
+        <div style="position: relative; font-family: 'Newsreader', serif; font-style: italic; font-weight: 300; font-size: 19px; line-height: 1.3; color: rgba(253,251,247,0.92);">una pared que se mueve</div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div style="height: 118px; box-sizing: border-box; border-radius: 18px; background: #fdfbf7; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="width: 26px; height: 26px; border-radius: 999px; background: oklch(0.62 0.24 300);"></div>
+          <div>
+            <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.03em; color: #1a1720;">Marca</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: rgba(26,23,32,0.5);">12 PROYECTOS</div>
+          </div>
+        </div>
+        <div style="height: 118px; box-sizing: border-box; border-radius: 18px; background: #fdfbf7; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="width: 26px; height: 26px; border-radius: 7px; background: oklch(0.66 0.24 20);"></div>
+          <div>
+            <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.03em; color: #1a1720;">Campaña</div>
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: rgba(26,23,32,0.5);">08 PROYECTOS</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; border-radius: 18px; background: #fdfbf7; padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <span style="font-weight: 900; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.45);">Capacidad del trimestre</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(26,23,32,0.5);">72%</span>
+        </div>
+        <div style="height: 16px; border-radius: 999px; background: rgba(26,23,32,0.12); position: relative;">
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; border-radius: 999px; background: linear-gradient(90deg, oklch(0.6 0.23 250), oklch(0.62 0.24 300));"></div>
+          <div style="position: absolute; left: 72%; top: 50%; width: 32px; height: 32px; margin: -16px 0 0 -16px; border-radius: 999px; background: #fdfbf7; border: 3px solid #1a1720; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;">
+            <div style="display: flex; gap: 7px; align-items: center;">
+              <div style="width: 8px; height: 2.5px; border-radius: 999px; background: #1a1720;"></div>
+              <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+            </div>
+            <div style="width: 12px; height: 6px; box-sizing: border-box; border-bottom: 2.5px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: flex; gap: 6px; overflow: hidden;">
+        <span style="padding: 8px 13px; border-radius: 999px; background: oklch(0.78 0.2 75); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #1a1720; transform: rotate(-1.5deg); flex: 0 0 auto;">Moda</span>
+        <span style="padding: 8px 13px; border-radius: 999px; background: oklch(0.72 0.22 130); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #1a1720; transform: rotate(1deg); flex: 0 0 auto;">Food</span>
+        <span style="padding: 8px 13px; border-radius: 999px; background: oklch(0.6 0.23 250); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #fdfbf7; transform: rotate(-1deg); flex: 0 0 auto;">Cultura</span>
+        <span style="padding: 8px 13px; border-radius: 999px; border: 2px solid rgba(253,251,247,0.3); font-weight: 900; font-size: 11px; text-transform: uppercase; color: rgba(253,251,247,0.8); transform: rotate(2deg); flex: 0 0 auto;">Tech</span>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; position: relative; overflow: hidden; border-radius: 18px; background: linear-gradient(160deg, oklch(0.6 0.23 250), oklch(0.72 0.22 130)); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="position: absolute; inset: 0; opacity: 0.28; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+        <div style="position: absolute; right: -24px; top: 40px; width: 108px; height: 108px; border-radius: 999px; background: rgba(253,251,247,0.18);"></div>
+        <div style="position: relative; font-weight: 900; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.8);">Destacado</div>
+        <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 38px; line-height: 0.86; letter-spacing: -0.04em; color: #fdfbf7; text-transform: uppercase;">Haz<br>ruido</div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 5px; border-radius: 999px; background: rgba(253,251,247,0.08);">
+        <div style="flex: 1; text-align: center; padding: 11px 0; border-radius: 999px; background: #fdfbf7; font-weight: 900; font-size: 12px; text-transform: uppercase; color: #1a1720;">Trabajo</div>
+        <div style="flex: 1; text-align: center; padding: 11px 0; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(253,251,247,0.55);">Equipo</div>
+        <div style="flex: 1; text-align: center; padding: 11px 0; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(253,251,247,0.55);">Contacto</div>
+      </div>
+    </div>
+
+    <!-- pantalla 2 · caso -->
+    <div style="width: 390px; flex: 0 0 auto; height: 844px; box-sizing: border-box; border-radius: 20px; background: #f5f2ec; padding: 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 2px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(26,23,32,0.5);">9:41</span>
+        <div style="width: 16px; height: 8px; border-radius: 2px; border: 1.5px solid rgba(26,23,32,0.35);"></div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;">
+        <div style="width: 40px; height: 40px; border-radius: 999px; background: #1a1720; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 10px; height: 10px; border-left: 2.5px solid #fdfbf7; border-bottom: 2.5px solid #fdfbf7; transform: rotate(45deg) translate(2px, -2px);"></div>
+        </div>
+        <span style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(26,23,32,0.5);">Caso 04</span>
+        <div style="width: 40px; height: 40px; border-radius: 999px; border: 2px solid rgba(26,23,32,0.2);"></div>
+      </div>
+
+      <div style="flex: 0 0 150px; height: 150px; border-radius: 18px; overflow: hidden; position: relative;">
+        <image-slot id="lqs-phone-caso" shape="rect" placeholder="Foto del caso"></image-slot>
+      </div>
+
+      <div style="flex: 0 0 auto; border-radius: 18px; background: #fdfbf7; padding: 18px 20px; display: flex; flex-direction: column; gap: 9px;">
+        <div style="display: flex; gap: 6px;">
+          <span style="padding: 6px 12px; border-radius: 999px; background: oklch(0.78 0.2 75); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1720;">Moda</span>
+          <span style="padding: 6px 12px; border-radius: 999px; background: rgba(26,23,32,0.09); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,23,32,0.6);">2026</span>
+        </div>
+        <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; line-height: 0.98; letter-spacing: -0.04em; color: #1a1720;">Identidad para una tienda de barrio</div>
+        <div style="font-weight: 500; font-size: 13px; line-height: 1.5; color: rgba(26,23,32,0.7);">Sistema modular de bloques en escaparate, bolsas y redes.</div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <div style="height: 92px; box-sizing: border-box; border-radius: 18px; background: #1a1720; padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">ALCANCE</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.04em; color: oklch(0.78 0.2 75);">1.2M</span>
+        </div>
+        <div style="height: 92px; box-sizing: border-box; border-radius: 18px; background: #1a1720; padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">VENTAS</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.04em; color: oklch(0.72 0.22 130);">+38%</span>
+        </div>
+        <div style="height: 92px; box-sizing: border-box; border-radius: 18px; background: #1a1720; padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(253,251,247,0.5);">SEMANAS</span>
+          <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.04em; color: oklch(0.6 0.23 250);">06</span>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 82px; display: flex; gap: 8px;">
+        <div style="flex: 1; height: 82px; border-radius: 18px; background: #fdfbf7; background-image: radial-gradient(oklch(0.62 0.24 300) 2.5px, transparent 2.6px); background-size: 18px 18px;"></div>
+        <div style="flex: 1; height: 82px; border-radius: 18px; background: repeating-linear-gradient(45deg, oklch(0.78 0.2 75) 0 12px, #fdfbf7 12px 24px);"></div>
+        <div style="flex: 1; height: 82px; position: relative; overflow: hidden; border-radius: 18px; background: linear-gradient(120deg, oklch(0.62 0.24 300), oklch(0.66 0.24 20));">
+          <div style="position: absolute; inset: 0; opacity: 0.5; mix-blend-mode: overlay; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='5'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; border-radius: 18px; background: #fdfbf7; padding: 16px 18px; display: flex; flex-direction: column; justify-content: center; gap: 8px; overflow: hidden;">
+        <div style="font-family: 'Newsreader', serif; font-style: italic; font-weight: 300; font-size: 20px; line-height: 1.35; color: #1a1720;">“Llegaron con bloques y salimos con una marca que se arma sola.”</div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.5);">DIRECCIÓN · CLIENTE</div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 12px; border-radius: 999px; background: #1a1720; box-shadow: 4px 4px 0 oklch(0.78 0.2 75);">
+        <div style="width: 32px; height: 32px; border-radius: 999px; background: oklch(0.78 0.2 75); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+          <div style="display: flex; gap: 7px;">
+            <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+            <div style="width: 5px; height: 5px; border-radius: 999px; background: #1a1720;"></div>
+          </div>
+          <div style="width: 13px; height: 6px; box-sizing: border-box; border-bottom: 2.5px solid #1a1720; border-radius: 0 0 999px 999px;"></div>
+        </div>
+        <span style="font-weight: 900; font-size: 14px; text-transform: uppercase; color: #fdfbf7;">Quiero algo así</span>
+      </div>
+    </div>
+
+    <!-- pantalla 3 · perfil -->
+    <div style="width: 390px; flex: 0 0 auto; height: 844px; box-sizing: border-box; border-radius: 20px; background: #1a1720; padding: 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+      <div style="flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 2px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(253,251,247,0.6);">9:41</span>
+        <div style="width: 16px; height: 8px; border-radius: 2px; border: 1.5px solid rgba(253,251,247,0.5);"></div>
+      </div>
+
+      <div style="flex: 0 0 auto; border-radius: 18px; background: #fdfbf7; padding: 22px 20px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+        <div style="position: relative; width: 118px; height: 118px; display: flex; align-items: center; justify-content: center;">
+          <div style="position: absolute; inset: 0; border-radius: 999px; background: repeating-conic-gradient(from 7.5deg, oklch(0.78 0.2 75) 0 9deg, oklch(0.7 0.2 60) 0 18deg);"></div>
+          <div style="position: absolute; inset: 8px; border-radius: 999px; background: conic-gradient(from 215deg, oklch(0.9 0.13 92), oklch(0.62 0.19 55), oklch(0.88 0.14 88), oklch(0.58 0.2 45), oklch(0.9 0.13 92)); box-shadow: 0 5px 14px rgba(0,0,0,0.35);"></div>
+          <div style="position: absolute; inset: 15px; border-radius: 999px; border: 4px dotted rgba(26,23,32,0.45);"></div>
+          <div style="position: absolute; inset: 25px; border-radius: 999px; background: linear-gradient(150deg, oklch(0.86 0.16 88), oklch(0.68 0.2 48)); box-shadow: inset 0 3px 0 rgba(255,255,255,0.55), inset 0 -5px 0 rgba(0,0,0,0.28);"></div>
+          <div style="position: absolute; left: 32px; top: 28px; width: 38px; height: 20px; border-radius: 999px; background: linear-gradient(160deg, rgba(255,255,255,0.75), rgba(255,255,255,0)); transform: rotate(-28deg);"></div>
+          <div style="position: relative; text-align: center;">
+            <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; line-height: 0.82; letter-spacing: -0.05em; color: #2a1c06;">01</div>
+            <div style="font-weight: 900; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(42,28,6,0.75);">Oro</div>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.035em; color: #1a1720;">Agencia del año</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: rgba(26,23,32,0.5);">CATEGORÍA EMERGENTE · 2026</div>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; border-radius: 18px; background: rgba(253,251,247,0.06); padding: 18px 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(253,251,247,0.5);"><span>MEDALLAS DEL AÑO</span><span>7/10</span></div>
+            <div style="display: flex; gap: 4px; height: 12px;">
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: oklch(0.72 0.22 130);"></div>
+              <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+              <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+              <div style="flex: 1; border-radius: 4px; background: rgba(253,251,247,0.14);"></div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0;">
+            <div style="width: 20px; height: 20px; border-radius: 999px; background: oklch(0.78 0.2 75); flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: oklch(0.78 0.2 75);"></div>
+            <div style="width: 20px; height: 20px; border-radius: 999px; background: oklch(0.78 0.2 75); flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: rgba(253,251,247,0.16);"></div>
+            <div style="width: 20px; height: 20px; border-radius: 999px; border: 4px solid rgba(253,251,247,0.25); box-sizing: border-box; flex: 0 0 auto;"></div>
+            <div style="height: 4px; flex: 1; background: rgba(253,251,247,0.16);"></div>
+            <div style="width: 20px; height: 20px; border-radius: 999px; border: 4px solid rgba(253,251,247,0.25); box-sizing: border-box; flex: 0 0 auto;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div style="height: 128px; box-sizing: border-box; border-radius: 18px; background: #fdfbf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+          <div style="position: relative; width: 62px; height: 62px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; border-radius: 999px; background: repeating-conic-gradient(from 9deg, oklch(0.72 0.22 130) 0 12deg, oklch(0.6 0.2 135) 0 24deg);"></div>
+            <div style="position: absolute; inset: 6px; border-radius: 999px; background: linear-gradient(150deg, oklch(0.82 0.2 128), oklch(0.58 0.2 138)); box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -3px 0 rgba(0,0,0,0.25);"></div>
+            <div style="position: relative; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: -0.05em; color: #14290a;">03</div>
+          </div>
+          <span style="font-weight: 900; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #1a1720;">Diseño</span>
+        </div>
+        <div style="height: 128px; box-sizing: border-box; border-radius: 18px; background: #fdfbf7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+          <div style="position: relative; width: 62px; height: 62px; display: flex; align-items: center; justify-content: center;">
+            <div style="position: absolute; inset: 0; background: conic-gradient(from 200deg, oklch(0.9 0.16 88), oklch(0.6 0.19 55), oklch(0.88 0.15 82), oklch(0.62 0.2 62), oklch(0.9 0.16 88)); clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"></div>
+            <div style="position: absolute; inset: 6px; background: #1a1720; clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"></div>
+            <div style="position: relative; font-weight: 900; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(0.82 0.19 78); text-align: center; line-height: 1.15;">Top<br>2026</div>
+          </div>
+          <span style="font-weight: 900; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #1a1720;">Campaña</span>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; border-radius: 18px; background: rgba(253,251,247,0.06); padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+        <span style="font-weight: 900; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(253,251,247,0.45);">Insignias</span>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <span style="padding: 7px 13px; border-radius: 999px; background: oklch(0.62 0.24 300); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #fdfbf7; transform: rotate(-2deg);">Música</span>
+          <span style="padding: 7px 13px; border-radius: 999px; background: oklch(0.78 0.2 75); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #1a1720; transform: rotate(1.5deg);">Moda</span>
+          <span style="padding: 7px 13px; border-radius: 999px; background: oklch(0.72 0.22 130); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #1a1720; transform: rotate(-1deg);">Food</span>
+          <span style="padding: 7px 13px; border-radius: 999px; background: oklch(0.6 0.23 250); font-weight: 900; font-size: 11px; text-transform: uppercase; color: #fdfbf7; transform: rotate(2deg);">Cultura</span>
+        </div>
+      </div>
+
+      <div style="flex: 0 0 auto; display: flex; padding: 5px; border-radius: 999px; background: rgba(253,251,247,0.08); gap: 2px;">
+        <div style="flex: 1; text-align: center; padding: 11px 0; border-radius: 999px; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(253,251,247,0.55);">Trabajo</div>
+        <div style="flex: 1; text-align: center; padding: 11px 0; border-radius: 999px; background: #fdfbf7; font-weight: 900; font-size: 12px; text-transform: uppercase; color: #1a1720;">Equipo</div>
+        <div style="flex: 1; text-align: center; padding: 11px 0; border-radius: 999px; font-weight: 900; font-size: 12px; text-transform: uppercase; color: rgba(253,251,247,0.55);">Contacto</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 08 REGLAS ══════════ -->
+  <div style="display: flex; align-items: baseline; gap: 14px; padding: 22px 8px 6px;">
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: oklch(0.78 0.2 75);">08</span>
+    <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; color: #f5f2ec;">Reglas del bento</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; padding: 8px; background: #f5f2ec; border-radius: 28px;">
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.03em; color: #1a1720;">Rejilla</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.55; color: rgba(26,23,32,0.7);">6 columnas, fila base 132–156 px, gap 8, padding del contenedor 8. Los bloques ocupan 1, 2, 3, 4 o 6 columnas. Nunca 5.</div>
+    </div>
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.03em; color: #1a1720;">Radios</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.55; color: rgba(26,23,32,0.7);">Contenedor 28, bloque 20, elemento interno 14, chip y botón 999. Nunca esquinas rectas salvo en las formas memphis.</div>
+    </div>
+    <div style="grid-column: span 2; border-radius: 20px; background: #fdfbf7; border: 1px solid rgba(26,23,32,0.12); padding: 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.03em; color: #1a1720;">Ritmo</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.55; color: rgba(26,23,32,0.7);">Un bloque grande manda por pared. Máximo dos degradados por pared; el resto en tinta, crema o papel.</div>
+    </div>
+    <div style="grid-column: span 3; border-radius: 20px; background: #1a1720; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: oklch(0.72 0.22 130);">Sí</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.6; color: rgba(253,251,247,0.85);">Grano de granito en cada superficie de color. Insignias rotadas. Mayúsculas cuando el mensaje grita. Espacio vacío dentro de los bloques.</div>
+    </div>
+    <div style="grid-column: span 3; border-radius: 20px; background: #1a1720; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: oklch(0.66 0.24 20);">No</div>
+      <div style="font-weight: 500; font-size: 13.5px; line-height: 1.6; color: rgba(253,251,247,0.85);">Degradados de tres paradas. Sombras suaves difusas. Syne en cuerpo de texto. Más de tres formas memphis en un mismo bloque. Iconos con línea fina.</div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

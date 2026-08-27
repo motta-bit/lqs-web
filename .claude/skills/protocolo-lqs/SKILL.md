@@ -51,6 +51,41 @@ burocrática. Si un texto suena a agencia, está mal.
 
 ## 2. El sistema visual
 
+### El Sistema de marca v1.0 manda sobre lo que sigue
+
+Desde el 27-ago-2026 existe `docs/marca/LQS Brand System.dc.html`, hecho por el
+usuario en Claude Design. **Donde choque con este archivo, gana el sistema**, y
+lo de abajo queda como historia de por qué se decidió cada cosa.
+
+Lo implementado vive en `docs/inicio.html`. Lo que el sistema cambió:
+
+| | Antes | Sistema v1.0 |
+| --- | --- | --- |
+| Tipografía | Bricolage · Anton · Instrument · Chakra · Manrope | **Syne** 800 display · **Rubik** 500/900 UI · **Newsreader** itálica 300 editorial · **IBM Plex Mono** datos |
+| Sombra | relieve neumórfico, difuso | **dura, 4px, sin desenfoque**. Al pasar el cursor desplaza 2px y se acorta |
+| Radios | esquina ancla asimétrica con `--curva` | fijos: **28** pared · **20** bloque · **14** interno · **999** botón |
+| Rejilla | 12 columnas | **6 columnas**, spans de 1, 2, 3, 4 o 6. **Nunca 5** |
+| Fondo | aura de masas a la deriva | lienzo `#0d0d0f`, pared `#f5f2ec`, bloque `#fdfbf7` o `#1a1720` |
+
+**El neumorfismo queda retirado.** El sistema prohíbe explícitamente las
+sombras suaves difusas, y el neumorfismo es exactamente eso. El laboratorio
+`docs/lab-neumorfismo.html` se conserva como registro, no como referencia.
+
+**Los cinco tonos**, croma alto, misma energía:
+`--ambar oklch(0.78 0.2 75)` · `--verde oklch(0.72 0.22 130)` ·
+`--rojo oklch(0.66 0.24 20)` · `--violeta oklch(0.62 0.24 300)` ·
+`--azul oklch(0.6 0.23 250)`.
+
+**Reglas que se rompen solas si no se vigilan:**
+
+- **Grano de granito en cada superficie de color.** Sin él, un degradé de croma
+  alto se ve a plástico.
+- **Máximo dos degradados por pared** y **máximo tres formas memphis por
+  bloque**. Pasada esa cuenta el bloque deja de tener motivo y pasa a tener ruido.
+- **Syne nunca en cuerpo de texto.** Es la regla que más fácil se incumple.
+- **Nada de esquinas rectas** salvo en las formas memphis.
+- Un bloque grande manda por pared.
+
 ### Los cinco universos
 
 El caos no se dibuja: se estructura. Las tres letras de LQS habitan universos
