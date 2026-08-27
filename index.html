@@ -5,56 +5,85 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LQS — Estudio creativo · Medellín</title>
 <meta name="description" content="LQS es un estudio creativo de Medellín. Marca, web, automatización, audiovisual y producto: gente que resuelve. Cotiza, agenda y sigue tus proyectos.">
-<meta name="theme-color" content="#06070f">
+<meta name="theme-color" content="#0d0d0f">
 <meta property="og:title" content="LQS — Estudio creativo · Medellín">
 <meta property="og:description" content="Gente que resuelve: marca, web, automatización, audiovisual y producto.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Serif:ital@0;1&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Serif:ital@0;1&family=Anton&family=Chakra+Petch:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <style>
+/* ═══ SISTEMA DE MARCA LQS v1.0 ═══════════════════════════════════════
+   Fuente de verdad: docs/marca/LQS Brand System.dc.html
+
+   Los NOMBRES de las variables se conservan porque 3.700 líneas los
+   referencian; lo que cambia son los valores. Así el sistema entra en toda
+   la página sin tocar el router, el visor ni el cliente de Supabase.
+
+   Tres reglas del sistema que rompen lo que había antes:
+   · Nada de sombras suaves difusas. Sombra DURA de 4px sin desenfoque.
+   · Radios fijos: 28 pared · 20 bloque · 14 interno · 999 botón.
+   · Rejilla de seis columnas; los bloques ocupan 1, 2, 3, 4 o 6. Nunca 5.
+   ══════════════════════════════════════════════════════════════════ */
 :root{
- --bg:#06070f;--bg2:#0a0c17;--bg3:#0e1120;--ink:#f2efe8;--dim:#9aa0b8;--faint:#5f6480;
- --gold:#e6c877;--line:rgba(210,215,240,.11);--line2:rgba(210,215,240,.22);
- --ok:#4ade80;--warn:#f0b34a;--err:#ff6b6b;
+ /* neutros: lienzo, bloque tinta, papel */
+ --bg:#0d0d0f;--bg2:#14131a;--bg3:#1a1720;--ink:#fdfbf7;--dim:#a8a2b2;--faint:#726c7c;
+ --gold:oklch(0.78 0.2 75);--line:rgba(253,251,247,.12);--line2:rgba(253,251,247,.24);
+ --ok:oklch(0.72 0.22 130);--warn:oklch(0.78 0.2 75);--err:oklch(0.66 0.24 20);
  --grain:.055;--atm:.38;
- /* una grotesca variable que se deja apretar y engordar según el sitio */
- --disp:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
- --sport:'Anton','Arial Narrow',Impact,sans-serif;
- --edit:'Instrument Serif',Georgia,serif;
- --tech:'Chakra Petch',ui-monospace,monospace;--sans:'Manrope',system-ui,sans-serif;
+
+ /* los cinco tonos del sistema: croma alto, misma energía */
+ --ambar:oklch(0.78 0.2 75);   --verde:oklch(0.72 0.22 130);
+ --rojo:oklch(0.66 0.24 20);   --violeta:oklch(0.62 0.24 300);
+ --azul:oklch(0.6 0.23 250);
+
+ /* cuatro familias, cada una con su oficio. Syne nunca en cuerpo de texto. */
+ --disp:'Syne',system-ui,sans-serif;
+ --sport:'Syne',system-ui,sans-serif;
+ --edit:'Newsreader',Georgia,serif;
+ --tech:'IBM Plex Mono',ui-monospace,monospace;
+ --sans:'Rubik',system-ui,sans-serif;
  --pad:clamp(20px,5vw,62px);
+
  /* movimiento */
  --ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1);
  --ease-drawer:cubic-bezier(0.32,0.72,0,1);
  --dur-fast:160ms;--dur-ui:200ms;--dur-panel:300ms;
- /* temperamento de forma: cuánto se desvía una curva de su versión circular.
-    Lo fija el universo de la sección, nunca la pieza. */
- --curva:1;--u1:#7c5cff;--u2:#00d4ff;--u3:#ff3d7f;
- --velo:6,7,15;
+
+ /* radios fijos del sistema. --curva sobrevive como variable porque 44
+    sitios la multiplican, pero vale 1 en todos los universos: la esquina
+    ancla se retiró y el radio ya no es temperamento, es constante. */
+ --curva:1;
+ --r-pared:28px;--r-bloque:20px;--r-interno:14px;--r-pildora:999px;
+
+ --u1:var(--violeta);--u2:var(--azul);--u3:var(--rojo);
+ --velo:13,13,15;
+
+ /* sombra dura: la firma del sistema */
+ --dura:5px 5px 0 rgba(26,23,32,.5);
+ --dura-ac:5px 5px 0 var(--ambar);
 }
-/* que --curva se pueda interpolar: sin esto una sección se convierte en la
-   siguiente de golpe, y el recorrido se lee como siete láminas sueltas */
 @property --curva{syntax:'<number>';inherits:true;initial-value:1}
-:root{transition:--curva 900ms var(--ease-out)}
-/* los cinco universos. Uno nunca se mezcla con otro dentro del mismo elemento:
-   conviven en el encuadre, no en la forma. */
-[data-universo="flujo"]{--curva:1;  --u1:#7c5cff;--u2:#00d4ff;--u3:#ff3d7f}
-[data-universo="brasa"]{--curva:.82;--u1:#ff8a3d;--u2:#ffd166;--u3:#e0264a}
-[data-universo="trama"]{--curva:.34;--u1:#4ade80;--u2:#2fb8a3;--u3:#0f5132}
-[data-universo="hielo"]{--curva:.20;--u1:#dff6ff;--u2:#5b8def;--u3:#1b3fb8}
-[data-universo="pulso"]{--curva:.64;--u1:#e6c877;--u2:#d98aa6;--u3:#8b5cf6}
+/* Los cinco universos ya no cambian la curva, solo el color: el sistema
+   fija los radios y quitarles la variación es justamente lo que hace que
+   una pared se lea como una pared y no como cinco piezas negociando. */
+[data-universo="flujo"]{--u1:var(--violeta);--u2:var(--azul);  --u3:var(--rojo)}
+[data-universo="brasa"]{--u1:var(--ambar);  --u2:var(--rojo);  --u3:var(--violeta)}
+[data-universo="trama"]{--u1:var(--verde);  --u2:var(--azul);  --u3:var(--ambar)}
+[data-universo="hielo"]{--u1:var(--azul);   --u2:var(--violeta);--u3:var(--verde)}
+[data-universo="pulso"]{--u1:var(--rojo);   --u2:var(--ambar); --u3:var(--violeta)}
 /* el mismo mundo con la luz encendida: no es un filtro, es otra paleta */
 :root[data-tema="claro"]{
- --bg:#efece4;--bg2:#f6f4ee;--bg3:#e6e2d8;--ink:#0c0e18;--dim:#54596e;--faint:#8a8fa3;
- --gold:#9a6b12;--line:rgba(12,14,24,.13);--line2:rgba(12,14,24,.26);
+ --bg:#f5f2ec;--bg2:#fdfbf7;--bg3:#eae6dd;--ink:#1a1720;--dim:#5c5764;--faint:#8b8593;
+ --gold:oklch(0.58 0.16 66);--line:rgba(26,23,32,.13);--line2:rgba(26,23,32,.26);
  --grain:.028;--atm:.17;
- --velo:246,244,238;
+ --velo:245,242,236;
+ --dura:5px 5px 0 rgba(26,23,32,.18);
 }
 /* ── el acento, medido ───────────────────────────────────────────────
    Al pasar el acento al borde y al título, los acentos claros (arena
-   #b6ad98, oro #e6c877, turquesa #3fd0e6) se borran sobre papel: 1,4:1.
+   #b6ad98, oro #ff9f00, turquesa #007eff) se borran sobre papel: 1,4:1.
    --ac-tx los hunde hacia la tinta hasta pasar 4,5:1 sin perder el matiz
    —el mismo rubro sigue siendo del mismo color en las dos luces— y
    --ac-bd hace lo propio con el borde, que sólo necesita 3:1.
@@ -63,14 +92,14 @@
    ni siquiera existe. */
 *{--ac-tx:var(--ac,var(--gold));--ac-bd:var(--ac,var(--gold))}
 :root[data-tema="claro"] *{
- --ac-tx:color-mix(in oklab,var(--ac,var(--gold)) 45%,#0c0e18);
- --ac-bd:color-mix(in oklab,var(--ac,var(--gold)) 62%,#0c0e18)}
+ --ac-tx:color-mix(in oklab,var(--ac,var(--gold)) 45%,#1a1720);
+ --ac-bd:color-mix(in oklab,var(--ac,var(--gold)) 62%,#1a1720)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 canvas,svg{display:block;max-width:100%}
 button,input,select,textarea{font-family:inherit}
-::selection{background:var(--gold);color:#0a0810}
+::selection{background:var(--gold);color:#0d0d0f}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 html{scrollbar-color:var(--line2) var(--bg);scrollbar-width:thin}
 ::-webkit-scrollbar{width:11px;height:11px}
@@ -84,15 +113,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:80;transition:background var(--d
 nav.solid{background:rgba(6,7,15,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1280px;margin:0 auto;padding:14px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:14px}
 .logo{font-family:var(--disp);font-size:1.7rem;letter-spacing:.05em;line-height:1;display:flex;cursor:pointer}
-.logo .l{color:#ff6b6b}.logo .q{color:var(--gold)}.logo .s{color:#3fd0e6}
+.logo .l{color:#ff3150}.logo .q{color:var(--gold)}.logo .s{color:#007eff}
 .nlinks{display:flex;gap:20px;align-items:center;font-family:var(--tech);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.13em;color:var(--dim)}
 .nlinks a{transition:color var(--dur-fast) ease;position:relative;cursor:pointer}
 .nlinks a:hover,.nlinks a.on{color:var(--ink)}
 .nlinks a::after{content:'';position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--gold);transition:right var(--dur-ui) var(--ease-out)}
 .nlinks a:hover::after,.nlinks a.on::after{right:0}
 .nbtn{border:1px solid var(--line2);padding:10px 17px;display:inline-flex;align-items:center;color:var(--ink);transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease;white-space:nowrap}
-.nbtn:hover{background:var(--ink);color:#06070f;border-color:var(--ink)}
-.nbtn.gold{background:var(--gold);border-color:var(--gold);color:#1a1408}
+.nbtn:hover{background:var(--ink);color:#0d0d0f;border-color:var(--ink)}
+.nbtn.gold{background:var(--gold);border-color:var(--gold);color:#1a1720}
 .burger{display:none;width:42px;height:42px;border:1px solid var(--line2);border-radius:11px;background:none;cursor:pointer;place-items:center}
 .burger span{display:block;width:17px;height:1.6px;background:var(--ink);position:relative;transition:transform var(--dur-ui) var(--ease-out),opacity var(--dur-ui) var(--ease-out)}
 .burger span::before,.burger span::after{content:'';position:absolute;left:0;width:17px;height:1.6px;background:var(--ink);transition:transform var(--dur-ui) var(--ease-out),opacity var(--dur-ui) var(--ease-out)}
@@ -121,14 +150,20 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .head{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-end;margin-bottom:40px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--tech);font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;
  padding:15px 25px;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,transform 90ms var(--ease-out),box-shadow var(--dur-fast) var(--ease-out);border:1px solid transparent;cursor:pointer}
-.btn.p{background:var(--ink);color:#06070f}
-/* el movimiento de hover solo donde hay mouse: en táctil se queda pegado */
+.btn.p{background:var(--ink);color:var(--bg3)}
+/* Sombra dura, sin desenfoque: la firma del sistema. Al pasar el cursor la
+   pieza se desplaza 2px y la sombra se acorta, como un botón serigrafiado
+   que se hunde. Antes era un halo difuso de 38px, que el sistema prohíbe.
+   El movimiento va sólo donde hay ratón: en táctil se queda pegado. */
+.btn.p,.btn.gold{box-shadow:4px 4px 0 var(--gold)}
+.btn.p{box-shadow:4px 4px 0 rgba(26,23,32,.55)}
 @media (hover:hover) and (pointer:fine){
- .btn.p:hover{box-shadow:0 16px 38px -14px rgba(242,239,232,.42)}
+ .btn.p:hover,.btn.gold:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(26,23,32,.55)}
 }
+.btn.p:active,.btn.gold:active{transform:translate(4px,4px);box-shadow:1px 1px 0 rgba(26,23,32,.55)}
 .btn.g{border-color:var(--line2);color:var(--ink);background:none}
 .btn.g:hover{border-color:var(--gold);color:var(--gold)}
-.btn.gold{background:var(--gold);color:#1a1408}
+.btn.gold{background:var(--gold);color:#1a1720}
 .btn.gold:hover{filter:brightness(1.07)}
 .btn:disabled{opacity:.5;cursor:not-allowed;translate:none;scale:none}
 .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
@@ -267,13 +302,14 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .soy-b{display:flex;align-items:center;gap:9px;max-width:46vw;padding:9px 15px;cursor:pointer;
  border:1px solid color-mix(in oklab,var(--sc,var(--line2)) 46%,var(--line2));color:var(--ink);
  background:linear-gradient(148deg,color-mix(in oklab,var(--sc,var(--gold)) 17%,var(--bg2)),var(--bg2) 72%);
- box-shadow:0 2px 14px -8px color-mix(in oklab,var(--sc,var(--gold)) 60%,transparent);
+ box-shadow:3px 3px 0 color-mix(in oklab,var(--sc,var(--gold)) 42%,transparent);
  font-family:var(--tech);font-size:.68rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
  transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,box-shadow var(--dur-ui) var(--ease-out),
   background var(--dur-ui) var(--ease-out),border-radius 480ms var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
  .soy-b:hover{border-color:color-mix(in oklab,var(--sc,var(--gold)) 70%,var(--line2));
-  box-shadow:0 4px 20px -8px color-mix(in oklab,var(--sc,var(--gold)) 80%,transparent)}}
+  transform:translate(2px,2px);
+  box-shadow:1px 1px 0 color-mix(in oklab,var(--sc,var(--gold)) 60%,transparent)}}
 .soy-b:active{transform:scale(.97);transition:transform 180ms var(--ease-out)}
 /* el punto late suave mientras no hayas elegido: dice "esto se puede tocar" */
 .soy:not(.eleg) .soy-b i{animation:latir 2.6s var(--ease-in-out) infinite}
@@ -352,14 +388,10 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  background:none;color:inherit;font:inherit;border:1px solid var(--line2);
  transition:border-color var(--dur-ui) var(--ease-out),
   border-radius 520ms var(--ease-out),translate 120ms var(--ease-out),scale 120ms var(--ease-out)}
-.pue:nth-child(4n+1){border-radius:calc(6px + 40px * var(--curva)) calc(18px - 6px * var(--curva))
- calc(20px + 12px * var(--curva)) calc(16px - 4px * var(--curva))}
-.pue:nth-child(4n+2){border-radius:calc(16px - 4px * var(--curva)) calc(8px + 42px * var(--curva))
- calc(17px - 5px * var(--curva)) calc(21px + 11px * var(--curva))}
-.pue:nth-child(4n+3){border-radius:calc(21px + 11px * var(--curva)) calc(15px - 4px * var(--curva))
- calc(7px + 39px * var(--curva)) calc(18px - 5px * var(--curva))}
-.pue:nth-child(4n){border-radius:calc(14px - 3px * var(--curva)) calc(22px + 10px * var(--curva))
- calc(17px - 5px * var(--curva)) calc(7px + 41px * var(--curva))}
+/* Radio fijo del sistema. Antes cada puerta llevaba una esquina mucho más
+   redonda que las otras tres, rotando con la posición: era la esquina ancla.
+   El Sistema de marca v1.0 fija los radios, así que se retira. */
+.pue{border-radius:var(--r-bloque)}
 @media(min-width:601px){.pue:nth-child(2n){transform:translateY(clamp(10px,1.6vw,26px))}}
 .pue .ilu{width:clamp(60px,8.4vw,116px);height:clamp(60px,8.4vw,116px);
  transition:transform var(--dur-panel) var(--ease-out)}
@@ -406,12 +438,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  background:none;color:inherit;font:inherit;border:1px solid var(--line);
  transition:border-color var(--dur-ui) var(--ease-out),background var(--dur-ui) var(--ease-out),
   border-radius 520ms var(--ease-out),scale 120ms var(--ease-out)}
-.nic:nth-child(3n+1){border-radius:calc(8px + 26px * var(--curva)) calc(14px - 4px * var(--curva))
- calc(16px + 8px * var(--curva)) calc(12px - 3px * var(--curva))}
-.nic:nth-child(3n+2){border-radius:calc(12px - 3px * var(--curva)) calc(8px + 28px * var(--curva))
- calc(13px - 4px * var(--curva)) calc(17px + 7px * var(--curva))}
-.nic:nth-child(3n){border-radius:calc(17px + 7px * var(--curva)) calc(11px - 3px * var(--curva))
- calc(7px + 25px * var(--curva)) calc(14px - 4px * var(--curva))}
+.nic{border-radius:var(--r-interno)}
 .nic .ilu{width:clamp(38px,4.2vw,52px);height:clamp(38px,4.2vw,52px)}
 .nic .tx{display:block;min-width:0}
 .nic b{display:block;font-family:var(--disp);font-size:clamp(.98rem,1.4vw,1.16rem);line-height:1.1;
@@ -421,7 +448,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
 .nic .mk{position:absolute;top:clamp(12px,1.4vw,15px);right:clamp(12px,1.4vw,15px);
  width:20px;height:20px;border:1.6px solid var(--line2);border-radius:50%;display:grid;place-items:center;
  transition:border-color var(--dur-fast) ease,background var(--dur-fast) ease}
-.nic .mk svg{width:11px;height:11px;stroke:#06070f;fill:none;stroke-width:3;stroke-linecap:round;
+.nic .mk svg{width:11px;height:11px;stroke:#0d0d0f;fill:none;stroke-width:3;stroke-linecap:round;
  stroke-linejoin:round;opacity:0;transform:scale(.5);
  transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
 .nic[aria-pressed="true"]{border-color:var(--ac-bd);background:color-mix(in oklab,var(--ac) 10%,transparent)}
@@ -647,7 +674,7 @@ h3.disp{font-size:clamp(1.5rem,3vw,2.2rem)}
  transition:transform var(--dur-fast) var(--ease-out)}
 @media (hover:hover) and (pointer:fine){
  .area .lk:hover{border-color:var(--ac-bd);color:var(--ac-tx)}
- .area .lk.pri:hover{background:var(--ac);color:#06070f}
+ .area .lk.pri:hover{background:var(--ac);color:#0d0d0f}
  .area .lk.pri:hover svg{transform:translateX(3px)}}
 .area .lk:active{transform:scale(.96)}
 @media(prefers-reduced-motion:reduce){.area .lk.pri:hover svg{transform:none}}
@@ -793,7 +820,7 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .st.entregado{background:rgba(74,222,128,.14);color:var(--ok);border:1px solid rgba(74,222,128,.4)}
 .st.pausado,.st.cancelado{background:rgba(154,160,184,.12);color:var(--dim);border:1px solid var(--line2)}
 .bar{height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin:6px 0 4px}
-.bar i{display:block;height:100%;width:100%;transform-origin:left center;transform:scaleX(0);border-radius:99px;background:linear-gradient(90deg,var(--gold),#3fd0e6);transition:transform var(--dur-panel) var(--ease-out)}
+.bar i{display:block;height:100%;width:100%;transform-origin:left center;transform:scaleX(0);border-radius:99px;background:linear-gradient(90deg,var(--gold),#007eff);transition:transform var(--dur-panel) var(--ease-out)}
 .meta{display:flex;flex-wrap:wrap;gap:10px 20px;font-size:.79rem;color:var(--faint);margin-top:12px}
 .meta b{color:var(--dim);font-weight:600}
 .hit{list-style:none;margin-top:16px;border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:9px}
@@ -806,8 +833,8 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
  border:1px solid var(--line);background:color-mix(in oklab,var(--bg2) 62%,transparent)}
 /* banner suscripción */
 #promo{position:fixed;right:18px;bottom:18px;z-index:75;width:min(340px,calc(100vw - 36px));
- background:linear-gradient(165deg,#141829,#0a0c17);border:1px solid var(--line2);padding:22px;
- box-shadow:0 26px 70px -24px #000;transform:translateY(140%);transition:transform 420ms var(--ease-drawer)}
+ background:linear-gradient(165deg,#141829,#14131a);border:1px solid var(--line2);padding:22px;
+ box-shadow:0 -6px 0 rgba(26,23,32,.5);transform:translateY(140%);transition:transform 420ms var(--ease-drawer)}
 #promo.on{transform:none}
 #promo .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer;font-size:1rem;line-height:1;transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease}
 #promo .x:hover{color:var(--ink);border-color:var(--line2)}
@@ -831,7 +858,7 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .tabs button{flex:1;padding:10px;border:none;background:none;color:var(--dim);font-family:var(--tech);font-size:.72rem;font-weight:700;
  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:42px;
  transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-radius 480ms var(--ease-out)}
-.tabs button.on{background:var(--ink);color:#06070f}
+.tabs button.on{background:var(--ink);color:#0d0d0f}
 .modal .x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--dim);cursor:pointer}
 /* footer */
 footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-index:2}
@@ -969,86 +996,24 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
 .tramo{position:relative;display:block}
 .tramo .guijarro,.tramo .estrato,.tramo .astilla{z-index:0}
 
-/* ══ LA ESQUINA ANCLA ═══════════════════════════════════════════════════
-   Las cuatro puertas de la portada hechas sistema. Tres reglas, ni una más:
+/* ══ RADIOS · Sistema de marca v1.0 ═════════════════════════════════════
+   Aquí vivía la esquina ancla: una esquina mucho más redonda que las otras
+   tres, rotando con la posición para que cuatro cajas iguales dejaran de
+   leerse como rejilla. Funcionaba, y aun así se retira.
 
-   1· UNA esquina es mucho mayor que las otras tres. Es lo que hace que una
-      caja deje de leerse como caja.
-   2· CUÁL lo es ROTA con la posición — 4n+1 arriba-izquierda, 4n+2 arriba-
-      derecha, 4n+3 abajo-derecha, 4n abajo-izquierda. Dos piezas hermanas
-      nunca repiten la esquina de su vecina, y por eso cuatro cajas iguales
-      dejan de leerse como rejilla.
-   3· El tamaño lo pone la PIEZA, no el perfil: --anc es el radio del ancla
-      y --men el de las otras tres. La proporción del sistema es 2,5:1, y se
-      sostiene en TODOS los universos: el ancla conserva un cuarto de su
-      tamaño aunque --curva baje a 0,20, y las otras tres encogen con ella.
-      Si el ancla se derritiera con la curva —como pasa cuando el radio menor
-      lleva una base fija—, en trama y en hielo la esquina dejaría de ser la
-      mayor y el lenguaje entero desaparecería justo donde más se nota.
+   El Sistema de marca v1.0 fija los radios en cuatro valores y prohíbe las
+   esquinas rectas salvo en las formas memphis. Lo que antes hacía la
+   asimetría del radio, ahora lo hace la rejilla: bloques de 1, 2, 3, 4 o 6
+   columnas y un bloque grande que manda por pared. La variedad se mudó del
+   contorno a la composición.
 
-   ESCALA — un botón de 44px con el radio de 46px de una puerta es una
-   pastilla, así que el radio baja con la pieza en vez de repetir el número:
-
-     grande   --anc:40px --men:16px   piezas de 230px+: .card .proj .fase
-                                      .todo .empty .area .modal #promo
-     media    --anc:26px --men:10px   150–230px: .galf .ficha .propq .msg
-                                      y el acento de la composición
-     control  --anc:16px --men:6px    44–56px de alto: .btn .nbtn .inp
-                                      select textarea .soy-b .vback .tabs
-     píldora  --anc:11px --men:4px    menos de 36px: .lk .tira a
-
-   Lo que NO la lleva, para que la esquina siga diciendo algo: los micro-
-   rótulos que no se tocan (.tagd .st) siguen siendo píldoras de 999px, los
-   controles redondos (.luz .burger) siguen siendo guijarros, y las siete
-   formas del léxico orgánico (cresta, astilla, guijarro, losa) se quedan
-   en la atmósfera, que es donde una curva SVG sí aporta.
-
-   Y --curva manda sobre todo: flujo 1,00 · brasa 0,82 · pulso 0,64 ·
-   trama 0,34 · hielo 0,20. El temperamento del universo activo decide
-   cuánto se curva el sitio entero, botones incluidos. */
-.card,.proj,.fase,.todo,.empty,.modal,#promo,.comp>.dom,.comp>.par>.sub{--anc:40px;--men:16px}
-.comp>.dom{--anc:46px;--men:18px}
-.galf,.ficha,.propq,.msg,.comp>.par>.acc,.soy-m{--anc:26px;--men:10px}
-.btn,.nbtn,.inp,.soy-b,.tabs button,.tabs,#visor .vback,.load-box{--anc:16px;--men:6px}
-.lk,.tira a,.elegido .vt,.abrir{--anc:11px;--men:4px}
-/* perfil 1 · ancla arriba-izquierda */
-.card,.proj,.fase,.galf,.btn,.nbtn,.inp,.lk,.tira a,.tabs button,.modal,.ficha,
-.card:nth-child(4n+1),.proj:nth-child(4n+1),.fase:nth-child(4n+1),.galf:nth-child(4n+1),
-.btn:nth-child(4n+1),.lk:nth-child(4n+1),.tira a:nth-child(4n+1),.tabs button:nth-child(4n+1),.abrir,
-.fld:nth-child(4n+1) .inp,.comp>.dom,.tramo:nth-of-type(3) .comp>.par>.acc{border-radius:
- calc(var(--men)*.35 + var(--anc)*(.25 + .75*var(--curva)))
- calc(var(--men)*.62*(.45 + .55*var(--curva)))
- calc(var(--men)*1*(.45 + .55*var(--curva)))
- calc(var(--men)*.8*(.45 + .55*var(--curva)))}
-/* perfil 2 · ancla arriba-derecha */
-.todo,.msg,
-.card:nth-child(4n+2),.proj:nth-child(4n+2),.fase:nth-child(4n+2),.galf:nth-child(4n+2),
-.btn:nth-child(4n+2),.lk:nth-child(4n+2),.tira a:nth-child(4n+2),.tabs button:nth-child(4n+2),
-.fld:nth-child(4n+2) .inp,.comp>.par>.sub,.tramo:nth-of-type(2) .comp>.dom{border-radius:
- calc(var(--men)*.8*(.45 + .55*var(--curva)))
- calc(var(--men)*.35 + var(--anc)*1.05*(.25 + .75*var(--curva)))
- calc(var(--men)*.62*(.45 + .55*var(--curva)))
- calc(var(--men)*1*(.45 + .55*var(--curva)))}
-/* perfil 3 · ancla abajo-derecha */
-.empty,.soy-b,.soy-m,#promo,
-.card:nth-child(4n+3),.proj:nth-child(4n+3),.fase:nth-child(4n+3),.galf:nth-child(4n+3),
-.btn:nth-child(4n+3),.lk:nth-child(4n+3),.tira a:nth-child(4n+3),.tabs button:nth-child(4n+3),
-.fld:nth-child(4n+3) .inp,.comp>.par>.acc,.tramo:nth-of-type(2) .comp>.par>.sub,
-.tramo:nth-of-type(3) .comp>.dom{border-radius:
- calc(var(--men)*1*(.45 + .55*var(--curva)))
- calc(var(--men)*.8*(.45 + .55*var(--curva)))
- calc(var(--men)*.35 + var(--anc)*.97*(.25 + .75*var(--curva)))
- calc(var(--men)*.62*(.45 + .55*var(--curva)))}
-/* perfil 4 · ancla abajo-izquierda */
-.propq,#visor .vback,.elegido .vt,
-.card:nth-child(4n),.proj:nth-child(4n),.fase:nth-child(4n),.galf:nth-child(4n),
-.btn:nth-child(4n),.lk:nth-child(4n),.tira a:nth-child(4n),.tabs button:nth-child(4n),
-.fld:nth-child(4n) .inp,.tramo:nth-of-type(2) .comp>.par>.acc,
-.tramo:nth-of-type(3) .comp>.par>.sub{border-radius:
- calc(var(--men)*.62*(.45 + .55*var(--curva)))
- calc(var(--men)*1*(.45 + .55*var(--curva)))
- calc(var(--men)*.8*(.45 + .55*var(--curva)))
- calc(var(--men)*.35 + var(--anc)*1.02*(.25 + .75*var(--curva)))}
+   Escala: 28 pared · 20 bloque · 14 interno · 999 chip y botón.
+   ═════════════════════════════════════════════════════════════════════ */
+.comp>.dom{border-radius:var(--r-pared)}
+.card,.proj,.fase,.todo,.empty,.modal,#promo,.comp>.par>.sub,
+.galf,.ficha,.propq,.msg,.comp>.par>.acc,.soy-m{border-radius:var(--r-bloque)}
+.inp,#visor .vback,.load-box,.tabs{border-radius:var(--r-interno)}
+.btn,.nbtn,.soy-b,.tabs button,.lk,.tira a,.elegido .vt,.abrir{border-radius:var(--r-pildora)}
 /* el radio no es decorativo: al pasar el puntero la forma se reacomoda, que
    es la manera de que un control se sienta vivo sin desplazarse. */
 .btn{transition:background var(--dur-fast) ease,color var(--dur-fast) ease,border-color var(--dur-fast) ease,
@@ -1072,8 +1037,7 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
  calc(50% + 8% * var(--curva)) calc(40% + 12% * var(--curva))
  calc(52% - 10% * var(--curva)) calc(44% + 6% * var(--curva));
  transition:color var(--dur-fast) ease,border-color var(--dur-fast) ease,border-radius 520ms var(--ease-out)}
-.tabs{border-radius:calc(var(--men)*.5 + var(--anc)*.7*(.25 + .75*var(--curva))) calc(var(--men)*.9)
- calc(var(--men)*.5 + var(--anc)*.7*(.25 + .75*var(--curva))) calc(var(--men)*.9)}
+.tabs{border-radius:var(--r-interno)}
 .ficha{border-color:var(--line)}
 .hit i{border-radius:60% 40% 52% 48% / 55% 50% 50% 45%}
 .card li::before{border-radius:58% 42% 50% 50% / 52% 48% 52% 48%}
@@ -1485,10 +1449,10 @@ footer{border-top:1px solid var(--line);padding:38px 0 48px;position:relative;z-
         <div class="card"><div class="pz">2-3</div><div class="un">semanas de montaje</div></div>
       </div>
     </div>
-    <div style="border:1px solid var(--line2);border-radius:26px;background:linear-gradient(170deg,#141829,#0a0c17);padding:16px 14px 20px;max-width:330px;margin:0 auto;width:100%">
+    <div style="border:1px solid var(--line2);border-radius:26px;background:linear-gradient(170deg,#141829,#14131a);padding:16px 14px 20px;max-width:330px;margin:0 auto;width:100%">
       <div style="display:flex;align-items:center;gap:9px;padding:4px 8px 13px;border-bottom:1px solid var(--line)">
-        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4ade80,#3fd0e6);display:grid;place-items:center">🤖</div>
-        <div><b style="font-size:.84rem;display:block;line-height:1.2">Tu negocio</b><span style="font-size:.68rem;color:#4ade80">● en línea</span></div>
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#74bd00,#007eff);display:grid;place-items:center">🤖</div>
+        <div><b style="font-size:.84rem;display:block;line-height:1.2">Tu negocio</b><span style="font-size:.68rem;color:#74bd00">● en línea</span></div>
       </div>
       <div id="waChat" style="padding:15px 4px 0;display:flex;flex-direction:column;gap:9px;min-height:250px"></div>
     </div>
@@ -1740,13 +1704,13 @@ let sb=true; // hay capa de datos disponible
    propuesta ya filtrada lleva.
    ═══════════════════════════════════════════════════════════════════════ */
 const PUERTAS=[
- ['empresa','Soy empresa','Marca, sitio y atención','#5b8def',
+ ['empresa','Soy empresa','Marca, sitio y atención','#007eff',
   ['empresas','almacenes','automatizacion'],'¿Qué necesita tu <span class="gold">empresa</span>?','empresas'],
  ['local','Tengo un local','Reservas, carta y pedidos','#e0614a',
   ['restaurantes','hoteles','eventos'],'¿Qué tipo de <span class="gold">local</span> tienes?','locales'],
- ['creador','Soy creador','Marca personal y contenido','#a97bd6',
+ ['creador','Soy creador','Marca personal y contenido','#a053fd',
   ['creadores','productora','express'],'¿Qué necesitas para tu <span class="gold">canal</span>?','creadores'],
- ['marca','Tengo una marca','Prendas, piezas y producto','#d98aa6',
+ ['marca','Tengo una marca','Prendas, piezas y producto','#ff3150',
   ['ropa','joyeria','productora'],'¿Qué hace tu <span class="gold">marca</span>?','marcas propias']
 ];
 /* Express entra en varios nichos porque un almacén, un restaurante y una
@@ -1754,34 +1718,34 @@ const PUERTAS=[
    catálogo actualizado— y ésa es justo el área de precio cerrado y 48
    horas. Sin ella el mapeo dejaba fuera su trabajo más frecuente. */
 const NICHOS={
- empresas:['Empresas','Marca, sitio y correo que se ven de una sola empresa.','#5b8def',
+ empresas:['Empresas','Marca, sitio y correo que se ven de una sola empresa.','#007eff',
   ['Empresas','Automatización','Express','Productora'],
   'propuestas/automatizacion.html?para=empresa'],
- almacenes:['Almacenes y catálogos','Catálogo al día y pedidos que entran por mensaje.','#39c07a',
+ almacenes:['Almacenes y catálogos','Catálogo al día y pedidos que entran por mensaje.','#74bd00',
   ['Empresas','Automatización','Productora','Express'],
   'propuestas/catalogos.html?para=almacenes'],
- automatizacion:['Automatización','Reservas, pedidos y precios contestados sin nadie escribiendo.','#3fd0e6',
+ automatizacion:['Automatización','Reservas, pedidos y precios contestados sin nadie escribiendo.','#007eff',
   ['Automatización','Empresas'],
   'propuestas/automatizacion.html?para=empresa'],
  restaurantes:['Restaurantes','Carta al día y pedidos desde el celular del cliente.','#e0614a',
   ['Restaurantes','Automatización','Productora','Express'],
   'propuestas/automatizacion.html?para=restaurante'],
- hoteles:['Hoteles','Reservas que entran solas y check-in ya hecho.','#2fb8a3',
+ hoteles:['Hoteles','Reservas que entran solas y check-in ya hecho.','#439800',
   ['Hoteles','Automatización','Productora'],
   'propuestas/automatizacion.html?para=hotel'],
- eventos:['Eventos','Equipo vestido, montaje grabado y lo que la gente se lleva.','#e6c877',
+ eventos:['Eventos','Equipo vestido, montaje grabado y lo que la gente se lleva.','#ff9f00',
   ['Productora','Express','Ropa y merch'],
   'propuestas/catalogos.html?para=eventos'],
- creadores:['Creadores','Verte igual de reconocible en cada publicación.','#a97bd6',
+ creadores:['Creadores','Verte igual de reconocible en cada publicación.','#a053fd',
   ['Creadores','Productora','Express'],null],
- productora:['Productora','Tu producto y tu local grabados como se deben ver.','#3fc6d6',
+ productora:['Productora','Tu producto y tu local grabados como se deben ver.','#007eff',
   ['Productora','Express'],null],
- express:['Express','Las piezas del día a día, con precio cerrado y en 48 horas.','#39c07a',
+ express:['Express','Las piezas del día a día, con precio cerrado y en 48 horas.','#74bd00',
   ['Express','Productora'],null],
  ropa:['Ropa y merch','Uniformes y merch con muestra física antes del lote.','#b6ad98',
   ['Ropa y merch','Productora','Creadores'],
   'propuestas/catalogos.html?para=ropa'],
- joyeria:['Joyería','Plata, acero y regalo corporativo con tu marca grabada.','#d98aa6',
+ joyeria:['Joyería','Plata, acero y regalo corporativo con tu marca grabada.','#ff3150',
   ['Joyería','Productora','Express'],null]
 };
 const CLAVES=PUERTAS.map(p=>p[0]);
@@ -1970,19 +1934,19 @@ const FICHAS=[
  ['Empresas','Marca completa',
   'Tu empresa se ve seria y responde sola: marca, sitio y atención bajo una sola dirección.',
   'Negocios que ya venden y todavía se ven improvisados.',
-  'mundos/empresas.html','mundos/empresas-muestras.html','#5b8def','marca'],
+  'mundos/empresas.html','mundos/empresas-muestras.html','#007eff','marca'],
  ['Express','Diseño día a día',
   'Las piezas del día a día salen en 48–72 horas, con precio cerrado y sin reunión previa.',
   'Quien publica seguido y no quiere cotizar cada pieza.',
-  'mundos/express.html','mundos/express-muestras.html','#39c07a','produccion'],
+  'mundos/express.html','mundos/express-muestras.html','#74bd00','produccion'],
  ['Productora','Video y foto',
   'Tu producto y tu local se ven grabados como se deben ver, no en foto de celular.',
   'Negocios que necesitan contenido constante para redes.',
-  'mundos/productora.html','mundos/productora-muestras.html','#3fc6d6','produccion'],
+  'mundos/productora.html','mundos/productora-muestras.html','#007eff','produccion'],
  ['Creadores','Marca personal',
   'Tu canal se ve reconocible en cada publicación, sin tener que diseñar cada vez.',
   'Creadores que ya publican y quieren verse profesionales.',
-  'mundos/creadores.html','mundos/creadores-muestras.html','#a97bd6','marca'],
+  'mundos/creadores.html','mundos/creadores-muestras.html','#a053fd','marca'],
  ['Ropa y merch','foma',
   'Uniformes y merch con tu marca aplicada, con muestra física antes de producir el lote.',
   'Marcas y equipos que quieren vestirse con lo suyo.',
@@ -1992,7 +1956,7 @@ const FICHAS=[
  ['Automatización','WhatsApp y redes',
   'Tu negocio contesta solo: reservas, pedidos y precios, todos los días del año.',
   'Quien pierde ventas por no alcanzar a responder.',
-  'mundos/automatizacion.html','mundos/automatizacion.html#vivo','#3fd0e6','presencia'],
+  'mundos/automatizacion.html','mundos/automatizacion.html#vivo','#007eff','presencia'],
  /* ↓ Restaurantes y Hoteles quedan sin página a propósito.
     Cuando tengas la definitiva, pon la ruta en el 5º campo (ficha) y,
     si hay demo, en el 6º (muestra). Ejemplo: 'mundos/carta.html'.
@@ -2004,20 +1968,20 @@ const FICHAS=[
  ['Hoteles','Aloja',
   'Las reservas entran solas y el huésped llega con su check-in ya hecho.',
   'Hoteles y hospedajes que llevan la agenda a mano.',
-  '','','#2fb8a3','presencia'],
+  '','','#439800','presencia'],
  /* el configurador de Mercury vive en la misma muestra que foma —son el mismo
     taller de objeto físico—, así que la ficha entra por su ancla */
  ['Joyería','Mercury · pronto',
   'Piezas en plata y acero, y regalos corporativos con tu marca grabada.',
   'Marcas que regalan y personas que buscan pieza propia.',
-  'mundos/mercury.html','mundos/marcas-muestras.html#cfgjoya','#d98aa6','produccion']
+  'mundos/mercury.html','mundos/marcas-muestras.html#cfgjoya','#ff3150','produccion']
 ];
 /* quinto campo: el color de la familia. Se usa en el remate del hero;
    la agrupación por el octavo campo de FICHAS no cambia. */
 const FAMILIAS=[
- ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.','#5b8def'],
- ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.','#3fd0e6'],
- ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.','#e6c877']];
+ ['marca','Marca','Cómo te ven','Identidad, piezas y todo lo que hace que un negocio se vea como lo que es.','#007eff'],
+ ['presencia','Presencia','Que te encuentren y te compren','El sitio, la carta, las reservas y la atención que responde sola.','#007eff'],
+ ['produccion','Producción','Piezas que salen','Diseño día a día, video, foto y objeto físico con tu marca.','#ff9f00']];
 /* cada acto es un tramo con su propio universo: la sección hereda el universo,
    la pieza sólo lee --curva, --u1/2/3. Por eso dos universos no se pueden
    mezclar dentro de la misma forma. */
@@ -2130,13 +2094,13 @@ pintaPuente(document.getElementById('puenteServ'),'No termina ahí.');
 pintaPuente(document.getElementById('puenteMue'),'También puedes tocar esto.');
 
 const DEMOS=[
- ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#5b8def'],
- ['Express','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#39c07a'],
- ['Productora','Rodaje y formatos','Reel de ejemplo, antes/después de foto de producto y la pieza en 4 formatos.','mundos/productora-muestras.html','#3fc6d6'],
+ ['Empresas','Marca, web y bot','Crea una identidad en vivo, navega un sitio de prueba y mira el bot atendiendo.','mundos/empresas-muestras.html','#007eff'],
+ ['Express','Piezas y precios','Mira piezas reales y arma tu pedido: el precio se calcula al instante.','mundos/express-muestras.html','#74bd00'],
+ ['Productora','Rodaje y formatos','Reel de ejemplo, antes/después de foto de producto y la pieza en 4 formatos.','mundos/productora-muestras.html','#007eff'],
  ['Ropa y merch','Merch y uniformes','Previsualiza tu merch, elige color y aplicación, y cotiza el lote en segundos.','mundos/marcas-muestras.html','#b6ad98'],
- ['Automatización','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#3fd0e6'],
- ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#e6c877'],
- ['Creadores','Kit de marca en vivo','Escribe tu nombre de canal y mira armarse el avatar, el banner, la miniatura y el media kit.','mundos/creadores-muestras.html','#a97bd6'],
+ ['Automatización','Chatbot en vivo','Escríbele al bot y mira cómo toma una reserva o resuelve una duda.','mundos/automatizacion.html','#007eff'],
+ ['Productora','Calculadora de rodaje','Arma tu presupuesto con transporte, viáticos y extras.','mundos/productora-calculadora.html','#ff9f00'],
+ ['Creadores','Kit de marca en vivo','Escribe tu nombre de canal y mira armarse el avatar, el banner, la miniatura y el media kit.','mundos/creadores-muestras.html','#a053fd'],
  ['Empresas','Servicios en detalle','La ficha completa de branding, web y automatización.','mundos/empresas.html','#8fb2f5']
  /* Restaurantes y Hoteles: cuando tengas la muestra, agrégala con este formato →
     ['Restaurantes','Menú digital','Cómo queda la carta en el celular.','mundos/carta-muestras.html','#e0614a'], */
@@ -2170,22 +2134,22 @@ const PROPUESTAS=[
   'propuestas/automatizacion.html?para=restaurante','#e0614a'],
  ['Hotel','Reservas y estadía',
   'Motor de disponibilidad con tarifas por temporada, check-in con QR, WhatsApp que confirma y el reporte de ocupación.',
-  'propuestas/automatizacion.html?para=hotel','#2fb8a3'],
+  'propuestas/automatizacion.html?para=hotel','#439800'],
  ['Empresa','Catálogo y cotizador',
   'Catálogo de servicios con reglas de precio, cotizador en línea, WhatsApp que agenda y seguimiento de cada solicitud.',
-  'propuestas/automatizacion.html?para=empresa','#5b8def'],
+  'propuestas/automatizacion.html?para=empresa','#007eff'],
  ['Almacenes','Un catálogo que sabe su stock',
   'El cliente arma su cotización y le sale en PDF, con el flete ya calculado. Al dueño le llega el reporte de qué se movió.',
-  'propuestas/catalogos.html?para=almacenes','#39c07a'],
+  'propuestas/catalogos.html?para=almacenes','#74bd00'],
  ['Eventos','Inventario y montaje',
   'Mobiliario y equipo con disponibilidad por fecha: qué está libre el sábado, qué ya salió y qué falta devolver.',
-  'propuestas/catalogos.html?para=eventos','#e6c877'],
+  'propuestas/catalogos.html?para=eventos','#ff9f00'],
  ['Marca de ropa','Curva de tallas y pedidos',
   'Catálogo por talla y color con el pedido mayorista adentro: la curva se arma sola, sin hojas de cálculo cruzadas.',
   'propuestas/catalogos.html?para=ropa','#b6ad98'],
  ['Caso real','Distrito Perú',
   'La propuesta que salió de este mismo sistema y se envió a un restaurante de verdad, con su marca y su carta.',
-  'propuestas/distrito-peru-automatizacion.html','#d98aa6']
+  'propuestas/distrito-peru-automatizacion.html','#ff3150']
 ];
 /* documentos: no son propuestas ni muestras, pero existen y hasta hoy no se
    llegaba a ellos desde ninguna parte del sitio.
@@ -2194,7 +2158,7 @@ const PROPUESTAS=[
 const DOCS=[
  ['Guía','Cómo se monta la automatización',
   'El documento técnico: alta de WhatsApp en el sistema oficial paso a paso, plantillas de mensaje listas y los costos reales por mensaje en Colombia.',
-  'automatizacion-guia.html','#3fd0e6',false]
+  'automatizacion-guia.html','#007eff',false]
 ];
 /* una sola lista con las tres fuentes que la galería sí muestra —muestras,
    fichas y documentos—, sin repetidos: una muestra de DEMOS y una ficha de
@@ -2238,7 +2202,7 @@ function uFlujo(x,t,w,h){
  g.addColorStop(0,'#4a1fb0');g.addColorStop(1,'#120832');
  x.fillStyle=g;x.fillRect(0,0,w,h);
  x.globalCompositeOperation='lighter';
- const R=Math.max(w,h),bl=[[.24,.20,'#8b6bff',.62],[.80,.34,'#00d4ff',.50],[.48,.92,'#ff3d7f',.58]];
+ const R=Math.max(w,h),bl=[[.24,.20,'#8b6bff',.62],[.80,.34,'#007eff',.50],[.48,.92,'#ff3150',.58]];
  for(let i=0;i<3;i++){
   const b=bl[i],cx=(b[0]+Math.sin(t*.42+i*2.1)*.17)*w,cy=(b[1]+Math.cos(t*.35+i*1.4)*.15)*h;
   const rr=R*b[3]*(.85+.15*Math.sin(t*.6+i));
@@ -2257,7 +2221,7 @@ function uBrasa(x,t,w,h){
  for(let i=0;i<30;i++){
   const sx=azar(i*7.13),sp=.26+azar(i*3.7)*.46,vida=(t*sp+azar(i*11.9))%1;
   x.globalAlpha=Math.sin(vida*Math.PI)*.8;
-  x.fillStyle=i%3?'#ffd166':'#ff8a3d';
+  x.fillStyle=i%3?'#ff9f00':'#f47700';
   x.beginPath();
   x.arc((sx+Math.sin(t*.9+i)*.05)*w,h*(1.02-vida*1.04),u*(.014+azar(i*5.3)*.022)*(.5+vida),0,6.2832);
   x.fill();
@@ -2293,13 +2257,13 @@ function uTrama(x,t,w,h){
 }
 function uHielo(x,t,w,h){
  const g=x.createLinearGradient(0,0,w*.6,h);
- g.addColorStop(0,'#c9f2ff');g.addColorStop(.45,'#5b8def');g.addColorStop(1,'#0b1650');
+ g.addColorStop(0,'#c9f2ff');g.addColorStop(.45,'#007eff');g.addColorStop(1,'#0b1650');
  x.fillStyle=g;x.fillRect(0,0,w,h);
  const D=Math.max(w,h)*1.8,paso=Math.max(11,Math.min(w,h)/6.5),off=(t*paso*.55)%(paso*2);
  x.save();x.translate(w/2,h/2);x.rotate(-1.02);x.translate(-D/2,-D/2);
  for(let i=-2;i*paso<D+paso*2;i++){
   x.globalAlpha=i%3===0?.55:(i%2?.2:.34);
-  x.fillStyle=i%3===0?'#ffffff':'#dff6ff';
+  x.fillStyle=i%3===0?'#ffffff':'#007eff';
   x.fillRect(i*paso+off,0,paso*(i%2?.3:.16),D);
  }
  x.restore();x.globalAlpha=1;
@@ -2315,7 +2279,7 @@ function uPulso(x,t,w,h){
  for(let i=0;i<N;i++){
   const r=(((i/N)+t*.11)%1)*R;
   x.globalAlpha=.26+.5*(1-r/R);
-  x.strokeStyle=i%2?'#e6c877':'#d98aa6';
+  x.strokeStyle=i%2?'#ff9f00':'#ff3150';
   x.beginPath();x.arc(cx,cy,r+1,0,6.2832);x.stroke();
  }
  x.globalAlpha=1;
@@ -2327,12 +2291,16 @@ function uPulso(x,t,w,h){
  rg.addColorStop(0,'rgba(255,233,168,.8)');rg.addColorStop(1,'rgba(255,233,168,0)');
  x.fillStyle=rg;x.fillRect(0,0,w,h);
 }
+/* Los cinco tonos del Sistema de marca v1.0, resueltos a sRGB: el lienzo
+   del hero y las masas de la atmósfera se pintan por canvas, y ahí oklch()
+   no llega en todos los motores. Equivalen a --ambar, --verde, --rojo,
+   --violeta y --azul del CSS. */
 const UNIV=[
- {n:'flujo', c:['#7c5cff','#00d4ff','#ff3d7f'], p:uFlujo},
- {n:'brasa', c:['#ff8a3d','#ffd166','#e0264a'], p:uBrasa},
- {n:'trama', c:['#4ade80','#2fb8a3','#0f5132'], p:uTrama},
- {n:'hielo', c:['#dff6ff','#5b8def','#1b3fb8'], p:uHielo},
- {n:'pulso', c:['#e6c877','#d98aa6','#8b5cf6'], p:uPulso}
+ {n:'flujo', c:['#a053fd','#007eff','#ff3150'], p:uFlujo},
+ {n:'brasa', c:['#ff9f00','#f47700','#ff3150'], p:uBrasa},
+ {n:'trama', c:['#74bd00','#439800','#007eff'], p:uTrama},
+ {n:'hielo', c:['#007eff','#0054cb','#a053fd'], p:uHielo},
+ {n:'pulso', c:['#ff3150','#ff9f00','#a053fd'], p:uPulso}
 ];
 let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
 
@@ -2612,10 +2580,10 @@ let mundoDe=[0,2,3];               /* qué universo lleva cada letra ahora */
    el fondo toma los colores del sitio donde estás. No es decoración:
    es cómo sabes que cambiaste de mundo sin que nadie te lo diga. */
 const CLIMA={
- inicio:['#7c5cff','#00d4ff','#ff3d7f'], servicios:['#5b8def','#39c07a','#3fc6d6'],
- muestras:['#a97bd6','#e6c877','#5b8def'], whatsapp:['#3fd0e6','#4ade80','#2fb8a3'],
- estudio:['#e6c877','#d98aa6','#7c5cff'], cotizar:['#4ade80','#3fd0e6','#e6c877'],
- cuenta:['#ff6b6b','#e6c877','#5b8def']
+ inicio:['#a053fd','#007eff','#ff3150'], servicios:['#74bd00','#439800','#007eff'],
+ muestras:['#ff3150','#ff9f00','#a053fd'], whatsapp:['#007eff','#0054cb','#74bd00'],
+ estudio:['#ff9f00','#f47700','#a053fd'], cotizar:['#74bd00','#007eff','#ff9f00'],
+ cuenta:['#ff3150','#ff9f00','#007eff']
 };
 /* el clima también trae temperamento de forma: cada vista hereda el universo
    que le corresponde, y con él cuánto se curvan sus piezas.
@@ -2647,7 +2615,7 @@ clima('inicio');
 const TEMAKEY='lqs_tema';
 function tema(t,guardar){
  document.documentElement.setAttribute('data-tema',t);
- document.querySelector('meta[name=theme-color]').setAttribute('content',t==='claro'?'#efece4':'#06070f');
+ document.querySelector('meta[name=theme-color]').setAttribute('content',t==='claro'?'#efece4':'#0d0d0f');
  if(guardar)try{localStorage.setItem(TEMAKEY,t);}catch(e){}
 }
 tema('oscuro',false);
@@ -2704,14 +2672,14 @@ addEventListener('popstate',()=>{
 let UNIS=[],PAKS=[],uniSel='todos';
 /* respaldo por si la base no responde: el sitio nunca queda vacío */
 const RESPALDO_U=[
- {id:'empresas',nombre:'Empresas',categoria:'Empresas',color:'#5b8def',orden:1},
- {id:'express',nombre:'Express',categoria:'Express',color:'#39c07a',orden:2},
- {id:'productora',nombre:'Productora',categoria:'Productora',color:'#3fc6d6',orden:3},
- {id:'creadores',nombre:'Creadores',categoria:'Creadores',color:'#a97bd6',orden:4},
+ {id:'empresas',nombre:'Empresas',categoria:'Empresas',color:'#007eff',orden:1},
+ {id:'express',nombre:'Express',categoria:'Express',color:'#74bd00',orden:2},
+ {id:'productora',nombre:'Productora',categoria:'Productora',color:'#007eff',orden:3},
+ {id:'creadores',nombre:'Creadores',categoria:'Creadores',color:'#a053fd',orden:4},
  {id:'carta',nombre:'Carta',categoria:'Restaurantes',color:'#e0614a',orden:5},
- {id:'aloja',nombre:'Aloja',categoria:'Hoteles',color:'#2fb8a3',orden:6},
+ {id:'aloja',nombre:'Aloja',categoria:'Hoteles',color:'#439800',orden:6},
  {id:'foma',nombre:'Ropa y merch',categoria:'Ropa y merch',color:'#b6ad98',orden:7},
- {id:'mercury',nombre:'Joyería',categoria:'Joyería',color:'#d98aa6',orden:8,proximamente:true}];
+ {id:'mercury',nombre:'Joyería',categoria:'Joyería',color:'#ff3150',orden:8,proximamente:true}];
 /* Copia de emergencia del catálogo: espeja las 18 filas activas de `paquetes`
    en Supabase, con los mismos precios. Si cambia un precio allá, cambia aquí.
    Ver docs/PRECIOS.md — un servicio, un precio en todo el ecosistema. */
@@ -2771,7 +2739,7 @@ function cargarPaquetes(){
  box.innerHTML=lista.map(p=>{
   const u=UNIS.find(x=>x.id===p.universo_id)||{};
   const inc=Array.isArray(p.incluye)?p.incluye:[];
-  return `<div class="card"><span class="tagd" style="color:${u.color||'#e6c877'}">${u.categoria||u.nombre||''}</span>
+  return `<div class="card"><span class="tagd" style="color:${u.color||'#ff9f00'}">${u.categoria||u.nombre||''}</span>
    <h3>${p.nombre}</h3><p>${p.descripcion||''}</p>
    <div class="pz">${fmt(p.precio_cop)}</div><div class="un">${p.unidad}</div>
    <ul>${inc.map(i=>`<li>${i}</li>`).join('')}</ul>
@@ -2920,7 +2888,7 @@ const PROP_UNI={
 function datosProp(url){
  const p=PROPUESTAS.find(x=>x[3]===url);
  return p?{tit:p[0]+' · '+p[1],des:p[2],col:p[4]}
-         :{tit:'Tu propuesta completa',des:'Alcance, cronograma y precio cerrado.',col:'#e6c877'};
+         :{tit:'Tu propuesta completa',des:'Alcance, cronograma y precio cerrado.',col:'#ff9f00'};
 }
 function propuestaTras(uni){
  const porCliente=propuestaDe();
@@ -2995,9 +2963,9 @@ function verPromo(){
 (function(){
  const c=document.getElementById('heroCv');if(!c)return;
  const g=c.getContext('2d');let W=0,H=0,t=0,prog=0,tgt=0,stars=[];
- const OBJ=[{x:.18,y:.30,s:1,k:'screen',col:'#5b8def'},{x:.80,y:.24,s:.9,k:'cam',col:'#3fd0e6'},
-  {x:.88,y:.66,s:.85,k:'gem',col:'#d98aa6'},{x:.12,y:.74,s:.9,k:'shirt',col:'#b6ad98'},
-  {x:.52,y:.16,s:.75,k:'chat',col:'#2fb8a3'},{x:.66,y:.86,s:.8,k:'pen',col:'#e6c877'}];
+ const OBJ=[{x:.18,y:.30,s:1,k:'screen',col:'#007eff'},{x:.80,y:.24,s:.9,k:'cam',col:'#007eff'},
+  {x:.88,y:.66,s:.85,k:'gem',col:'#ff3150'},{x:.12,y:.74,s:.9,k:'shirt',col:'#b6ad98'},
+  {x:.52,y:.16,s:.75,k:'chat',col:'#439800'},{x:.66,y:.86,s:.8,k:'pen',col:'#ff9f00'}];
  function rz(){const b=c.getBoundingClientRect();W=c.width=b.width;H=c.height=b.height;
   stars=Array.from({length:Math.min(140,Math.round(W*H/9500))},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.8+.2,p:Math.random()*6}));}
  rz();addEventListener('resize',()=>{rz();if(RM)lp();});
@@ -3024,7 +2992,7 @@ function verPromo(){
   gr.addColorStop(0,'rgba(74,58,150,.3)');gr.addColorStop(.55,'rgba(120,60,100,.1)');gr.addColorStop(1,'rgba(6,7,15,0)');
   g.fillStyle=gr;g.fillRect(0,0,W,H);
   for(const s of stars){const tw=RM?.6:(.4+.6*Math.sin(t*1.3+s.p));g.globalAlpha=tw*s.z*.85;
-   g.fillStyle=s.z>.85?'#e6c877':'#c3cdf0';const yy=(s.y+prog*90*s.z)%H;g.fillRect(s.x|0,yy|0,s.z>.85?2:1,s.z>.85?2:1);}
+   g.fillStyle=s.z>.85?'#ff9f00':'#c3cdf0';const yy=(s.y+prog*90*s.z)%H;g.fillRect(s.x|0,yy|0,s.z>.85?2:1,s.z>.85?2:1);}
   g.globalAlpha=1;
   OBJ.forEach((o,i)=>{const drift=RM?0:Math.sin(t*.5+i*1.7)*7,push=prog*(90+i*26);
    const S=(Math.min(W,H)/760+.62)*o.s;
@@ -3239,7 +3207,7 @@ function animarWA(){
   const d=document.createElement('div');
   d.style.cssText='max-width:82%;padding:10px 13px;border-radius:15px;font-size:.85rem;line-height:1.45;animation:vin .28s var(--ease-out)'+
    (k==='b'?';align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid var(--line);border-bottom-left-radius:5px'
-    :k==='u'?';align-self:flex-end;background:linear-gradient(135deg,#4ade80,#35b46a);color:#06120c;font-weight:600;border-bottom-right-radius:5px'
+    :k==='u'?';align-self:flex-end;background:linear-gradient(135deg,#74bd00,#35b46a);color:#06120c;font-weight:600;border-bottom-right-radius:5px'
     :';align-self:flex-end;background:none;border:1px solid rgba(74,222,128,.55);color:#a7f3c4;font-weight:700');
   d.textContent=t;el.appendChild(d);
   waTimer=setTimeout(paso,k==='b'?1500:1000);
