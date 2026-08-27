@@ -209,12 +209,43 @@ body{background:var(--fondo);color:var(--tinta);font-family:var(--sans);
    no puede ser la más floja de la página. */
 .hero .lema{color:color-mix(in oklab, var(--tinta) 82%, var(--media))}
 .lqs{font-family:var(--disp);font-weight:800;letter-spacing:-.05em;
-  font-size:clamp(2.8rem,8.5vw,5.4rem);line-height:.86;display:flex;gap:.02em}
+  font-size:clamp(2.8rem,8.5vw,5.4rem);line-height:.86;display:flex;gap:.02em;
+  position:relative;width:max-content}
+
+/* ── LA CRIATURA ─────────────────────────────────────────────────────
+   Se asoma por encima de las letras, apoyada en el borde superior de la
+   L. Va en em, no en px: si el hero cambia de tamaño, ella también, y
+   nunca se despega.
+
+   El vídeo venía sobre blanco puro, así que el fondo se recortó con un
+   relleno desde el borde, no borrando «todo lo blanco»: eso último le
+   habría borrado también el blanco de los ojos, que es interior.        */
+.criatura{position:absolute;left:.06em;bottom:.62em;
+  width:1.15em;height:auto;z-index:2;pointer-events:none;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.34));
+  transform-origin:50% 100%;
+  animation:asoma 4.5s var(--ease-out) infinite}
+/* El <picture> obedece el em, pero el <img> de dentro no hereda ancho y se
+   planta en sus 480px nativos. Sin esta línea la criatura sale gigante. */
+.criatura img{width:100%;height:auto;display:block}
+@keyframes asoma{
+  0%,58%,100%{translate:0 0;    rotate:-3deg}
+  66%        {translate:0 -7%;  rotate:2deg}
+  74%        {translate:0 -2%;  rotate:-1deg}
+}
+/* Quieta, pero presente. El GIF interno sigue su propio ciclo y eso no lo
+   controla el CSS, así que la versión sin animación se sirve aparte. */
+@media (prefers-reduced-motion:reduce){
+  .criatura{animation:none;rotate:-3deg}
+}
 .lqs span{background:linear-gradient(150deg,var(--a),var(--b));
   -webkit-background-clip:text;background-clip:text;color:transparent}
-.lqs span:nth-child(1){--a:var(--m-violeta);--b:var(--m-cian)}
-.lqs span:nth-child(2){--a:var(--m-rosa);   --b:var(--m-ambar)}
-.lqs span:nth-child(3){--a:var(--m-verde);  --b:var(--m-azul)}
+/* nth-of-TYPE, no nth-child: la criatura es el primer hijo del contenedor y
+   con nth-child corría los índices una posición. La S se quedaba sin regla
+   de degradé y, como el color base es transparent, desaparecía entera. */
+.lqs span:nth-of-type(1){--a:var(--m-violeta);--b:var(--m-cian)}
+.lqs span:nth-of-type(2){--a:var(--m-rosa);   --b:var(--m-ambar)}
+.lqs span:nth-of-type(3){--a:var(--m-verde);  --b:var(--m-azul)}
 .hero .lema{font-size:clamp(1rem,1.8vw,1.24rem);color:var(--media);
   max-width:32ch;margin-top:8px}
 .fila{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
@@ -285,7 +316,13 @@ body{background:var(--fondo);color:var(--tinta);font-family:var(--sans);
         <circle cx="700" cy="270" r="30" fill="#ffd166"/>
       </svg></div>
       <div class="txt">
-        <div class="lqs" aria-label="LQS"><span>L</span><span>Q</span><span>S</span></div>
+        <div class="lqs" aria-label="LQS">
+          <picture class="criatura">
+            <source srcset="../img/lqs-criatura-quieta.png" media="(prefers-reduced-motion: reduce)">
+            <img src="../img/lqs-criatura.webp" alt="" width="480" height="272" decoding="async">
+          </picture>
+          <span>L</span><span>Q</span><span>S</span>
+        </div>
         <p class="lema">Creamos lo que sea. Resolvemos lo que venga.</p>
         <div class="fila">
           <button class="bt lleno" type="button">Ver lo que hacemos</button>
