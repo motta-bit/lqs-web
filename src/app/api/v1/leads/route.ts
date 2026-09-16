@@ -47,13 +47,18 @@ async function processLeadAsync(leadId: string, data: any) {
       }, ...existing.slice(0, 99)])
     } catch (e) { console.warn('Edge Config lead save failed:', e) }
 
-    if (process.env.DATABASE_URL) {
+    // El modelo Lead exige name/email y NO tiene totalEstimate/currency:
+    // el create anterior usaba esos campos y lanzaba con BD real. Se mapea
+    // totalEstimate→budget y services→nombres; sin name/email se omite la BD
+    // (Edge Config ya capturó el lead arriba).
+    if (process.env.DATABASE_URL && data.name && data.email) {
       const { prisma } = await import('@/lib/prisma')
-      await (prisma as any).lead.create({
+      await prisma.lead.create({
         data: {
           id: leadId, name: data.name, email: data.email, phone: data.phone,
-          clientType: data.clientType, message: data.message,
-          totalEstimate: data.totalEstimate, currency: data.currency, status: 'new' as any,
+          clientType: data.clientType as any, message: data.message,
+          services: (data.services || []).map((s: any) => s.name),
+          budget: data.totalEstimate, status: 'new',
         },
       })
     }
