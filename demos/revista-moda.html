@@ -3,299 +3,360 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Revista Tendido</title>
-<meta name="description" content="Revista de moda: un índice en bento con números fantasma que se abre en paneles de color a pantalla completa, sin salir de la página.">
+<title>Tendido</title>
+<meta name="description" content="Revista de moda: cinco portadas a pantalla completa que se apilan al pasar, cada una con su campo de degradé vivo y su silueta.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Manrope:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;800;900&family=Manrope:wght@300;400;500;700&display=swap">
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   TENDIDO · revista de moda, número 07
+   TENDIDO · revista de moda
 
-   Color   fondo #080809 · tarjeta #121214 · tiza #ededf0
-           cada sección trae su propio color pleno y no lo comparte:
-           lila #7b5cff · arena #d8b48c · verde #1f6b4a
-           coral #ff4d4d · hielo #cfe3ff
-   Tipo    Unbounded 700 para los números y las portadas de sección
-           (una grotesca geométrica y ancha, no la de siempre);
-           Manrope para el cuerpo
-   Planta  Columna fija con la cabecera de la revista. A la derecha,
-           un índice en bento: cada entrada lleva su número gigante
-           recortado por el borde de la tarjeta.
+   Lo que cambió: la versión anterior eran tarjetas con párrafos. Un
+   párrafo no es moda; moda es imagen, color y silueta. Esta no se
+   lee: se PASA, como se pasa una revista.
 
-   Al tocar una entrada, la sección NO navega: sube desde abajo un
-   panel a color pleno que cubre la columna derecha. Vuelve por el
-   mismo camino, porque si algo se va por abajo tiene que volver
-   por abajo.
+   Cinco portadas a pantalla completa, apiladas con sticky. La que
+   queda atrás se encoge y se va al fondo mientras la siguiente la
+   cubre — como levantar una revista de encima de otra. Ninguna
+   lleva más de dos líneas de texto.
+
+   Color   cada portada es un CAMPO de degradé vivo, de tres paradas,
+           que respira: el fondo nunca está quieto ni se repite igual.
+           Negro #07070a solo para los huecos entre portadas.
+   Tipo    Big Shoulders Display 900, condensada y alta — la letra de
+           cartel de desfile. Manrope 300 para el crédito, que debe
+           desaparecer.
    ═══════════════════════════════════════════════════════════════ */
 :root{
-  --fondo:#080809; --tarjeta:#121214; --tarjeta2:#191a1d;
-  --tiza:#ededf0; --gris:#8b8b94; --linea:rgba(237,237,240,.1);
-  --disp:'Unbounded',system-ui,sans-serif;
+  --negro:#07070a; --tiza:#f6f4f1;
+  --disp:'Big Shoulders Display',Impact,sans-serif;
   --cuerpo:'Manrope',system-ui,sans-serif;
-  --m:clamp(16px,3.4vw,40px);
+  --m:clamp(16px,4vw,54px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--fondo);color:var(--tiza);font-family:var(--cuerpo);
-  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-::selection{background:#7b5cff;color:#fff}
+body{background:var(--negro);color:var(--tiza);font-family:var(--cuerpo);
+  font-weight:300;line-height:1.5;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden}
+::selection{background:var(--tiza);color:var(--negro)}
 
-.marco{display:grid;grid-template-columns:1fr;gap:var(--m);padding:var(--m);
-  min-height:100dvh}
-.marco > *{min-width:0}
-@media (min-width:980px){
-  .marco{grid-template-columns:clamp(260px,26vw,380px) 1fr}
+/* ── cabecera flotante ──────────────────────────────────────── */
+.cab{position:fixed;top:0;left:0;right:0;z-index:30;padding:var(--m);
+  display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;
+  justify-content:space-between;mix-blend-mode:difference;
+  pointer-events:none}
+.cab b{font-family:var(--disp);font-weight:900;font-size:clamp(1.2rem,2.4vw,1.7rem);
+  letter-spacing:-.02em;text-transform:uppercase;line-height:1}
+.cab span{font-size:.64rem;letter-spacing:.26em;text-transform:uppercase}
+
+/* ── EL FAJO DE PORTADAS ────────────────────────────────────────
+   Cada portada es sticky a pantalla completa. Al llegar la siguiente,
+   la de atrás se encoge y pierde luz: es el gesto de levantar una
+   revista de encima de otra, no un desvanecido. */
+.fajo{position:relative}
+/* La última no se pega: si lo hiciera se quedaría clavada detrás del
+   sumario, dejando una franja de portada con su crédito chocando
+   contra la cabecera. Al ser la última no tiene a quién dejar pasar. */
+.ed:last-of-type{position:relative}
+.ed{position:sticky;top:0;height:100dvh;overflow:hidden;
+  display:grid;grid-template-rows:1fr auto;
+  padding:calc(var(--m) + 46px) var(--m)
+          max(var(--m), env(safe-area-inset-bottom, 0px) + 14px);
+  transform-origin:50% 0;will-change:transform,filter}
+
+/* el campo: tres paradas que se mueven, nunca un plano liso */
+.campo{position:absolute;inset:-20%;z-index:0;
+  background:
+    radial-gradient(42% 56% at var(--ax) var(--ay), var(--c1), transparent 68%),
+    radial-gradient(48% 48% at var(--bx) var(--by), var(--c2), transparent 66%),
+    radial-gradient(70% 80% at var(--cx) var(--cy), var(--c3), transparent 74%),
+    var(--c0);
+  filter:saturate(1.15);
+  animation:respira var(--t,26s) ease-in-out infinite alternate}
+@keyframes respira{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to  {transform:translate3d(4%,-5%,0) scale(1.16)}
+}
+/* grano: sin él un campo de este tamaño se ve a plástico */
+.ed::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:.3;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* la silueta: hueco para la foto, y mientras tanto una figura */
+/* La figura se corre a la derecha para dejarle el aire al titular,
+   que va alineado a la izquierda. Centrada, los dos se pelean. */
+.silueta{position:absolute;inset:0;z-index:2;pointer-events:none;
+  display:grid;place-items:center;padding-left:min(38vw,560px)}
+@media (max-width:900px){.silueta{padding-left:0;align-items:end;
+  padding-bottom:4vh}}
+.silueta canvas{height:86%;width:auto;max-width:92%;
+  mix-blend-mode:var(--mezcla,soft-light);opacity:.92}
+.hueco{position:absolute;left:50%;bottom:clamp(90px,14vh,150px);translate:-50% 0;
+  z-index:4;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:7px 14px;border-radius:999px;border:1px solid rgba(246,244,241,.3);
+  color:rgba(246,244,241,.72);white-space:nowrap;
+  opacity:0;transition:opacity .24s}
+.ed:hover .hueco{opacity:1}
+@media (hover:none){.hueco{opacity:.7}}
+
+/* El titular, a todo el ancho de la portada.
+   La medida NO va en ch: un ch aquí se mide contra los 16px de este
+   contenedor, no contra los 11rem del titular, y el titular se sale de
+   la caja (ya me pasó con el mezcal). Y va ancha a propósito: con la
+   fuente cargada rompe en líneas de cartel, y mientras carga —o si no
+   carga— la sustituta es mucho más ancha y necesita todo el espacio
+   para no desbordarse. */
+.titulo{position:relative;z-index:3;align-self:center;justify-self:start;
+  max-width:100%}
+.titulo .n{font-family:var(--cuerpo);font-size:.62rem;letter-spacing:.3em;
+  text-transform:uppercase;opacity:.8;margin-bottom:10px}
+.titulo h2{font-family:var(--disp);font-weight:900;
+  font-size:clamp(3.4rem,13.5vw,11rem);line-height:.82;letter-spacing:-.02em;
+  text-transform:uppercase;text-wrap:balance}
+/* Palabra en contorno. Dos cuidados aprendidos a golpes:
+   · el trazo va en em, no en px — 2px sobre un cuerpo de 176px no se
+     ve y la palabra desaparece dejando un renglón en blanco;
+   · el trazo NO puede ser currentColor: en esta misma regla color vale
+     transparent, así que currentColor resuelve a transparente y el
+     trazo desaparece con el relleno. Va el color explícito;
+   · color:transparent SOLO dentro del @supports. Si el navegador no
+     tiene text-stroke, la palabra se queda sólida en vez de volverse
+     invisible, que es exactamente lo que no puede pasar. */
+.titulo h2 em{font-style:normal}
+@supports (-webkit-text-stroke:1px red){
+  .titulo h2 em{-webkit-text-stroke:.045em var(--tiza);color:transparent}
 }
 
-/* ── cabecera fija ──────────────────────────────────────────── */
-.cab{display:flex;flex-direction:column;gap:20px;padding:6px 0}
-@media (min-width:980px){
-  .cab{position:sticky;top:var(--m);height:calc(100dvh - var(--m)*2);
-    justify-content:space-between}
-}
-.sello{width:34px;height:34px;border-radius:50%;background:var(--tiza);
-  display:grid;place-items:center;color:var(--fondo);font-family:var(--disp);
-  font-weight:700;font-size:.82rem;line-height:1}
-.cab .est{display:flex;align-items:center;gap:9px;font-size:.66rem;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--gris)}
-.cab .est i{width:6px;height:6px;border-radius:50%;background:#1f6b4a;
-  box-shadow:0 0 10px #1f6b4a;font-style:normal}
-.cab h1{font-family:var(--disp);font-weight:700;
-  font-size:clamp(1.9rem,4.6vw,2.9rem);line-height:1.02;letter-spacing:-.045em}
-.cab h1 span{color:var(--gris);font-weight:300}
-.cab p{font-size:.86rem;color:var(--gris);max-width:30ch}
-.cab a.correo{font-size:.84rem;color:var(--tiza);text-decoration:none;
-  border-bottom:1px solid var(--linea);padding-bottom:3px;width:max-content;
-  transition:border-color .2s}
-.cab a.correo:hover{border-color:#7b5cff}
-.cab a.correo:focus-visible{outline:2px solid #7b5cff;outline-offset:4px}
+/* el crédito: una línea, y se calla */
+.credito{position:relative;z-index:3;display:flex;flex-wrap:wrap;
+  gap:8px 24px;align-items:baseline;justify-content:space-between;
+  padding-top:14px;border-top:1px solid rgba(246,244,241,.28);
+  font-size:.66rem;letter-spacing:.2em;text-transform:uppercase}
+.credito .pase{display:inline-flex;align-items:center;gap:8px}
+.credito .pase i{font-style:normal;animation:cae 1.9s ease-in-out infinite}
+@keyframes cae{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(4px);opacity:1}}
 
-/* ── el índice en bento ─────────────────────────────────────── */
-.indice{position:relative;display:grid;gap:10px;
-  grid-template-columns:repeat(6,1fr);align-content:start}
-.ent{position:relative;overflow:hidden;border:0;cursor:pointer;text-align:left;
-  background:var(--tarjeta);border-radius:16px;color:var(--tiza);
-  font-family:var(--cuerpo);padding:20px 22px;
-  min-height:clamp(118px,15vw,150px);display:flex;flex-direction:column;
-  justify-content:flex-end;gap:2px;
-  transition:background .26s cubic-bezier(.22,1,.3,1),transform .22s cubic-bezier(.22,1,.3,1)}
-.ent:nth-child(1){grid-column:span 3}
-.ent:nth-child(2){grid-column:span 3}
-.ent:nth-child(3){grid-column:span 2}
-.ent:nth-child(4){grid-column:span 4}
-.ent:nth-child(5){grid-column:span 6;min-height:clamp(98px,11vw,120px)}
-@media (max-width:700px){
-  .ent,.ent:nth-child(n){grid-column:span 6}
-}
-/* el número fantasma: enorme, recortado, detrás de todo */
-.ent .fant{position:absolute;right:-.04em;top:50%;translate:0 -50%;
-  font-family:var(--disp);font-weight:700;font-size:clamp(5rem,13vw,10rem);
-  line-height:.72;letter-spacing:-.06em;color:var(--tarjeta2);
-  pointer-events:none;user-select:none;
-  transition:color .26s,translate .4s cubic-bezier(.22,1,.3,1)}
-.ent small{position:relative;font-size:.72rem;color:var(--gris);
-  letter-spacing:.04em;transition:color .26s}
-.ent b{position:relative;font-family:var(--disp);font-weight:500;
-  font-size:clamp(1rem,2vw,1.28rem);letter-spacing:-.03em;line-height:1.1}
-@media (hover:hover) and (pointer:fine){
-  .ent:hover{background:var(--tarjeta2);transform:translateY(-3px)}
-  .ent:hover .fant{color:var(--tono);translate:0 -54%}
-  .ent:hover small{color:var(--tiza)}
-}
-.ent:active{transform:translateY(0) scale(.994)}
-.ent:focus-visible{outline:2px solid var(--tono);outline-offset:3px}
+/* ── sumario, al final ──────────────────────────────────────── */
+/* El sumario llena la pantalla a propósito: si queda más corto, al
+   final del scroll asoma la cola de la última portada y su crédito
+   choca contra la cabecera fija. Y una página de contenidos merece
+   la pantalla entera. */
+.sumario{position:relative;z-index:20;background:var(--negro);
+  padding:clamp(54px,10vw,120px) var(--m);
+  min-height:100dvh;display:flex;flex-direction:column;justify-content:center}
+.sumario h3{font-family:var(--disp);font-weight:900;text-transform:uppercase;
+  font-size:clamp(2rem,6vw,4rem);line-height:.9;letter-spacing:-.02em;
+  margin-bottom:clamp(24px,4vw,42px)}
+.lista{display:grid;gap:0}
+.fila{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:baseline;
+  padding:17px 0;border-top:1px solid rgba(246,244,241,.14);
+  text-decoration:none;color:inherit;transition:padding-left .24s cubic-bezier(.22,1,.3,1)}
+.fila:last-child{border-bottom:1px solid rgba(246,244,241,.14)}
+.fila:hover{padding-left:12px}
+.fila:focus-visible{outline:2px solid var(--tiza);outline-offset:3px}
+.fila .nn{font-size:.64rem;letter-spacing:.2em;opacity:.55;min-width:3ch}
+.fila .tt{font-family:var(--disp);font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.05rem,2.6vw,1.6rem);line-height:1;letter-spacing:-.01em}
+.fila .cc{width:30px;height:10px;border-radius:999px;background:var(--tono)}
 
-/* ── el panel que sube ──────────────────────────────────────── */
-.panel{position:fixed;inset:var(--m);z-index:50;border-radius:20px;
-  background:var(--tono);color:#0b0b0c;overflow:auto;overscroll-behavior:contain;
-  padding:clamp(22px,4vw,56px);
-  transform:translateY(102%);visibility:hidden;
-  transition:transform .52s cubic-bezier(.22,1,.3,1),visibility 0s linear .52s}
-@media (min-width:980px){
-  .panel{left:calc(clamp(260px,26vw,380px) + var(--m)*2)}
-}
-.panel.on{transform:none;visibility:visible;transition-delay:0s}
-.panel.claro{color:#f6f6f8}
-.panel .volver{all:unset;display:inline-flex;align-items:center;gap:10px;
-  cursor:pointer;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
-  padding:11px 20px;border-radius:999px;background:rgba(11,11,12,.12);
-  margin-bottom:clamp(22px,4vw,44px);transition:background .18s,transform .14s}
-.panel.claro .volver{background:rgba(246,246,248,.16)}
-.panel .volver:hover{background:rgba(11,11,12,.2)}
-.panel.claro .volver:hover{background:rgba(246,246,248,.26)}
-.panel .volver:active{transform:scale(.97)}
-.panel .volver:focus-visible{outline:2px solid currentColor;outline-offset:3px}
-.panel .et{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;opacity:.62}
-.panel h2{font-family:var(--disp);font-weight:500;
-  font-size:clamp(1.6rem,4.4vw,3.1rem);line-height:1.08;letter-spacing:-.04em;
-  margin:12px 0 26px;max-width:18ch;text-wrap:balance}
-.panel h2 em{font-style:normal;opacity:.5}
-.panel .rejilla{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))}
-.panel .rejilla > div > i{font-style:normal;font-size:.68rem;letter-spacing:.14em;opacity:.55}
-.panel .rejilla > div > h3{font-family:var(--disp);font-weight:500;font-size:1rem;
-  letter-spacing:-.02em;margin:7px 0 6px}
-.panel .rejilla > div > p{font-size:.88rem;line-height:1.62;opacity:.78}
-/* la figura: geometría al azar, una por panel */
-.panel figure{margin-top:clamp(26px,4vw,48px);border-radius:14px;overflow:hidden;
-  aspect-ratio:16/7;background:rgba(11,11,12,.14)}
-.panel figure canvas{width:100%;height:100%;display:block}
-.scrim{position:fixed;inset:0;z-index:40;background:rgba(8,8,9,.6);
-  opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s linear .4s}
-.scrim.on{opacity:1;visibility:visible;transition-delay:0s}
+.pie{padding:0 var(--m) clamp(40px,7vw,80px);display:flex;flex-wrap:wrap;
+  gap:12px 26px;justify-content:space-between;
+  font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
 
+/* Sin movimiento: las portadas dejan de apilarse y se leen una tras
+   otra. El color y las siluetas se quedan — apagarlo todo no es
+   accesibilidad, es castigo. */
 @media (prefers-reduced-motion:reduce){
-  .ent,.ent .fant,.panel,.scrim{transition-duration:.01ms !important}
+  .ed{position:static;height:auto;min-height:88dvh;transform:none !important;
+    filter:none !important}
+  .campo{animation:none}
+  .credito .pase i{animation:none}
+  .fila{transition:none}
 }
 </style>
 </head>
 <body>
 
-<div class="marco">
-
-  <header class="cab">
-    <div style="display:flex;flex-direction:column;gap:18px">
-      <div class="sello">T</div>
-      <div class="est"><i></i>Número 07 · en circulación</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <h1>Tendido<br><span>revista de moda</span></h1>
-      <p>Cinco entradas por número. Ni una más, para que todas se lean.</p>
-      <a class="correo" href="#suscribir">Suscribirse al 08</a>
-    </div>
-  </header>
-
-  <nav class="indice" id="indice" aria-label="Índice del número"></nav>
+<div class="cab">
+  <b>Tendido</b>
+  <span>Número 07 · primavera</span>
 </div>
 
-<div class="scrim" id="scrim"></div>
-<section class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="ptit" tabindex="-1"></section>
+<main class="fajo" id="fajo"></main>
+
+<section class="sumario">
+  <h3>En este número</h3>
+  <div class="lista" id="lista"></div>
+</section>
+
+<div class="pie">
+  <span>Tendido · Medellín</span>
+  <span>Cinco portadas, cinco historias</span>
+</div>
 
 <script>
 const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* Cada entrada trae su color y decide si el panel va con texto claro
-   u oscuro: un color pleno con el texto equivocado encima es ilegible,
-   y eso no se puede dejar a la suerte de cada tarjeta. */
-const NUMERO = [
-  {n:'01', seccion:'Portada',  tit:'La ropa que sobrevive <em>a su temporada</em>',
-   tono:'#7b5cff', claro:true, formas:'orbitas',
-   bloques:[['Hilo','Lo que dura','Seis talleres que todavía rematan a mano y por qué sus prendas vuelven a venderse de segunda.'],
-            ['Molde','Patrones viejos','El archivo de patronaje de los años sesenta que un taller de Itagüí digitalizó entero.'],
-            ['Color','Teñido natural','Achiote, cáscara de cebolla y añil. Lo que se destiñe, y lo que no.']]},
-  {n:'02', seccion:'Retrato',  tit:'Diez años cosiendo <em>para nadie en particular</em>',
-   tono:'#d8b48c', claro:false, formas:'rejilla',
-   bloques:[['Perfil','Marta Ocampo','Hace abrigos por encargo y no tiene vitrina. La lista de espera va en catorce meses.'],
-            ['Taller','Una pieza a la vez','Por qué se niega a contratar y qué le ha costado esa decisión.'],
-            ['Precio','Lo que vale','La conversación incómoda sobre cuánto cuesta un abrigo hecho bien.']]},
-  {n:'03', seccion:'Materia',  tit:'El algodón <em>que nadie quiere</em>',
-   tono:'#1f6b4a', claro:true, formas:'tallos',
-   bloques:[['Campo','Cesar y Córdoba','Lo que queda del algodón colombiano, contado por quien todavía lo siembra.'],
-            ['Fibra','Corta y gruesa','Por qué la industria la descartó y qué marcas están volviendo a ella.']]},
-  {n:'04', seccion:'Archivo',  tit:'Lo que se puso Medellín <em>en 1994</em>',
-   tono:'#ff4d4d', claro:true, formas:'confeti',
-   bloques:[['Calle','Junín','Fotografías de archivo de la que fue la vitrina de la ciudad.'],
-            ['Marca','Las que ya no están','Nombres que vestían a medio país y desaparecieron en una década.'],
-            ['Vuelta','Qué regresó','Tres siluetas de entonces que hoy se venden como novedad.']]},
-  {n:'05', seccion:'Al cierre',tit:'Cartas, erratas <em>y una disculpa</em>',
-   tono:'#cfe3ff', claro:false, formas:'lineas',
-   bloques:[['Correo','Lo que nos escribieron','Las respuestas al número 06, incluidas las que no nos gustaron.'],
-            ['Errata','Nos equivocamos','El taller de la página 34 no queda en Envigado. Queda en Sabaneta.']]}
+/* Cinco portadas. Cada una es un campo de tres colores que se mueve, una
+   silueta y dos líneas de texto. Nada más: si hace falta un párrafo para
+   que una portada se entienda, la portada está mal. */
+const PORTADAS = [
+  {n:'Portada', t:'Lo que <em>sobrevive</em> a su temporada', firma:'Fotografía · Daniela Restrepo',
+   c0:'#140a2e', c1:'#7b5cff', c2:'#ff3d9a', c3:'#2a1b6b', fig:'abrigo', mezcla:'soft-light',
+   foto:'figura de cuerpo entero · 1400×2000'},
+  {n:'Retrato', t:'Diez años cosiendo <em>para nadie</em>', firma:'Retrato · Marta Ocampo, en su taller',
+   c0:'#2a1206', c1:'#ff8a3d', c2:'#ffd166', c3:'#8f2d0e', fig:'busto', mezcla:'overlay',
+   foto:'retrato a media luz · 1400×1800'},
+  {n:'Materia', t:'El algodón que <em>nadie quiere</em>', firma:'Campo · Cesar, mayo',
+   c0:'#04210f', c1:'#3fd08a', c2:'#d8f36b', c3:'#0a5c32', fig:'tela', mezcla:'soft-light',
+   foto:'detalle de fibra · 1600×1100'},
+  {n:'Archivo', t:'Lo que se puso <em>Medellín</em> en 1994', firma:'Archivo · Junín, colección privada',
+   c0:'#2b0410', c1:'#ff4d4d', c2:'#ffb26b', c3:'#6b0d2a', fig:'pasarela', mezcla:'overlay',
+   foto:'archivo en blanco y negro · 1400×1900'},
+  {n:'Al cierre', t:'Cartas, erratas <em>y una disculpa</em>', firma:'Correspondencia · lectores del 06',
+   c0:'#061426', c1:'#cfe3ff', c2:'#5b8def', c3:'#0d2b52', fig:'papel', mezcla:'soft-light',
+   foto:'papel intervenido · 1400×1000'}
 ];
 
-/* ── el índice ─────────────────────────────────────────────── */
-const indice = document.getElementById('indice');
-indice.innerHTML = NUMERO.map((e,i)=>`
-  <button class="ent" style="--tono:${e.tono}" data-i="${i}" aria-haspopup="dialog">
-    <span class="fant" aria-hidden="true">${e.n}</span>
-    <small>${e.seccion}</small>
-    <b>${e.tit.replace(/<\/?em>/g,'')}</b>
-  </button>`).join('');
-
-/* ── el panel ──────────────────────────────────────────────── */
-const panel=document.getElementById('panel'), scrim=document.getElementById('scrim');
-let abridor=null;
-
-function abre(i){
-  const e=NUMERO[i];
-  panel.style.setProperty('--tono', e.tono);
-  panel.classList.toggle('claro', !!e.claro);
-  panel.innerHTML = `
-    <button class="volver" type="button" data-cerrar>← Volver al índice</button>
-    <div class="et">${e.n} · ${e.seccion}</div>
-    <h2 id="ptit">${e.tit}</h2>
-    <div class="rejilla">
-      ${e.bloques.map(([i2,t,d])=>`<div><i>${i2}</i><h3>${t}</h3><p>${d}</p></div>`).join('')}
+/* ── montaje ──────────────────────────────────────────────────── */
+document.getElementById('fajo').innerHTML = PORTADAS.map((p,k)=>`
+  <article class="ed" data-k="${k}" style="--mezcla:${p.mezcla}">
+    <div class="campo" style="
+      --c0:${p.c0};--c1:${p.c1};--c2:${p.c2};--c3:${p.c3};
+      --ax:${18+k*13}%;--ay:${22+k*9}%;
+      --bx:${74-k*8}%;--by:${30+k*12}%;
+      --cx:${44+k*7}%;--cy:${88-k*6}%;
+      --t:${22+k*4}s"></div>
+    <div class="silueta"><canvas data-fig="${p.fig}" aria-hidden="true"></canvas></div>
+    <div class="hueco">Aquí va la foto · ${p.foto}</div>
+    <div class="titulo">
+      <div class="n">${String(k+1).padStart(2,'0')} · ${p.n}</div>
+      <h2>${p.t}</h2>
     </div>
-    <figure><canvas></canvas></figure>`;
-  figura(panel.querySelector('canvas'), e.formas, e.claro);
-  scrim.classList.add('on'); panel.classList.add('on');
-  abridor = document.activeElement;
-  panel.focus({preventScroll:true});
-  document.body.style.overflow='hidden';
-}
-function cierra(){
-  panel.classList.remove('on'); scrim.classList.remove('on');
-  document.body.style.overflow='';
-  if(abridor) abridor.focus({preventScroll:true});   // vuelve de donde salió
-}
-indice.addEventListener('click', e=>{
-  const b=e.target.closest('.ent'); if(b) abre(+b.dataset.i);
-});
-panel.addEventListener('click', e=>{ if(e.target.closest('[data-cerrar]')) cierra(); });
-scrim.addEventListener('click', cierra);
-addEventListener('keydown', e=>{ if(e.key==='Escape' && panel.classList.contains('on')) cierra(); });
+    <div class="credito">
+      <span>${p.firma}</span>
+      ${k===0?'<span class="pase">Pasa la portada <i aria-hidden="true">↓</i></span>':`<span>${String(k+1).padStart(2,'0')} / ${String(PORTADAS.length).padStart(2,'0')}</span>`}
+    </div>
+  </article>`).join('');
 
-/* ── LA FIGURA ─────────────────────────────────────────────────
-   Cinco geometrías distintas, una por sección, y cada una se dibuja
-   con azar en la posición pero nunca en la estructura: así cada
-   lectura es irrepetible sin que ninguna salga mal compuesta. */
-function figura(cv, tipo, claro){
+document.getElementById('lista').innerHTML = PORTADAS.map((p,k)=>`
+  <a class="fila" href="#" style="--tono:${p.c1}">
+    <span class="nn">${String(k+1).padStart(2,'0')}</span>
+    <span class="tt">${p.t.replace(/<\/?em>/g,'')}</span>
+    <span class="cc"></span>
+  </a>`).join('');
+
+/* ── LAS SILUETAS ──────────────────────────────────────────────
+   Mientras no haya fotos, cada portada lleva una figura dibujada con
+   su propio vocabulario. No son ilustraciones: son masas y líneas que
+   insinúan una silueta y aguantan el degradé por detrás. Se dibujan
+   una sola vez. */
+document.querySelectorAll('.silueta canvas').forEach(cv=>{
   const g=cv.getContext('2d'), d=Math.min(devicePixelRatio||1,2);
-  const w=cv.clientWidth||800, h=cv.clientHeight||350;
-  cv.width=w*d; cv.height=h*d; g.setTransform(d,0,0,d,0,0);
-  const tinta = claro ? 'rgba(246,246,248,' : 'rgba(11,11,12,';
-  g.lineCap='round';
+  const W=620, H=880; cv.width=W*d; cv.height=H*d; g.setTransform(d,0,0,d,0,0);
+  const tipo=cv.dataset.fig;
+  const tinta=(a)=>`rgba(246,244,241,${a})`;
+  g.lineCap='round'; g.lineJoin='round';
 
-  if(tipo==='orbitas'){
-    for(let i=0;i<9;i++){
-      const r=h*(0.12+i*0.09), cx=w*(0.3+Math.random()*0.42), cy=h*0.5;
-      g.strokeStyle=tinta+(0.1+Math.random()*0.22)+')'; g.lineWidth=1+Math.random()*2.4;
-      g.beginPath(); g.ellipse(cx,cy,r*1.6,r,Math.random()*3.14,0,7); g.stroke();
+  if(tipo==='abrigo'){
+    // Un abrigo largo: cuello, hombro que cae, y vuelo hacia el bajo.
+    // El hombro tiene que ser más angosto que el bajo o la figura lee
+    // como cápsula en vez de como prenda.
+    g.beginPath();
+    g.moveTo(W*.5,H*.14);                                  // cuello
+    g.lineTo(W*.68,H*.2);                                   // hombro derecho
+    g.bezierCurveTo(W*.74,H*.42, W*.78,H*.68, W*.78,H*.92); // vuelo
+    g.lineTo(W*.22,H*.92);
+    g.bezierCurveTo(W*.22,H*.68, W*.26,H*.42, W*.32,H*.2);  // hombro izquierdo
+    g.closePath(); g.fillStyle=tinta(.2); g.fill();
+    g.strokeStyle=tinta(.55); g.lineWidth=2.4; g.stroke();
+    // solapa y abertura central: lo que lo vuelve abrigo y no bata
+    g.beginPath();
+    g.moveTo(W*.5,H*.14); g.lineTo(W*.42,H*.3); g.lineTo(W*.5,H*.36);
+    g.lineTo(W*.58,H*.3); g.closePath();
+    g.strokeStyle=tinta(.45); g.lineWidth=2; g.stroke();
+    g.beginPath(); g.moveTo(W*.5,H*.36); g.lineTo(W*.5,H*.92);
+    g.strokeStyle=tinta(.38); g.stroke();
+    // cinturón
+    g.beginPath(); g.moveTo(W*.27,H*.54); g.lineTo(W*.755,H*.54);
+    g.strokeStyle=tinta(.4); g.lineWidth=5; g.stroke();
+    // caída de la tela
+    for(let i=0;i<8;i++){ const x=W*(.28+i*.06);
+      g.beginPath(); g.moveTo(x,H*.58); g.lineTo(x+(Math.random()-.5)*22,H*.9);
+      g.strokeStyle=tinta(.07+Math.random()*.12); g.lineWidth=1+Math.random()*2; g.stroke(); }
+  } else if(tipo==='busto'){
+    g.beginPath(); g.ellipse(W*.5,H*.3,W*.17,H*.13,0,0,7);
+    g.fillStyle=tinta(.22); g.fill(); g.strokeStyle=tinta(.5); g.lineWidth=2; g.stroke();
+    g.beginPath(); g.moveTo(W*.5,H*.44);
+    g.bezierCurveTo(W*.76,H*.5,W*.82,H*.68,W*.8,H*.94);
+    g.lineTo(W*.2,H*.94);
+    g.bezierCurveTo(W*.18,H*.68,W*.24,H*.5,W*.5,H*.44);
+    g.closePath(); g.fillStyle=tinta(.17); g.fill(); g.strokeStyle=tinta(.42); g.stroke();
+  } else if(tipo==='tela'){
+    // una tela colgada: ondas que caen y se van cerrando
+    for(let i=0;i<16;i++){
+      const y=H*(.14+i*.05);
+      g.beginPath(); g.moveTo(W*.12,y);
+      for(let x=W*.12;x<W*.88;x+=14){
+        g.lineTo(x, y+Math.sin((x/W)*9+i*.6)*(16-i*.6));
+      }
+      g.strokeStyle=tinta(.1+ (1-i/16)*.34); g.lineWidth=1.4+Math.random()*2.2; g.stroke();
     }
-  } else if(tipo==='rejilla'){
-    const c=16, f=7;
-    for(let i=0;i<c;i++) for(let j=0;j<f;j++){
-      if(Math.random()<0.42) continue;
-      g.fillStyle=tinta+(0.06+Math.random()*0.3)+')';
-      const pw=w/c, ph=h/f;
-      g.fillRect(i*pw+1, j*ph+1, pw-2, ph-2);
-    }
-  } else if(tipo==='tallos'){
-    for(let i=0;i<34;i++){
-      const x=Math.random()*w, alto=h*(0.25+Math.random()*0.7);
-      g.strokeStyle=tinta+(0.14+Math.random()*0.3)+')'; g.lineWidth=1+Math.random()*2.6;
-      g.beginPath(); g.moveTo(x,h);
-      g.quadraticCurveTo(x+(Math.random()-0.5)*70, h-alto*0.6, x+(Math.random()-0.5)*48, h-alto);
-      g.stroke();
-    }
-  } else if(tipo==='confeti'){
-    for(let i=0;i<40;i++){
-      const x=Math.random()*w, y=Math.random()*h, s=5+Math.random()*26;
-      g.save(); g.translate(x,y); g.rotate(Math.random()*3.14);
-      g.fillStyle=tinta+(0.1+Math.random()*0.32)+')';
-      if(Math.random()<0.5) g.fillRect(-s/2,-s/6,s,s/3);
-      else { g.beginPath(); g.arc(0,0,s/2.6,0,7); g.fill(); }
+  } else if(tipo==='pasarela'){
+    // tres figuras en fila, una detrás de otra
+    [[.3,.86,.2],[.5,1,.3],[.7,.9,.22]].forEach(([cx,esc,al])=>{
+      const h=H*esc;
+      g.beginPath(); g.ellipse(W*cx,H*.5-h*.34,W*.065,h*.05,0,0,7);
+      g.fillStyle=tinta(al); g.fill();
+      // el cuerpo arranca dentro de la cabeza, si no quedan flotando
+      g.beginPath();
+      g.moveTo(W*cx,H*.5-h*.32);
+      g.bezierCurveTo(W*(cx+.1),H*.5-h*.14, W*(cx+.09),H*.5+h*.2, W*(cx+.06),H*.5+h*.42);
+      g.lineTo(W*(cx-.06),H*.5+h*.42);
+      g.bezierCurveTo(W*(cx-.09),H*.5+h*.2, W*(cx-.1),H*.5-h*.14, W*cx,H*.5-h*.26);
+      g.closePath(); g.fillStyle=tinta(al*.85); g.fill();
+      g.strokeStyle=tinta(al*1.9); g.lineWidth=1.6; g.stroke();
+    });
+  } else { /* papel */
+    for(let i=0;i<7;i++){
+      const x=W*(.16+Math.random()*.5), y=H*(.14+Math.random()*.56);
+      const w=W*(.2+Math.random()*.26), h=w*(1.1+Math.random()*.5);
+      g.save(); g.translate(x+w/2,y+h/2); g.rotate((Math.random()-.5)*.5);
+      g.fillStyle=tinta(.1+Math.random()*.14); g.fillRect(-w/2,-h/2,w,h);
+      g.strokeStyle=tinta(.3); g.lineWidth=1.4; g.strokeRect(-w/2,-h/2,w,h);
+      for(let l=0;l<5;l++){
+        const ly=-h/2+h*(.2+l*.14);
+        g.beginPath(); g.moveTo(-w/2+w*.1,ly); g.lineTo(-w/2+w*(.3+Math.random()*.55),ly);
+        g.strokeStyle=tinta(.22); g.lineWidth=1.6; g.stroke();
+      }
       g.restore();
     }
-  } else { /* lineas */
-    for(let i=0;i<22;i++){
-      const y=h*(i+0.5)/22;
-      g.strokeStyle=tinta+(0.08+Math.random()*0.26)+')'; g.lineWidth=1+Math.random()*2;
-      g.beginPath(); g.moveTo(w*Math.random()*0.3, y);
-      g.lineTo(w*(0.45+Math.random()*0.55), y); g.stroke();
-    }
   }
-}
+});
+
+/* ── EL FAJO ───────────────────────────────────────────────────
+   La portada que queda atrás se encoge y pierde luz a medida que la
+   siguiente sube a cubrirla. El valor sale del scroll, no de una
+   animación con duración fija, así que si el visitante se devuelve a
+   mitad de camino la portada vuelve con él. */
+(function(){
+  if(quieto) return;
+  const eds=[...document.querySelectorAll('.ed')];
+  function paso(){
+    const vh=innerHeight;
+    eds.forEach((ed,i)=>{
+      if(i===eds.length-1){ ed.style.transform=''; ed.style.filter=''; return; }
+      const sig=eds[i+1].getBoundingClientRect();
+      // 0 mientras la siguiente no ha llegado; 1 cuando ya la tapó
+      const k=Math.min(1,Math.max(0,1-(sig.top/vh)));
+      ed.style.transform=`scale(${1-k*0.085}) translateY(${-k*26}px)`;
+      ed.style.filter=`brightness(${1-k*0.42})`;
+    });
+  }
+  addEventListener('scroll', ()=>requestAnimationFrame(paso), {passive:true});
+  addEventListener('resize', paso);
+  paso();
+})();
 </script>
 </body>
 </html>
