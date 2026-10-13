@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cuatro mundos</title>
+<meta name="description" content="Cuatro páginas de una sola pantalla hechas por LQS: cada una adapta una referencia distinta y la lleva a otro oficio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root{
+  --fondo:#0d0d0f; --tarjeta:#1a1720; --tiza:#fdfbf7; --gris:#8b8593;
+  --linea:rgba(253,251,247,.12);
+  --disp:'Syne',system-ui,sans-serif; --cuerpo:'Rubik',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--fondo);color:var(--tiza);font-family:var(--cuerpo);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding:clamp(20px,5vw,60px);min-height:100dvh}
+.env{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;
+  gap:clamp(26px,4vw,48px)}
+header h1{font-family:var(--disp);font-weight:800;
+  font-size:clamp(2.1rem,6vw,3.6rem);line-height:1;letter-spacing:-.04em}
+header p{color:var(--gris);max-width:58ch;margin-top:12px;font-size:.98rem}
+.rejilla{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+a.caja{text-decoration:none;color:inherit;background:var(--tarjeta);
+  border:1px solid var(--linea);border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:5px 5px 0 rgba(26,23,32,.5);
+  transition:transform .14s ease, box-shadow .14s ease}
+a.caja:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--tono)}
+a.caja:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--tono)}
+a.caja:focus-visible{outline:3px solid var(--tono);outline-offset:3px}
+.muestra{height:118px;background:var(--mix)}
+.cuerpo{padding:18px 20px 20px;display:flex;flex-direction:column;gap:5px}
+.cuerpo i{font-style:normal;font-family:var(--mono);font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--tono)}
+.cuerpo h2{font-family:var(--disp);font-weight:700;font-size:1.18rem;
+  letter-spacing:-.025em}
+.cuerpo p{font-size:.86rem;color:var(--gris)}
+.cuerpo small{margin-top:9px;padding-top:10px;border-top:1px solid var(--linea);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--gris)}
+footer{color:var(--gris);font-size:.82rem;padding-top:8px;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="env">
+
+  <header>
+    <h1>Cuatro mundos</h1>
+    <p>Cuatro páginas de una sola pantalla. Cada una adapta una referencia
+      distinta y la lleva a un oficio que no era el suyo, para ver hasta dónde
+      aguanta el lenguaje antes de romperse.</p>
+  </header>
+
+  <div class="rejilla">
+
+    <a class="caja" href="tienda-ropa.html"
+       style="--tono:#1b35ff;--mix:repeating-linear-gradient(90deg,#0b0b0c 0 22px,#141416 22px 44px),linear-gradient(90deg,#1b35ff,#0b0b0c)">
+      <div class="muestra"></div>
+      <div class="cuerpo">
+        <i>Tienda de ropa</i>
+        <h2>Atelier Norte</h2>
+        <p>Suizo editorial: tipografía que se sale del lienzo y una retícula que se arma sola.</p>
+        <small>Monocromo + un azul · lámina que sigue al cursor</small>
+      </div>
+    </a>
+
+    <a class="caja" href="restaurante.html"
+       style="--tono:#ff5b1e;--mix:radial-gradient(60% 120% at 50% 110%,#ffa519,#ff5b1e 38%,#0c0907 78%)">
+      <div class="muestra"></div>
+      <div class="cuerpo">
+        <i>Restaurante</i>
+        <h2>Rescoldo</h2>
+        <p>Brasa viva en lienzo, Bodoni de contraste alto y la carta que se abre en el sitio.</p>
+        <small>90 partículas con flotabilidad · tres discos de brasa</small>
+      </div>
+    </a>
+
+    <a class="caja" href="revista-moda.html"
+       style="--tono:#7b5cff;--mix:linear-gradient(115deg,#7b5cff 0 36%,#121214 36% 62%,#d8b48c 62%)">
+      <div class="muestra"></div>
+      <div class="cuerpo">
+        <i>Revista de moda</i>
+        <h2>Tendido</h2>
+        <p>Índice en bento con números fantasma. Cada entrada sube un panel a color pleno.</p>
+        <small>Cinco colores que no se mezclan · figura por sección</small>
+      </div>
+    </a>
+
+    <a class="caja" href="mezcal.html"
+       style="--tono:#d4641f;--mix:linear-gradient(118deg,#8f2d0e,#d4641f 52%,#e8a23c)">
+      <div class="muestra"></div>
+      <div class="cuerpo">
+        <i>Aleatoria</i>
+        <h2>Casa Tepemete</h2>
+        <p>Destilería de mezcal. El degradé del horno y rosetas de agave que crecen solas.</p>
+        <small>Cada visita ve una planta distinta</small>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>Las cuatro son de un solo archivo, sin librerías. Todas responden a
+    <b style="color:var(--tiza);font-weight:500">prefers-reduced-motion</b>: el
+    movimiento se apaga, el color y el contenido no.</footer>
+
+</div>
+</body>
+</html>

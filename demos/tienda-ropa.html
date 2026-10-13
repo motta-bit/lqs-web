@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atelier Norte</title>
+<meta name="description" content="Casa de punto: una página de tipografía suiza sobrescalada, retícula que se arma sola y fichas de prenda que se abren en el sitio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ATELIER NORTE · casa de punto
+
+   Color   tinta #0b0b0c · papel #f1efea · pizarra #76736c
+           un solo acento, azul eléctrico #1b35ff, y nada más
+   Tipo    Archivo 900 para el display, recortado por el borde;
+           IBM Plex Mono para los rótulos y las cifras
+   Planta  Columna fija a la izquierda con la identidad; a la
+           derecha, una pila que se lee de arriba abajo. La palabra
+           gigante se sale del lienzo a propósito: lo que no cabe
+           es lo que dice que hay más.
+
+   Movimiento: la retícula de arriba no se dibuja, se ARMA. Veinte
+   rectángulos entran girados y desordenados y se acomodan a su
+   sitio con un muelle. Es lo que hace una máquina de tejer.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --tinta:#0b0b0c; --papel:#f1efea; --pizarra:#76736c;
+  --linea:rgba(11,11,12,.14); --azul:#1b35ff;
+  --disp:'Archivo',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --col:clamp(16px,4vw,56px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);font-family:var(--disp);
+  font-weight:400;line-height:1.45;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden}
+::selection{background:var(--azul);color:var(--papel)}
+
+/* ── planta ─────────────────────────────────────────────────── */
+/* `min-width:0` en las dos columnas: por defecto una pista `1fr` tiene
+   `min-width:auto` y crece hasta caber su contenido. Con un titular en
+   `nowrap` de 13rem eso infla la columna y la página entera scrollea de
+   lado. Es el desbordamiento clásico de CSS Grid. */
+.marco{display:grid;grid-template-columns:1fr;min-height:100dvh}
+.marco > *{min-width:0}
+@media (min-width:900px){
+  .marco{grid-template-columns:clamp(240px,24vw,340px) 1fr}
+}
+
+/* columna fija: la identidad no se mueve, el trabajo sí */
+.lado{padding:var(--col);display:flex;flex-direction:column;gap:22px;
+  border-bottom:1px solid var(--linea)}
+@media (min-width:900px){
+  .lado{position:sticky;top:0;height:100dvh;justify-content:space-between;
+    border-bottom:0;border-right:1px solid var(--linea)}
+}
+.logo{font-weight:900;font-size:1.05rem;letter-spacing:-.04em;line-height:1}
+.logo i{display:block;font-family:var(--mono);font-style:normal;font-size:.58rem;
+  font-weight:400;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--pizarra);margin-top:9px}
+.lado nav{display:flex;flex-direction:column;gap:3px;font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.07em}
+.lado nav a{color:var(--pizarra);text-decoration:none;padding:4px 0;
+  width:max-content;position:relative;transition:color .18s}
+.lado nav a::after{content:'';position:absolute;left:0;right:100%;bottom:2px;
+  height:1px;background:var(--azul);transition:right .32s cubic-bezier(.22,1,.3,1)}
+.lado nav a:hover{color:var(--tinta)}
+.lado nav a:hover::after{right:0}
+.lado nav a:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+.pie-lado{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  color:var(--pizarra);line-height:1.9}
+
+/* ── el telar: la retícula que se arma sola ─────────────────── */
+.telar{position:relative;height:clamp(230px,34vw,380px);overflow:hidden;
+  border-bottom:1px solid var(--linea);background:var(--tinta)}
+.telar canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.telar .rot{position:absolute;left:var(--col);bottom:18px;z-index:2;
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(241,239,234,.6)}
+
+/* ── el titular que no cabe ─────────────────────────────────── */
+.grito{padding:clamp(26px,5vw,60px) 0 clamp(20px,4vw,44px) var(--col);
+  overflow:hidden;border-bottom:1px solid var(--linea)}
+.grito h1{font-weight:900;font-size:clamp(4.2rem,17vw,13rem);line-height:.8;
+  letter-spacing:-.055em;text-transform:uppercase;white-space:nowrap}
+/* cada palabra sube desde debajo de su propia máscara */
+.mask{display:block;overflow:hidden}
+.mask > span{display:block;transform:translateY(102%);
+  animation:sube .9s cubic-bezier(.19,1,.22,1) forwards}
+.mask:nth-of-type(2) > span{animation-delay:.09s}
+.mask:nth-of-type(3) > span{animation-delay:.18s}
+@keyframes sube{to{transform:translateY(0)}}
+.grito .bajo{display:flex;flex-wrap:wrap;gap:10px 34px;align-items:baseline;
+  margin-top:26px;padding-right:var(--col);
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--pizarra)}
+.grito .bajo b{color:var(--azul);font-weight:500}
+
+/* ── manifiesto ─────────────────────────────────────────────── */
+.dicho{display:grid;gap:26px;padding:clamp(34px,6vw,76px) var(--col);
+  border-bottom:1px solid var(--linea)}
+@media (min-width:760px){.dicho{grid-template-columns:1fr 1.25fr;gap:56px}}
+.dicho .et{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--pizarra)}
+.dicho p{font-size:clamp(1.25rem,2.9vw,2.1rem);line-height:1.22;
+  letter-spacing:-.025em;font-weight:400;max-width:22ch}
+.dicho p em{font-style:normal;color:var(--pizarra)}
+
+/* ── las prendas ────────────────────────────────────────────── */
+.prendas{border-bottom:1px solid var(--linea)}
+.prenda{display:grid;grid-template-columns:auto 1fr auto;gap:18px;
+  align-items:center;padding:clamp(18px,2.6vw,26px) var(--col);
+  border-top:1px solid var(--linea);cursor:pointer;position:relative;
+  background:var(--papel);transition:background .22s, color .22s}
+.prenda:first-child{border-top:0}
+.prenda .num{font-family:var(--mono);font-size:.64rem;color:var(--pizarra);
+  letter-spacing:.08em;transition:color .22s}
+.prenda h3{font-weight:800;font-size:clamp(1.1rem,3.6vw,2.15rem);
+  letter-spacing:-.035em;line-height:1}
+.prenda .pz{font-family:var(--mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  transition:color .22s}
+@media (hover:hover) and (pointer:fine){
+  .prenda:hover{background:var(--tinta);color:var(--papel)}
+  .prenda:hover .num,.prenda:hover .pz{color:var(--azul)}
+}
+.prenda:active{background:var(--azul);color:var(--papel)}
+.prenda:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+
+/* la lámina que sigue al cursor: el producto aparece donde miras */
+.lamina{position:fixed;z-index:60;width:min(22vw,230px);aspect-ratio:3/4;
+  pointer-events:none;opacity:0;border-radius:2px;overflow:hidden;
+  will-change:transform,opacity}
+.lamina canvas{width:100%;height:100%;display:block}
+
+/* ── clientes, en marquesina ────────────────────────────────── */
+.cinta{overflow:hidden;background:var(--tinta);color:var(--papel);
+  padding:16px 0;border-bottom:1px solid var(--linea)}
+.cinta div{display:flex;gap:46px;width:max-content;
+  animation:corre 26s linear infinite}
+.cinta span{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;
+  text-transform:uppercase;white-space:nowrap;opacity:.78}
+.cinta span:nth-child(3n){color:var(--azul);opacity:1}
+@keyframes corre{to{transform:translateX(-50%)}}
+
+/* ── cierre ─────────────────────────────────────────────────── */
+.cierre{padding:clamp(40px,7vw,90px) var(--col);display:grid;gap:22px}
+.cierre h2{font-weight:900;font-size:clamp(2rem,7vw,4.6rem);line-height:.92;
+  letter-spacing:-.045em;text-transform:uppercase;max-width:14ch}
+.cierre a{justify-self:start;font-family:var(--mono);font-size:.74rem;
+  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+  color:var(--papel);background:var(--tinta);padding:15px 26px;
+  transition:background .18s,transform .14s}
+.cierre a:hover{background:var(--azul)}
+.cierre a:active{transform:translateY(1px)}
+.cierre a:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+
+/* lo que entra al hacer scroll llega desde abajo, una sola vez */
+/* El estado por defecto es el VISIBLE. El ocultamiento lo pone el propio
+   JavaScript al arrancar (`html.js`), así que si el script falla o no corre,
+   la página se lee entera en vez de salir en blanco. */
+.sube-al-ver{transition:opacity .62s cubic-bezier(.22,1,.3,1),transform .62s cubic-bezier(.22,1,.3,1)}
+html.js .sube-al-ver{opacity:0;transform:translateY(22px)}
+html.js .sube-al-ver.visto{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .mask > span{animation:none;transform:none}
+  .cinta div{animation:none}
+  .sube-al-ver{opacity:1;transform:none;transition:none}
+  .lamina{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="marco">
+
+  <aside class="lado">
+    <div>
+      <div class="logo">ATELIER<br>NORTE<i>Punto · Medellín</i></div>
+    </div>
+    <nav>
+      <a href="#taller">Taller</a>
+      <a href="#prendas">Prendas</a>
+      <a href="#cierre">Cita</a>
+    </nav>
+    <div class="pie-lado">
+      Carrera 35 #8—14<br>
+      Mar a sáb · 10—19<br>
+      <span style="color:var(--azul)">Temporada 06</span>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- el telar: veinte piezas que llegan torcidas y se acomodan -->
+    <section class="telar">
+      <canvas id="telar" aria-hidden="true"></canvas>
+      <div class="rot">Lana merino · 19,5 micras</div>
+    </section>
+
+    <section class="grito">
+      <h1>
+        <span class="mask"><span>Tejido</span></span>
+        <span class="mask"><span>a mano,</span></span>
+        <span class="mask"><span>sin prisa</span></span>
+      </h1>
+      <div class="bajo">
+        <span>Serie corta</span>
+        <span>Nada se repone</span>
+        <span><b>12 piezas por modelo</b></span>
+      </div>
+    </section>
+
+    <section class="dicho sube-al-ver" id="taller">
+      <div class="et">(01) El taller</div>
+      <p>Cuatro agujas, dos manos y tres semanas por prenda.
+        <em>No hacemos más porque no se puede hacer más.</em></p>
+    </section>
+
+    <section class="prendas" id="prendas">
+      <article class="prenda" tabindex="0" data-tono="#1b35ff">
+        <span class="num">01</span><h3>Jersey Páramo</h3><span class="pz">$480.000</span>
+      </article>
+      <article class="prenda" tabindex="0" data-tono="#0b0b0c">
+        <span class="num">02</span><h3>Cárdigan Niebla</h3><span class="pz">$620.000</span>
+      </article>
+      <article class="prenda" tabindex="0" data-tono="#8a3b12">
+        <span class="num">03</span><h3>Bufanda Doble</h3><span class="pz">$215.000</span>
+      </article>
+      <article class="prenda" tabindex="0" data-tono="#2f4a2b">
+        <span class="num">04</span><h3>Chaleco Trenza</h3><span class="pz">$390.000</span>
+      </article>
+      <article class="prenda" tabindex="0" data-tono="#6b2040">
+        <span class="num">05</span><h3>Gorro Cumbre</h3><span class="pz">$145.000</span>
+      </article>
+    </section>
+
+    <div class="cinta" aria-hidden="true"><div id="cinta"></div></div>
+
+    <section class="cierre sube-al-ver" id="cierre">
+      <h2>Se prueba en el taller, con cita</h2>
+      <a href="#cierre">Pedir una cita</a>
+    </section>
+
+  </main>
+</div>
+
+<div class="lamina" id="lamina" aria-hidden="true"><canvas id="lcv"></canvas></div>
+
+<script>
+const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── EL TELAR ──────────────────────────────────────────────────
+   Veinte piezas entran giradas y fuera de sitio, y cada una se
+   acomoda con su propio muelle. El azar está en el estado INICIAL
+   —rotación, desvío, retardo—, nunca en el final: el destino es
+   una retícula exacta. Caos que se ordena, que es lo que hace una
+   máquina de tejer. */
+(function(){
+  const cv = document.getElementById('telar'), g = cv.getContext('2d');
+  let W=0,H=0,piezas=[],t0=null,raf=null;
+  const COLS=10, FILAS=3;
+
+  function medir(){
+    const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
+    W=r.width; H=r.height; cv.width=W*d; cv.height=H*d; g.setTransform(d,0,0,d,0,0);
+    armar();
+  }
+  function armar(){
+    piezas=[];
+    const pw=W/COLS, ph=H/FILAS;
+    for(let f=0;f<FILAS;f++) for(let c=0;c<COLS;c++){
+      piezas.push({
+        x:c*pw, y:f*ph, w:pw, h:ph,
+        dx:(Math.random()*2-1)*W*0.5,        // de dónde viene
+        dy:(Math.random()*2-1)*H*0.8,
+        rot:(Math.random()*2-1)*1.1,
+        azul:Math.random()<0.1,              // una de cada diez va en azul
+        tono:12+Math.random()*16,
+        esp:(c*0.035)+(f*0.08)+Math.random()*0.12
+      });
+    }
+  }
+  /* muelle críticamente amortiguado: llega y se queda, sin rebote.
+     Es una retícula, no un objeto lanzado: el rebote sería mentira. */
+  const muelle = p => p<=0 ? 0 : 1-Math.exp(-7.2*p)*(1+7.2*p);
+
+  function pinta(ts){
+    if(t0===null) t0=ts;
+    const t=(ts-t0)/1000;
+    g.clearRect(0,0,W,H);
+    g.fillStyle='#0b0b0c'; g.fillRect(0,0,W,H);
+    let listas=0;
+    for(const p of piezas){
+      const k = muelle(t-p.esp);
+      if(k>0.999) listas++;
+      const ix=p.x+p.dx*(1-k), iy=p.y+p.dy*(1-k), ir=p.rot*(1-k);
+      g.save();
+      g.translate(ix+p.w/2, iy+p.h/2); g.rotate(ir);
+      g.fillStyle = p.azul ? '#1b35ff' : `rgb(${p.tono},${p.tono},${p.tono+2})`;
+      g.globalAlpha = 0.35+0.65*k;
+      g.fillRect(-p.w/2+0.5, -p.h/2+0.5, p.w-1, p.h-1);
+      g.restore();
+    }
+    if(listas<piezas.length) raf=requestAnimationFrame(pinta);
+  }
+  function arranca(){ cancelAnimationFrame(raf); t0=null;
+    if(quieto){ // sin movimiento: la retícula ya está puesta
+      g.fillStyle='#0b0b0c'; g.fillRect(0,0,W,H);
+      for(const p of piezas){
+        g.fillStyle = p.azul ? '#1b35ff' : `rgb(${p.tono},${p.tono},${p.tono+2})`;
+        g.fillRect(p.x+0.5,p.y+0.5,p.w-1,p.h-1);
+      }
+      return;
+    }
+    raf=requestAnimationFrame(pinta);
+  }
+  medir(); arranca();
+  addEventListener('resize', ()=>{ medir(); arranca(); });
+})();
+
+/* ── LA LÁMINA QUE SIGUE AL CURSOR ─────────────────────────────
+   No hay fotos todavía, así que cada prenda muestra un tejido
+   dibujado con su color. La lámina persigue el cursor con retardo
+   —no pegada, que se sentiría rígida— y arranca desde donde está,
+   nunca desde un valor lógico. */
+(function(){
+  if(quieto) return;
+  const lam=document.getElementById('lamina'), cv=document.getElementById('lcv'), g=cv.getContext('2d');
+  let x=innerWidth/2,y=innerHeight/2,px=x,py=y,viva=false,raf=null;
+
+  function tejido(tono){
+    const d=Math.min(devicePixelRatio||1,2), w=cv.clientWidth||230, h=cv.clientHeight||306;
+    cv.width=w*d; cv.height=h*d; g.setTransform(d,0,0,d,0,0);
+    g.fillStyle=tono; g.fillRect(0,0,w,h);
+    // punto de media: uves encajadas, con el grosor irregular de lo hecho a mano
+    g.strokeStyle='rgba(241,239,234,.34)'; g.lineCap='round';
+    const paso=w/9;
+    for(let f=-1;f*paso*1.15<h+paso;f++){
+      for(let c=-1;c<10;c++){
+        const cx=c*paso+(f%2?paso/2:0), cy=f*paso*1.15;
+        g.lineWidth=1+Math.random()*1.3;
+        g.beginPath();
+        g.moveTo(cx,cy); g.lineTo(cx+paso/2,cy+paso*.8); g.lineTo(cx+paso,cy);
+        g.stroke();
+      }
+    }
+  }
+  function sigue(){
+    px+=(x-px)*0.14; py+=(y-py)*0.14;   // retardo constante = peso
+    lam.style.transform=`translate3d(${px-lam.offsetWidth/2}px,${py-lam.offsetHeight/2}px,0)`;
+    raf=requestAnimationFrame(sigue);
+  }
+  addEventListener('pointermove', e=>{ x=e.clientX; y=e.clientY; }, {passive:true});
+  document.querySelectorAll('.prenda').forEach(p=>{
+    p.addEventListener('pointerenter', ()=>{
+      tejido(p.dataset.tono); lam.style.opacity='1';
+      if(!viva){ viva=true; px=x; py=y; sigue(); }   // arranca donde está el cursor
+    });
+    p.addEventListener('pointerleave', ()=>{ lam.style.opacity='0'; });
+  });
+  lam.style.transition='opacity .26s ease';
+})();
+
+/* ── marquesina de clientes, duplicada para que el bucle no corte ── */
+(function(){
+  const casas=['Hilandería del Sur','Mercado Carulla','Teatro Pablo Tobón',
+    'Museo de Antioquia','Café Pergamino','Librería Lerner','Hotel Charlee'];
+  const c=document.getElementById('cinta');
+  c.innerHTML = [...casas,...casas].map(n=>`<span>${n}</span>`).join('');
+})();
+
+/* ── lo que entra al hacer scroll ─────────────────────────────── */
+(function(){
+  document.documentElement.classList.add('js');
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visto'); obs.unobserve(e.target); } });
+  },{threshold:.18, rootMargin:'0px 0px 180px 0px'});
+  document.querySelectorAll('.sube-al-ver').forEach(e=>obs.observe(e));
+})();
+</script>
+</body>
+</html>
