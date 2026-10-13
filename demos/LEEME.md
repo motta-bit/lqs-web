@@ -49,11 +49,28 @@ tanto porque cada una declara su familia de respaldo.
 
 ## Fotografía
 
-Las 55 imágenes son de muestra, optimizadas a WebP con el lado largo en
-1300px. Hay unas 19 sin usar en `img/`, listas por si se quiere cambiar
-alguna: platos (`ostras`, `caviar`, `mesa-cenital`…), mezcal (`botellas`,
-`brindis`, `pencas`, `pintura`), `bolsos/nacar`, `bolsos/tienda` y
-`moda/brocado`.
+Las 55 imágenes están optimizadas a WebP con el lado largo en 1300px. Hay unas
+19 sin usar en `img/`, listas por si se quiere cambiar alguna: platos
+(`ostras`, `caviar`, `mesa-cenital`…), mezcal (`botellas`, `brindis`,
+`pencas`, `pintura`), `bolsos/nacar`, `bolsos/tienda` y `moda/brocado`.
 
-Antes de publicarlas fuera de una muestra hay que confirmar los derechos de
-cada una.
+**Son material de referencia, no activos del proyecto.** Se recopilaron en
+Cosmos, que es un tablero de curaduría: ahí la gente guarda imágenes de toda
+la web, así que no es la fuente ni el titular de los derechos de ninguna. La
+autoría sigue siendo de cada fotógrafo, ilustrador o marca, y Cosmos no otorga
+ninguna licencia sobre lo que se guarda en él.
+
+Dos cosas concretas antes de que esto salga de una demostración:
+
+- **Los bolsos son productos de una marca identificable** —formas registradas
+  de una casa real—. Presentarlos como catálogo de «Atelier Norte», con
+  nombres y precios propios, es lo más delicado del paquete: no es solo
+  derecho de autor sobre la foto, es la forma del producto y la marca. Esas
+  diez van sustituidas sí o sí antes de cualquier publicación.
+- **Las seis ilustraciones son obra de autor individual.** Si alguna se
+  quisiera conservar, hay que localizar a quien la hizo y pedir permiso; no
+  basta con acreditar.
+
+El resto —platos, mezcal, editorial de moda— también es de terceros, pero son
+fotografías sin marca identificable, así que sustituirlas es solo cuestión de
+conseguir sesión propia.
