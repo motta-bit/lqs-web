@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rescoldo</title>
-<meta name="description" content="Cocina al fuego: la carta es una rueda de platos que gira con el scroll y abre su ficha cuando el plato llega al frente.">
+<meta name="description" content="Cocina de brasa: la carta es una rueda que gira con el scroll y abre la ficha del plato al llegar al frente.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
@@ -239,13 +239,13 @@ html.apretado .riel{display:none}
     <span>Laureles · Medellín</span>
   </div>
   <div class="centro">
-    <h1>Todo pasa por el <i>fuego</i>, nada por el microondas</h1>
-    <p>Una parrilla, leña de naranjo y veintidós puestos. La carta es lo que
-      dio el mercado esta mañana.</p>
+    <h1>Trabajamos el <i>fuego</i> hasta que cabe en un bocado</h1>
+    <p>Brasa de naranjo y temperatura sostenida. La carta se cierra cada
+      mañana, cuando ya se sabe qué llegó al mercado.</p>
   </div>
   <div class="baja">
     <span class="pt" aria-hidden="true"></span>
-    <span>Hoy quedan 4 mesas</span>
+    <span>Veintidós puestos, un turno</span>
     <span>Mar a sáb · 19—23</span>
     <span class="flecha">Gira la carta <i aria-hidden="true">↓</i></span>
   </div>
@@ -264,7 +264,7 @@ html.apretado .riel{display:none}
 <nav class="riel" id="riel" aria-label="Platos"></nav>
 
 <section class="cierre">
-  <h2>Se reserva por teléfono, como antes</h2>
+  <h2>La reserva se confirma hablando</h2>
   <a href="#reserva">Llamar al restaurante</a>
   <small>+57 333 279 1710 · de 15 a 18</small>
 </section>
@@ -282,27 +282,27 @@ const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
    ají de árbol del pulpo es el que justifica el aviso de picante. */
 const CARTA = [
   {i:'I',  n:'Pulpo a la brasa', pz:'$62.000', f1:[255,91,30],  f2:[255,165,25],
-   d:'Dos horas al fuego bajo y después vuelta y vuelta sobre la llama viva.',
+   d:'Cocción larga a temperatura baja y un golpe final de llama directa. La fibra cede; la piel no.',
    ing:['Papa criolla','Pimentón quemado','Ají de árbol','Aceite de ajo'],
    avisos:['picante'],
    foto:'carbon', alt:'Plato oscuro con un emplatado pequeño sobre un lecho de carbón'},
   {i:'II', n:'Costilla, naranjo', pz:'$54.000', f1:[214,58,24], f2:[255,124,32],
-   d:'Ocho horas de humo de naranjo. Se desprende sola del hueso.',
+   d:'Ocho horas de humo de naranjo a fuego indirecto. Se separa del hueso sin cuchillo.',
    ing:['Cerdo de montaña','Encurtido de cebolla','Melaza de caña'],
    avisos:[],
    foto:'salsa-vertida', alt:'Una mano vertiendo salsa oscura sobre una pieza de carne'},
   {i:'III',n:'Trucha de Guatapé', pz:'$48.000', f1:[255,138,61], f2:[255,209,102],
-   d:'Entera, con la piel dorada sobre la brasa y la carne apenas hecha.',
+   d:'Entera sobre la brasa, piel contra el calor. Se retira antes de que la carne se cierre.',
    ing:['Mantequilla de hierbas','Limón asado','Alcaparra'],
    avisos:[],
    foto:'cenital-luz', alt:'Plato blanco visto desde arriba, atravesado por una franja de luz'},
   {i:'IV', n:'Berenjena entera', pz:'$36.000', f1:[164,74,196], f2:[255,124,96],
-   d:'Enterrada en la ceniza hasta que se rinde sola. Nada de origen animal la toca.',
+   d:'Enterrada en ceniza viva hasta que colapsa sola. Nada de origen animal la toca.',
    ing:['Tahini de ajonjolí','Miel de caña','Ajonjolí tostado'],
    avisos:['vegano'],
    foto:'verde-hoja', alt:'Hoja verde asada sobre una crema clara, en plato oscuro'},
   {i:'V',  n:'Postre del día', pz:'$22.000', f1:[255,176,86], f2:[255,230,172],
-   d:'Lo decide quien esté en la pastelería esa tarde. Siempre hay dos.',
+   d:'Lo define la pastelería cada tarde. Siempre hay dos en carta.',
    ing:['Cambia a diario'],
    avisos:[],
    foto:'burrata', alt:'Cúpula blanca con salsa roja sobre un plato moteado'}

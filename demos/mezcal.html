@@ -219,7 +219,7 @@ html.js .ver.on{opacity:1;transform:none}
   <div class="titular">
     <h1>Ocho años de planta para <i>una sola botella</i></h1>
     <p>Mezcal de olla de barro, en Santiago Matatlán. Lo que sale del alambique
-      es lo que hay: no se corrige, no se mezcla, no se repone.</p>
+      entra tal cual en la botella; cuando el lote se acaba, se acaba.</p>
   </div>
 
   <div class="cifras">
@@ -234,7 +234,7 @@ html.js .ver.on{opacity:1;transform:none}
 
   <section class="proceso ver" id="proceso">
     <div class="et">El oficio</div>
-    <h2>Cuatro pasos, y ninguno se puede apurar</h2>
+    <h2>Cuatro pasos; el tiempo de cada uno no se negocia</h2>
     <div class="pasos">
       <article class="paso">
         <span class="n">(i)</span><h3>Jima</h3>
@@ -248,7 +248,7 @@ html.js .ver.on{opacity:1;transform:none}
       </article>
       <article class="paso">
         <span class="n">(iii)</span><h3>Tahona</h3>
-        <p>Molida con rueda de piedra tirada por caballo. Nada de molino eléctrico.</p>
+        <p>Molienda en tahona de piedra, tirada por caballo. La fibra se abre sin que el calor la toque.</p>
         <div class="calor"><i data-k=".3"></i><span>Ambiente · 26°</span></div>
       </article>
       <article class="paso">
@@ -280,14 +280,14 @@ html.js .ver.on{opacity:1;transform:none}
     </figure>
     <figure>
       <img src="img/agave/manos-hielo.webp" alt="Manos sosteniendo vasos sobre un fondo naranja" loading="lazy">
-      <figcaption>Sin hielo, sin sal</figcaption>
+      <figcaption>A temperatura de cuarto</figcaption>
     </figure>
   </div>
 
   <section class="visita ver" id="visita">
-    <h2>El palenque se visita, con cita y sin prisa</h2>
-    <p>Cuatro personas por grupo. Se camina el campo, se abre un horno si hay,
-      y se prueba de la olla. Dura media mañana.</p>
+    <h2>El palenque se abre con cita, y toma media mañana</h2>
+    <p>Cuatro personas por grupo. Se camina el campo, se destapa un horno si
+      lo hay y se cata directo de la olla.</p>
     <a href="#visita">Pedir una visita</a>
   </section>
 
@@ -393,9 +393,9 @@ const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 (function(){
   const LOTES=[
     ['Espadín','Lote 24—A','Ocho años. Humo seco, pimienta blanca y un final largo.','$340.000','47°'],
-    ['Tobalá','Lote 24—C','Silvestre de monte. Floral, casi dulce, y se queda en la boca.','$520.000','48,5°'],
-    ['Tepeztate','Lote 23—F','Veinticinco años de planta. Herbal, mineral, nada fácil.','$680.000','49°'],
-    ['Ensamble','Lote 24—B','Espadín y madrecuixe en la misma olla. Solo esta vez.','$430.000','46,5°']
+    ['Tobalá','Lote 24—C','Silvestre de monte. Floral, casi dulce, y se sostiene en boca.','$520.000','48,5°'],
+    ['Tepeztate','Lote 23—F','Veinticinco años de planta. Herbal, mineral y exigente.','$680.000','49°'],
+    ['Ensamble','Lote 24—B','Espadín y madrecuixe en la misma olla. Un solo ensamble por año.','$430.000','46,5°']
   ];
   document.getElementById('rejilla').innerHTML = LOTES.map(([n,l,d,p,gr])=>`
     <article class="lote">

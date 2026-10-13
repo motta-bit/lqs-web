@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tendido</title>
-<meta name="description" content="Revista de moda e ilustración: un tendido de imágenes que se arma solo, campos de degradé que respiran y la foto que aparece donde pone el cursor.">
+<meta name="description" content="Moda e ilustración como puesta en escena: un tendido que se arma solo, campos de degradé que respiran y la imagen que aparece donde pone el cursor.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;800;900&family=Manrope:wght@300;400;500;700&display=swap">
@@ -336,21 +336,21 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
 
     <section class="grito">
       <h1>
-        <span class="mask"><span>Lo que</span></span>
-        <span class="mask"><span class="tinte">sobrevive</span></span>
-        <span class="mask"><span>al invierno</span></span>
+        <span class="mask"><span>La ropa</span></span>
+        <span class="mask"><span class="tinte">actúa</span></span>
+        <span class="mask"><span>primero</span></span>
       </h1>
       <div class="bajo">
-        <span>Fotografía</span>
+        <span>Dirección de arte</span>
         <span>Ilustración</span>
-        <span><b>Nada patrocinado</b></span>
+        <span><b>Puesta en escena, no catálogo</b></span>
       </div>
     </section>
 
     <section class="dicho sube-al-ver">
       <div class="et">(01) El número</div>
-      <p>Seis ilustradores y seis fotógrafas sobre la misma pregunta.
-        <em>Ninguno se puso de acuerdo.</em></p>
+      <p>Doce autores montan la misma escena.
+        <em>Ninguno la resuelve igual.</em></p>
     </section>
 
     <!-- las ilustraciones: obra, no adorno -->
@@ -363,13 +363,13 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
 
     <figure class="cierre-foto sube-al-ver">
       <img src="img/moda/plumas-campo.webp" alt="Figura tendida entre pastos altos, envuelta en plumas rosadas" loading="lazy" width="1040" height="1300">
-      <figcaption>Cierre · «El invierno no se fue, se mudó» · fotografía de Daniela Restrepo</figcaption>
+      <figcaption>Cierre · «Caída controlada» · dirección de arte y fotografía, Daniela Restrepo</figcaption>
     </figure>
 
     <div class="cinta" aria-hidden="true"><div id="cinta"></div></div>
 
     <section class="cierre sube-al-ver" id="cierre">
-      <h2>Cuatro números al año, en papel</h2>
+      <h2>Cuatro entregas al año, en papel</h2>
       <a href="#cierre">Suscribirse</a>
     </section>
 
@@ -383,16 +383,16 @@ const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* Las fotografías que arman el tendido y salen en la lámina. */
 const FOTOS = [
-  {f:'salto',          t:'El salto',            a:'Figura suspendida en el aire con pantalón oscuro y camisa crema'},
-  {f:'cielo',          t:'Cielo partido',       a:'Modelo recostada sobre un plano blanco contra cielo azul'},
-  {f:'plumas-retrato', t:'Retrato en plumas',   a:'Retrato de una modelo envuelta en un abrigo de plumas blancas'},
-  {f:'cresta',         t:'Cresta',              a:'Retrato de perfil con el pelo levantado en púas'},
-  {f:'plumas-campo',   t:'Campo rosa',          a:'Figura tendida entre pastos altos, envuelta en plumas rosadas'},
-  {f:'cancha',         t:'Cancha',              a:'Modelo en cuclillas con balón de baloncesto y falda de encaje'},
-  {f:'barrido',        t:'Barrido',             a:'Figura caminando, captada con barrido de obturador'},
-  {f:'encaje',         t:'Encaje y tul',        a:'Figura agachada con encaje sobre el rostro y medias azules'},
-  {f:'sala',           t:'Sala vacía',          a:'Hombre sentado con traje gris en una sala de luz cálida'},
-  {f:'blazer-bn',      t:'Blazer, blanco y negro', a:'Retrato en blanco y negro de una modelo con blazer abierto'}
+  {f:'salto',          t:'Suspensión',          a:'Figura suspendida en el aire con pantalón oscuro y camisa crema'},
+  {f:'cielo',          t:'Contra el cielo',     a:'Modelo recostada sobre un plano blanco contra cielo azul'},
+  {f:'plumas-retrato', t:'Armadura blanda',     a:'Retrato de una modelo envuelta en un abrigo de plumas blancas'},
+  {f:'cresta',         t:'El perfil manda',     a:'Retrato de perfil con el pelo levantado en púas'},
+  {f:'plumas-campo',   t:'Caída controlada',    a:'Figura tendida entre pastos altos, envuelta en plumas rosadas'},
+  {f:'cancha',         t:'Uniforme prestado',   a:'Modelo en cuclillas con balón de baloncesto y falda de encaje'},
+  {f:'barrido',        t:'Movimiento en bruto', a:'Figura caminando, captada con barrido de obturador'},
+  {f:'encaje',         t:'Segunda piel',        a:'Figura agachada con encaje sobre el rostro y medias azules'},
+  {f:'sala',           t:'Escenario vacío',     a:'Hombre sentado con traje gris en una sala de luz cálida'},
+  {f:'blazer-bn',      t:'La línea del hombro', a:'Retrato en blanco y negro de una modelo con blazer abierto'}
 ];
 
 /* Las ilustraciones. Cada una trae el color de su propio halo,
@@ -473,7 +473,7 @@ document.getElementById('obras').innerHTML = OBRAS.map((o,i)=>`
     <figcaption><b>${o.t}</b><span>${o.au}</span></figcaption>
   </div>`).join('') + `
   <div class="cita">
-    <blockquote>«Dibujo lo que no me cabe en la cámara»</blockquote>
+    <blockquote>«Dibujo la pose que ningún cuerpo aguanta»</blockquote>
     <cite>Andrés Mazo · sobre «Salto, con ruido»</cite>
   </div>`;
 
