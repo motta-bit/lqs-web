@@ -137,6 +137,35 @@ body{background:var(--tierra);color:var(--hueso);font-family:var(--cuerpo);
   letter-spacing:.1em;text-transform:uppercase}
 
 /* ── cierre ─────────────────────────────────────────────────── */
+/* ── el campo, a sangre ──────────────────────────────────────
+   La página era toda dibujo: horno de degradé y rosetas de canvas.
+   Una foto del campo real es lo que la ancla a un sitio que existe,
+   y es lo único que el dibujo no puede dar. */
+.campo{margin-top:var(--m);border-radius:clamp(20px,3vw,34px);overflow:hidden;
+  position:relative;background:var(--barro)}
+.campo img{width:100%;height:clamp(240px,40vw,520px);object-fit:cover;display:block}
+.campo figcaption{position:absolute;z-index:2;left:var(--p);bottom:var(--p);
+  font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--hueso);max-width:38ch}
+.campo::after{content:'';position:absolute;left:0;right:0;bottom:0;
+  height:clamp(100px,16vw,170px);pointer-events:none;
+  background:linear-gradient(to top,rgba(14,11,9,.8),transparent)}
+
+/* ── la cata: tres fotos, sin texto encima ───────────────────── */
+.cata{margin-top:var(--m);display:grid;gap:var(--m);
+  grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){.cata{grid-template-columns:repeat(3,1fr)}}
+.cata figure{border-radius:clamp(14px,2vw,22px);overflow:hidden;background:var(--barro)}
+/* La primera ocupa las dos columnas en móvil: en una tira de tres a
+   dos columnas, si no, queda una huérfana abajo. */
+.cata figure:first-child{grid-column:span 2}
+@media (min-width:760px){.cata figure:first-child{grid-column:span 1}}
+.cata img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;
+  transition:transform .8s cubic-bezier(.22,1,.3,1)}
+@media (hover:hover) and (pointer:fine){.cata figure:hover img{transform:scale(1.04)}}
+.cata figcaption{padding:12px 2px 0;font-size:.62rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--polvo)}
+
 .visita{margin-top:var(--m);border-radius:clamp(20px,3vw,34px);overflow:hidden;
   position:relative;padding:clamp(40px,8vw,100px) var(--p);
   background:linear-gradient(255deg,var(--ladrillo),var(--barro) 68%);
@@ -230,10 +259,30 @@ html.js .ver.on{opacity:1;transform:none}
     </div>
   </section>
 
+  <figure class="campo ver">
+    <img src="img/agave/campo.webp" alt="Campo de agave en hileras al pie de un cerro seco" loading="lazy" width="1300" height="867">
+    <figcaption>Santiago Matatlán · ocho a doce años por planta</figcaption>
+  </figure>
+
   <section class="lotes ver" id="lotes">
     <h2>Lo que hay ahora</h2>
     <div class="rejilla" id="rejilla"></div>
   </section>
+
+  <div class="cata ver">
+    <figure>
+      <img src="img/agave/cata.webp" alt="Hombre de perfil oliendo una copa de mezcal" loading="lazy">
+      <figcaption>La nariz primero</figcaption>
+    </figure>
+    <figure>
+      <img src="img/agave/copas.webp" alt="Copas de mezcal vistas desde arriba sobre una mesa clara" loading="lazy">
+      <figcaption>Cuatro lotes, una mesa</figcaption>
+    </figure>
+    <figure>
+      <img src="img/agave/manos-hielo.webp" alt="Manos sosteniendo vasos sobre un fondo naranja" loading="lazy">
+      <figcaption>Sin hielo, sin sal</figcaption>
+    </figure>
+  </div>
 
   <section class="visita ver" id="visita">
     <h2>El palenque se visita, con cita y sin prisa</h2>

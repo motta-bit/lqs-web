@@ -4,13 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Atelier Norte</title>
-<meta name="description" content="Casa de punto: una página de tipografía suiza sobrescalada, retícula que se arma sola y fichas de prenda que se abren en el sitio.">
+<meta name="description" content="Marroquinería de serie corta: tipografía suiza sobrescalada, un mosaico que se arma solo y el bolso que aparece donde pone el cursor.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   ATELIER NORTE · casa de punto
+   ATELIER NORTE · marroquinería
+
+   Lo que cambió: la casa pasó de punto a cuero. La planta, la
+   tipografía y el movimiento se quedan —eran lo que funcionaba—,
+   pero ya no dibujo texturas: ahora hay fotos, así que el mosaico
+   y la lámina muestran los bolsos de verdad.
 
    Color   tinta #0b0b0c · papel #f1efea · pizarra #76736c
            un solo acento, azul eléctrico #1b35ff, y nada más
@@ -21,9 +26,10 @@
            gigante se sale del lienzo a propósito: lo que no cabe
            es lo que dice que hay más.
 
-   Movimiento: la retícula de arriba no se dibuja, se ARMA. Veinte
-   rectángulos entran girados y desordenados y se acomodan a su
-   sitio con un muelle. Es lo que hace una máquina de tejer.
+   Movimiento: el mosaico de arriba no se dibuja, se ARMA. Las
+   piezas entran giradas y desordenadas y cada una se acomoda a su
+   sitio con un muelle críticamente amortiguado: llega y se queda,
+   sin rebote, porque es una retícula y no un objeto lanzado.
    ═══════════════════════════════════════════════════════════════ */
 :root{
   --tinta:#0b0b0c; --papel:#f1efea; --pizarra:#76736c;
@@ -38,6 +44,7 @@ body{background:var(--papel);color:var(--tinta);font-family:var(--disp);
   font-weight:400;line-height:1.45;-webkit-font-smoothing:antialiased;
   overflow-x:hidden}
 ::selection{background:var(--azul);color:var(--papel)}
+img{display:block;max-width:100%}
 
 /* ── planta ─────────────────────────────────────────────────── */
 /* `min-width:0` en las dos columnas: por defecto una pista `1fr` tiene
@@ -73,13 +80,30 @@ body{background:var(--papel);color:var(--tinta);font-family:var(--disp);
 .pie-lado{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
   color:var(--pizarra);line-height:1.9}
 
-/* ── el telar: la retícula que se arma sola ─────────────────── */
-.telar{position:relative;height:clamp(230px,34vw,380px);overflow:hidden;
-  border-bottom:1px solid var(--linea);background:var(--tinta)}
-.telar canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.telar .rot{position:absolute;left:var(--col);bottom:18px;z-index:2;
+/* ── el mosaico: la retícula que se arma sola ─────────────────
+   Antes eran rectángulos pintados en un canvas. Ahora son las fotos,
+   en DOM: el navegador compone los transforms en la GPU, las
+   imágenes llevan su alt, y no hay canvas que se contamine. */
+.mosaico{position:relative;display:grid;gap:2px;background:var(--tinta);
+  grid-template-columns:repeat(5,1fr);
+  height:clamp(230px,34vw,380px);overflow:hidden;
+  border-bottom:1px solid var(--linea)}
+@media (min-width:760px){.mosaico{grid-template-columns:repeat(10,1fr)}}
+.tes{position:relative;overflow:hidden;background:#141416;
+  will-change:transform}
+.tes img{width:100%;height:100%;object-fit:cover;
+  filter:grayscale(1) contrast(1.08) brightness(.82)}
+/* unas pocas se quedan en color: el ojo necesita dónde caer */
+.tes.viva img{filter:none}
+/* El rótulo va sobre foto, así que necesita su propio suelo: un
+   degradado al pie. Con solo text-shadow se perdía justo encima de
+   las fotos claras. */
+.mosaico::after{content:'';position:absolute;left:0;right:0;bottom:0;
+  height:92px;z-index:2;pointer-events:none;
+  background:linear-gradient(to top,rgba(11,11,12,.78),transparent)}
+.mosaico .rot{position:absolute;left:var(--col);bottom:18px;z-index:3;
   font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(241,239,234,.6)}
+  text-transform:uppercase;color:#f1efea}
 
 /* ── el titular que no cabe ─────────────────────────────────── */
 .grito{padding:clamp(26px,5vw,60px) 0 clamp(20px,4vw,44px) var(--col);
@@ -109,31 +133,63 @@ body{background:var(--papel);color:var(--tinta);font-family:var(--disp);
   letter-spacing:-.025em;font-weight:400;max-width:22ch}
 .dicho p em{font-style:normal;color:var(--pizarra)}
 
-/* ── las prendas ────────────────────────────────────────────── */
-.prendas{border-bottom:1px solid var(--linea)}
-.prenda{display:grid;grid-template-columns:auto 1fr auto;gap:18px;
+/* ── una imagen a sangre, para romper la pila ─────────────────
+   La retícula no puede ser lo único: una página de producto necesita
+   un momento donde la imagen mande y el texto se calle. */
+.sangre{position:relative;border-bottom:1px solid var(--linea);
+  background:var(--tinta);overflow:hidden}
+.sangre img{width:100%;height:clamp(300px,58vw,640px);object-fit:cover;
+  object-position:50% 42%}
+/* Mismo problema que en el mosaico, y peor: sobre el amarillo de la
+   campaña, un rótulo blanco se queda en 1,2:1. El degradado al pie es
+   lo único que aguanta cualquier foto que entre aquí mañana. */
+.sangre::after{content:'';position:absolute;left:0;right:0;bottom:0;
+  height:clamp(110px,16vw,180px);pointer-events:none;
+  background:linear-gradient(to top,rgba(11,11,12,.72),transparent)}
+.sangre figcaption{position:absolute;z-index:2;left:var(--col);bottom:var(--col);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#f1efea;max-width:42ch}
+
+/* ── los bolsos ─────────────────────────────────────────────── */
+.bolsos{border-bottom:1px solid var(--linea)}
+.bolso{display:grid;grid-template-columns:auto 1fr auto;gap:18px;
   align-items:center;padding:clamp(18px,2.6vw,26px) var(--col);
   border-top:1px solid var(--linea);cursor:pointer;position:relative;
   background:var(--papel);transition:background .22s, color .22s}
-.prenda:first-child{border-top:0}
-.prenda .num{font-family:var(--mono);font-size:.64rem;color:var(--pizarra);
+.bolso:first-child{border-top:0}
+.bolso .num{font-family:var(--mono);font-size:.64rem;color:var(--pizarra);
   letter-spacing:.08em;transition:color .22s}
-.prenda h3{font-weight:800;font-size:clamp(1.1rem,3.6vw,2.15rem);
+.bolso h3{font-weight:800;font-size:clamp(1.1rem,3.6vw,2.15rem);
   letter-spacing:-.035em;line-height:1}
-.prenda .pz{font-family:var(--mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+.bolso .pz{font-family:var(--mono);font-size:.78rem;font-variant-numeric:tabular-nums;
   transition:color .22s}
 @media (hover:hover) and (pointer:fine){
-  .prenda:hover{background:var(--tinta);color:var(--papel)}
-  .prenda:hover .num,.prenda:hover .pz{color:var(--azul)}
+  .bolso:hover{background:var(--tinta);color:var(--papel)}
+  .bolso:hover .num,.bolso:hover .pz{color:var(--azul)}
 }
-.prenda:active{background:var(--azul);color:var(--papel)}
-.prenda:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+.bolso:active{background:var(--azul);color:var(--papel)}
+.bolso:focus-visible{outline:2px solid var(--azul);outline-offset:-2px}
+
+/* En táctil no hay cursor al que seguir, así que la lámina no sirve:
+   ahí la foto va dentro de la fila, que es lo honesto. */
+.bolso .mini{display:none;grid-column:1/-1;margin-top:14px}
+.bolso .mini img{width:100%;aspect-ratio:4/5;object-fit:cover}
+@media (hover:none){
+  .bolso{grid-template-columns:auto 1fr auto}
+  .bolso .mini{display:block}
+}
 
 /* la lámina que sigue al cursor: el producto aparece donde miras */
-.lamina{position:fixed;z-index:60;width:min(22vw,230px);aspect-ratio:3/4;
-  pointer-events:none;opacity:0;border-radius:2px;overflow:hidden;
+/* `top:0;left:0` no es decorativo: sin offsets, un position:fixed se
+   coloca en su posición ESTÁTICA —el final del documento, 3.500px
+   abajo— y el translate3d lo mueve desde allí, así que la lámina
+   nunca entraba en pantalla. Anclada a la esquina del viewport, el
+   transform ya trabaja en coordenadas de pantalla. */
+.lamina{position:fixed;top:0;left:0;z-index:60;
+  width:min(22vw,250px);aspect-ratio:4/5;
+  pointer-events:none;opacity:0;overflow:hidden;background:var(--tinta);
   will-change:transform,opacity}
-.lamina canvas{width:100%;height:100%;display:block}
+.lamina img{width:100%;height:100%;object-fit:cover}
 
 /* ── clientes, en marquesina ────────────────────────────────── */
 .cinta{overflow:hidden;background:var(--tinta);color:var(--papel);
@@ -169,8 +225,15 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
   html{scroll-behavior:auto}
   .mask > span{animation:none;transform:none}
   .cinta div{animation:none}
-  .sube-al-ver{opacity:1;transform:none;transition:none}
+  /* Con el selector completo: los media queries no suman
+     especificidad, así que `.sube-al-ver{opacity:1}` (0,1,0) perdía
+     contra `html.js .sube-al-ver{opacity:0}` (0,2,0) y la regla no
+     hacía nada — el contenido seguía dependiendo del scroll para
+     aparecer, justo lo que esto venía a evitar. */
+  html.js .sube-al-ver,
+  html.js .sube-al-ver.visto{opacity:1;transform:none;transition:none}
   .lamina{display:none}
+  .tes{transform:none !important}
 }
 </style>
 </head>
@@ -180,11 +243,11 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
 
   <aside class="lado">
     <div>
-      <div class="logo">ATELIER<br>NORTE<i>Punto · Medellín</i></div>
+      <div class="logo">ATELIER<br>NORTE<i>Marroquinería · Medellín</i></div>
     </div>
     <nav>
       <a href="#taller">Taller</a>
-      <a href="#prendas">Prendas</a>
+      <a href="#bolsos">Bolsos</a>
       <a href="#cierre">Cita</a>
     </nav>
     <div class="pie-lado">
@@ -196,48 +259,36 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
 
   <main>
 
-    <!-- el telar: veinte piezas que llegan torcidas y se acomodan -->
-    <section class="telar">
-      <canvas id="telar" aria-hidden="true"></canvas>
-      <div class="rot">Lana merino · 19,5 micras</div>
+    <!-- el mosaico: las piezas llegan torcidas y se acomodan -->
+    <section class="mosaico" id="mosaico">
+      <div class="rot">Vaqueta curtida al vegetal · 20 piezas por modelo</div>
     </section>
 
     <section class="grito">
       <h1>
-        <span class="mask"><span>Tejido</span></span>
+        <span class="mask"><span>Cosido</span></span>
         <span class="mask"><span>a mano,</span></span>
         <span class="mask"><span>sin prisa</span></span>
       </h1>
       <div class="bajo">
         <span>Serie corta</span>
         <span>Nada se repone</span>
-        <span><b>12 piezas por modelo</b></span>
+        <span><b>20 piezas por modelo</b></span>
       </div>
     </section>
 
     <section class="dicho sube-al-ver" id="taller">
       <div class="et">(01) El taller</div>
-      <p>Cuatro agujas, dos manos y tres semanas por prenda.
+      <p>Una piel, dos manos y nueve días por bolso.
         <em>No hacemos más porque no se puede hacer más.</em></p>
     </section>
 
-    <section class="prendas" id="prendas">
-      <article class="prenda" tabindex="0" data-tono="#1b35ff">
-        <span class="num">01</span><h3>Jersey Páramo</h3><span class="pz">$480.000</span>
-      </article>
-      <article class="prenda" tabindex="0" data-tono="#0b0b0c">
-        <span class="num">02</span><h3>Cárdigan Niebla</h3><span class="pz">$620.000</span>
-      </article>
-      <article class="prenda" tabindex="0" data-tono="#8a3b12">
-        <span class="num">03</span><h3>Bufanda Doble</h3><span class="pz">$215.000</span>
-      </article>
-      <article class="prenda" tabindex="0" data-tono="#2f4a2b">
-        <span class="num">04</span><h3>Chaleco Trenza</h3><span class="pz">$390.000</span>
-      </article>
-      <article class="prenda" tabindex="0" data-tono="#6b2040">
-        <span class="num">05</span><h3>Gorro Cumbre</h3><span class="pz">$145.000</span>
-      </article>
-    </section>
+    <figure class="sangre sube-al-ver">
+      <img src="img/bolsos/amarillo.webp" alt="Composición: un bolso sostenido sobre un fondo amarillo saturado" loading="lazy" width="725" height="1088">
+      <figcaption>(02) Campaña · Temporada 06</figcaption>
+    </figure>
+
+    <section class="bolsos" id="bolsos"></section>
 
     <div class="cinta" aria-hidden="true"><div id="cinta"></div></div>
 
@@ -249,116 +300,118 @@ html.js .sube-al-ver.visto{opacity:1;transform:none}
   </main>
 </div>
 
-<div class="lamina" id="lamina" aria-hidden="true"><canvas id="lcv"></canvas></div>
+<div class="lamina" id="lamina" aria-hidden="true"><img id="limg" alt=""></div>
 
 <script>
 const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ── EL TELAR ──────────────────────────────────────────────────
-   Veinte piezas entran giradas y fuera de sitio, y cada una se
-   acomoda con su propio muelle. El azar está en el estado INICIAL
-   —rotación, desvío, retardo—, nunca en el final: el destino es
-   una retícula exacta. Caos que se ordena, que es lo que hace una
-   máquina de tejer. */
-(function(){
-  const cv = document.getElementById('telar'), g = cv.getContext('2d');
-  let W=0,H=0,piezas=[],t0=null,raf=null;
-  const COLS=10, FILAS=3;
+/* El catálogo. Cada bolso lleva su foto: la misma que arma el mosaico
+   de arriba y la que sale en la lámina al pasar el cursor. */
+const BOLSOS = [
+  {n:'Sobre Junín',      p:'$580.000',   f:'cuero-tabaco',    a:'Sobre de cuero color tabaco sobre fondo azul noche'},
+  {n:'Bolso Nutibara',   p:'$1.240.000', f:'granate-petalos', a:'Bolso granate con pétalos caídos, sobre fondo negro'},
+  {n:'Croco Guayabal',   p:'$1.890.000', f:'manos-croco',     a:'Manos sosteniendo un bolso de piel grabada sobre fondo arena'},
+  {n:'Sobre Provenza',   p:'$720.000',   f:'abrigo-sobre',    a:'Sobre vino sostenido con guantes junto a un abrigo del mismo tono'},
+  {n:'Bolso Pedregal',   p:'$1.150.000', f:'roca',            a:'Bolso rojo apoyado en una roca, sobre fondo claro'},
+  {n:'Charol Laureles',  p:'$860.000',   f:'charol',          a:'Bolso rojo de charol sobre papel blanco'},
+  {n:'Bolso Marfil',     p:'$1.320.000', f:'marfil',          a:'Bolso blanco de asas altas sobre fondo rojo'},
+  {n:'Azul Prado',       p:'$990.000',   f:'azul-notas',      a:'Bolso azul eléctrico sobre un tendido de notas azules'},
+  {n:'Rojo Nocturno',    p:'$1.080.000', f:'rojo-noche',      a:'Bolso rojo iluminado a contraluz sobre fondo negro'},
+  {n:'Bolso Envigado',   p:'$1.450.000', f:'en-mano',         a:'Persona sosteniendo un bolso grande de cuero claro'}
+];
+const ruta = f => `img/bolsos/${f}.webp`;
 
-  function medir(){
-    const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
-    W=r.width; H=r.height; cv.width=W*d; cv.height=H*d; g.setTransform(d,0,0,d,0,0);
-    armar();
+/* ── EL MOSAICO ────────────────────────────────────────────────
+   Veinte teselas —las diez fotos, dos veces— entran giradas y fuera
+   de sitio, y cada una se acomoda con su propio muelle. El azar está
+   en el estado INICIAL —rotación, desvío, retardo—, nunca en el
+   final: el destino es una retícula exacta. Caos que se ordena.
+
+   El estado por defecto es el colocado. El desorden lo pone el JS al
+   arrancar, así que si el script no corre el mosaico se ve igual. */
+(function(){
+  const cont = document.getElementById('mosaico');
+  const N = 20;
+  const teselas = [];
+  for(let i=0;i<N;i++){
+    /* El orden está barajado a propósito. Con `i % 10` las dos filas
+       salían idénticas, foto por foto y en la misma columna, y se
+       leía como un error. El paso 7 es coprimo con 10, así que
+       recorre las diez sin repetir; el desplazamiento por fila evita
+       que una fila quede encima de su gemela. */
+    const b = BOLSOS[(i*7 + Math.floor(i/10)*3) % BOLSOS.length];
+    const d = document.createElement('div');
+    d.className = 'tes' + (i%7===3 ? ' viva' : '');
+    d.innerHTML = `<img src="${ruta(b.f)}" alt="" aria-hidden="true" loading="${i<10?'eager':'lazy'}">`;
+    cont.appendChild(d);
+    teselas.push({
+      el:d,
+      dx:(Math.random()*2-1)*60,           // de dónde viene, en %
+      dy:(Math.random()*2-1)*90,
+      rot:(Math.random()*2-1)*26,
+      esp:((i%10)*0.035)+(Math.floor(i/10)*0.08)+Math.random()*0.12
+    });
   }
-  function armar(){
-    piezas=[];
-    const pw=W/COLS, ph=H/FILAS;
-    for(let f=0;f<FILAS;f++) for(let c=0;c<COLS;c++){
-      piezas.push({
-        x:c*pw, y:f*ph, w:pw, h:ph,
-        dx:(Math.random()*2-1)*W*0.5,        // de dónde viene
-        dy:(Math.random()*2-1)*H*0.8,
-        rot:(Math.random()*2-1)*1.1,
-        azul:Math.random()<0.1,              // una de cada diez va en azul
-        tono:12+Math.random()*16,
-        esp:(c*0.035)+(f*0.08)+Math.random()*0.12
-      });
-    }
-  }
+  if(quieto) return;
+
   /* muelle críticamente amortiguado: llega y se queda, sin rebote.
      Es una retícula, no un objeto lanzado: el rebote sería mentira. */
   const muelle = p => p<=0 ? 0 : 1-Math.exp(-7.2*p)*(1+7.2*p);
 
-  function pinta(ts){
-    if(t0===null) t0=ts;
-    const t=(ts-t0)/1000;
-    g.clearRect(0,0,W,H);
-    g.fillStyle='#0b0b0c'; g.fillRect(0,0,W,H);
+  let t0=null, raf=null;
+  function pon(t){
     let listas=0;
-    for(const p of piezas){
+    for(const p of teselas){
       const k = muelle(t-p.esp);
-      if(k>0.999) listas++;
-      const ix=p.x+p.dx*(1-k), iy=p.y+p.dy*(1-k), ir=p.rot*(1-k);
-      g.save();
-      g.translate(ix+p.w/2, iy+p.h/2); g.rotate(ir);
-      g.fillStyle = p.azul ? '#1b35ff' : `rgb(${p.tono},${p.tono},${p.tono+2})`;
-      g.globalAlpha = 0.35+0.65*k;
-      g.fillRect(-p.w/2+0.5, -p.h/2+0.5, p.w-1, p.h-1);
-      g.restore();
+      if(k>0.999){ listas++; p.el.style.transform=''; p.el.style.opacity=''; continue; }
+      const u = 1-k;
+      p.el.style.transform =
+        `translate3d(${p.dx*u}%, ${p.dy*u}%, 0) rotate(${p.rot*u}deg)`;
+      p.el.style.opacity = (0.35+0.65*k).toFixed(3);
     }
-    if(listas<piezas.length) raf=requestAnimationFrame(pinta);
+    return listas === teselas.length;
   }
-  function arranca(){ cancelAnimationFrame(raf); t0=null;
-    if(quieto){ // sin movimiento: la retícula ya está puesta
-      g.fillStyle='#0b0b0c'; g.fillRect(0,0,W,H);
-      for(const p of piezas){
-        g.fillStyle = p.azul ? '#1b35ff' : `rgb(${p.tono},${p.tono},${p.tono+2})`;
-        g.fillRect(p.x+0.5,p.y+0.5,p.w-1,p.h-1);
-      }
-      return;
-    }
-    raf=requestAnimationFrame(pinta);
+  function cuadro(ts){
+    if(t0===null) t0=ts;
+    if(pon((ts-t0)/1000)) return;        // acabó: se deja de pintar
+    raf = requestAnimationFrame(cuadro);
   }
-  medir(); arranca();
-  addEventListener('resize', ()=>{ medir(); arranca(); });
+  pon(0);                                 // deja el desorden ANTES del primer cuadro
+  // Arranca cuando el mosaico está a la vista, no cuando carga la página:
+  // si el visitante llega con el scroll abajo, la animación no se le pierde.
+  const obs = new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){ obs.disconnect(); raf=requestAnimationFrame(cuadro); }
+  },{threshold:.1});
+  obs.observe(cont);
 })();
 
+/* ── LAS FILAS DEL CATÁLOGO ─────────────────────────────────── */
+document.getElementById('bolsos').innerHTML = BOLSOS.map((b,i)=>`
+  <article class="bolso" tabindex="0" data-foto="${ruta(b.f)}">
+    <span class="num">${String(i+1).padStart(2,'0')}</span>
+    <h3>${b.n}</h3>
+    <span class="pz">${b.p}</span>
+    <div class="mini"><img src="${ruta(b.f)}" alt="${b.a}" loading="lazy"></div>
+  </article>`).join('');
+
 /* ── LA LÁMINA QUE SIGUE AL CURSOR ─────────────────────────────
-   No hay fotos todavía, así que cada prenda muestra un tejido
-   dibujado con su color. La lámina persigue el cursor con retardo
-   —no pegada, que se sentiría rígida— y arranca desde donde está,
-   nunca desde un valor lógico. */
+   La lámina persigue el cursor con retardo —no pegada, que se
+   sentiría rígida— y arranca desde donde está el cursor, nunca
+   desde un valor lógico, para que no dé un salto al aparecer. */
 (function(){
   if(quieto) return;
-  const lam=document.getElementById('lamina'), cv=document.getElementById('lcv'), g=cv.getContext('2d');
-  let x=innerWidth/2,y=innerHeight/2,px=x,py=y,viva=false,raf=null;
+  const lam=document.getElementById('lamina'), img=document.getElementById('limg');
+  let x=innerWidth/2,y=innerHeight/2,px=x,py=y,viva=false;
 
-  function tejido(tono){
-    const d=Math.min(devicePixelRatio||1,2), w=cv.clientWidth||230, h=cv.clientHeight||306;
-    cv.width=w*d; cv.height=h*d; g.setTransform(d,0,0,d,0,0);
-    g.fillStyle=tono; g.fillRect(0,0,w,h);
-    // punto de media: uves encajadas, con el grosor irregular de lo hecho a mano
-    g.strokeStyle='rgba(241,239,234,.34)'; g.lineCap='round';
-    const paso=w/9;
-    for(let f=-1;f*paso*1.15<h+paso;f++){
-      for(let c=-1;c<10;c++){
-        const cx=c*paso+(f%2?paso/2:0), cy=f*paso*1.15;
-        g.lineWidth=1+Math.random()*1.3;
-        g.beginPath();
-        g.moveTo(cx,cy); g.lineTo(cx+paso/2,cy+paso*.8); g.lineTo(cx+paso,cy);
-        g.stroke();
-      }
-    }
-  }
   function sigue(){
     px+=(x-px)*0.14; py+=(y-py)*0.14;   // retardo constante = peso
     lam.style.transform=`translate3d(${px-lam.offsetWidth/2}px,${py-lam.offsetHeight/2}px,0)`;
-    raf=requestAnimationFrame(sigue);
+    requestAnimationFrame(sigue);
   }
   addEventListener('pointermove', e=>{ x=e.clientX; y=e.clientY; }, {passive:true});
-  document.querySelectorAll('.prenda').forEach(p=>{
+  document.querySelectorAll('.bolso').forEach(p=>{
     p.addEventListener('pointerenter', ()=>{
-      tejido(p.dataset.tono); lam.style.opacity='1';
+      img.src = p.dataset.foto; lam.style.opacity='1';
       if(!viva){ viva=true; px=x; py=y; sigue(); }   // arranca donde está el cursor
     });
     p.addEventListener('pointerleave', ()=>{ lam.style.opacity='0'; });
@@ -368,7 +421,7 @@ const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ── marquesina de clientes, duplicada para que el bucle no corte ── */
 (function(){
-  const casas=['Hilandería del Sur','Mercado Carulla','Teatro Pablo Tobón',
+  const casas=['Curtiembre del Sur','Mercado Carulla','Teatro Pablo Tobón',
     'Museo de Antioquia','Café Pergamino','Librería Lerner','Hotel Charlee'];
   const c=document.getElementById('cinta');
   c.innerHTML = [...casas,...casas].map(n=>`<span>${n}</span>`).join('');
