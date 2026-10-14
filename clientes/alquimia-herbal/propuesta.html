@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alquimia Herbal</title>
+<meta name="description" content="Alquimia Herbal · Medellín. Maceraciones, resinas, jabón curado y aceites, por lote corto. Propuesta de sitio.">
+<meta name="theme-color" content="#060e0b">
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   ALQUIMIA HERBAL · propuesta de sitio
+   Un solo archivo. Sin librerías, sin CDN, sin build. Se abre y anda.
+
+   LA DECISIÓN DE COLOR, que es la que hay que defender primero:
+   la identidad es clara —crema, verde medio, verde claro— y las
+   referencias que llegaron son oscuras y con mucha luz dorada. No se
+   pueden tener las dos a la vez, así que la luz se hace CON la paleta
+   en vez de traer un dorado ajeno: el fondo es un verde tan oscuro que
+   lee casi negro (sigue siendo la familia verde, no un azul ni un gris),
+   la crema pasa a ser el color del texto y el verde claro #c2eaaa pasa
+   a ser el color de la LUZ, que es lo que ese verde hace mejor. El rojo
+   #a31111 no se usa sobre oscuro —se queda en 2,4:1— así que para el
+   acento va su versión encendida.
+
+   Dos excursiones fuera de la paleta, a propósito: el violeta de la
+   lavanda y el azul frío de la selenita. Son tintes de LUZ, no colores
+   de marca, y son los dos únicos momentos en que la habitación cambia
+   de temperatura. Si se permiten diez, deja de ser un gesto.
+   ══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --noche:#060e0b; --noche2:#0b1611;
+  --crema:#fbf8ef; --claro:#c2eaaa; --verde:#88ad6b; --brasa:#f2836f;
+  --tenue:rgba(251,248,239,.72); --linea:rgba(194,234,170,.16);
+  /* Los tres los reescribe el JS en cada cuadro, interpolados hacia el
+     tinte de la pieza que esté al frente. En rgba y no en hex porque
+     así no hace falta color-mix ni @property en ninguna parte. */
+  --haz:rgba(194,234,170,.30); --halo:rgba(194,234,170,.11); --chispa:#c2eaaa;
+  --disp:Georgia,'Iowan Old Style','Times New Roman',ui-serif,serif;
+  --cuerpo:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --margen:clamp(18px,5vw,64px);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--noche);color:var(--crema);font-family:var(--cuerpo);
+  font-size:clamp(.96rem,.9rem + .25vw,1.06rem);line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--claro);outline-offset:3px;border-radius:3px}
+.oculto{position:absolute;width:1px;height:1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap}
+
+/* ── el cielo: el haz de luz y la viñeta ───────────────────────────
+   Todo con degradés, sin clip-path y sin blur. Un filter se aplica
+   DESPUÉS del recorte, así que un clip-path recortado y luego
+   desenfocado vuelve a tener borde duro: el haz se dibuja con elipses,
+   que ya nacen con el borde suave. */
+.cielo{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(120% 70% at 50% -8%, var(--halo), transparent 62%),
+    linear-gradient(180deg, var(--noche2), var(--noche) 55%)}
+.cielo::before{content:'';position:absolute;top:-6%;left:50%;
+  width:min(96vw,1040px);height:118%;transform:translateX(-50%);
+  background:
+    radial-gradient(42% 78% at 50% 0%, var(--haz), transparent 72%),
+    radial-gradient(22% 56% at 50% 4%, var(--haz), transparent 78%)}
+.cielo::after{content:'';position:absolute;inset:0;
+  background:radial-gradient(130% 92% at 50% 42%, transparent 46%, rgba(2,6,4,.76))}
+.polvo{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;
+  pointer-events:none}
+
+/* ── chapa superior ───────────────────────────────────────────────── */
+.chapa{position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:16px;
+  padding:12px var(--margen);
+  background:rgba(6,14,11,.52);backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid rgba(194,234,170,.1)}
+.chapa .ojo{width:34px;height:34px;flex:none;color:var(--claro);
+  filter:drop-shadow(0 0 7px rgba(194,234,170,.4))}
+.chapa b{font-family:var(--disp);font-weight:400;font-size:1.02rem;
+  letter-spacing:.012em;white-space:nowrap}
+.chapa nav{margin-left:auto;display:flex;align-items:center;gap:6px}
+.chapa nav a{text-decoration:none;font-size:.82rem;color:var(--tenue);
+  padding:7px 11px;border-radius:999px;transition:color .14s,background .14s}
+.chapa nav a:hover{color:var(--crema);background:rgba(194,234,170,.09)}
+.chapa nav a.pedir{color:var(--noche);background:var(--claro);font-weight:600}
+.chapa nav a.pedir:hover{background:var(--crema)}
+@media (max-width:560px){.chapa nav a.lejos{display:none}}
+@media (prefers-reduced-transparency:reduce){
+  .chapa{background:#07110d;backdrop-filter:none}}
+
+main{position:relative;z-index:2}
+section{padding:clamp(56px,11vh,120px) var(--margen)}
+.centro{max-width:1180px;margin:0 auto}
+
+/* ── rótulos de sección ───────────────────────────────────────────── */
+.rotulo{display:flex;align-items:center;gap:12px;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--claro);margin-bottom:22px}
+.rotulo::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--linea),transparent)}
+
+/* ── portada ──────────────────────────────────────────────────────── */
+.portada{min-height:calc(100dvh - 58px);display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding-top:clamp(30px,7vh,70px)}
+.sello{width:clamp(104px,15vw,152px);aspect-ratio:1;color:var(--claro);
+  filter:drop-shadow(0 0 26px rgba(194,234,170,.5));margin-bottom:clamp(18px,4vh,34px)}
+.firma{font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--claro);margin-bottom:14px}
+h1{font-family:var(--disp);font-weight:400;
+  font-size:clamp(2.6rem,10.5vw,6.4rem);line-height:.98;letter-spacing:-.025em;
+  /* nada de max-width en ch sobre un título: el ch se resuelve contra
+     el tamaño de letra del propio elemento, y a 6rem son unos anchos
+     enormes. Aquí se limita por ancho de columna. */
+  max-width:16em}
+h1 em{font-style:normal;color:var(--claro);
+  text-shadow:0 0 34px rgba(194,234,170,.45)}
+.entrada{margin-top:clamp(16px,3vh,26px);max-width:52ch;color:var(--tenue)}
+.botones{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-top:clamp(22px,4vh,34px)}
+.bot{text-decoration:none;font-size:.88rem;font-weight:500;
+  padding:11px 20px;border-radius:999px;border:1px solid var(--linea);
+  color:var(--crema);transition:transform .12s ease,background .14s,border-color .14s}
+.bot:hover{background:rgba(194,234,170,.1);border-color:rgba(194,234,170,.4)}
+.bot:active{transform:scale(.97)}
+.bot.lleno{background:var(--claro);color:#07110d;border-color:transparent;font-weight:600}
+.bot.lleno:hover{background:var(--crema)}
+.pista-baja{margin-top:clamp(26px,6vh,52px);font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(251,248,239,.5)}
+
+/* ══ EL HAZ · la rueda ═══════════════════════════════════════════════
+   Diez piezas girando alrededor de un eje vertical de luz. Lo que
+   gobierna todo es un ángulo; de él salen la posición, el tamaño, la
+   opacidad y el orden de apilado, y la pieza que queda al frente
+   decide el color de la habitación.
+
+   Por defecto —sin JS— esto no existe: se ve la mesa de abajo, que es
+   la lista legible. El JS añade html.rueda y ahí aparece. Se usa una
+   clase propia y no html.js para que «movimiento reducido» sea
+   simplemente no ponerla, en vez de pelear con la especificidad de una
+   media query, que no añade ninguna. */
+.pista{position:relative}
+.escena{display:none}
+/* Columna centrada, no tres cajas colocadas a mano. La ficha mide
+   distinto en cada pieza y en cada ancho —en un móvil estrecho la
+   descripción pasa de dos líneas a cinco—, así que predecir su alto
+   para dejarle sitio sale mal siempre: o sobra media pantalla o se
+   sale por abajo. Centrando la columna y dejando que el orbe se quede
+   con lo que la ficha no use, el equilibrio lo resuelve el navegador.
+   El padding de arriba es la chapa: la escena se pega en top:0 para
+   que el haz salga a sangre, así que por debajo le pasa la chapa. */
+html.rueda .escena{display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:clamp(10px,2.2vh,26px);
+  position:sticky;top:0;height:100dvh;overflow:clip;
+  padding:clamp(62px,9vh,86px) 0 clamp(16px,3vh,34px)}
+
+/* El núcleo se dibuja SOLO con degradés radiales. Con uno lineal el
+   borde vertical queda duro y se ve la caja: una banda con dos cantos
+   rectos en medio de la pantalla. El radial se apaga por los cuatro
+   lados, que es lo que hace un haz. */
+.nucleo{position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:min(52vw,460px);height:100%;z-index:76;pointer-events:none;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(40% 54% at 50% 40%, var(--haz), transparent 74%),
+    radial-gradient(16% 72% at 50% 46%, var(--halo), transparent 80%)}
+.nucleo::after{content:'';position:absolute;top:8%;left:50%;width:2px;height:58%;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,transparent,var(--chispa),transparent);
+  opacity:.42}
+
+/* min-height:0 es lo que deja que encoja de verdad: sin eso un hijo
+   flexible no baja de su contenido y la columna desborda. */
+.orbe{position:relative;width:100%;flex:1 1 auto;min-height:0;
+  /* El tope evita que la banda se infle cuando la ficha sale corta: sin
+     él, el orbe se queda con TODA la holgura y el frasco flota en medio
+     de 180 px de nada arriba y otros 180 abajo. Con el tope, la holgura
+     se la reparte la columna entera y el grupo queda junto. */
+  max-height:calc(var(--tam,210px) * 1.57)}
+.pieza{position:absolute;left:50%;top:50%;width:var(--tam,210px);
+  aspect-ratio:12/13;will-change:transform,opacity;
+  transform:translate3d(-50%,-50%,0)}
+/* El charco de luz propio de cada pieza. Se enciende con la cercanía
+   —el JS escribe --f— para que la del frente esté posada en su luz y
+   las del fondo no arrastren un halo que las delate. */
+.pieza .brillo{position:absolute;left:50%;top:54%;
+  width:190%;aspect-ratio:1;transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,var(--haz),transparent 78%);
+  opacity:var(--f,0);pointer-events:none}
+.pieza .glifo{position:relative;width:100%;height:100%;color:var(--claro)}
+/* OJO con dónde va esto. El contenido de un <use> vive en un árbol
+   sombra, y un selector no entra ahí: `.glifo g{fill:none}` no toca
+   nada y los frascos salen como siluetas negras, que es el valor
+   inicial de fill. Lo único que cruza esa frontera es la HERENCIA, así
+   que fill y stroke se declaran en el propio .glifo y bajan solos.
+   Lo que necesite otro valor —las manchas de relleno— lo lleva como
+   atributo de presentación en el símbolo, que gana a lo heredado.
+
+   El contorno se escala con la pieza a propósito: la que está atrás
+   adelgaza y eso es lo que lee como distancia. Un non-scaling-stroke
+   las dejaría a todas con el mismo peso y se perdería el aire. */
+.glifo{fill:none;stroke:currentColor;stroke-width:2.1;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.ficha{position:relative;flex:none;width:min(92vw,46ch);text-align:center;z-index:4;
+  transition:opacity .2s ease, transform .2s ease}
+.ficha.muda{opacity:0;transform:translateY(6px)}
+.ficha .fam{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--chispa)}
+.ficha h3{font-family:var(--disp);font-weight:400;
+  font-size:clamp(1.5rem,4.6vw,2.3rem);line-height:1.06;letter-spacing:-.02em;
+  margin:6px 0 8px}
+.ficha p{color:var(--tenue);font-size:.93rem;line-height:1.55}
+.ficha ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;
+  justify-content:center;margin-top:12px}
+.ficha li{font-size:.7rem;letter-spacing:.07em;padding:4px 10px;
+  border:1px solid var(--linea);border-radius:999px;color:var(--claro)}
+.ficha .formato{display:block;margin-top:11px;font-size:.72rem;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(251,248,239,.52)}
+
+/* El índice, que además sirve de atajo. Va por debajo de la chapa:
+   la escena se pega en top:0, así que un top pequeño lo mete detrás
+   de la barra y los puntos desaparecen. */
+.indice{position:absolute;left:50%;top:clamp(68px,9.4vh,92px);
+  transform:translateX(-50%);display:flex;gap:6px;z-index:80}
+/* 24×24 de área de toque, no 22: es el mínimo, y con 6 px de hueco los
+   centros quedan a 30 px, así que diez caben hasta en 320. El punto
+   apagado va a .44 y no a .3 —medido, .3 se queda en 2,31:1 sobre este
+   fondo y un control pide 3:1—. No es texto, es el único indicio de que
+   la rueda tiene diez posiciones y de en cuál está. */
+.indice button{appearance:none;background:none;border:0;cursor:pointer;
+  width:24px;height:24px;display:grid;place-items:center}
+.indice i{display:block;width:6px;height:6px;border-radius:50%;
+  background:rgba(251,248,239,.44);transition:background .18s,transform .18s}
+.indice button:hover i{background:rgba(251,248,239,.78)}
+.indice button[aria-current="true"] i{background:var(--chispa);transform:scale(1.5)}
+
+/* ── la mesa: la lista legible. Es el estado por defecto y también el
+   índice con el que se salta a una pieza de la rueda. ─────────────── */
+.carta{display:grid;gap:14px;margin-top:8px;
+  grid-template-columns:repeat(auto-fill,minmax(min(236px,100%),1fr))}
+/* La tarjeta es un <article>, no un <button>: dentro de un botón solo
+   cabe contenido de frase, y aquí hay h3, p y ul. El botón de verdad
+   es el título, y un ::after estirado le da el área de clic de toda la
+   tarjeta —el patrón de la tarjeta con enlace estirado—. Así hay un
+   control nativo, con su foco y su teclado, y el HTML es válido. */
+.item{position:relative;display:flex;gap:14px;align-items:flex-start;
+  padding:16px;border:1px solid var(--linea);border-radius:16px;
+  background:rgba(11,22,17,.5);
+  transition:transform .13s ease,border-color .14s,background .14s}
+.item:hover{border-color:rgba(194,234,170,.42);background:rgba(16,31,24,.66)}
+.item .glifo{width:56px;height:61px;flex:none;color:var(--claro);opacity:.9}
+.item h3{margin-bottom:3px;font-weight:400}
+.item h3 button{appearance:none;background:none;border:0;padding:0;margin:0;
+  cursor:pointer;color:inherit;text-align:left;
+  font-family:var(--disp);font-weight:400;font-size:1.12rem;letter-spacing:-.01em}
+.item h3 button::after{content:'';position:absolute;inset:0;border-radius:16px}
+.item .fam{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--verde);margin-bottom:5px}
+.item p{font-size:.84rem;color:var(--tenue);line-height:1.5}
+.item .comp{list-style:none;display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.item .comp li{font-size:.66rem;letter-spacing:.05em;padding:3px 8px;
+  border:1px solid var(--linea);border-radius:999px;color:var(--claro)}
+.item .formato{margin-top:9px;font-size:.66rem;letter-spacing:.11em;
+  text-transform:uppercase;color:rgba(251,248,239,.56)}
+/* El anillo de foco salta del título a la tarjeta entera, que es lo
+   que de verdad se activa. Sin :has se queda en el título, que es
+   correcto igual: por eso el outline:none va dentro del @supports. */
+@supports selector(:has(*)){
+  .item h3 button:focus-visible{outline:none}
+  .item:has(h3 button:focus-visible){outline:2px solid var(--claro);outline-offset:3px}
+  .item:has(h3 button:active){transform:scale(.985)}
+}
+
+/* ── el oficio ────────────────────────────────────────────────────── */
+.oficio{display:grid;gap:clamp(18px,3vw,34px);
+  grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))}
+.paso{border-top:1px solid var(--linea);padding-top:18px}
+.paso .num{font-family:var(--disp);font-size:2.4rem;line-height:1;
+  color:var(--claro);opacity:.62}
+.paso h3{font-family:var(--disp);font-weight:400;font-size:1.4rem;
+  letter-spacing:-.015em;margin:10px 0 8px}
+.paso p{color:var(--tenue);font-size:.92rem}
+
+/* ── bloques de texto ─────────────────────────────────────────────── */
+.dos{display:grid;gap:clamp(20px,4vw,52px);align-items:start;
+  grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+h2{font-family:var(--disp);font-weight:400;
+  font-size:clamp(1.8rem,5.2vw,3.1rem);line-height:1.04;letter-spacing:-.025em}
+h2 em{font-style:normal;color:var(--claro)}
+.parrafo{color:var(--tenue);max-width:58ch}
+.parrafo + .parrafo{margin-top:14px}
+
+.aviso{border:1px solid var(--linea);border-radius:18px;
+  padding:clamp(18px,3vw,30px);background:rgba(11,22,17,.46)}
+.aviso h3{font-family:var(--disp);font-weight:400;font-size:1.3rem;
+  letter-spacing:-.015em;margin-bottom:10px}
+.aviso p{color:var(--tenue);font-size:.9rem}
+.aviso p + p{margin-top:10px}
+
+/* ── pedido ───────────────────────────────────────────────────────── */
+.pedido{text-align:center}
+.pedido h2{margin-bottom:16px}
+.canales{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-top:24px}
+.pendiente{margin-top:18px;font-size:.78rem;color:rgba(251,248,239,.5)}
+
+footer{padding:clamp(34px,6vh,64px) var(--margen) clamp(40px,7vh,76px);
+  border-top:1px solid var(--linea);font-size:.8rem;color:rgba(251,248,239,.56);
+  position:relative;z-index:2}
+footer .centro{display:grid;gap:14px;max-width:78ch}
+footer b{color:var(--tenue);font-weight:600}
+
+/* ── entrada por scroll ───────────────────────────────────────────────
+   Sube y aparece. El reposo es el estado visible: esconder es lo que
+   añade el JS, para que un fallo de script no deje la página en blanco. */
+/* La pista de «toca una pieza» solo existe si la rueda llegó a
+   montarse: con el script apagado, con movimiento reducido o en una
+   ventana demasiado corta no hay rueda a la que mandar a nadie. */
+.solo-rueda{display:none}
+html.rueda .solo-rueda{display:inline}
+
+html.js .sube{opacity:0;transform:translateY(16px)}
+html.js .sube.dentro{opacity:1;transform:none;
+  transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+
+/* Más contraste: los fondos translúcidos se vuelven sólidos y los
+   bordes se definen, porque un borde a .16 de alfa no es un borde. */
+@media (prefers-contrast:more){
+  :root{--tenue:#fbf8ef;--linea:rgba(194,234,170,.5)}
+  .item,.aviso{background:#07110d;border-color:rgba(194,234,170,.5)}
+  .ficha li,.item .comp li{border-color:rgba(194,234,170,.55)}
+  .cielo::after{background:radial-gradient(130% 92% at 50% 42%,
+    rgba(2,6,4,.5) 40%, rgba(2,6,4,.9))}
+  .polvo{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  html.js .sube{opacity:1;transform:none;transition:none}
+  .ficha{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cielo" aria-hidden="true"></div>
+<canvas class="polvo" id="polvo" aria-hidden="true"></canvas>
+
+<header class="chapa">
+  <svg class="ojo" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#ojo"/></svg>
+  <b>Alquimia&nbsp;Herbal</b>
+  <nav>
+    <a href="#haz" class="lejos">Catálogo</a>
+    <a href="#oficio" class="lejos">El oficio</a>
+    <a href="#pedido" class="pedir">Pedir</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── portada ──────────────────────────────────────────────────── -->
+  <section class="portada">
+    <svg class="sello" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#ojo"/></svg>
+    <p class="firma">Medellín · lote corto</p>
+    <h1>El monte<br>entra<br>en <em>frasco</em></h1>
+    <p class="entrada">Maceraciones en frío, resina, jabón curado seis semanas
+      y aceites que se arman de a poco. Nada se apura: la planta pone el tiempo
+      y nosotras lo esperamos.</p>
+    <div class="botones">
+      <a class="bot lleno" href="#haz">Ver lo que hay</a>
+      <a class="bot" href="#oficio">Cómo se hace</a>
+    </div>
+    <p class="pista-baja">Baja · cada pieza pasa por la luz</p>
+  </section>
+
+  <!-- ── el haz ───────────────────────────────────────────────────── -->
+  <section id="haz" class="pista" style="padding:0">
+    <div class="escena" id="escena">
+      <div class="nucleo" aria-hidden="true"></div>
+      <!-- group y no tablist: unas pestañas de verdad piden aria-selected
+           y aria-controls sobre paneles que aquí no existen. Son
+           botones de salto, y eso es lo que dicen que son. -->
+      <div class="indice" id="indice" role="group" aria-label="Ir a una pieza"></div>
+      <div class="orbe" id="orbe" aria-hidden="true"></div>
+      <div class="ficha" id="ficha" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- La mesa va en su PROPIA sección, no dentro de la pista. Un
+       sticky sigue ocupando su hueco en el flujo, así que un hermano
+       que venga detrás empieza a 100dvh del inicio de la pista y sube
+       por encima de la rueda mientras esta todavía está pegada. -->
+  <section id="mesa">
+    <div class="centro">
+      <p class="rotulo">En la mesa · diez piezas</p>
+      <p class="parrafo" style="margin:-8px 0 22px">Todo se hace por lote, así
+        que de vez en cuando algo se agota y vuelve en dos semanas.<span
+        class="solo-rueda"> Toca una pieza y la rueda sube hasta ella.</span></p>
+      <div class="carta" id="carta">
+      <article class="item" data-g="g-copalera" data-tinte="217,164,76">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-copalera"/></svg>
+        <div>
+          <p class="fam">Humo</p>
+          <h3><button type="button">Copalera de barro</button></h3>
+          <p class="desc">Barro torneado y cocido, de tres patas. Se prende el carbón, se pone la resina encima y se deja que el humo recorra la casa a su ritmo.</p>
+          <ul class="comp"><li>barro cocido</li><li>tres patas</li><li>para carbón</li></ul>
+          <p class="formato">9 cm de diámetro</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-gotero" data-tinte="194,234,170">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-gotero"/></svg>
+        <div>
+          <p class="fam">Piel</p>
+          <h3><button type="button">Tónico facial</button></h3>
+          <p class="desc">Hamamelis y caléndula macerados en frío veintiún días. Se pasa con algodón sobre el rostro limpio, mañana y noche, antes del aceite.</p>
+          <ul class="comp"><li>hamamelis</li><li>caléndula</li><li>romero</li></ul>
+          <p class="formato">120 ml · vidrio ámbar</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-roller" data-tinte="179,166,224">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-roller"/></svg>
+        <div>
+          <p class="fam">Aceites</p>
+          <h3><button type="button">Roller de lavanda</button></h3>
+          <p class="desc">Lavanda reposada en aceite de almendras dulces. Rueda en muñecas, sienes y detrás de las orejas; cabe en cualquier bolsillo.</p>
+          <ul class="comp"><li>lavanda</li><li>almendras</li><li>jojoba</li></ul>
+          <p class="formato">10 ml · rodillo de acero</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-barra" data-tinte="207,232,187">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-barra"/></svg>
+        <div>
+          <p class="fam">Piel</p>
+          <h3><button type="button">Desodorante natural</button></h3>
+          <p class="desc">Sin aluminio y sin perfume de síntesis. Coco, bicarbonato y maicena batidos hasta crema, con una gota de árbol de té.</p>
+          <ul class="comp"><li>coco</li><li>bicarbonato</li><li>árbol de té</li></ul>
+          <p class="formato">60 g · tarro de vidrio</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-spray" data-tinte="224,197,106">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-spray"/></svg>
+        <div>
+          <p class="fam">Casa</p>
+          <h3><button type="button">Siete Puertas</button></h3>
+          <p class="desc">Siete plantas en agua reposada. Se rocía en las entradas de la casa: puerta, ventanas y las esquinas que uno sabe.</p>
+          <ul class="comp"><li>ruda</li><li>romero</li><li>albahaca</li></ul>
+          <p class="formato">250 ml · atomizador</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-ampolla" data-tinte="216,110,92">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-ampolla"/></svg>
+        <div>
+          <p class="fam">Resina</p>
+          <h3><button type="button">Sangre de Drago</button></h3>
+          <p class="desc">Látex de Croton lechleri, traído de la Amazonía y envasado sin diluir. Una gota, directo, y se deja secar sobre la piel.</p>
+          <ul class="comp"><li>croton lechleri</li><li>sin diluir</li></ul>
+          <p class="formato">15 ml · gotero</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-jabon" data-tinte="184,215,156">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-jabon"/></svg>
+        <div>
+          <p class="fam">Piel</p>
+          <h3><button type="button">Jabón de monte</button></h3>
+          <p class="desc">Saponificado en frío y curado seis semanas. Cada barra se corta a mano, así que ninguna pesa exactamente lo mismo que la otra.</p>
+          <ul class="comp"><li>coco</li><li>caléndula</li><li>carbón activado</li></ul>
+          <p class="formato">100 g · corte a mano</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-shampoo" data-tinte="156,207,126">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-shampoo"/></svg>
+        <div>
+          <p class="fam">Piel</p>
+          <h3><button type="button">Shampoo herbal</button></h3>
+          <p class="desc">Cocción larga de romero, ortiga y cola de caballo sobre base vegetal. Espuma poca: es lo normal cuando no lleva sulfatos.</p>
+          <ul class="comp"><li>romero</li><li>ortiga</li><li>cola de caballo</li></ul>
+          <p class="formato">250 ml</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-selenita" data-tinte="223,240,255">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-selenita"/></svg>
+        <div>
+          <p class="fam">Mineral</p>
+          <h3><button type="button">Selenita</button></h3>
+          <p class="desc">Barra de yeso cristalizado, pulida a mano. Se pone donde se quiera que la luz se parta: en una ventana, al borde de una mesa.</p>
+          <ul class="comp"><li>yeso cristalizado</li><li>pulida a mano</li></ul>
+          <p class="formato">12 cm · barra</p>
+        </div>
+      </article>
+
+      <article class="item" data-g="g-kit" data-tinte="217,164,76">
+        <svg class="glifo" viewBox="0 0 120 130" aria-hidden="true"><use href="#g-kit"/></svg>
+        <div>
+          <p class="fam">Casa</p>
+          <h3><button type="button">Kit para empezar</button></h3>
+          <p class="desc">Copalera, resina, carbón y un manojo atado, en una caja. Lo justo para encender la primera vez sin tener que comprar de a poco.</p>
+          <ul class="comp"><li>copalera</li><li>copal</li><li>carbón</li><li>manojo</li></ul>
+          <p class="formato">caja de cartón prensado</p>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── el oficio ────────────────────────────────────────────────── -->
+  <section id="oficio">
+    <div class="centro">
+      <p class="rotulo">El oficio</p>
+      <h2 class="sube">Tres cosas que no se<br>pueden <em>acortar</em></h2>
+      <div class="oficio" style="margin-top:clamp(28px,5vh,54px)">
+        <div class="paso sube">
+          <p class="num">01</p>
+          <h3>Se cosecha</h3>
+          <p>Romero, caléndula, ortiga y cola de caballo de huerta cercana,
+            cortadas la misma semana en que entran al frasco. Lo que no hay,
+            no se pone: la receta se mueve con lo que da el mes.</p>
+        </div>
+        <div class="paso sube">
+          <p class="num">02</p>
+          <h3>Se macera en frío</h3>
+          <p>Veintiún días en vidrio ámbar, sin calor y sin prisa. El calor
+            acelera la extracción y de paso rompe justo lo que se quería
+            guardar, así que aquí el fuego solo se usa donde hace falta:
+            bajo el carbón de la copalera.</p>
+        </div>
+        <div class="paso sube">
+          <p class="num">03</p>
+          <h3>Se espera</h3>
+          <p>El jabón se saponifica en frío y cura seis semanas antes de
+            salir. No hay manera de abreviarlas. Por eso los lotes son
+            cortos y por eso a veces algo se agota.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── línea ceremonial ─────────────────────────────────────────── -->
+  <section>
+    <div class="centro dos">
+      <div>
+        <p class="rotulo">Línea ceremonial</p>
+        <h2 class="sube">No va en el<br>catálogo <em>abierto</em></h2>
+        <p class="parrafo sube" style="margin-top:20px">Rapés, mambe y los
+          preparados de uso ceremonial no se venden desde una página ni se
+          mandan por correo. Se hablan.</p>
+        <p class="parrafo sube">Quien los busca ya sabe lo que busca, y lo
+          que corresponde de este lado es atender uno por uno: de dónde
+          viene cada cosa, con qué linaje, en qué contexto. Escribe al
+          directo y lo conversamos.</p>
+      </div>
+      <div class="aviso sube">
+        <h3>Lo que esta página no dice</h3>
+        <p>Nada de lo que está aquí es un medicamento ni sustituye una
+          consulta médica. No se le atribuye a ninguna pieza la capacidad de
+          prevenir, aliviar ni curar ninguna enfermedad.</p>
+        <p>Los preparados son cosméticos y aromáticos hechos a mano, en lotes
+          cortos y sin conservantes de síntesis. Si estás en embarazo, en
+          lactancia, en tratamiento, o tienes la piel reactiva, prueba
+          primero en una zona pequeña y pregunta antes.</p>
+        <p>Hay plantas que no se llevan bien con todo el mundo. Preferimos
+          decirlo aquí y no en letra chica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── pedido ───────────────────────────────────────────────────── -->
+  <section id="pedido" class="pedido">
+    <div class="centro">
+      <p class="rotulo" style="justify-content:center">Pedidos</p>
+      <h2 class="sube">Se arma por encargo,<br>se entrega a <em>mano</em></h2>
+      <p class="parrafo sube" style="margin:18px auto 0">Medellín y alrededores,
+        entrega en mano. Al resto del país va por envío, con el lote recién
+        salido. Escribe y te digo qué hay listo esta semana.</p>
+      <div class="canales sube">
+        <a class="bot lleno" href="https://instagram.com/alquimiaherbal.co"
+           target="_blank" rel="noopener">@alquimiaherbal.co</a>
+        <a class="bot" href="#" data-pendiente="whatsapp">WhatsApp</a>
+      </div>
+      <p class="pendiente">↑ Falta el número de WhatsApp para dejar el enlace
+        directo con el mensaje ya escrito.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="centro">
+    <p><b>Alquimia Herbal</b> · Medellín, Colombia · @alquimiaherbal.co</p>
+    <p><b>Propuesta de diseño, no la página definitiva.</b> Los frascos están
+      dibujados a propósito: ocupan exactamente el sitio y el tamaño donde van
+      las fotos reales de cada producto, así que cada dibujo se reemplaza por
+      su foto sin tocar nada más. Los textos son de muestra —el tono se
+      ajusta con la dueña— y las cifras de cada ficha (mililitros, gramos,
+      días de curado) hay que confirmarlas una por una antes de publicar.</p>
+    <p>Hecho por <b>LQS</b>. Un solo archivo, sin librerías ni dependencias
+      externas: lo que se ve es todo lo que hay.</p>
+  </div>
+</footer>
+
+<!-- ══ los dibujos ════════════════════════════════════════════════════
+     El ojo es la marca, vectorizada del pincel original y vuelta a
+     trazar en peso de web: la ruta de impresión pesa 178 KB y en
+     pantalla se ve a 150 px, donde las dos son idénticas.
+     Los diez frascos son dibujo de línea, en el mismo idioma que la
+     marca —que ya es línea—, para que el catálogo no dependa de tener
+     sesión de fotos resuelta. Cada uno está en una caja de 120×160. ── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+
+<symbol id="ojo" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M217 913C212 911 225 893 236 885C239 883 254 866 265 852C273 841 281 834 284 834C285 834 285 834 283 841C281 850 281 856 286 864C289 868 292 874 294 878C302 900 310 898 313 874C314 864 319 841 325 822C327 815 329 805 330 800C331 796 332 790 333 788C334 785 335 780 336 775C338 766 341 762 343 764C345 765 345 773 342 779C341 781 340 786 339 791C338 795 336 800 335 804C332 808 331 812 330 820C329 825 327 833 325 836C323 841 323 844 323 851C323 856 322 864 321 870C320 875 320 882 320 886C319 910 317 913 291 913C267 913 266 913 263 904C258 891 247 883 241 890C239 892 239 897 242 903C244 909 244 911 239 912C234 914 220 914 217 913ZM469 912C465 911 465 907 467 895C470 872 471 857 469 850C466 837 466 835 467 819C468 803 471 794 480 785C487 776 487 748 480 734C477 728 477 726 476 717C476 703 479 700 484 710C486 715 489 716 494 715C495 714 497 714 498 714C499 714 499 721 497 731C495 740 495 750 496 785C496 790 495 796 494 800C492 809 493 820 497 828C498 831 499 835 499 839C499 843 499 849 500 852C501 855 502 863 502 869C503 874 504 881 505 884C510 902 503 916 492 911C488 909 487 909 482 911C476 914 472 914 469 912ZM685 913C684 913 681 912 679 912C673 911 673 907 680 900C686 892 685 886 676 872C661 851 662 844 677 864C681 868 688 876 693 882C698 887 703 893 705 895C707 897 710 901 713 904C721 912 720 912 701 913C693 913 685 913 685 913ZM77 911C73 909 73 891 77 872C81 857 80 844 74 808C73 801 73 791 73 787C73 782 72 778 72 777C71 775 71 775 72 774C74 772 76 773 76 777C76 778 76 781 78 784C79 787 80 791 81 801C81 809 82 818 83 822C84 826 85 831 85 833C85 834 86 841 88 847C91 858 91 858 90 867C89 872 88 881 88 888C87 909 84 915 77 911ZM378 911C376 909 376 909 379 894C380 889 382 877 383 868C384 859 387 847 388 842C389 837 391 830 392 827C394 809 399 793 404 778C406 773 408 768 408 766C408 761 411 756 412 759C412 760 412 763 411 766C410 769 409 772 410 776C411 783 409 787 405 795C402 799 401 802 401 808C400 812 399 817 398 819C397 823 397 827 397 837C397 854 395 871 390 901C388 912 383 916 378 911ZM907 909C905 908 905 902 907 895C911 884 915 855 915 836C916 821 917 819 922 822C925 824 925 828 922 840C922 842 922 848 922 853C923 860 922 862 921 866C919 868 919 872 919 876C919 879 918 884 917 888C916 892 914 898 914 902C912 910 910 913 907 909ZM489 898C496 891 494 866 488 870C483 872 482 875 482 886C481 899 484 904 489 898ZM647 896C645 891 643 871 644 859C645 851 645 849 642 843C641 840 637 830 633 821C626 803 622 795 616 787C606 773 594 740 599 742C601 742 613 758 622 772C627 778 633 787 635 790C642 798 644 802 645 808C646 813 647 814 650 818C652 821 654 824 655 829C656 833 658 837 659 840C664 847 665 850 660 849C651 846 649 849 649 861C650 866 649 871 649 874C648 877 648 879 649 882C652 893 650 905 647 896ZM580 868C579 867 577 861 576 853C574 846 571 832 568 822C566 811 563 800 563 797C563 793 562 787 561 783C558 769 559 765 565 771C569 775 570 777 573 787C575 796 578 808 585 828C591 847 588 878 580 868ZM291 824C291 823 295 816 297 816C299 816 296 823 292 825C291 825 291 825 291 824ZM210 812C207 810 208 805 216 794C218 790 222 784 224 780C231 767 242 752 277 710C284 702 289 701 290 709C290 713 286 720 278 727C274 731 269 737 268 739C265 744 264 745 263 757C262 763 260 767 250 779C246 783 242 789 240 791C238 795 236 797 229 800C223 803 221 804 219 808C216 814 213 815 210 812ZM115 792C114 790 111 786 108 783C106 780 102 775 99 772C90 764 95 759 123 744C170 720 173 726 137 772C134 775 131 781 129 784C124 795 120 797 115 792ZM794 758C789 755 787 746 790 745C792 744 801 749 801 751C803 758 800 761 794 758ZM774 738C766 732 761 729 754 727C745 726 731 720 726 716C724 714 718 710 714 708C704 701 691 691 688 688C685 685 682 683 677 682C669 681 668 675 675 675C678 675 695 679 696 681C697 681 702 684 708 686C714 689 721 692 723 694C725 695 734 700 743 705C766 717 785 733 785 741C785 744 779 743 774 738ZM956 700C951 698 950 697 951 692C953 681 970 684 970 695C970 702 965 703 956 700ZM496 683C495 682 494 677 494 673C493 664 491 657 489 656C483 653 477 657 474 664C469 674 464 673 464 662C464 658 461 653 458 649C454 643 454 642 459 637C467 629 469 629 477 637C486 648 489 648 502 637C514 625 514 626 532 626C541 626 550 625 554 624C558 623 564 622 568 622C572 622 577 620 580 619C584 618 590 617 595 616C604 614 619 609 637 601C647 597 650 597 651 602C653 610 657 610 666 602C669 599 673 596 675 596C679 595 682 592 682 588C682 582 682 582 695 582L706 582L708 587C709 590 711 595 713 598C718 604 719 608 718 612C716 615 715 615 711 610C702 599 691 600 690 612C689 620 688 621 682 620C665 618 662 619 663 630C664 638 663 639 654 635C643 629 638 631 637 643C635 653 635 653 629 650C619 644 612 646 607 657C604 665 599 665 589 659C580 654 575 658 575 668C575 677 574 677 568 670C561 664 559 660 558 655C555 637 540 639 542 657C545 672 543 678 539 674C536 672 533 662 532 653C529 633 509 631 507 651C506 674 500 689 496 683ZM382 681C379 675 381 663 385 657C388 653 389 650 390 645C390 641 391 637 392 635C403 615 385 608 365 625C355 633 352 632 353 619C354 604 350 602 336 609C324 614 319 615 317 613C315 611 315 604 317 601C322 591 314 585 304 591C292 598 280 588 288 576C292 568 288 564 279 566C266 569 251 550 252 533C253 525 253 524 250 516C244 503 246 498 254 501C269 506 281 498 272 490C267 485 267 485 271 482C274 479 274 478 274 471C275 460 278 458 284 467C290 477 301 475 305 464C308 457 309 456 315 455C328 454 336 442 331 432C330 429 319 418 308 408C302 404 301 402 299 397C298 394 296 388 294 384C286 369 300 373 309 388C315 398 331 420 333 421C335 422 338 423 340 423C342 423 347 425 351 427L358 430L358 434C358 446 368 449 372 439C374 434 374 431 370 427L367 423L370 415C374 403 377 403 383 415C388 424 393 423 394 413C395 402 399 401 403 410C412 426 427 422 429 404C430 393 432 392 436 401C443 416 460 413 466 395C468 388 470 389 472 396C476 410 492 408 492 393C492 391 492 387 494 384C496 378 496 367 494 356C493 349 493 349 497 339C503 319 505 317 509 327C512 335 513 335 520 320C529 302 534 302 536 319L536 329L532 333C526 340 528 348 535 350C541 352 542 353 538 366C534 382 530 384 521 374C516 369 511 371 509 380C508 382 507 387 505 390C500 409 515 414 530 399C534 395 536 395 536 403C536 419 556 418 570 401C580 389 585 392 578 407C570 428 583 437 601 423C608 418 616 415 619 415L622 415L623 425L623 436L627 440C632 445 639 448 648 449C657 450 658 450 661 457C668 468 672 470 684 466C697 462 700 464 698 476C696 490 700 496 712 498C719 499 721 501 721 508C721 516 723 519 733 524C744 529 752 539 750 544C747 549 737 548 730 543C724 537 716 532 708 529C704 527 696 523 690 521C683 518 673 513 667 511C655 506 643 499 631 489C623 483 595 467 592 467C587 467 586 470 586 489C586 522 573 542 547 546C539 548 541 542 549 539C555 538 557 536 562 528C569 518 570 517 570 500C569 470 567 460 558 449C542 432 503 428 515 445C516 446 517 450 518 454C524 473 530 481 537 482C550 484 548 488 532 489C524 490 521 491 514 494C498 501 483 500 472 489C462 479 471 456 489 446C502 438 504 435 499 429C495 426 461 426 453 429C445 433 427 454 423 467C413 492 429 530 452 538C474 544 477 549 466 554C451 561 431 553 409 531L399 521L397 511C393 496 394 478 401 460C403 452 403 447 400 445C396 443 348 466 342 473C338 478 330 484 322 488C319 489 316 492 314 494C313 495 309 499 305 501C301 504 294 510 289 515C283 520 277 525 274 527C263 535 267 541 286 546C291 548 297 551 306 557C325 569 344 581 352 584C356 586 361 588 364 590C370 593 411 606 424 609C451 615 455 616 449 620C446 622 444 627 444 633C444 639 443 639 439 644C436 646 432 651 430 655C418 673 416 663 426 636C429 629 427 623 421 622C414 621 408 626 398 641L391 650L392 659C393 671 385 689 382 681ZM249 662C249 659 257 653 261 653C262 653 262 653 262 655C260 658 249 664 249 662ZM125 654C125 653 126 652 128 651C129 650 134 647 139 644C147 638 161 632 182 625C188 623 199 619 206 616C229 605 241 603 238 609C236 613 229 616 213 621C204 624 195 628 192 630C180 638 163 645 145 649C139 650 132 652 130 653C126 655 125 655 125 654ZM582 648C586 643 583 636 577 636C572 636 569 645 574 648C577 650 579 650 582 648ZM275 647C275 645 279 642 286 639C290 637 295 635 297 633C305 627 311 628 304 635C299 639 275 649 275 647ZM611 636C615 634 617 632 618 629C620 621 602 620 597 628C592 635 601 640 611 636ZM97 594C97 591 144 569 160 564C177 559 218 555 218 559C218 566 203 572 181 574C170 575 162 576 158 578C155 579 149 580 145 581C133 584 109 590 105 592C100 595 97 595 97 594ZM771 568C758 567 754 564 760 559C763 555 815 554 819 557C824 561 814 566 797 568C784 570 784 570 771 568ZM110 515C108 514 105 513 104 512C101 510 98 509 93 509C81 507 81 504 92 498L100 494L119 494C136 494 137 494 142 497C159 505 130 522 110 515ZM802 503C804 499 810 495 817 492C827 487 828 488 822 494C815 501 800 508 802 503ZM899 493C897 488 896 482 898 475C900 468 900 468 898 465C895 460 895 457 899 453C905 447 906 450 902 462C900 468 900 468 902 473C907 486 904 504 899 493ZM233 486C231 485 228 482 225 480C219 474 211 470 195 466C176 461 176 461 170 461C161 461 158 458 158 452C159 448 158 447 156 443C153 439 153 438 154 437C156 436 156 436 162 441C169 447 170 448 182 453C187 455 196 458 201 460C212 464 224 467 235 466C244 466 247 467 251 473C255 480 242 490 233 486ZM343 464C344 464 345 462 346 460C350 452 343 446 336 452C328 458 334 467 343 464ZM924 440C923 438 926 435 928 436C929 437 930 438 930 439C930 442 925 442 924 440ZM722 439C722 438 720 436 717 435C708 429 713 419 738 397C751 385 755 379 761 362C765 349 767 346 772 340C774 337 777 332 778 330C779 328 782 324 784 322C786 319 788 314 791 306C793 299 796 292 798 289C799 286 801 281 802 279C802 277 804 272 806 269C807 265 809 259 810 255C811 251 812 246 814 244C817 239 817 238 819 230C819 227 821 222 822 219C823 216 825 213 825 211C825 210 826 204 827 198C831 182 836 155 838 140C839 121 841 117 847 118C851 119 851 120 849 137C847 146 846 156 846 161C844 172 844 173 839 183C832 197 828 211 827 220C826 224 825 229 825 232C823 237 824 239 828 240C833 241 826 256 811 277C808 281 805 287 804 290C803 293 800 298 799 301C793 314 791 320 793 326L794 332L789 342C776 366 756 397 731 434C727 439 724 441 722 439ZM251 425C248 424 243 422 239 421C223 415 206 401 218 403C223 404 232 407 235 410C244 417 247 418 252 421C260 426 260 430 251 425ZM955 410C954 407 962 397 966 397C969 397 970 400 968 404C966 409 956 413 955 410ZM634 395C632 390 635 380 639 378C647 375 646 389 639 394C635 397 635 397 634 395ZM693 361C693 359 695 353 697 352C699 351 699 358 696 361C694 364 693 364 693 361ZM263 352C259 348 257 344 259 344C260 344 270 353 270 354C270 357 266 356 263 352ZM445 338C441 333 445 296 450 296C455 295 456 297 456 308C457 328 451 345 445 338ZM241 325C233 319 193 274 182 259L178 254L182 251C187 247 190 248 197 258C198 261 202 264 204 266C207 268 211 272 213 275C216 278 220 282 222 283C230 289 243 311 245 320C246 328 246 328 241 325ZM284 260C282 257 279 249 279 248C279 245 280 247 284 252C289 260 289 267 284 260ZM665 236C664 233 664 224 666 221C666 219 667 212 668 207C668 201 670 192 671 187C672 182 673 175 673 170C673 156 677 137 680 139C684 143 689 140 692 131C695 121 698 118 700 122C701 124 698 134 695 139C694 141 692 146 691 148C691 151 689 157 688 160C683 171 679 186 678 192C678 195 676 200 675 204C674 209 672 215 672 220C671 232 667 242 665 236ZM841 229C841 221 849 198 854 196C862 191 868 182 869 173C870 170 871 168 875 164C881 158 888 143 893 128C896 117 897 117 916 117C937 117 940 118 930 126C928 128 923 133 919 136C915 141 911 143 907 144C899 147 895 151 890 160C888 164 884 169 882 171C876 180 859 205 853 216C849 222 846 228 845 228C843 229 841 230 841 229ZM261 212C259 210 257 206 256 202C255 198 252 193 251 190C248 184 248 182 252 188C254 190 256 194 258 197C265 207 267 221 261 212ZM368 206C361 197 358 189 353 166C352 162 349 153 347 147C336 123 335 117 342 121C344 122 354 136 354 138C354 139 355 142 357 145C359 148 361 152 362 155C365 163 369 165 374 160C380 156 383 162 379 172C378 175 377 177 378 182C378 188 377 205 376 210C375 214 373 213 368 206ZM90 195C87 194 81 191 78 190C63 185 57 180 58 176C59 173 68 177 85 186C104 196 107 202 90 195ZM240 168C236 163 234 157 234 154C234 151 236 154 240 163C244 172 244 175 240 168ZM676 134C675 132 675 126 675 125C677 122 679 124 679 129C679 133 677 136 676 134Z"/></symbol>
+
+<symbol id="g-copalera" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M26 84h68c0 20-9 30-18 32H44c-9-2-18-12-18-32Z"/>
+  <ellipse cx="60" cy="84" rx="34" ry="7"/>
+  <path d="M26 84c0 20 9 30 18 32h32c9-2 18-12 18-32"/>
+  <path d="M38 112l-5 11M60 116v9M82 112l5 11"/>
+  <path d="M46 86c5 4 23 4 28 0"/>
+  <path d="M60 76c-7-9 5-14-1-23 7 7 12 2 9 14"/>
+  <path d="M44 70c-6-14 7-21 1-34 8 10 15 5 11 20"/>
+  <path d="M78 66c-5-16 8-23 2-36 9 11 16 7 12 23"/>
+</g></symbol>
+
+<symbol id="g-gotero" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M38 56h44v62H38Z"/>
+  <path d="M38 58v50a10 10 0 0 0 10 10h24a10 10 0 0 0 10-10V58"/>
+  <path d="M38 58c0-9 5-10 7-15h30c2 5 7 6 7 15"/>
+  <path d="M50 43h20v-7H50Z"/>
+  <path d="M47 22h26v14H47Z"/><path d="M54 22v-9h12v9"/>
+  <path d="M46 76h30M46 90h20"/>
+</g></symbol>
+
+<symbol id="g-ampolla" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M44 76h32v26a16 16 0 0 1-32 0Z"/>
+  <path d="M44 74v28a16 16 0 0 0 32 0V74"/>
+  <path d="M40 74h40"/><path d="M48 62h24v12H48Z"/>
+  <path d="M50 48h20v14H50Z"/>
+  <path d="M60 98c-6-4-6-13 0-17 6 4 6 13 0 17Z"/>
+</g></symbol>
+
+<symbol id="g-roller" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M50 54h20v64H50Z"/>
+  <path d="M50 54h20v54a10 10 0 0 1-20 0Z"/>
+  <path d="M52 38h16v16H52Z"/>
+  <circle cx="60" cy="33" r="7"/>
+  <path d="M55 74h10M55 86h6"/>
+</g></symbol>
+
+<symbol id="g-barra" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M40 58h40v60H40Z"/>
+  <path d="M40 58v52a8 8 0 0 0 8 8h24a8 8 0 0 0 8-8V58"/>
+  <ellipse cx="60" cy="58" rx="20" ry="5"/>
+  <path d="M44 58V30h32v28"/>
+  <path d="M44 30c0-11 7-17 16-17s16 6 16 17"/>
+  <path d="M48 80h24M48 94h14"/>
+</g></symbol>
+
+<symbol id="g-spray" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M42 62h36v56H42Z"/>
+  <path d="M42 62v48a8 8 0 0 0 8 8h20a8 8 0 0 0 8-8V62"/>
+  <path d="M50 50h20v12H50Z"/>
+  <path d="M44 34h24v16H44Z"/>
+  <path d="M68 38h13v7H68"/>
+  <path d="M88 32h7M88 43h7M93 25h5M93 50h5"/>
+  <path d="M48 80h24M48 94h16"/>
+</g></symbol>
+
+<symbol id="g-jabon" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M22 78 60 64l38 14-38 14Z"/>
+  <path d="M22 78 60 64l38 14-38 14Z"/>
+  <path d="M22 78v14l38 14 38-14V78"/>
+  <path d="M60 92v14"/>
+  <path d="M60 58c-6-12 6-17 0-28 8 8 14 4 11 17"/>
+  <path d="M74 62c-4-9 6-13 1-21"/>
+  <path d="M46 62c-3-7 3-11 7-13"/>
+</g></symbol>
+
+<symbol id="g-shampoo" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M40 48h40v70H40Z"/>
+  <path d="M40 48v60a10 10 0 0 0 10 10h20a10 10 0 0 0 10-10V48"/>
+  <path d="M40 48c0-9 6-9 8-13h24c2 4 8 4 8 13"/>
+  <path d="M52 35h16v-4H52Z"/>
+  <path d="M52 31v-7h-9a7 7 0 0 0-7 7v5"/>
+  <path d="M48 66h32M48 80h22M48 94h28"/>
+</g></symbol>
+
+<symbol id="g-selenita" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="m60 10 16 26v62l-16 20-16-20V36Z"/>
+  <path d="m60 10 16 26v62l-16 20-16-20V36Z"/>
+  <path d="M44 36h32M44 98h32"/>
+  <path d="m49 36 11-18 11 18"/>
+  <path d="M68 48v38M52 48v38"/>
+</g></symbol>
+
+<symbol id="g-kit" viewBox="0 0 120 130"><g>
+  <path fill="currentColor" stroke="none" opacity=".13" d="M20 78h80v40H20Z"/>
+  <path d="M20 78v32a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V78"/>
+  <path d="M16 66h88v12H16Z"/>
+  <path d="M60 78v40"/>
+  <path d="M34 66V54h14v12"/><path d="M31 50h20"/>
+  <path d="M76 66V48"/><path d="m70 56 6-8 6 8"/><path d="M76 48v-7"/>
+  <path d="M30 96h16M74 96h16"/>
+</g></symbol>
+
+</defs></svg>
+
+<script>
+(function(){
+'use strict';
+var raiz = document.documentElement;
+raiz.classList.add('js');
+
+var quieto = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ══ el catálogo ════════════════════════════════════════════════════
+   El catálogo VIVE EN EL HTML, no aquí. Antes estaba en este array y
+   la mesa se construía con innerHTML: con el script apagado la página
+   se quedaba con el rótulo «diez piezas» y ni una sola pieza debajo.
+   Ahora el HTML trae las diez escritas y el JS las lee para armar la
+   rueda, que es lo único que de verdad necesita JavaScript.
+
+   El tinte —el color que toma la luz cuando la pieza llega al frente—
+   va en data-tinte, dentro de la familia ámbar ↔ verde salvo en dos
+   casos a propósito, la lavanda y la selenita. Las cifras van marcadas
+   como de muestra en el pie: hay que confirmarlas antes de publicar. */
+var carta = document.getElementById('carta');
+var fichas = [].slice.call(carta.querySelectorAll('.item'));
+var PIEZAS = fichas.map(function(el){
+  return {
+    g:   el.dataset.g,
+    t:   el.dataset.tinte.split(',').map(Number),
+    fam: el.querySelector('.fam').textContent,
+    n:   el.querySelector('h3').textContent.trim(),
+    d:   el.querySelector('.desc').textContent.trim(),
+    c:   [].map.call(el.querySelectorAll('.comp li'), function(li){
+           return li.textContent; }),
+    f:   el.querySelector('.formato').textContent.trim()
+  };
+});
+var N = PIEZAS.length, PASO = 360 / N;
+
+/* ══ la rueda ═══════════════════════════════════════════════════════ */
+var pista   = document.getElementById('haz');
+var escena  = document.getElementById('escena');
+var orbe    = document.getElementById('orbe');
+var ficha   = document.getElementById('ficha');
+var indice  = document.getElementById('indice');
+var lienzo  = document.getElementById('polvo');
+var cielo   = document.querySelector('.cielo');
+
+var montada = false, piezas = [], puntos = [];
+var ang = 0, vel = 0, frente = -1;
+var tinte = [194,234,170], destino = [194,234,170];
+var ultimoScroll = 0, impulso = 0, scrollPrevio = scrollY;
+
+/* La banda de la rueda no se calcula: se MIDE. El orbe es el hijo
+   flexible de la columna, así que su alto es exactamente lo que la
+   ficha dejó libre —con la ficha de verdad, no con una estimación que
+   falla en cuanto la descripción pasa de dos líneas a cinco—. Por eso
+   geometria() se vuelve a llamar cada vez que la ficha cambia de
+   contenido. Si no queda banda para una pieza legible, la rueda no se
+   monta y se queda la mesa, igual que la carta apilada del
+   restaurante en una ventana de 320×568. */
+var G = {R:0, tam:0, lift:0, cabe:false};
+function geometria(){
+  var W = innerWidth, ho = orbe.clientHeight;
+  /* En un móvil el límite lo pone el ancho, no el alto. A 0,44 del
+     ancho el frasco del frente se queda en 171 px en una pantalla de
+     390 y parece una miniatura; a 0,56 llena y las piezas de los
+     lados se salen por los bordes, que es justo lo que se quiere:
+     se van de la escena en vez de acabarse dentro de ella. */
+  G.tam  = Math.min(W * 0.56, ho * 0.80, 280);
+  G.R    = Math.min(W * 0.56, 760);  /* radio antes de la fuga: el máximo en pantalla es ~0,72 de este */
+  G.lift = Math.min(48, ho * 0.09);
+  G.cabe = ho >= 150 && W >= 300;
+  escena.style.setProperty('--tam', Math.round(G.tam) + 'px');
+}
+
+function monta(){
+  if (montada) return;
+  PIEZAS.forEach(function(p, i){
+    var a = document.createElement('article');
+    a.className = 'pieza';
+    a.innerHTML = '<span class="brillo"></span>'
+      + '<svg class="glifo" viewBox="0 0 120 130"><use href="#' + p.g + '"/></svg>';
+    orbe.appendChild(a); piezas.push(a);
+
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', p.n);
+    b.innerHTML = '<i></i>';
+    b.addEventListener('click', function(){ vaA(i); });
+    indice.appendChild(b); puntos.push(b);
+  });
+  montada = true;
+  raiz.classList.add('rueda');
+  geometria();
+  if (!G.cabe){ desmonta(); return; }
+  pista.style.height = (N * 82) + 'vh';
+  requestAnimationFrame(cuadro);
+}
+
+function desmonta(){
+  raiz.classList.remove('rueda');
+  pista.style.height = '';
+}
+
+/* ── scroll → ángulo ──────────────────────────────────────────────── */
+function anguloDeScroll(){
+  var r = pista.getBoundingClientRect();
+  var recorrido = r.height - innerHeight;
+  if (recorrido <= 0) return 0;
+  var p = Math.min(1, Math.max(0, -r.top / recorrido));
+  return p * PASO * (N - 1);
+}
+function vaA(i){
+  var r = pista.getBoundingClientRect();
+  var recorrido = r.height - innerHeight;
+  var p = (i / (N - 1));
+  scrollTo({ top: scrollY + r.top + p * recorrido, behavior: quieto ? 'auto' : 'smooth' });
+}
+
+/* ── la ficha ─────────────────────────────────────────────────────── */
+function pintaFicha(i){
+  var p = PIEZAS[i];
+  ficha.textContent = '';
+  var fam = document.createElement('p'); fam.className = 'fam'; fam.textContent = p.fam;
+  var tit = document.createElement('h3'); tit.textContent = p.n;
+  var des = document.createElement('p'); des.textContent = p.d;
+  var ul  = document.createElement('ul');
+  p.c.forEach(function(x){
+    var li = document.createElement('li'); li.textContent = x; ul.appendChild(li);
+  });
+  var fmt = document.createElement('span'); fmt.className = 'formato'; fmt.textContent = p.f;
+  ficha.appendChild(fam); ficha.appendChild(tit); ficha.appendChild(des);
+  ficha.appendChild(ul);  ficha.appendChild(fmt);
+}
+function cambiaFrente(i){
+  if (i === frente) return;
+  frente = i;
+  destino = PIEZAS[i].t;
+  puntos.forEach(function(b, k){ b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+  ficha.classList.add('muda');
+  /* dos cuadros: uno para que el navegador registre la opacidad en 0,
+     otro para el cambio de texto y la vuelta. Un solo rAF a veces se
+     funde con el pintado y la ficha cambia de golpe. */
+  requestAnimationFrame(function(){
+    pintaFicha(i);
+    /* la ficha nueva puede medir distinto, y la banda de la rueda es
+       justo lo que la ficha deja libre: hay que volver a medirla */
+    geometria();
+    requestAnimationFrame(function(){ ficha.classList.remove('muda'); });
+  });
+}
+
+/* ── el bucle ─────────────────────────────────────────────────────────
+   Un muelle críticamente amortiguado, en forma semi-implícita: la
+   velocidad sobrevive a los cambios de objetivo, que es exactamente
+   lo que hace que se pueda interrumpir el giro a media vuelta sin
+   que dé un salto. Respuesta 0,42 s. */
+var RESP = 0.42, w = 2 * Math.PI / RESP;
+var t0 = 0;
+
+function cuadro(t){
+  if (!raiz.classList.contains('rueda')) return;
+  var dt = t0 ? Math.min(0.033, (t - t0) / 1000) : 0.016;
+  t0 = t;
+
+  var objetivo = anguloDeScroll();
+  /* reposo: cuando el scroll calla, el objetivo se redondea al paso
+     más cercano y el muelle lleva la pieza al frente él solo. La
+     corrección nunca pasa de medio paso, así que no pelea con el
+     scroll: se lee como que la rueda se asienta. */
+  if (t - ultimoScroll > 120) objetivo = Math.round(objetivo / PASO) * PASO;
+
+  vel += (-2 * w * vel - w * w * (ang - objetivo)) * dt;
+  ang += vel * dt;
+
+  /* Proyección con fuga, no con seno a secas. Sin la división por la
+     profundidad, los ángulos θ y 180−θ caen en la MISMA x —el mismo
+     seno— y la pieza del fondo queda exactamente detrás de la del
+     frente: se ve como una doble exposición, un cristal fantasma
+     dentro del frasco. Con la fuga, la de atrás se acerca al centro y
+     la de adelante se abre, que es lo que hacen de verdad dos cosas a
+     distinta distancia. De paso la escala deja de ser un número
+     inventado: es la misma división. */
+  for (var i = 0; i < N; i++){
+    var th = (i * PASO - ang) * Math.PI / 180;
+    var cz = Math.cos(th);
+    /* La fuga se mide en radios: el punto de vista está a 2,2 radios
+       del eje. Más cerca da más profundidad pero comprime las x —a
+       1,5 radios las piezas de 36° y 72° se montan una encima de
+       otra— y más lejos aplana el giro hasta que parece una fila. */
+    var fuga = 2.2 / (3.2 - cz);            /* 1 al frente · 0,524 al fondo */
+    var f = (fuga - 0.524) / 0.476;         /* 0 fondo → 1 frente */
+    var x = Math.sin(th) * G.R * fuga;
+    var y = -cz * G.lift;
+    var el = piezas[i];
+    el.style.transform = 'translate3d(calc(-50% + ' + x.toFixed(1) + 'px), calc(-50% + '
+      + y.toFixed(1) + 'px), 0) scale(' + fuga.toFixed(3) + ')';
+    el.style.opacity = (0.06 + 0.94 * Math.pow(f, 2.4)).toFixed(3);
+    el.style.setProperty('--f', Math.pow(f, 4).toFixed(3));
+    /* Misma escala que el z-index del núcleo (76): lo que queda
+       detrás del eje pasa POR DEBAJO del haz y la luz lo lava. */
+    el.style.zIndex = Math.round(fuga * 100);
+  }
+
+  var ifrente = ((Math.round(ang / PASO) % N) + N) % N;
+  cambiaFrente(ifrente);
+
+  /* el color de la habitación va detrás del giro, nunca de golpe */
+  var k = 1 - Math.pow(0.001, dt);
+  for (var c = 0; c < 3; c++) tinte[c] += (destino[c] - tinte[c]) * k;
+  var rgb = tinte.map(Math.round);
+  raiz.style.setProperty('--haz',    'rgba(' + rgb + ',.42)');
+  raiz.style.setProperty('--halo',   'rgba(' + rgb + ',.15)');
+  raiz.style.setProperty('--chispa', 'rgb(' + rgb + ')');
+
+  polvo(dt);
+  requestAnimationFrame(cuadro);
+}
+
+/* ── el polvo del haz ─────────────────────────────────────────────────
+   Motas de luz. Pocas y lentas: lo que pidió la dueña es adictivo sin
+   ser saturante, y setenta motas a media opacidad es la diferencia
+   entre aire y confeti. Suben, porque el aire caliente del carbón
+   sube, y el scroll las revuelve: el impulso entra con la velocidad
+   del scroll y se amortigua solo. Eso es lo que hace que uno quiera
+   seguir bajando. */
+var ctx = lienzo.getContext && lienzo.getContext('2d');
+var motas = [], mota1 = null, dpr = 1;
+
+function sprite(){
+  var s = 28;
+  var c = document.createElement('canvas'); c.width = c.height = s;
+  var g = c.getContext('2d');
+  var rad = g.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
+  rad.addColorStop(0,   'rgba(255,255,255,1)');
+  rad.addColorStop(.35, 'rgba(255,255,255,.5)');
+  rad.addColorStop(1,   'rgba(255,255,255,0)');
+  g.fillStyle = rad; g.fillRect(0, 0, s, s);
+  return c;
+}
+function siembra(){
+  if (!ctx) return;
+  dpr = Math.min(2, devicePixelRatio || 1);
+  lienzo.width  = innerWidth  * dpr;
+  lienzo.height = innerHeight * dpr;
+  if (!mota1) mota1 = sprite();
+  var n = innerWidth < 640 ? 38 : 70;
+  motas = [];
+  for (var i = 0; i < n; i++) motas.push({
+    x: Math.random(), y: Math.random(),
+    r: 1.2 + Math.random() * 3.4,
+    v: 4 + Math.random() * 13,              /* px/s hacia arriba */
+    bal: Math.random() * Math.PI * 2,
+    amp: 6 + Math.random() * 18,
+    a: 0.16 + Math.random() * 0.5
+  });
+}
+function polvo(dt){
+  if (!ctx || quieto) return;
+  var W = innerWidth, H = innerHeight;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'lighter';
+  impulso *= Math.pow(0.08, dt);
+  var rgb = tinte.map(Math.round);
+  for (var i = 0; i < motas.length; i++){
+    var m = motas[i];
+    m.y -= (m.v * dt + impulso * dt * 0.9) / H;
+    if (m.y < -0.04){ m.y = 1.04; m.x = Math.random(); }
+    if (m.y >  1.08){ m.y = -0.04; m.x = Math.random(); }
+    m.bal += dt * 0.6;
+    var px = m.x * W + Math.sin(m.bal) * m.amp;
+    var py = m.y * H;
+    /* más brillantes dentro de la columna de luz y más apagadas fuera:
+       es lo que hace que el haz se lea como un volumen y no como un
+       degradé pegado al fondo */
+    var dentro = 1 - Math.min(1, Math.abs(px - W / 2) / (W * 0.42));
+    var a = m.a * (0.22 + 0.78 * dentro * dentro);
+    var s = m.r * 2 * (1 + dentro);
+    ctx.globalAlpha = a;
+    ctx.drawImage(mota1, px - s / 2, py - s / 2, s, s);
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+  /* el polvo se tiñe con la habitación, por encima y en multiply */
+  ctx.globalCompositeOperation = 'source-atop';
+  ctx.fillStyle = 'rgb(' + rgb + ')';
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+/* ── escucha ──────────────────────────────────────────────────────── */
+addEventListener('scroll', function(){
+  ultimoScroll = performance.now();
+  impulso += (scrollY - scrollPrevio) * 1.1;
+  impulso = Math.max(-900, Math.min(900, impulso));
+  scrollPrevio = scrollY;
+}, {passive:true});
+
+var reTimer;
+addEventListener('resize', function(){
+  clearTimeout(reTimer);
+  reTimer = setTimeout(function(){
+    siembra();
+    if (!montada) return;
+    geometria();
+    if (G.cabe){
+      if (!raiz.classList.contains('rueda')){
+        raiz.classList.add('rueda');
+        pista.style.height = (N * 82) + 'vh';
+        t0 = 0; requestAnimationFrame(cuadro);
+      } else pista.style.height = (N * 82) + 'vh';
+    } else desmonta();
+  }, 160);
+}, {passive:true});
+
+/* La mesa lleva a la pieza dentro de la rueda. Si la rueda no está
+   montada —sin JS no llega aquí, pero sí con movimiento reducido o en
+   una ventana demasiado corta— el botón simplemente no mueve nada, que
+   es mejor que llevar a una sección que no existe. */
+carta.addEventListener('click', function(e){
+  var art = e.target.closest('.item'); if (!art) return;
+  if (raiz.classList.contains('rueda')) vaA(fichas.indexOf(art));
+});
+
+/* el WhatsApp no tiene número todavía: mejor decirlo que inventarlo */
+document.querySelectorAll('[data-pendiente]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    a.textContent = 'Falta el número';
+    setTimeout(function(){ a.textContent = 'WhatsApp'; }, 1800);
+  });
+});
+
+/* ── entradas por scroll ──────────────────────────────────────────── */
+if ('IntersectionObserver' in window){
+  var obs = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if (en.isIntersecting){ en.target.classList.add('dentro'); obs.unobserve(en.target); }
+    });
+  }, {rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.sube').forEach(function(el, i){
+    el.style.transitionDelay = (i % 3) * 70 + 'ms';
+    obs.observe(el);
+  });
+} else {
+  document.querySelectorAll('.sube').forEach(function(el){ el.classList.add('dentro'); });
+}
+
+/* ── arranque ─────────────────────────────────────────────────────── */
+pintaFicha(0);
+siembra();
+if (!quieto) monta();
+})();
+</script>
+</body>
+</html>
