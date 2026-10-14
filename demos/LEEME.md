@@ -10,7 +10,7 @@ dónde llega una página sin librerías ni build.
 | `revista-moda.html` | **Tendido** · moda e ilustración | Tendido que se arma solo, campos de degradé que respiran, seis ilustraciones con su halo |
 | `mezcal.html` | **Casa Tepemete** · mezcal de olla | Degradé de horno y rosetas de agave dibujadas al azar: cada visita ve una planta distinta |
 | `automatizacion.html` | **Turno** · contenido y bots | La parrilla de publicaciones, los dos bots y el reporte de cierre. Los bots son una máquina de estados: lo que se toca decide la conversación |
-| `index.html` | Índice de las cuatro | — |
+| `index.html` | Índice de las cinco | — |
 
 ## Cómo se monta
 
@@ -36,11 +36,11 @@ familia de respaldo.
 
 ## Lo que hay que saber antes de tocarlas
 
-- **El estado por defecto es el legible.** Sin JavaScript las cuatro se leen
+- **El estado por defecto es el legible.** Sin JavaScript las cinco se leen
   enteras: la carta de Rescoldo sale apilada, el mosaico de Atelier sale
   colocado. El movimiento lo monta el script añadiendo `html.js`. Si se
   invierte eso, un fallo de script deja la página en blanco.
-- **`prefers-reduced-motion` está atendido en las cuatro.** Se apaga el
+- **`prefers-reduced-motion` está atendido en las cinco.** Se apaga el
   movimiento; el color y el contenido se quedan. No es lo mismo apagar el
   movimiento que castigar a quien lo pidió.
 - **Rescoldo se desmonta solo** cuando la ventana es tan corta que no queda
@@ -60,10 +60,11 @@ familia de respaldo.
 
 ## Fotografía
 
-Las 55 imágenes están optimizadas a WebP con el lado largo en 1300px. Hay unas
-19 sin usar en `img/`, listas por si se quiere cambiar alguna: platos
-(`ostras`, `caviar`, `mesa-cenital`…), mezcal (`botellas`, `brindis`,
-`pencas`, `pintura`), `bolsos/nacar`, `bolsos/tienda` y `moda/brocado`.
+Las 55 imágenes están optimizadas a WebP con el lado largo en 1300px. Quedan 12
+sin usar en `img/`, listas por si se quiere cambiar alguna: `bolsos/nacar`,
+`bolsos/tienda`, `mesa/foco-oscuro`, `mesa/mesa-cenital`, `moda/brocado` y
+siete de mezcal (`barra`, `botellas`, `brindis`, `cristal`, `pencas`,
+`pintura`, `planta`).
 
 **Son material de referencia, no activos del proyecto.** Se recopilaron en
 Cosmos, que es un tablero de curaduría: ahí la gente guarda imágenes de toda
