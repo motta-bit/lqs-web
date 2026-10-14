@@ -1,7 +1,7 @@
-# Muestras · cuatro páginas de una pantalla
+# Muestras
 
-Cuatro sitios de muestra, cada uno de **un solo archivo HTML**. Sirven para
-enseñar hasta dónde llega una página sin librerías ni build.
+Cinco muestras, cada una de **un solo archivo HTML**. Sirven para enseñar hasta
+dónde llega una página sin librerías ni build.
 
 | Archivo | Qué es | Mecánica |
 |---|---|---|
@@ -9,6 +9,7 @@ enseñar hasta dónde llega una página sin librerías ni build.
 | `restaurante.html` | **Rescoldo** · cocina de brasa | La carta es una rueda que gira con el scroll; el fuego del fondo cambia de temperatura con cada plato |
 | `revista-moda.html` | **Tendido** · moda e ilustración | Tendido que se arma solo, campos de degradé que respiran, seis ilustraciones con su halo |
 | `mezcal.html` | **Casa Tepemete** · mezcal de olla | Degradé de horno y rosetas de agave dibujadas al azar: cada visita ve una planta distinta |
+| `automatizacion.html` | **Turno** · contenido y bots | La parrilla de publicaciones, los dos bots y el reporte de cierre. Los bots son una máquina de estados: lo que se toca decide la conversación |
 | `index.html` | Índice de las cuatro | — |
 
 ## Cómo se monta
@@ -18,6 +19,7 @@ Se copia la carpeta entera y se abre. No hay build, ni npm, ni dependencias.
     demos/
       index.html
       tienda-ropa.html  restaurante.html  revista-moda.html  mezcal.html
+      automatizacion.html
       img/
         bolsos/  mesa/  agave/  moda/
 
@@ -25,10 +27,12 @@ Se copia la carpeta entera y se abre. No hay build, ni npm, ni dependencias.
 (`img/mesa/carbon.webp`), así que la estructura se respeta tal cual y funciona
 en cualquier subcarpeta del sitio, sin tocar nada.
 
-Lo único que sale a la red son las tipografías de Google Fonts. Si algún día
-hay que cortar esa dependencia, se descargan los `.woff2` a `img/../fuentes/`
-y se cambia el `<link>` por un `@font-face`; la página no se rompe mientras
-tanto porque cada una declara su familia de respaldo.
+Lo único que sale a la red son las tipografías de Google Fonts, y solo en las
+cuatro páginas de marca: `automatizacion.html` usa la letra del sistema y no
+pide nada. Si algún día hay que cortar esa dependencia en las otras, se
+descargan los `.woff2` a una carpeta `fuentes/` y se cambia el `<link>` por un
+`@font-face`; mientras tanto no se rompe nada, porque cada una declara su
+familia de respaldo.
 
 ## Lo que hay que saber antes de tocarlas
 
@@ -45,7 +49,14 @@ tanto porque cada una declara su familia de respaldo.
 - **Los avisos de Picante y Vegano son afirmaciones sobre la comida.** Si se
   cambian los ingredientes de un plato, hay que revisar su aviso. La berenjena
   es vegana porque ningún ingrediente suyo es de origen animal; si entra yogur
-  o mantequilla, el aviso sale.
+  o mantequilla, el aviso sale. Aparecen en dos sitios: la carta del
+  restaurante y la que manda el bot.
+- **Las cifras del reporte cuadran entre sí** y conviene que sigan cuadrando:
+  143 resueltos por el bot más 41 derivados son los 184 mensajes, y el 78 / 22
+  por ciento de la barra sale de ahí. Si se cambia una, se cambian todas.
+- **Las plataformas se nombran, no se imitan.** Los glifos de WhatsApp e
+  Instagram son geométricos propios; no son sus logos. Si esto se publica con
+  la marca de un cliente, conviene dejarlo así.
 
 ## Fotografía
 
