@@ -4,16 +4,26 @@
 build y **sin red**: las dos tipografías y las trece imágenes van incrustadas
 en base64, así que abre desde un correo, un USB o un doble clic.
 
-> Si el carrusel no aparece, la página se está viendo en una vista previa que
-> capa el JavaScript. Doble clic al archivo, en Chrome o Safari.
+## El carrusel: dos formas de lo mismo
 
-## El carrusel
+**La de por defecto no necesita JavaScript.** Las cinco piezas están escritas
+en el HTML dentro de una tira con `scroll-snap` nativo: se desliza con el dedo
+y funciona en cualquier parte, también en la vista previa de archivo de iOS
+—Quick Look—, que no ejecuta scripts. Antes el carrusel se armaba desde el
+script y en esa vista previa la sección salía vacía: la página saltaba del
+titular a la mesa. Ese era el fallo.
 
-Cinco envases flotando alrededor de un eje de luz. **El que llega al frente
-tiñe la luz de toda la página con su color**, sacado de su propia foto: de ahí
-salen los amarillos, los violetas, los rojos y los verdes.
+Cuando el script sí corre, añade `html.rueda` y **las mismas piezas** pasan a
+girar alrededor del eje de luz. El JS no crea ninguna: solo las coloca. Por eso
+hay un `desmonta()` que limpia los estilos en línea que dejó el giro —si no,
+al volver a ser tira las piezas se quedan apiladas y transparentes.
 
-Tres entradas, no una:
+En la tira, el color lo pone cada tarjeta desde su propio `--t`, porque sin
+JavaScript no hay quién mueva el haz central; en el giro, **el que llega al
+frente tiñe la luz de toda la página**. La promesa de «cada uno enciende la
+página con su color» se cumple en las dos versiones.
+
+Con el giro montado hay tres entradas, no una:
 
 - **Scroll.** La pista mide cinco pantallas, repartidas en cinco posiciones.
 - **Arrastre**, con el dedo o el ratón, 1:1. El arrastre **no mueve un ángulo
@@ -103,12 +113,13 @@ otro `src`.
 
 ## Lo que hay que saber antes de tocarla
 
-- **El estado por defecto es el legible.** El catálogo vive en el HTML: sin
-  JavaScript se leen los ocho productos enteros, con foto, descripción,
-  componentes y formato. El JS lo lee para armar el carrusel, y solo monta en
-  él los `<article>` marcados con `data-rueda`.
-- **`prefers-reduced-motion` no monta el carrusel.** Queda la mesa, con el
-  color y el contenido intactos.
+- **El estado por defecto es el legible y además es usable.** Sin JavaScript
+  no solo se lee: el carrusel se desliza. Las cinco piezas están en la tira y
+  los otros tres productos en la mesa, todos con foto, descripción,
+  componentes y formato.
+- **`prefers-reduced-motion` no monta el giro.** Queda la tira, que no tiene
+  movimiento propio: es la versión suave perfecta, y se sigue pudiendo
+  recorrer.
 - **El carrusel se desmonta solo** si no queda banda para una pieza legible.
 - **La banda se mide, no se calcula.** El orbe es el hijo flexible de la
   columna, así que su alto es lo que la ficha dejó libre; por eso
