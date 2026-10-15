@@ -425,3 +425,128 @@ Lo mismo que en el catálogo —las fotos de cámara, las cifras, las dos
 tipografías— más una cosa propia: **los precios de cada módulo**. La página
 dice deliberadamente en qué orden conviene hacerlos y qué resuelve cada uno,
 pero no cuánto cuestan. Eso se habla, no se manda por correo.
+
+---
+
+# Las tipografías definitivas
+
+Dentro de los dos archivos van ahora **Legrand** en los títulos y **Glacial
+Indifference** en el resto, incrustadas en woff2: 56 KB las tres caras.
+Fuera Eagle Lake y Jost, que eran las sustitutas.
+
+No fue cambiar el nombre de la familia. Dos hechos de las fuentes obligaron a
+recomponer:
+
+**Legrand es una fuente de capitales.** La minúscula sale en versalita, así
+que un título en caja baja se lee como capitales con la inicial más alta.
+Queda muy bien y es muy Art Nouveau, pero las capitales no tienen bajadas:
+todo el interlineado que dejaba sitio a la cola de la «y» de Eagle Lake
+sobraba. Y las capitales piden tracking **positivo**, al revés que una redonda
+grande. Títulos, pies y rótulos de los dos archivos están recompuestos con eso
+en cuenta.
+
+**Glacial Indifference solo trae 400 y 700.** Los pesos 300 y 500 que usaban
+las dos páginas no existen: el navegador los fingía adelgazando y engordando
+a ojo. Ahora son 400 y 700 de verdad, que además se leen mejor.
+
+## Los glifos que faltaban
+
+Ninguna de las dos cubre entero el castellano tal como viene. Se hizo el censo
+exacto —qué carácter cae en qué fuente, recorriendo el DOM de los dos
+archivos— en vez de suponerlo, y salieron tres:
+
+| | |
+|---|---|
+| `·` en Legrand | **estaba dibujado y sin mapear**. Basta mapearlo: así se usa el punto del propio diseñador, no una invención. |
+| `¿` `¡` `·` en Glacial | no están de ninguna forma. Se construyen girando `?` y `!` 180° y subiendo el `.`. Girar es exactamente lo que son esos signos. |
+| `«` `»` | no están en ninguna y no se derivan de nada. Se cambiaron en el texto por `“ ”`, igual de correctas en castellano. |
+
+`¿` y `¡` **hoy no se usan** en ninguna de las dos páginas. Se añadieron igual:
+una página en castellano cuyo cuerpo no puede escribir una pregunta es una
+mina para la primera persona que edite una frase.
+
+El constructor es `construir_tipos.py` en el raspador. Si llegan versiones
+nuevas de las fuentes, se vuelve a pasar.
+
+## Todo el contraste hubo que volver a medirlo
+
+Cambiar de fuente cambia el grosor del trazo, y el grosor del trazo cambia el
+contraste medido. Las cifras viejas quedaron caducadas en el momento del
+cambio. Repetido entero, en cuatro estados:
+
+| estado | resultado |
+|---|---|
+| presentacion, con JS | **32 de 32** |
+| presentacion, sin JS | **32 de 32** |
+| propuesta, con JS | **12 de 12** |
+| propuesta, sin JS | **14 de 14** |
+| pie vivo de la rueda, en los **seis** tintes | todo pasa |
+
+El estado sin JavaScript se mide sobre una copia a la que se le quita el
+`<script>`, porque con `javaScriptEnabled:false` el propio `page.evaluate` de
+Playwright deja de ser fiable.
+
+Seis correcciones reales salieron de ahí: el marcador del idioma activo
+(4,35), la pista de scroll (4,29), la firma del héroe (4,40), el formato de la
+tarjeta sin JS (4,15), el formato del pie vivo (4,33) y la familia del pie
+vivo (3,64).
+
+## El color vivo que no podía ganar
+
+La familia de cada ficha iba con el color del producto. Se intentó conservarlo
+aclarándolo por luminancia; no funciona, y el motivo es estructural: **detrás
+de ese pie está el haz teñido con ese mismo color**, así que es dorado sobre
+dorado. Medido en los seis tintes, el vivo caía a **2,97:1** en el rosa del
+kit. Con oro suave fijo, el peor de los seis es **4,93**.
+
+Se quitó la función que lo aclaraba en vez de dejarla ahí sin usar. El tinte
+sigue vivo donde sí se distingue: el haz, la línea y el punto del índice.
+
+Nota de método: el punto activo del índice da **1,13** con la medición A/B
+—es un artefacto, el elemento es diminuto—. Sondeado directo da **9,82:1**
+contra la página, y además el estado activo no depende solo del color: escala
+1,55×.
+
+# El material de ambiente
+
+Tres imágenes en `presentacion.html`, de doce que llegaron. Van **siempre al
+fondo, apagadas y sin pie**, para que no se confundan nunca con la fotografía
+de producto de ella:
+
+1. **Portada** — textura de verdes oscuros detrás del titular.
+2. **Banda** entre «la pregunta» y «la base», que es donde el documento gira
+   del problema a lo que ya está hecho.
+3. **Banda** antes del cierre: la línea de atados sobre el valle, que abre.
+
+Las bandas se funden por los cuatro lados. Con cantos rectos leen como una
+foto pegada encima; fundidas, como un respiro del propio documento.
+
+**En el catálogo no va ninguna**, a propósito: ahí la fotografía es la de ella
+y meter ambiente de archivo al lado invita a confundir qué es suyo.
+
+## Cuatro descartadas, con motivo
+
+- La del mortero lleva **la firma visible de otra fotógrafa** («Гусарова В.»).
+  El trabajo firmado de otra persona no va en una propuesta de cliente.
+- La del sahumerio con torso descubierto y la del cráneo entre lavanda y
+  cuarzos son **la línea ceremonial**, que esta marca decidió dejar fuera de
+  lo público. Meterlas contradice la propia propuesta.
+- La del taller con velas **parece generada**: los objetos se deshacen y la
+  perspectiva no cierra. En un documento que defiende el oficio, resta.
+
+## Lo que hay que decidir sobre ellas
+
+Las tres que quedan **no son de la marca ni de LQS**. Para un documento que se
+le enseña a una persona es un riesgo; si alguna vez esto se publica, es otro.
+Antes de que salga de la conversación con Mariana conviene o comprar licencia,
+o sustituirlas por fotografía propia, o quitarlas: el documento funciona sin
+ellas, que para eso el argumento está en el texto.
+
+# Encontrado y no hecho
+
+`propuesta.html` arrastra **unas 25 líneas de CSS muerto**: todo el bloque
+`.item` (y sus dos menciones en el `@media (prefers-contrast:more)`). No queda
+ni un elemento con esa clase en el cuerpo ni el script crea ninguno —está
+comprobado—. Es resto de cuando el catálogo era una lista antes de pasar a
+`.ficha` / `.pieza`. No estorba, pero confunde a quien lea el archivo y me
+costó un rato de medición creyendo que medía algo.
