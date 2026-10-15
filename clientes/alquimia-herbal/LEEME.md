@@ -732,3 +732,44 @@ Sigue abriendo sin conexión y sin dependencias, y por enlace o por WhatsApp va
 de sobra. Si algún día hace falta adelgazarlo, por orden de lo que más pesa:
 el tablero de marca (128 KB), la carta animada (131 KB), la foto de perfil
 (34 KB) y las dos bandas de ambiente (71 KB).
+
+# El sello: la flor, y redondo
+
+El que había era el **ojo suelto** —los rayos llenando un cuadrado— y no se
+entendía a la primera. El del tablero que sí se entiende es el otro: el ojo
+**dentro de la flor abierta**, recortado en círculo. Cambiado en los cuatro
+sitios: el saludo, la portada de la propuesta, la cabecera del catálogo y su
+portada.
+
+## Va en mapa de bits, y es a propósito
+
+La ruta vectorial de la flor son **235 KB** —es un trazo de pincel con
+muchísimas curvas— frente a los 11,9 KB que ocupaba el ojo. Probé a
+simplificarla: quitando motas y redondeando a enteros se queda en 139 KB, y lo
+que se pierde por el camino es justo el temblor de la mano, que es lo que la
+hace buena.
+
+A los tamaños en que se usa —de 27 a 146 px— un WebP de 448 px cubre hasta
+pantallas de triple densidad y pesa 47 KB. **El vector íntegro sigue en
+`alquimia-vector/flor/`**, que es donde tiene que estar para imprenta.
+
+El disco va dorado con la flor calada: la versión del tablero invertida, para
+que destaque sobre la página oscura. El recorte circular deja la alfa en forma
+de disco, así que el resplandor del CSS sigue saliendo redondo.
+
+## Dos errores que salieron de aquí
+
+**El sello estaba incrustado cuatro veces** —250 KB de lo mismo repetido—
+porque iba como `<img src="data:…">` en cada sitio. Ahora es una variable,
+`--sello`, declarada una vez en `:root` y pintada de fondo.
+
+**Y los globales se emitían por duplicado desde el principio.** El constructor
+acotaba el CSS dejando intactos los selectores globales *y además* reponía un
+bloque base con esos mismos selectores. Con reglas pequeñas era ruido
+silencioso; con el sello dentro de `:root` eran 63 KB de nada. El bloque base
+está retirado: el acotador ya los conserva.
+
+**Un `<span>` es inline**, así que al pasar de `<img>` a `<span>` el sello
+salió con cero de alto: ni `width` ni `aspect-ratio` aplican a un inline, y la
+regla global `display:block` solo cubre `img`, `svg` y `canvas`. Lleva
+`display:block` explícito.

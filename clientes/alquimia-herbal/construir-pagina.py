@@ -192,11 +192,12 @@ if len(caras) != 3:
 FUENTES = '\n'.join(caras)
 
 # ── el símbolo del ojo, una sola vez ────────────────────────────────
+# El sello pasó a mapa de bits, así que ya no hay símbolo que compartir.
+# Si algún día vuelve un <symbol>, esto lo recoge y lo emite una sola vez.
 m = re.search(r'<svg width="0" height="0"[^>]*>.*?</svg>', cue_r, re.S)
-if not m:
-    sys.exit('no encuentro el bloque <defs> del ojo')
-SIMBOLO = m.group(0)
-cue_r = cue_r.replace(SIMBOLO, '')
+SIMBOLO = m.group(0) if m else ''
+if m:
+    cue_r = cue_r.replace(SIMBOLO, '')
 cue_p = re.sub(r'<svg width="0" height="0"[^>]*>.*?</svg>', '', cue_p, flags=re.S)
 
 # ── los guiones, fuera de sus cuerpos ───────────────────────────────
@@ -214,18 +215,16 @@ GLOBAL = frozenset({'.cielo', '.grano', 'img,svg,canvas', 'a', ':focus-visible',
                     'main', '*', 'html', 'body', ':root'})
 css_r_ac = acota(css_r, '.propuesta', GLOBAL)
 css_p_ac = acota(css_p, '.muestra')
+# el sello va declarado en el :root global de la propuesta; la copia que
+# trae el catálogo en su propio :root sería el mismo medio megabyte otra vez
+css_p_ac, _s = re.subn(r'\s*--sello:url\(data:[^)]*\);', '', css_p_ac, count=1)
+if _s != 1:
+    sys.exit('no encontré la copia del sello en el catálogo')
 
-# la presentación conserva de verdad los globales; .propuesta solo envuelve
-# lo suyo, así que hay que reponer el bloque base tal cual venía
-base = []
-for tipo, prel, cuerpo in bloques(css_r):
-    if tipo != 'regla':
-        continue
-    if prel.lower().startswith('@font-face'):
-        continue
-    if prel.strip() in GLOBAL:
-        base.append(prel.strip() + '{' + cuerpo + '}')
-BASE = '\n'.join(base)
+# Los globales NO se reponen aparte: el acotador ya los deja intactos
+# (están en GLOBAL). Emitirlos otra vez duplicaba cada uno —y con el
+# sello dentro de :root, medio megabyte de nada.
+BASE = ''
 
 # ══ cirugía del cuerpo ═══════════════════════════════════════════════
 VITRINA_NUEVA = """<p class="grande sep tenue sube" style="max-width:56ch">No hace
@@ -250,7 +249,7 @@ UMBRAL = """
 
 SALUDO = """<div class="saludo" id="saludo" role="dialog" aria-labelledby="saludo-titulo" hidden>
   <div class="saludo-caja">
-    <svg class="saludo-ojo" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#ojo"/></svg>
+    <span class="saludo-ojo" aria-hidden="true"></span>
     <p class="saludo-firma">Alquimia Herbal &times; LQS</p>
     <h2 id="saludo-titulo">Bienvenida, Mariana</h2>
     <p class="pregunta">&iquest;Lista para recorrer la propuesta?</p>
@@ -428,7 +427,8 @@ PUENTE = """
 .saludo-caja{max-width:34ch;display:grid;justify-items:center;
   transform:translateY(14px);transition:transform .62s cubic-bezier(.2,.7,.3,1)}
 .saludo.puesto .saludo-caja{transform:none}
-.saludo-ojo{width:clamp(60px,7.6vw,86px);aspect-ratio:1;color:var(--oro);
+.saludo-ojo{display:block;width:clamp(60px,7.6vw,86px);aspect-ratio:1;
+  background:var(--sello) center/contain no-repeat;
   filter:drop-shadow(0 0 38px rgba(227,178,60,.32));
   margin-bottom:clamp(15px,2.8vh,24px)}
 .saludo-firma{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
