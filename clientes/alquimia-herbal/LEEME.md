@@ -1,6 +1,6 @@
 # Alquimia Herbal · propuesta de sitio
 
-`propuesta.html` — **un solo archivo**, 446 KB, sin librerías, sin CDN, sin
+`propuesta.html` — **un solo archivo**, 466 KB, sin librerías, sin CDN, sin
 build y **sin red**: las dos tipografías, las dos lenguas y las ocho imágenes van incrustadas
 en base64, así que abre desde un correo, un USB o un doble clic.
 
@@ -63,6 +63,9 @@ Eran dos cosas distintas y las dos están arregladas:
   muesca se metía siempre el asentamiento y la rueda peleaba con el siguiente
   empujón. Fuera. Ahora la rueda solo se mueve cuando uno la mueve: está medido
   —se la deja en un punto y a los tres segundos sigue exactamente ahí.
+- **La pista se acortó a 44vh por producto** (eran 58). La parte fijada
+  dura ahora unas dos pantallas en vez de tres: pinchada mucho tiempo, la
+  página se siente congelada por mucha meseta que tenga.
 - **Lo rígido era el reparto.** Ahora cada tramo tiene una **meseta** al
   principio y otra al final donde la rueda no gira: ahí la pieza se queda
   quieta y se lee, y en medio gira de corrido. Medido en pasos de 4 %, el
@@ -143,6 +146,57 @@ que si los tamaños propios se separan más que eso, un vecino sale más grande
 que la pieza del frente y se deshace la profundidad. Los altos van comprimidos
 a 0,78–1,00, y el orden del giro evita que el shampoo (el mayor) quede al lado
 del roll on (el menor), que era el único par que quedaba justo.
+
+## El oro, el papel y el grano
+
+Tres arreglos a la misma queja: «no hay degradado, el amarillo no se ve
+dorado y todo tiene el mismo perfil de color».
+
+- **El oro es una escala, no un amarillo.** Un color plano no parece metal:
+  lo que lo hace metal es el recorrido de bronce a champán **dentro de la
+  misma letra**, con una banda clara en medio que hace de reflejo. De ahí
+  `--grad-oro`, con seis paradas, recortado contra el texto en los titulares
+  y en los botones.
+- **Una sección de papel.** Seis secciones oscuras seguidas se leen como una
+  sola imagen larga; «El oficio» pasa a fondo claro. Oscuro → claro → oscuro
+  es lo que da respiración a una página larga, y de paso es lo que hace que
+  el oro de las secciones oscuras se lea como oro, porque ya hay algo claro
+  con que compararlo.
+- **Grano.** Un SVG de ruido de 300 bytes, fijo y sin animar. Es el detalle
+  más barato que separa una página plana de una que parece impresa: rompe
+  las bandas de los degradés y le da materia a los planos grandes.
+
+Dos cosas medidas que conviene no deshacer:
+
+- **Sobre papel el oro NO va en degradé.** La parada más clara del bronce
+  (`#d8ae45`) se queda en **1,74:1** contra el papel, y un degradé vale lo
+  que su peor parada. En la sección clara el oro es bronce sólido, 5,5:1.
+- **`background-clip:text` solo pinta sobre el texto del PROPIO elemento.**
+  La segunda línea del lema vive en su propio `<span>`, así que necesita su
+  propia declaración; sin ella se queda transparente sobre nada, es decir
+  invisible, y es justo la línea que el cliente quería resaltar.
+
+## Los recortes: la silueta hacia dentro
+
+La primera versión rellenaba entre los bordes **suavizados** por la mediana,
+así que allí donde el contorno real era más estrecho que la mediana metía
+fondo: de ahí el halo rectangular del rodillo y la orla del desodorante.
+Sobre fondo oscuro casi no se notaba; sobre claro saltaba a la vista, y por
+eso ahora **todo recorte se revisa sobre los dos fondos**.
+
+Ahora, para cada fila, el borde es *inward-only*:
+
+- si el borde real está cerca de la mediana, manda el real y se toma el más
+  interior de los dos —así una concavidad de verdad, como el cuello, se
+  conserva;
+- si el borde real se dispara —un bulto de fondo que coló la regla, o la
+  muesca que deja la etiqueta al llegar al canto del vidrio—, manda la
+  mediana.
+
+Y el bloque pálido al pie era **la mesa**: la regla de color la deja pasar y,
+como toca la base del frasco, ni la componente mayor ni el relleno la
+sueltan. Se corta por arriba y por abajo usando el **núcleo oscuro** —vidrio
+ámbar o tapa negra—, que la mesa no tiene.
 
 ## Las tipografías
 
