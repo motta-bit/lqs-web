@@ -1,6 +1,6 @@
 # Alquimia Herbal · propuesta de sitio
 
-`propuesta.html` — **un solo archivo**, 466 KB, sin librerías, sin CDN, sin
+`propuesta.html` — **un solo archivo**, 551 KB, sin librerías, sin CDN, sin
 build y **sin red**: las dos tipografías, las dos lenguas y las ocho imágenes van incrustadas
 en base64, así que abre desde un correo, un USB o un doble clic.
 
@@ -176,7 +176,59 @@ Dos cosas medidas que conviene no deshacer:
   propia declaración; sin ella se queda transparente sobre nada, es decir
   invisible, y es justo la línea que el cliente quería resaltar.
 
+## Por qué son láminas y no recortes
+
+El cliente dijo que el carrusel iba pesado y que sospechaba de los recortes.
+Tenía razón, y el culpable concreto se pudo medir: **un recorte obliga a
+`drop-shadow`**, que es un filtro y se recalcula en cada cuadro mientras la
+pieza escala; **una lámina permite `box-shadow`**, que el compositor cachea.
+
+Medido sobre el carrusel girando, con el mismo recorrido y el mismo número de
+cuadros:
+
+| | media por cuadro | cuadros > 20 ms |
+|---|---|---|
+| antes | 47,5 ms | 140 de 145 |
+| ahora | ~20 ms | ~50 de 145 |
+| solo las piezas, sin ambiente | 16,9 ms | 17 de 145 |
+
+Lo que se quitó, en orden de lo que costaba:
+
+- **El halo de cada pieza**: seis degradés de 700 px promovidos, **20 ms por
+  cuadro** ellos solos. Con láminas tampoco aportaba, porque la foto tapa el
+  centro: la luz de la pieza del frente la pone el haz y la sombra de caja.
+- **`drop-shadow` y el grano se multiplicaban entre sí.** Juntos valían 18 ms:
+  una capa fija que se *mezcla* obliga a recomponer toda la pila cada vez que
+  algo debajo se mueve. El grano perdió el `mix-blend-mode` y bajó la opacidad;
+  sigue rompiendo las bandas de los degradés y ya no cuesta nada.
+- **`mix-blend-mode:screen` en el núcleo**, por lo mismo. Sobre fondo oscuro
+  screen es casi pintar encima, así que se cambió por alfa normal —subida de
+  .44 a .60 para devolver por alfa la luz que daba la mezcla.
+- **Escribir las variables de color en `:root` en cada cuadro.** Eso invalida
+  todo lo que las usa: el cielo entero con sus cuatro degradés a pantalla
+  completa. Ahora solo se escriben cuando el color cambia más de tres niveles.
+- **El `z-index` de cada pieza en cada cuadro**, que reordena la pila sesenta
+  veces por segundo para nada: el orden de las seis cambia unas pocas veces
+  por vuelta.
+- **El polvo repintaba la pantalla entera** con un relleno `source-atop` por
+  cuadro, solo para teñir setenta puntitos. Ahora la mota se re-tiñe cuando
+  cambia el color, no cuando cambia el cuadro; el lienzo va a un píxel por
+  punto y las motas bajaron de 70 a 48.
+- **Las tres capas de ambiente** —cielo, núcleo y grano— cubren la pantalla y
+  casi nunca cambian, pero sin promover se repintaban con todo lo demás. Un
+  `translateZ(0)` las deja como lámina propia.
+
+**Y el cambio tuvo un efecto lateral bueno:** como ya no hay que recortar,
+entran al carrusel las dos fichas que antes eran imposibles —copaleras y
+jabón, planos cenitales donde no se puede separar jabón de jabón por color— y
+salen los dos envases de muestra, que como lámina habrían sido un bloque
+blanco. **Las seis piezas son ahora fotografía real suya**, sin una sola
+sustitución.
+
 ## Los recortes: la silueta hacia dentro
+
+*(El procedimiento de recorte se conserva en `recorte-envases.py` y descrito
+aquí abajo: sigue valiendo si algún día hace falta una pieza sin fondo.)*
 
 La primera versión rellenaba entre los bordes **suavizados** por la mediana,
 así que allí donde el contorno real era más estrecho que la mediana metía
