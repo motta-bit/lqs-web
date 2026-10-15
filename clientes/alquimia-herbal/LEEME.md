@@ -657,3 +657,26 @@ Medido con el saludo puesto: los cinco elementos pasan contraste —el titular a
 
 Para quitarlo o cambiar el nombre: `SALUDO` en `construir-pagina.py`, y se
 reconstruye.
+
+# Corrección: de quién es cada cosa
+
+**El ojo, la flor, las cartas y el logotipo en versalitas son propuesta de
+LQS.** No son la marca que la clienta tiene. Su marca actual es otra: un
+emblema de cinco hojas en línea blanca con el nombre en palo seco, el que se ve
+en su Instagram.
+
+El documento llegó a decir «el ojo funciona como sello» y «el ojo, que ya era
+de la marca». Las dos frases presentaban trabajo nuestro como patrimonio suyo,
+que es exactamente lo que no puede pasar delante de una clienta. Corregido en
+los tres sitios donde aparecía, con una comprobación en el constructor que
+falla si alguna vuelve a colarse.
+
+De paso la sección ganó el argumento que le faltaba: **su marca de hoy puesta
+al lado de la propuesta.** El salto del emblema botánico simétrico a la
+dirección Art Nouveau se ve, y ya no hace falta explicarlo en tres párrafos.
+El titular pasó de «una propuesta sacada de la propia marca» —que tampoco era
+cierto— a «una propuesta completa, no un retoque».
+
+El aviso de maqueta dice ahora dos cosas más: que **nada de esto está en uso
+todavía**, y que el catálogo de más abajo va armado con la propuesta puesta,
+para verla aplicada y no solo dibujada.
