@@ -635,3 +635,25 @@ multiplicador de alcance en el único canal que la marca ya tiene. Son once, y
 la entrada del tablero nombra ahora el territorio completo —marca, sitio,
 automatización, audiovisual y producto— porque si no se nombra, no se ve que
 esté.
+
+# El saludo de entrada
+
+El archivo único abre con una bienvenida a nombre de Mariana, que se va en
+cuanto ella responde. Tres reglas que no hay que deshacer:
+
+- **Nace oculto y solo el guion lo enseña.** Si el JavaScript no corre —el
+  Quick Look de iOS, por ejemplo— no hay telón que apartar y la página empieza
+  directamente. Comprobado: sin JS el saludo queda en `display:none` y siguen
+  legibles los 13.952 caracteres.
+- **No secuestra el scroll.** Un telón que bloquea el scroll en iOS es una
+  trampa si algo sale mal. Este se aparta con el botón, con Escape, tocando
+  fuera y al primer gesto de scroll.
+- **Los oídos del scroll se enganchan con 400 ms de retardo.** Al recargar, el
+  navegador restaura la posición y dispara un scroll que lo habría cerrado
+  antes de que se llegara a ver.
+
+Medido con el saludo puesto: los cinco elementos pasan contraste —el titular a
+13,81:1, el más bajo a 7,39— y la caja cabe entera en 390 y en 320 px.
+
+Para quitarlo o cambiar el nombre: `SALUDO` en `construir-pagina.py`, y se
+reconstruye.

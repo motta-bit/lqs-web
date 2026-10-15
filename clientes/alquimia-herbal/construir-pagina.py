@@ -248,6 +248,70 @@ UMBRAL = """
   </div>
 """
 
+SALUDO = """<div class="saludo" id="saludo" role="dialog" aria-labelledby="saludo-titulo" hidden>
+  <div class="saludo-caja">
+    <svg class="saludo-ojo" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#ojo"/></svg>
+    <p class="saludo-firma">Alquimia Herbal &times; LQS</p>
+    <h2 id="saludo-titulo">Bienvenida, Mariana</h2>
+    <p class="pregunta">&iquest;Lista para recorrer la propuesta?</p>
+    <button type="button" id="saludo-ok">Empecemos</button>
+    <p class="atajo">O desliza para empezar</p>
+  </div>
+</div>"""
+
+JS_SALUDO = """
+/* El saludo se enseña desde aquí, nunca desde el CSS: así, si el guion no
+   corre, no queda un telón puesto que nadie pueda apartar.
+
+   Se va con el botón, con Escape, tocando fuera o al primer gesto de
+   scroll. Los oídos del scroll se enganchan con retardo: al recargar, el
+   navegador restaura la posición y dispara un scroll que lo habría
+   cerrado antes de que se viera. */
+(function(){
+  var s = document.getElementById('saludo');
+  if (!s) return;
+  var boton = document.getElementById('saludo-ok');
+  var ido = false;
+
+  function mover(){ quitar(); }
+  function tecla(e){ if (e.key === 'Escape' || e.key === 'Enter') quitar(); }
+  function sordo(){
+    removeEventListener('keydown', tecla);
+    removeEventListener('wheel', mover);
+    removeEventListener('touchmove', mover);
+    removeEventListener('scroll', mover);
+  }
+  function quitar(){
+    if (ido) return;
+    ido = true;
+    sordo();
+    s.classList.remove('puesto');
+    var fin = function(){ s.hidden = true; s.removeEventListener('transitionend', fin); };
+    s.addEventListener('transitionend', fin);
+    setTimeout(fin, 700);          /* por si la transición no llega a disparar */
+  }
+
+  /* el documento es un recorrido: empieza arriba, no donde quedó */
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(e){}
+  scrollTo(0, 0);
+
+  s.hidden = false;
+  requestAnimationFrame(function(){ s.classList.add('puesto'); });
+  if (boton){
+    boton.addEventListener('click', quitar);
+    try { boton.focus({preventScroll:true}); } catch(e){ boton.focus(); }
+  }
+  s.addEventListener('click', function(e){ if (e.target === s) quitar(); });
+  addEventListener('keydown', tecla);
+  setTimeout(function(){
+    if (ido) return;
+    addEventListener('wheel', mover, {passive:true});
+    addEventListener('touchmove', mover, {passive:true});
+    addEventListener('scroll', mover, {passive:true});
+  }, 400);
+})();
+"""
+
 PIE = """
 <footer class="pie-lqs">
   <div class="centro">
@@ -344,6 +408,55 @@ PUENTE = """
 .umbral .que{font-family:var(--disp);font-weight:400;letter-spacing:.015em;
   font-size:clamp(1.15rem,2.8vw,1.6rem);color:var(--crema);margin-bottom:9px}
 
+/* ══ el saludo ═══════════════════════════════════════════════════════
+   Abre el documento y se va en cuanto ella responde.
+
+   Nace OCULTO y solo el guion lo enseña. Si el JavaScript no corre —el
+   Quick Look de iOS, por ejemplo— no hay telón que apartar y la página
+   empieza directamente, que es el estado que siempre tiene que funcionar.
+
+   No secuestra el scroll a propósito: un telón que bloquea el scroll en
+   iOS es una trampa si algo sale mal. Este se aparta solo en cuanto el
+   dedo se mueve, además del botón y de Escape. */
+.saludo{position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  padding:var(--margen);text-align:center;background:rgba(10,13,7,.93);
+  -webkit-backdrop-filter:blur(14px) saturate(130%);
+  backdrop-filter:blur(14px) saturate(130%);
+  opacity:0;transition:opacity .5s ease}
+.saludo[hidden]{display:none}
+.saludo.puesto{opacity:1}
+.saludo-caja{max-width:34ch;display:grid;justify-items:center;
+  transform:translateY(14px);transition:transform .62s cubic-bezier(.2,.7,.3,1)}
+.saludo.puesto .saludo-caja{transform:none}
+.saludo-ojo{width:clamp(60px,7.6vw,86px);aspect-ratio:1;color:var(--oro);
+  filter:drop-shadow(0 0 38px rgba(227,178,60,.32));
+  margin-bottom:clamp(15px,2.8vh,24px)}
+.saludo-firma{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--oro-suave);margin-bottom:13px}
+.saludo h2{font-family:var(--disp);font-weight:400;letter-spacing:.012em;
+  line-height:1.04;font-size:clamp(1.85rem,5.8vw,3rem);color:var(--crema)}
+.saludo .pregunta{margin-top:12px;line-height:1.5;color:var(--tenue);
+  font-size:clamp(1rem,2.3vw,1.18rem)}
+.saludo button{appearance:none;font:inherit;font-size:.95rem;font-weight:700;
+  cursor:pointer;margin-top:clamp(22px,4vh,34px);padding:12px 30px;border:0;
+  border-radius:999px;color:#1a1304;background:var(--grad-oro);
+  background-size:180% 100%;background-position:30% 0;
+  box-shadow:0 1px 0 rgba(255,250,224,.55) inset,0 10px 26px rgba(0,0,0,.4);
+  transition:transform .12s ease,background-position .45s ease}
+.saludo button:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){
+  .saludo button:hover{background-position:70% 0}
+}
+.saludo .atajo{margin-top:15px;font-size:.74rem;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(253,249,238,.74)}
+@media (prefers-reduced-motion:reduce){
+  .saludo{transition-duration:.001s}
+  .saludo-caja{transform:none;transition:none}
+}
+@media (prefers-contrast:more){
+  .saludo{background:#0a0d07;-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
 /* el pie queda fuera de los dos espacios de nombres, así que se viste aquí */
 .pie-lqs{position:relative;z-index:2;border-top:1px solid var(--linea);
   padding:clamp(30px,5vh,56px) var(--margen) clamp(38px,6.5vh,70px);
@@ -371,6 +484,8 @@ SALIDA = f"""<!doctype html>
 </head>
 <body>
 
+__SALUDO__
+
 <div class="cielo" aria-hidden="true"></div>
 <div class="grano" aria-hidden="true"></div>
 
@@ -386,6 +501,9 @@ __PIE__
 
 {SIMBOLO}
 
+<script>
+__JS_SALUDO__
+</script>
 <script>
 {js_r}
 </script>
@@ -416,7 +534,9 @@ pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else '/tmp/fundido.html').write_te
     SALIDA.replace('__PROPUESTA__', '<div class="propuesta">' + cue_r + '</div>')
           .replace('__MUESTRA__', cue_p)
           .replace('__UMBRAL__', UMBRAL)
-          .replace('__PIE__', PIE),
+          .replace('__PIE__', PIE)
+          .replace('__SALUDO__', SALUDO)
+          .replace('__JS_SALUDO__', JS_SALUDO),
     encoding='utf-8')
 print('armado en bruto ·', round(len(SALIDA.encode()) / 1024), 'KB de plantilla')
 print('css propuesta acotado:', round(len(css_r_ac) / 1024), 'KB')
