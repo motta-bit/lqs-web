@@ -1,7 +1,7 @@
 # Alquimia Herbal · propuesta de sitio
 
-`propuesta.html` — **un solo archivo**, 431 KB, sin librerías, sin CDN, sin
-build y **sin red**: las dos tipografías y las trece imágenes van incrustadas
+`propuesta.html` — **un solo archivo**, 446 KB, sin librerías, sin CDN, sin
+build y **sin red**: las dos tipografías, las dos lenguas y las ocho imágenes van incrustadas
 en base64, así que abre desde un correo, un USB o un doble clic.
 
 ## El carrusel: dos formas de lo mismo
@@ -51,6 +51,57 @@ con el balanceo apagándose con la distancia para que el fondo no tiemble.
   muelle asienta la pieza; la corrección nunca pasa de medio paso. Mientras hay
   un dedo encima no se asienta nada. Medido: en reposo la pieza del frente
   llega a opacidad 1 exacta.
+
+## El reparto del scroll
+
+Iba lineal y el cliente lo describió como «rígido y congelado por partes».
+Eran dos cosas distintas y las dos están arregladas:
+
+- **Lo robótico era el asentamiento automático.** A los 120 ms de callar el
+  scroll, la rueda se redondeaba al paso más cercano y se movía **sola**. Con
+  rueda de ratón los eventos llegan en muescas sueltas, así que entre muesca y
+  muesca se metía siempre el asentamiento y la rueda peleaba con el siguiente
+  empujón. Fuera. Ahora la rueda solo se mueve cuando uno la mueve: está medido
+  —se la deja en un punto y a los tres segundos sigue exactamente ahí.
+- **Lo rígido era el reparto.** Ahora cada tramo tiene una **meseta** al
+  principio y otra al final donde la rueda no gira: ahí la pieza se queda
+  quieta y se lee, y en medio gira de corrido. Medido en pasos de 4 %, el
+  recorrido de cada tramo va 0 → 119 → 234 → 123 → 41 → 0 píxeles: una pausa,
+  una vuelta, otra pausa. La meseta es el 30 % del tramo, repartido entre los
+  dos extremos; más larga y volvería a sentirse congelado, que es la otra
+  mitad de la queja.
+
+El muelle pasa de 0,42 a 0,55 s de respuesta: con la meseta, el giro de en
+medio es más rápido por píxel de scroll, y un muelle más lento lo convierte en
+maquinaria pesada en vez de en un seguimiento 1:1 que delata el mecanismo.
+
+## Las dos lenguas
+
+**Sin una línea de JavaScript.** Cada texto lleva sus dos versiones en dos
+spans y el `:has(#en:target)` del `html` decide cuál se ve, con dos anclas
+fijas de tamaño cero —fijas para que al pulsarlas el navegador no tenga a
+dónde desplazarse y no salte al principio de la página.
+
+Dos trampas que costaron sangre y conviene no volver a pisar:
+
+- **Conmuta una clase, no el atributo `lang`.** Con `[lang="es"]` el selector
+  cogería también al `<html lang="es">`, y un `display:none` ahí deja la
+  página en blanco. El atributo `lang` se queda donde corresponde —en los dos
+  enlaces del selector— para que un lector de pantalla los anuncie bien.
+- **La ficha del carrusel CLONA el bloque de texto de la pieza**, en vez de
+  reconstruirlo leyendo sus cadenas con `textContent`. Con dos lenguas dentro,
+  leer el texto devolvía el español y el inglés pegados: «Tónico facial anti
+  acnéAnti-acne facial toner». Clonando, la ficha hereda los dos spans y el
+  CSS esconde el que toca. Lo mismo con los títulos de la mesa: se sacan los
+  hijos del botón en vez de copiar su texto.
+
+## La paleta
+
+Dos acentos, y cada uno con su oficio. El **oro** es la luz: la marca, los
+titulares, los rótulos, el botón, el haz. El **verde** de la identidad se
+queda para lo botánico —los ingredientes—, que es donde significa algo. Oro
+sobre un negro cálido es lo que da la sensación de realeza; el verde al lado
+es lo que la mantiene primaveral y no de ópera.
 
 ## Los recortes, que es lo que había que arreglar
 
@@ -124,6 +175,10 @@ otro `src`.
 - **La banda se mide, no se calcula.** El orbe es el hijo flexible de la
   columna, así que su alto es lo que la ficha dejó libre; por eso
   `geometria()` se vuelve a llamar cuando la ficha cambia.
+- **El selector de lengua lleva la cadena entera en el selector CSS**
+  (`.chapa nav .leng a`). `.chapa nav a` es (0,2,1) y le ganaba a `.leng a`
+  (0,1,1), así que el relleno que le puse nunca se aplicaba y a 320 px la
+  chapa desbordaba 63 px.
 - **Contraste medido** sobre el compuesto real —degradé vivo más partículas—,
   elemento por elemento y con el tinte más oscuro al frente. Lo más justo es el
   rótulo de familia de la ficha en el rojo: 4,97:1 sobre 4,5. Los puntos del
