@@ -550,3 +550,88 @@ ni un elemento con esa clase en el cuerpo ni el script crea ninguno —está
 comprobado—. Es resto de cuando el catálogo era una lista antes de pasar a
 `.ficha` / `.pieza`. No estorba, pero confunde a quien lea el archivo y me
 costó un rato de medición creyendo que medía algo.
+
+---
+
+# `alquimia-herbal.html` · el archivo único
+
+El catálogo dejó de ser un archivo aparte y pasó a **habitar** la propuesta.
+Un solo archivo, 1,0 MB, con todo dentro: la propuesta, el catálogo de muestra
+funcionando, las dos tipografías y todas las imágenes.
+
+## Se construye, no se edita a mano
+
+**La fuente editable siguen siendo `presentacion.html` y `propuesta.html`.**
+El archivo único es la salida:
+
+    python3 construir-pagina.py alquimia-herbal.html
+
+Editar a mano un archivo de 1 MB con tres bloques de base64 dentro es pedir un
+error. Se toca la parte que corresponda y se vuelve a construir.
+
+## Por qué hacía falta un constructor y no un copiar-pegar
+
+Las dos hojas comparten **18 nombres de clase** (`bot`, `centro`, `claro`,
+`firma`, `portada`, `rotulo`, `sello`, `num`, `paso`…) y casi todos los
+selectores de elemento desnudo (`h1`, `h2`, `section`, `footer`, `p`, `img`).
+Pegadas una debajo de otra se pisan sin avisar.
+
+Cada hoja se encierra en su espacio de nombres —`.propuesta` y `.muestra`— con
+un acotador que entiende llaves anidadas, `@media`, `@supports`, `@keyframes`,
+`:root` y los selectores que empiezan por `html`. Lo único que queda global es
+lo que de verdad es común: las tres caras tipográficas, la paleta base, el
+telón y el grano.
+
+Dos trampas que costaron un rato:
+
+- **El partidor tiene que entender comentarios.** Una llave dentro de un
+  comentario en prosa descuadra el conteo y media hoja sale sin acotar.
+- **El preludio arrastra los comentarios de delante.** Con ellos pegados,
+  `@media` y `@supports` dejan de reconocerse como arrobas y su interior entero
+  sale sin acotar. Se separan antes de mirar de qué tipo es la regla.
+
+## Lo que la fusión arregló por el camino
+
+| | |
+|---|---|
+| tipografías | iban dos veces · **−75 KB** |
+| símbolo del ojo | iba dos veces · **−12 KB** |
+| capturas del catálogo | sobran cuando el catálogo está ahí abajo · **−54 KB** |
+| grano | iba duplicado: el ruido se doblaba |
+| rendimiento de la rueda | de **41 cuadros** sobre 20 ms a **1 de 144** |
+
+**El haz ahora se enciende solo en el carrusel.** Antes seguía encendido en
+toda la página. El haz existe para teñir la habitación con el color de la pieza
+que está al frente, así que fuera del carrusel no significa nada: colgado de la
+muestra entera lavaba el cierre de la propuesta, que está justo encima, y
+seguía encendido en la sección de papel, que está justo debajo. Va colgado de
+`#rueda`.
+
+## Costuras que hubo que coser a mano
+
+- **`<main>` anidado es HTML inválido.** El del catálogo pasa a `div` y su
+  regla ya acotada se renombra con él.
+- **El pie de la propuesta decía que eran dos archivos que viajan juntos.** Dejó
+  de ser verdad en el momento de fundirlos. Hay un solo pie, al final.
+- **Los enlaces al otro archivo** pasaron a anclas: `href="#muestra"`.
+- El telón y el grano de la presentación los repone la plantilla, que ahora es
+  la dueña del documento.
+
+## Verificado sobre el fundido
+
+| | |
+|---|---|
+| contraste, con JS | **50 de 50** |
+| contraste, sin JS | **50 de 50** |
+| a 320 px | sin desbordamiento |
+| idioma | cambia la muestra y **no toca** la propuesta |
+| rueda | mediana 16,7 ms · 1 cuadro de 144 sobre 20 ms |
+| sin JavaScript | 6 tarjetas, 11 módulos, 13.952 caracteres legibles |
+
+# Los módulos, completos
+
+Faltaba **audiovisual**, que es un área entera de LQS y además el mayor
+multiplicador de alcance en el único canal que la marca ya tiene. Son once, y
+la entrada del tablero nombra ahora el territorio completo —marca, sitio,
+automatización, audiovisual y producto— porque si no se nombra, no se ve que
+esté.
