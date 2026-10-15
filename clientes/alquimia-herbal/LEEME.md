@@ -680,3 +680,55 @@ cierto— a «una propuesta completa, no un retoque».
 El aviso de maqueta dice ahora dos cosas más: que **nada de esto está en uso
 todavía**, y que el catálogo de más abajo va armado con la propuesta puesta,
 para verla aplicada y no solo dibujada.
+
+# «Hoy no hay un logo. Hay cinco.»
+
+La sección de dirección visual tenía un argumento flojo —«el logo actual es
+genérico»— y resultó que el argumento de verdad era otro, mucho más fuerte y
+además comprobable: **la marca usa cinco marcas distintas al mismo tiempo.**
+
+| Dónde | Qué lleva |
+|---|---|
+| La cuadrícula | emblema de cinco hojas, línea blanca, nombre en palo seco |
+| La foto de perfil | escudo dorado sobre corona de flores |
+| Desodorante | emblema circular con matraz y luna |
+| Roll on | otro emblema, arco y luna, sobre lila |
+| Tónico | un tercero, triangular, sobre dorado |
+
+Las cinco van puestas en fila, al mismo tamaño, recortadas de sus propias
+fotos. **No hace falta afirmar que no hay sistema: se ve.** Y convierte la
+propuesta de identidad completa en algo evidentemente necesario, en vez de un
+capricho de diseñador.
+
+El tono importa y está cuidado: *«Es lo normal cuando una marca crece haciendo
+—cada cosa se resolvió en su momento, con lo que había a mano—, pero el efecto
+es que nada se reconoce entre sí.»* Señala el problema sin reprochar nada.
+
+# La carta animada
+
+Doce fotogramas a 6 fps, dos segundos, el trazo rojo temblando como un dibujo
+hecho a mano. El bucle **cierra solo**: la diferencia media entre el primer
+fotograma y el último es 0,52 sobre 255, así que no hace falta ni recortar ni
+hacer ida y vuelta.
+
+Va en **WebP animado dentro de un `<img>`**, no en vídeo:
+
+- un `<video autoplay>` depende de la política de reproducción automática del
+  navegador y puede quedarse quieto;
+- un `<img>` con WebP animado se mueve siempre, **también sin JavaScript** —
+  comprobado en el estado sin guiones, donde sale a 264 px y animándose;
+- y pesa mucho menos que un GIF, que además solo tiene 256 colores.
+
+Recortada a la caja que ocupa el dibujo en **todos** los fotogramas —no en
+uno—, para que no haya salto de encuadre. 131 KB.
+
+Con movimiento reducido no hay manera de detener un WebP animado desde CSS.
+Queda anotado: si molesta, la salida es duplicar la carta en una versión
+estática y conmutarlas con `prefers-reduced-motion`.
+
+# El archivo pesa 1,3 MB
+
+Sigue abriendo sin conexión y sin dependencias, y por enlace o por WhatsApp va
+de sobra. Si algún día hace falta adelgazarlo, por orden de lo que más pesa:
+el tablero de marca (128 KB), la carta animada (131 KB), la foto de perfil
+(34 KB) y las dos bandas de ambiente (71 KB).
