@@ -319,3 +319,109 @@ llama «anti acné» —el nombre se respeta, porque es suyo, pero la descripci�
 añade una promesa—. El recuadro «Lo que esta página no dice» está a la vista.
 **Es criterio de diseño, no asesoría legal**: si la marca va a facturar,
 conviene que alguien mire la rotulación frente a Invima.
+
+---
+
+# `presentacion.html` · la propuesta para Mariana
+
+Segundo archivo, **197 KB**, mismas reglas que el catálogo: un solo archivo,
+sin librerías, sin CDN, sin red. Es la pieza que se muestra **mientras se
+habla con ella**, y el catálogo es lo que se enseña dentro.
+
+**Los dos archivos viajan juntos y en la misma carpeta.** El botón «abrir el
+catálogo» es un enlace relativo a `propuesta.html`; si se manda solo uno, ese
+botón no lleva a ninguna parte. Está dicho en el pie de la página para que no
+sea una sorpresa delante del cliente.
+
+## El argumento, que es lo que importa
+
+La página existe para sostener una conversación incómoda sin tratarla de boba:
+**ella pidió una página de catálogo; lo que necesita es llegar a más gente.**
+Ella ya reconoce el problema, así que la página no se lo explica: lo nombra,
+lo separa en dos cosas distintas —atraer y convertir— y pasa directo a qué
+módulo resuelve cuál.
+
+El orden de las secciones es el orden de esa conversación:
+
+1. **Portada** — «Esto no es el resultado final. Es la base.» Primero, antes
+   que nada, para que no se lea como una entrega.
+2. **Dónde estamos** — lo que ya está bien (el producto y la fotografía) y
+   tres cifras **suyas, reales**: 44 publicaciones, 1.160 seguidores, 1 canal.
+   No hay una sola estadística inventada en toda la página, ni porcentajes de
+   conversión, ni promesas de alcance.
+3. **La pregunta de fondo** — el diagrama de caminos. Ver abajo.
+4. **La base** — las dos capturas del catálogo, lo que ya hace y **lo que
+   falta, que es suyo**, dicho sin rodeos.
+5. **Los módulos** — el tablero, sobre papel claro.
+6. **Si tuviera que elegir** — tres pasos en orden, con el porqué de cada uno.
+7. **Lo que salió en el camino** — el sello, los vectores, la tipografía, la
+   línea ceremonial, Invima, los dos idiomas.
+8. **Cierre** — «lo que falta para arrancar no es un presupuesto».
+
+## El diagrama de caminos
+
+Es lo único interactivo de la página, y lo es a propósito: se enciende con un
+botón, en vivo, justo en la frase que lo necesita. Tres grifos arriba
+—Instagram, Google, un enlace que circula—, el catálogo abajo. De entrada solo
+Instagram está abierto; el botón abre los otros dos y el caudal **se ve
+engordar**, porque sube con un muelle de 0,75 s y no de un salto: lo que
+convence es ver el cambio ocurrir.
+
+Sin la animación la frase se sigue entendiendo —está escrita encima y debajo—,
+así que el dibujo explica, no sustituye.
+
+Tres cosas que costaron y conviene no deshacer:
+
+- **El poso de luz se pinta sobre todo el lienzo.** Recortarlo a la mitad
+  inferior cortaba el degradado antes de llegar a cero y dejaba una costura
+  gris atravesada de lado a lado.
+- **El canto inferior del lienzo va enmascarado** (`mask-image`). El charco de
+  luz es más ancho que el alto que le queda, así que contra el borde volvía a
+  dibujar una raya recta. Enmascarado, los chorros se deshacen dentro del
+  rótulo, que además es lo que se quiere contar.
+- **Cada gota aterriza con un desvío propio.** Cayendo todas al mismo punto se
+  amontonaban en un grumo; con desvío y apagándose en los últimos centímetros,
+  leen como caudal.
+
+Con movimiento reducido no hay gotas: los cauces engordan y el poso crece
+igual, así que el botón sigue diciendo lo mismo (medido: 35 % → 76 % del
+lienzo pintado).
+
+## Lo que está medido
+
+| | |
+|---|---|
+| contraste | **32 de 32 elementos pasan AA**, medidos sobre el compuesto real |
+| coste por cuadro | mediana **16,7 ms**, 1 cuadro de 149 por encima de 20 ms |
+| scroll completo | mediana **16,7 ms**, 0 cuadros por encima de 20 ms |
+| sin JavaScript | **41 de 41 bloques visibles**, 7.093 caracteres legibles |
+| a 320 px | sin desbordamiento horizontal |
+
+El contraste se mide renderizando cada elemento **dos veces**, con y sin
+texto, y comparando píxel contra su propio fondo, quedándose con el peor. El
+método de percentiles que se usó primero daba 13 falsos fallos: cuando el
+texto es escaso, los dos percentiles caen sobre fondo. El texto en degradado
+necesita además que se le quite el `background-image`, porque volver
+transparente el color no lo borra.
+
+Dos correcciones salieron de ahí y las dos eran reales, no de método:
+«Lo que falta, y es tuyo» medía 3,67:1, y la chapa «DESPUÉS» 4,38:1.
+
+## Detalles de composición que ya se corrigieron
+
+- **Eagle Lake tiene descendentes largas.** Con `line-height:1.06` la cola de
+  la «y» de «ya puede» se metía en el párrafo de abajo. Está en 1,14.
+- **El resplandor del sello se cuajaba en un cuadrado**, porque los rayos del
+  trazo llegan a las esquinas y un desenfoque corto los une. Más abierto y más
+  tenue, lee como halo. El trazo en sí está limpio: se comprobó aislado.
+- **La costura entre el papel y la noche daba un escalón**, porque el velo
+  solo llegaba al 50 % de oscuridad y chocaba con la sección negra. Ahora los
+  dos velos llegan a `--noche` opaca en el canto: el papel emerge y se vuelve
+  a hundir sin junta.
+
+## Lo que falta aquí
+
+Lo mismo que en el catálogo —las fotos de cámara, las cifras, las dos
+tipografías— más una cosa propia: **los precios de cada módulo**. La página
+dice deliberadamente en qué orden conviene hacerlos y qué resuelve cada uno,
+pero no cuánto cuestan. Eso se habla, no se manda por correo.
