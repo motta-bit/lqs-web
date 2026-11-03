@@ -75,7 +75,12 @@ button{font:inherit;color:inherit}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 main{position:relative;z-index:2}
-section{padding:clamp(54px,9vh,112px) var(--margen);position:relative}
+/* «main >» a propósito: sin el hijo directo, cualquier <section> anidado
+   —el de cada categoría del carrusel, por ejemplo— hereda 90px de padding y
+   abre un hueco enorme donde no debería haber nada. */
+main > section{padding:clamp(54px,9vh,112px) var(--margen);position:relative;
+  /* la chapa es pegajosa: sin esto, «Ver el recorrido» deja el título debajo */
+  scroll-margin-top:62px}
 .centro{max-width:1180px;margin:0 auto}
 
 /* ── tipografía ───────────────────────────────────────────────────── */
@@ -258,7 +263,77 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 .pestanas button[aria-selected="true"]{background:var(--tinta);color:var(--crema);
   border-color:var(--tinta)}
 
+/* ── el riel: cómo se acomoda la carta ────────────────────────────── */
+/* Va al lado del teléfono a propósito: la pregunta «¿cómo se ve mi carta?»
+   se responde tocando, no leyendo una lista de opciones. */
+.con-rail{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(10px,1.6vw,18px);align-items:center}
+.rail{display:flex;flex-direction:column;gap:8px;scroll-margin-top:72px}
+.rail button{display:grid;gap:6px;justify-items:center;width:72px;padding:9px 6px;
+  border-radius:14px;border:1px solid var(--linea);background:rgba(255,253,248,.72);
+  cursor:pointer;color:var(--tinta-70);font-size:.62rem;font-weight:800;
+  letter-spacing:.04em;text-transform:uppercase;line-height:1;
+  transition:background .16s,color .16s,border-color .16s,transform .1s var(--muelle)}
+.rail button:active{transform:scale(.95)}
+.rail button[aria-selected="true"]{background:var(--tinta);color:var(--crema);
+  border-color:var(--tinta)}
+.rail svg{width:22px;height:22px;fill:currentColor}
+@media (max-width:620px){
+  .con-rail{grid-template-columns:minmax(0,1fr)}
+  .rail{flex-direction:row;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .rail button{flex:none}
+}
+
+/* ── las cuatro disposiciones ─────────────────────────────────────── */
+/* El marcado de cada plato es siempre el mismo: lo que cambia es el CSS.
+   Así el botón «+» y el carrito siguen funcionando en las cuatro. */
 .platos{display:grid;gap:10px;padding:0 14px 18px}
+
+/* las tres que no son tarjetas apilan: foto, texto, y precio en fila */
+.platos.carrusel .plato,.platos.bento .plato,.platos.libre .plato{
+  grid-template-columns:minmax(0,1fr)}
+.platos.carrusel .col-der,.platos.bento .col-der,.platos.libre .col-der{
+  display:flex;align-items:center;gap:8px;justify-items:stretch}
+.platos.carrusel .precio,.platos.bento .precio,.platos.libre .precio{margin-right:auto}
+.platos.carrusel .mas,.platos.bento .mas,.platos.libre .mas{margin-top:0}
+
+/* Una tira por categoría, no una sola fila larga: así se ve una carta en
+   carrusel de verdad, y de paso no queda media pantalla vacía debajo. */
+.platos.carrusel{display:grid;gap:16px;padding:2px 0 18px}
+.platos.carrusel .grupo h6{font-size:.7rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--arcilla-h);padding:0 14px 8px}
+.platos.carrusel .tira{display:flex;gap:10px;overflow-x:auto;padding:0 14px 2px;
+  scroll-snap-type:x mandatory;scrollbar-width:none}
+.platos.carrusel .tira::-webkit-scrollbar{display:none}
+.platos.carrusel .plato{flex:none;width:150px;scroll-snap-align:start}
+.platos.carrusel .hueco{width:100%;height:92px}
+.platos.carrusel .desc{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden}
+/* el precio se pega abajo: si no, las tarjetas de nombre largo descuadran
+   la fila entera */
+.platos.carrusel .plato,.platos.bento .plato{grid-template-rows:auto auto 1fr}
+.platos.carrusel .col-der,.platos.bento .col-der{align-self:end}
+
+.platos.bento{grid-template-columns:1fr 1fr;gap:9px}
+.platos.bento .hueco{width:100%;height:74px}
+/* uno de cada cuatro ocupa el ancho entero: eso es lo que hace un bento
+   y no una cuadrícula. */
+.platos.bento .plato:nth-child(4n+1){grid-column:span 2}
+.platos.bento .plato:nth-child(4n+1) .hueco{height:104px}
+.platos.bento .desc{display:none}
+.platos.bento .plato:nth-child(4n+1) .desc{display:-webkit-box;-webkit-line-clamp:2;
+  line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.platos.libre{gap:20px}
+/* sin tarjeta: la foto manda y el texto va debajo, nunca encima —sobre el
+   durazno el texto claro no llega al contraste y el oscuro se ensucia. */
+.platos.libre .plato{background:transparent;border:0;padding:0;gap:0}
+.platos.libre .hueco{width:100%;height:clamp(130px,34vw,164px);
+  border-radius:var(--r-interno)}
+.platos.libre h5{font-size:1.04rem;margin-top:11px}
+.platos.libre .desc{font-size:.78rem}
+.platos.libre .col-der{margin-top:9px}
 .plato{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;
   align-items:center;padding:10px;border-radius:var(--r-interno);
   background:rgba(245,239,226,.6);border:1px solid rgba(42,38,32,.07);
@@ -540,9 +615,16 @@ footer b{color:var(--tinta)}
             <span class="en">Thumb-readable: no pinch-zooming a PDF.</span></li>
           <li><span class="es">Agotar un plato es un clic, no rehacer la carta.</span>
             <span class="en">Marking a dish sold out is one click, not a redesign.</span></li>
+          <li><span class="es"><b>Cuatro formas de acomodarla</b>, ahí al lado:
+            tarjetas, carrusel, bento o libre. Escógela y mírala cambiar.</span>
+            <span class="en"><b>Four ways to lay it out</b>, right there: cards,
+            carousel, bento or free. Pick one and watch it change.</span></li>
         </ul>
       </div>
       <div class="pieza">
+        <div class="con-rail">
+        <div class="rail" role="tablist" id="rail"
+             aria-label="Forma de acomodar la carta"></div>
         <div class="tel">
           <div class="tel-pantalla">
             <div class="tel-barra"><span class="hora">12:41</span><span>LTE</span><span>100%</span></div>
@@ -565,6 +647,7 @@ footer b{color:var(--tinta)}
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -1062,7 +1145,28 @@ var CATS = [
   {id:'postres', es:'Postres', en:'Desserts'}
 ];
 
-var filtro = 'todo', carrito = {};
+/* Las cuatro formas de acomodar la carta. El dibujito importa: dice la forma
+   antes de leer la palabra, que es justo lo que se está escogiendo. */
+var FORMAS = [
+  {id:'tarjetas', es:'Tarjetas', en:'Cards',
+   ic:'<rect x="2" y="3" width="20" height="5" rx="1.6"/>' +
+      '<rect x="2" y="9.5" width="20" height="5" rx="1.6"/>' +
+      '<rect x="2" y="16" width="20" height="5" rx="1.6"/>'},
+  {id:'carrusel', es:'Carrusel', en:'Carousel',
+   ic:'<rect x="2" y="4" width="8" height="16" rx="2"/>' +
+      '<rect x="12" y="4" width="8" height="16" rx="2"/>' +
+      '<rect x="22" y="4" width="4" height="16" rx="2" opacity=".45"/>'},
+  {id:'bento', es:'Bento', en:'Bento',
+   ic:'<rect x="2" y="3" width="12" height="18" rx="2"/>' +
+      '<rect x="16" y="3" width="6" height="8" rx="2"/>' +
+      '<rect x="16" y="13" width="6" height="8" rx="2"/>'},
+  {id:'libre', es:'Libre', en:'Free',
+   ic:'<rect x="2" y="3" width="20" height="10" rx="2"/>' +
+      '<rect x="2" y="15.4" width="13" height="2.6" rx="1.3"/>' +
+      '<rect x="2" y="19.2" width="8" height="2.6" rx="1.3"/>'}
+];
+
+var filtro = 'todo', forma = 'tarjetas', carrito = {};
 
 function enIngles(){ return location.hash === '#en'; }
 
@@ -1079,25 +1183,68 @@ function pintaPestanas(){
   });
 }
 
+function pintaRail(){
+  var c = $('#rail'); if (!c) return;
+  c.innerHTML = '';
+  FORMAS.forEach(function(f){
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', f.id === forma ? 'true' : 'false');
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + f.ic + '</svg>' +
+      '<span class="es">' + f.es + '</span><span class="en">' + f.en + '</span>';
+    b.addEventListener('click', function(){
+      forma = f.id; pintaRail(); pintaPlatos();
+      /* la carta vuelve arriba: si quedaba a media altura, el cambio de
+         forma no se ve y parece que el botón no hizo nada. */
+      var cuerpo = $('#telCuerpo');
+      if (cuerpo) cuerpo.scrollTo({top:0, behavior: quieto ? 'auto' : 'smooth'});
+    });
+    c.appendChild(b);
+  });
+}
+
+/* Un solo marcado de plato para las cuatro formas: lo que cambia es el CSS.
+   Por eso el «+» y el carrito siguen funcionando igual en todas. */
+function hazPlato(p){
+  var el = document.createElement('article');
+  el.className = 'plato';
+  el.innerHTML =
+    '<span class="hueco" aria-hidden="true"><span>' +
+      '<span class="es">tu foto</span><span class="en">your photo</span></span></span>' +
+    '<div><h5><span class="es">' + p.nom + '</span><span class="en">' + p.en + '</span></h5>' +
+    '<p class="desc"><span class="es">' + p.d + '</span><span class="en">' + p.de + '</span></p></div>' +
+    '<div class="col-der"><span class="precio">' + pesos(p.p) + '</span>' +
+    '<button class="mas" type="button" aria-label="Agregar">+</button></div>';
+  el.querySelector('.mas').addEventListener('click', function(){ agrega(p); });
+  return el;
+}
+
 function pintaPlatos(){
   var c = $('#platos');
+  c.className = 'platos' + (forma === 'tarjetas' ? '' : ' ' + forma);
   c.innerHTML = '';
-  CARTA.filter(function(p){ return filtro === 'todo' || p.cat === filtro; })
-       .forEach(function(p, i){
-    var el = document.createElement('article');
-    el.className = 'plato';
-    el.innerHTML =
-      '<span class="hueco" aria-hidden="true"><span>' +
-        '<span class="es">tu foto</span><span class="en">your photo</span></span></span>' +
-      '<div><h5><span class="es">' + p.nom + '</span><span class="en">' + p.en + '</span></h5>' +
-      '<p class="desc"><span class="es">' + p.d + '</span><span class="en">' + p.de + '</span></p></div>' +
-      '<div class="col-der"><span class="precio">' + pesos(p.p) + '</span>' +
-      '<button class="mas" type="button" aria-label="Agregar">+</button></div>';
-    el.querySelector('.mas').addEventListener('click', function(){
-      agrega(p);
+
+  if (forma === 'carrusel'){
+    CATS.filter(function(k){
+      return k.id !== 'todo' && (filtro === 'todo' || k.id === filtro);
+    }).forEach(function(k){
+      var dentro = CARTA.filter(function(p){ return p.cat === k.id; });
+      if (!dentro.length) return;
+      var g = document.createElement('section');
+      g.className = 'grupo';
+      g.innerHTML = '<h6><span class="es">' + k.es + '</span>' +
+                    '<span class="en">' + k.en + '</span></h6>';
+      var tira = document.createElement('div');
+      tira.className = 'tira';
+      dentro.forEach(function(p){ tira.appendChild(hazPlato(p)); });
+      g.appendChild(tira);
+      c.appendChild(g);
     });
-    c.appendChild(el);
-  });
+    return;
+  }
+
+  CARTA.filter(function(p){ return filtro === 'todo' || p.cat === filtro; })
+       .forEach(function(p){ c.appendChild(hazPlato(p)); });
 }
 
 function agrega(p){
@@ -1267,7 +1414,7 @@ function pintaResumenFinal(){
 carrito['Bandeja de la casa'] = {p:CARTA[0], n:1};
 carrito['Limonada de panela'] = {p:CARTA[6], n:1};
 
-pintaPestanas(); pintaPlatos(); pintaCarrito(); pintaTemporada();
+pintaRail(); pintaPestanas(); pintaPlatos(); pintaCarrito(); pintaTemporada();
 pintaResumenPago(); pintaResumenFinal(); escribeWa();
 
 $('#btnDomicilio').addEventListener('click', function(){

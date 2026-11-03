@@ -23,6 +23,11 @@ funcionando al final.
 Lo que de verdad funciona, porque es el argumento entero:
 
 - La carta filtra por categoría y suma el pedido en pesos.
+- **Las cuatro formas de acomodarla**, en el riel de al lado: tarjetas,
+  carrusel, bento y libre. Se escogen y la carta se rearma de verdad; el
+  marcado de cada plato es el mismo en las cuatro y solo cambia el CSS, por
+  eso el «+» y el carrito siguen sirviendo igual. En carrusel se arma una tira
+  por categoría, que es como se ve una carta así de verdad.
 - El mensaje de WhatsApp **se escribe solo** con los platos, el total y la
   dirección si es domicilio.
 - El recorrido de pago entero: resumen, medio de pago y confirmación.
@@ -55,6 +60,10 @@ Tres decisiones que conviene no deshacer sin medir:
 3. **El cambio de idioma cuelga de `:has(#en:target)` a propósito.** Un
    `.en{display:none}` pelado lo tumba cualquier regla local que toque
    `display` —pasó con `.cifras-hero span`— y salen los dos idiomas a la vez.
+4. **El padding de sección va en `main > section`, con el hijo directo.** Sin
+   él, el `<section>` de cada categoría del carrusel heredaba 90 px y abría un
+   hueco de media pantalla. Lo mismo que pasó con el `<main>` anidado de
+   Alquimia: una regla de elemento pelada muerde en cuanto se anida algo.
 
 El dominio va en una línea y nada más: que al valor del trabajo se le suma el
 del nombre de la página, y que varía según el que se escoja. La cifra exacta se
