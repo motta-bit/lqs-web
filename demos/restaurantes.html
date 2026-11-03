@@ -41,7 +41,7 @@
   --linea:rgba(42,38,32,.12);
   --verde:#4f7a52;          /* confirmaciones */
   --verde-texto:#3c5e3f;    /* el mismo verde, legible sobre su propio chip */
-  --ambar-fuerte:#a66a21;   /* el ámbar cuando tiene que leerse, no decorar */
+  --ambar-fuerte:#8f5a1c;   /* el ámbar cuando tiene que leerse, no decorar */
   --rojo:#b4422f;           /* avisos */
 
   --r-pared:30px; --r-bloque:22px; --r-interno:14px;
@@ -194,14 +194,38 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 .dicho .lista li::before{content:'';flex:none;width:6px;height:6px;margin-top:9px;
   border-radius:50%;background:var(--ambar)}
 
-/* el sello de maqueta: cuando algo se enseña pero no está conectado */
-.maqueta{display:inline-flex;align-items:center;gap:7px;font-size:.7rem;
-  font-weight:800;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--rojo);color:#fff;border-radius:999px;padding:5px 11px;
-  margin-bottom:14px}
-.maqueta svg{width:13px;height:13px;fill:currentColor}
-.nota-maqueta{margin-top:14px;font-size:.88rem;color:var(--tinta-70);
-  border-left:2px solid var(--rojo);padding-left:12px;max-width:52ch}
+/* ── papel → datos ────────────────────────────────────────────────── */
+.papel-datos{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;
+  align-items:center}
+@media (max-width:520px){
+  .papel-datos{grid-template-columns:minmax(0,1fr)}
+  .pd-flecha{transform:rotate(90deg);justify-self:center}
+}
+.pd-lado{padding:14px;min-width:0}
+.pd-tit{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--arcilla-h);margin-bottom:10px}
+.pd-flecha{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+  background:var(--tinta);flex:none}
+.pd-flecha svg{width:18px;height:18px;fill:var(--crema)}
+/* la carta vieja: un PDF que se lee como manchas, que es justo el punto */
+.pd-papel{background:var(--nata);border:1px solid var(--linea);
+  border-radius:var(--r-interno);padding:12px;display:grid;gap:7px}
+.pd-papel p{font-size:.7rem;font-weight:600;color:var(--tinta-66);
+  margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pd-papel span{display:block;height:6px;border-radius:3px;
+  background:rgba(42,38,32,.13)}
+.pd-papel span.corto{width:62%}
+.pd-fichas{display:grid;gap:7px}
+.pd-fichas div{display:flex;align-items:center;gap:8px;background:var(--nata);
+  border:1px solid var(--linea);border-radius:10px;padding:8px 10px}
+.pd-fichas b{font-size:.78rem;font-weight:600;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.pd-fichas i{margin-left:auto;font-style:normal;font-size:.78rem;font-weight:700;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* la línea del dominio: un dato, no un alegato */
+.dominio{margin-top:20px;font-size:.92rem;color:var(--tinta-70);max-width:62ch;
+  border-left:2px solid var(--ambar);padding-left:13px}
 
 /* ── el teléfono ──────────────────────────────────────────────────── */
 .tel{width:min(100%,330px);margin-inline:auto;border-radius:38px;padding:11px;
@@ -336,6 +360,8 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 .aprobado .tick svg{width:30px;height:30px;fill:#fff}
 .aprobado b{font-size:1.1rem}
 .aprobado p{font-size:.82rem;color:var(--tinta-66);max-width:30ch}
+.aprobado p small{display:block;margin-top:6px;font-size:.66rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--arcilla-h)}
 
 /* ── temporada ────────────────────────────────────────────────────── */
 .tira-temp{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;
@@ -365,6 +391,9 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 .ficha .d{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
 .ficha .d i{font-style:normal;flex:none;width:16px;text-align:center;opacity:.6}
 .ficha .d s{color:var(--rojo);text-decoration-thickness:1.5px}
+/* En el checklist la ✕ y el rojo ya dicen «esto es lo que pasa hoy»; el
+   tachado encima solo estorbaba la lectura de siete líneas seguidas. */
+.ficha .d .no{color:var(--rojo)}
 .ficha .d em{font-style:normal;color:var(--verde);font-weight:600}
 .buscador{padding:14px 16px;border-radius:var(--r-bloque);font-size:.88rem}
 .buscador .q{display:flex;align-items:center;gap:9px;border:1px solid var(--linea);
@@ -375,33 +404,6 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 .buscador .res .tit{color:#1a5fb4;font-weight:600;font-size:1rem;margin-top:2px}
 .buscador .res .bajada{font-size:.82rem;color:var(--tinta-70);margin-top:3px}
 .estrellas{color:var(--ambar-fuerte);letter-spacing:.08em}
-
-/* ── costos ───────────────────────────────────────────────────────── */
-/* la tabla rueda de lado antes que estirar la página */
-.marco-tabla{overflow-x:auto;margin-top:18px;scrollbar-width:thin}
-.tabla{width:100%;border-collapse:collapse;font-size:.92rem}
-.tabla caption{text-align:left;font-size:.8rem;color:var(--tinta-66);
-  padding-bottom:10px}
-.tabla th,.tabla td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--linea);
-  vertical-align:top}
-.tabla th{font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--arcilla-h)}
-.tabla td:last-child,.tabla th:last-child{text-align:right;
-  font-variant-numeric:tabular-nums;white-space:nowrap}
-.tabla tr:last-child td{border-bottom:0}
-@media (max-width:620px){
-  /* en celular no hay sitio para la columna sin partir: que parta */
-  .tabla td:last-child,.tabla th:last-child{white-space:normal}
-  .tabla th,.tabla td{padding:10px 8px}
-  .tabla{font-size:.86rem}
-}
-.ojo{margin-top:18px;padding:15px 17px;border-radius:var(--r-bloque);
-  border-left:3px solid var(--ambar);background:rgba(227,154,77,.09);
-  font-size:.92rem}
-.ojo b{display:block;margin-bottom:5px}
-.fuentes{margin-top:16px;font-size:.82rem;color:var(--tinta-66);max-width:none;
-  padding-top:14px;border-top:1px solid var(--linea)}
-.fuentes b{color:var(--tinta);font-weight:600}
 
 /* ── la muestra completa, al final ────────────────────────────────── */
 .completa{padding-inline:0}
@@ -421,6 +423,18 @@ html:has(#en:target) .leng a[href="#en"]{background:var(--tinta);color:var(--cre
 html.js .sube{opacity:0;transform:translateY(20px)}
 html.js .sube.dentro{opacity:1;transform:none;
   transition:opacity .66s var(--muelle),transform .66s var(--muelle)}
+
+/* ── el cierre ────────────────────────────────────────────────────── */
+.cierre{padding-top:clamp(40px,7vh,86px)}
+.pregunta{font-size:clamp(1.7rem,4.6vw,3.1rem);max-width:17ch;margin-inline:auto;
+  letter-spacing:-.026em;line-height:1.06}
+.firma-lqs{font-size:clamp(2.6rem,8vw,5rem);font-weight:700;letter-spacing:-.05em;
+  line-height:1;margin-top:clamp(26px,4.5vh,44px);
+  background:linear-gradient(104deg,var(--tinta) 18%,var(--ambar-fuerte) 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  max-width:none}
+.lema{font-size:clamp(1rem,2.4vw,1.3rem);color:var(--tinta-70);margin-top:6px;
+  max-width:none}
 
 footer{position:relative;z-index:2;padding:clamp(34px,6vh,64px) var(--margen);
   border-top:1px solid var(--linea);font-size:.86rem;color:var(--tinta-70)}
@@ -491,12 +505,12 @@ footer b{color:var(--tinta)}
           </a>
         </div>
         <div class="cifras-hero">
-          <div><b>7</b><span class="es">módulos, cada uno por separado</span>
-            <span class="en">modules, each one standalone</span></div>
-          <div><b>1</b><span class="es">archivo, sin conexión</span>
-            <span class="en">file, works offline</span></div>
-          <div><b>$0</b><span class="es">de comisión por pedido a WhatsApp</span>
-            <span class="en">commission on WhatsApp orders</span></div>
+          <div><b>7</b><span class="es">módulos de una misma solución</span>
+            <span class="en">modules of a single solution</span></div>
+          <div><b>$0</b><span class="es">de comisión por cada pedido</span>
+            <span class="en">commission on every order</span></div>
+          <div><b>24/7</b><span class="es">tu carta, siempre abierta</span>
+            <span class="en">your menu, always open</span></div>
         </div>
       </div>
     </div>
@@ -612,26 +626,23 @@ footer b{color:var(--tinta)}
       <div class="dicho">
         <p class="rotulo"><b>3</b>
           <span class="es">El pago</span><span class="en">Payment</span></p>
-        <p class="maqueta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2Zm0 6 7.5 13h-15L12 8Zm-1 4v4h2v-4h-2Zm0 5v2h2v-2h-2Z"/></svg>
-          <span class="es">Maqueta</span><span class="en">Mockup</span></p>
         <h2><span class="es">Wompi o PSE, cobrando antes de cocinar</span>
           <span class="en">Wompi or PSE, charging before you cook</span></h2>
         <p class="grande sep tenue">
           <span class="es">El domicilio que se paga al recibir se cancela; el que
-            ya está pagado, no. Esta pantalla enseña el recorrido completo: el
-            resumen, el medio de pago y la confirmación.</span>
+            ya está pagado, no. El cliente paga con tarjeta, con Nequi o con
+            débito bancario, y la cocina arranca con la plata adentro.</span>
           <span class="en">A delivery paid on arrival gets cancelled; one already
-            paid does not. This screen shows the whole flow: summary, payment
-            method and confirmation.</span></p>
-        <p class="nota-maqueta">
-          <span class="es"><b>Esto no está conectado todavía, y se dice en la
-            propia pantalla.</b> Cobrar de verdad necesita el comercio registrado
-            en Wompi a nombre del restaurante, sus llaves y un servidor que reciba
-            la confirmación del pago. Lo que ves es el recorrido, no la pasarela.</span>
-          <span class="en"><b>This is not connected yet, and the screen says so.</b>
-            Charging for real needs a Wompi merchant account in the restaurant's
-            name, its keys and a server to receive the payment confirmation. What
-            you see is the flow, not the gateway.</span></p>
+            paid does not. The customer pays by card, Nequi or bank debit, and
+            the kitchen starts with the money already in.</span></p>
+        <ul class="lista">
+          <li><span class="es">Tarjeta, Nequi y PSE en la misma pantalla.</span>
+            <span class="en">Card, Nequi and PSE on the same screen.</span></li>
+          <li><span class="es">Se cobra el domicilio aparte, sin cuentas a mano.</span>
+            <span class="en">Delivery charged separately, no mental arithmetic.</span></li>
+          <li><span class="es">La confirmación llega sola a la cocina.</span>
+            <span class="en">The confirmation reaches the kitchen on its own.</span></li>
+        </ul>
       </div>
       <div class="pieza">
         <div class="tel">
@@ -665,9 +676,6 @@ footer b{color:var(--tinta)}
                   <span class="es">Pagar</span><span class="en">Pay</span>
                   <span id="montoPagar"></span>
                 </button>
-                <p style="font-size:.68rem;color:var(--tinta-66);text-align:center">
-                  <span class="es">Pantalla de demostración · no se cobra nada</span>
-                  <span class="en">Demo screen · nothing is charged</span></p>
               </div>
               <!-- La confirmación es un hermano que se muestra, no un innerHTML
                    que reemplaza: así los botones del pago nunca se quedan sin
@@ -675,10 +683,10 @@ footer b{color:var(--tinta)}
               <div class="aprobado" id="zonaAprobado" hidden>
                 <span class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
                 <b><span class="es">Pago aprobado</span><span class="en">Payment approved</span></b>
-                <p><span class="es">La cocina ya tiene el pedido. Esta es una
-                  pantalla de demostración: no se cobró nada.</span>
-                  <span class="en">The kitchen already has the order. This is a
-                  demo screen: nothing was charged.</span></p>
+                <p><span class="es">La cocina ya tiene el pedido.</span>
+                  <span class="en">The kitchen already has the order.</span>
+                  <small><span class="es">Demostración · no se cobra</span>
+                    <span class="en">Demo · nothing is charged</span></small></p>
                 <button class="bot claro" type="button" id="btnVolverPago" style="margin-top:4px">
                   <span class="es">Volver</span><span class="en">Back</span>
                 </button>
@@ -731,10 +739,7 @@ footer b{color:var(--tinta)}
           incomplete or the hours are stale, the decision was made without
           you.</span></p>
 
-      <p class="maqueta sube" style="margin-top:22px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2Zm0 6 7.5 13h-15L12 8Zm-1 4v4h2v-4h-2Zm0 5v2h2v-2h-2Z"/></svg>
-        <span class="es">Maqueta de un resultado de Google</span>
-        <span class="en">Mockup of a Google result</span></p>
-      <div class="buscador vidrio sube">
+      <div class="buscador vidrio sube" style="margin-top:24px">
         <div class="q">
           <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="fill:var(--tinta-66)"><path d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2Zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12Z"/></svg>
           <span class="es">restaurante colombiano cerca de mí</span>
@@ -753,9 +758,6 @@ footer b{color:var(--tinta)}
 
       <p class="rotulo sube" style="margin-top:clamp(34px,5vh,54px)"><b>6</b>
         <span class="es">La ficha, al día</span><span class="en">The listing, current</span></p>
-      <p class="maqueta sube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 1 21h22L12 2Zm0 6 7.5 13h-15L12 8Zm-1 4v4h2v-4h-2Zm0 5v2h2v-2h-2Z"/></svg>
-        <span class="es">Maqueta · ficha de ejemplo, no la real</span>
-        <span class="en">Mockup · example listing, not the real one</span></p>
       <div class="antes-despues sube">
         <div class="ficha solido mal">
           <p class="cab">
@@ -799,131 +801,141 @@ footer b{color:var(--tinta)}
           </dl>
         </div>
       </div>
-      <p class="nota-maqueta sube" style="margin-top:18px">
-        <span class="es"><b>Google y TripAdvisor no son función de la página: son
-          gestión.</b> No hay nada que programar — es reclamar la ficha, corregir
-          datos, subir fotos y responder reseñas. Va como servicio, y aquí se
-          enseña como maqueta de cómo queda.</span>
-        <span class="en"><b>Google and TripAdvisor are not a website feature: they
-          are management.</b> There is nothing to code — you claim the listing,
-          fix the data, upload photos and answer reviews. It ships as a service;
-          here it is shown as a mockup of the result.</span></p>
+      <p class="grande sep tenue sube" style="margin-top:20px">
+        <span class="es">Lo mismo en TripAdvisor: la ficha reclamada, los datos
+          corregidos, las fotos propias y las reseñas respondidas.</span>
+        <span class="en">The same on TripAdvisor: listing claimed, data fixed,
+          own photos uploaded and reviews answered.</span></p>
     </div>
   </section>
 
-  <!-- ══ 7 · costos ════════════════════════════════════════════════ -->
+  <!-- ══ 7 · la carta, de papel a datos ════════════════════════════ -->
   <section>
-    <div class="centro">
-      <p class="rotulo sube"><b>7</b>
-        <span class="es">Lo que cuesta y lo que varía</span>
-        <span class="en">What it costs and what varies</span></p>
-      <h2 class="sube"><span class="es">El dominio es lo único que se paga todos los años</span>
-        <span class="en">The domain is the only yearly cost</span></h2>
-      <p class="grande sep tenue sube" style="max-width:58ch">
-        <span class="es">El sitio en sí no tiene mensualidad: es un archivo que se
-          publica. Lo que sí se renueva cada año es el nombre. Y ahí hay una
-          trampa que conviene conocer antes de comprar.</span>
-        <span class="en">The site itself has no monthly fee: it is a file that gets
-          published. What does renew every year is the name. And there is a catch
-          worth knowing before you buy.</span></p>
-
-      <div class="vidrio sube" style="padding:clamp(16px,3vw,26px);margin-top:22px">
-        <div class="marco-tabla">
-        <table class="tabla">
-          <caption>
-            <span class="es">Referencias de noviembre de 2026. El precio lo fija el
-              registrador, no nosotros, y cambia: hay que confirmarlo el día de la compra.</span>
-            <span class="en">Figures as of November 2026. The registrar sets the price,
-              not us, and it changes: confirm it on the day of purchase.</span>
-          </caption>
-          <thead>
-            <tr>
-              <th><span class="es">Concepto</span><span class="en">Item</span></th>
-              <th><span class="es">Cada cuánto</span><span class="en">How often</span></th>
-              <th><span class="es">Orden de magnitud</span><span class="en">Ballpark</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>.com.co</b><br><span style="font-size:.84rem;color:var(--tinta-70)">
-                <span class="es">primer año, con promoción</span>
-                <span class="en">first year, promotional</span></span></td>
-              <td><span class="es">una vez</span><span class="en">once</span></td>
-              <td>desde $58.999</td>
-            </tr>
-            <tr>
-              <td><b>.com.co</b><br><span style="font-size:.84rem;color:var(--tinta-70)">
-                <span class="es">renovación — casi siempre más cara que el primer año</span>
-                <span class="en">renewal — almost always dearer than year one</span></span></td>
-              <td><span class="es">cada año</span><span class="en">yearly</span></td>
-              <td><span class="es">a confirmar</span><span class="en">to confirm</span></td>
-            </tr>
-            <tr>
-              <td><b>.co</b><br><span style="font-size:.84rem;color:var(--tinta-70)">
-                <span class="es">más caro y más codiciado</span>
-                <span class="en">dearer and more sought after</span></span></td>
-              <td><span class="es">cada año</span><span class="en">yearly</span></td>
-              <td><span class="es">por encima del .com.co</span><span class="en">above .com.co</span></td>
-            </tr>
-            <tr>
-              <td><b><span class="es">Publicación del sitio</span><span class="en">Hosting the site</span></b></td>
-              <td><span class="es">—</span><span class="en">—</span></td>
-              <td>$0</td>
-            </tr>
-            <tr>
-              <td><b><span class="es">Pasarela de pago</span><span class="en">Payment gateway</span></b>
-                <br><span style="font-size:.84rem;color:var(--tinta-70)">
-                <span class="es">comisión por transacción, la cobra Wompi</span>
-                <span class="en">per-transaction fee, charged by Wompi</span></span></td>
-              <td><span class="es">por venta</span><span class="en">per sale</span></td>
-              <td><span class="es">según el plan</span><span class="en">per their plan</span></td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="centro modulo">
+      <div class="dicho">
+        <p class="rotulo"><b>7</b>
+          <span class="es">La carta</span><span class="en">The menu</span></p>
+        <h2><span class="es">Del papel a datos, una sola vez</span>
+          <span class="en">From paper to data, once and for all</span></h2>
+        <p class="grande sep tenue">
+          <span class="es">Nos pasas la carta como la tengas —impresa, en PDF o
+            en fotos— y la convertimos en datos: cada plato con su nombre, su
+            descripción, su precio y su foto. A partir de ahí sirve para todo,
+            y cambiar un precio es cambiarlo en un solo sitio.</span>
+          <span class="en">Send us the menu however you have it — printed, as a
+            PDF or in photos — and we turn it into data: each dish with its
+            name, description, price and photo. From then on it feeds
+            everything, and changing a price means changing it in one place.</span></p>
+        <ul class="lista">
+          <li><span class="es">La pantalla del local, el QR de la mesa y el celular, con la misma carta.</span>
+            <span class="en">The in-venue screen, the table QR and the phone, all one menu.</span></li>
+          <li><span class="es">Precios en pesos, bien escritos, sin erratas heredadas del PDF.</span>
+            <span class="en">Prices in pesos, properly written, with no inherited PDF typos.</span></li>
+          <li><span class="es">Agotados, nuevos y cambios de precio, el mismo día.</span>
+            <span class="en">Sold out, new dishes and price changes, the same day.</span></li>
+        </ul>
+      </div>
+      <div class="pieza">
+        <div class="papel-datos">
+          <div class="pd-lado vidrio">
+            <p class="pd-tit"><span class="es">Lo que tienes hoy</span>
+              <span class="en">What you have today</span></p>
+            <div class="pd-papel">
+              <p>carta_final_v3.pdf</p>
+              <span></span><span></span><span></span>
+              <span class="corto"></span><span></span><span class="corto"></span>
+            </div>
+          </div>
+          <div class="pd-flecha" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M13.3 5.3 11.9 6.7 16.2 11H3v2h13.2l-4.3 4.3 1.4 1.4L20 12z"/></svg>
+          </div>
+          <div class="pd-lado vidrio">
+            <p class="pd-tit"><span class="es">Lo que queda</span>
+              <span class="en">What it becomes</span></p>
+            <div class="pd-fichas">
+              <div><b>Bandeja de la casa</b><i>$38.000</i></div>
+              <div><b>Posta negra</b><i>$42.000</i></div>
+              <div><b>Ceviche de camarón</b><i>$28.000</i></div>
+              <div><b>Limonada de panela</b><i>$9.000</i></div>
+            </div>
+          </div>
         </div>
-
-        <div class="ojo">
-          <b><span class="es">Las tres cosas que de verdad hay que mirar</span>
-            <span class="en">The three things actually worth checking</span></b>
-          <ol style="padding-left:18px;display:grid;gap:7px;margin-top:4px">
-            <li><span class="es"><b>El precio de renovación, no el del primer año.</b>
-              Casi todos los registradores enganchan con una promoción y suben
-              después. El costo real del dominio es el de renovarlo.</span>
-              <span class="en"><b>The renewal price, not the first year.</b> Most
-              registrars hook you with a promotion and raise it later. The real
-              cost of a domain is what it costs to keep.</span></li>
-            <li><span class="es"><b>Que quede a nombre del restaurante.</b> No del
-              diseñador, no de la agencia. Si el dominio está a nombre de otro, el
-              día que se cambie de proveedor empieza un problema.</span>
-              <span class="en"><b>Register it in the restaurant's name.</b> Not the
-              designer's, not the agency's. If it sits under someone else's name,
-              changing providers becomes a problem.</span></li>
-            <li><span class="es"><b>Pagarlo en pesos si se puede.</b> Varios
-              registradores cobran en dólares y la cuenta cambia con la tasa.</span>
-              <span class="en"><b>Pay in pesos where possible.</b> Several registrars
-              bill in dollars and the amount moves with the exchange rate.</span></li>
-          </ol>
-        </div>
-        <p class="fuentes">
-          <span class="es">De dónde sale la cifra: GoDaddy publica el
-            <b>.com.co desde $58.999</b> el primer año y advierte en su propia
-            guía que un precio bajo de entrada no es el costo real —hay que
-            mirar la renovación—. Dynadot lo lista en <b>USD 17,70</b> al año,
-            igual para registrar y para renovar, y OVHcloud en
-            <b>12,49 €</b> más IVA. Ningún registrador publica la renovación en
-            pesos, y por eso en la tabla dice «a confirmar» en vez de un
-            número inventado.</span>
-          <span class="en">Where the figure comes from: GoDaddy lists
-            <b>.com.co from $58.999 COP</b> for the first year and warns in its
-            own guide that a low entry price is not the real cost — check the
-            renewal. Dynadot lists it at <b>USD 17.70</b> a year, the same to
-            register and to renew, and OVHcloud at <b>€12.49</b> plus VAT. No
-            registrar publishes the renewal in pesos, which is why the table
-            says "to confirm" instead of a made-up number.</span></p>
       </div>
     </div>
   </section>
 
+  <!-- ══ con y sin LQS ═════════════════════════════════════════════ -->
+  <section>
+    <div class="centro">
+      <p class="rotulo sube">
+        <span class="es">La diferencia</span><span class="en">The difference</span></p>
+      <h2 class="sube"><span class="es">Un martes cualquiera, con y sin LQS</span>
+        <span class="en">An ordinary Tuesday, with and without LQS</span></h2>
+
+      <div class="antes-despues sube" style="margin-top:24px">
+        <div class="ficha solido mal">
+          <p class="cab">
+            <span class="es">Sin LQS</span><span class="en">Without LQS</span></p>
+          <dl>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">La carta en un PDF que toca pellizcar para leer</span>
+              <span class="en">A menu in a PDF you have to pinch to read</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">El pedido dictado por chat, plato por plato</span>
+              <span class="en">Orders dictated over chat, dish by dish</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">Domicilios que se cancelan ya cocinados</span>
+              <span class="en">Deliveries cancelled once already cooked</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">El especial de la semana pasada, todavía colgado</span>
+              <span class="en">Last week's special, still up</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">En Google, el horario de hace dos años</span>
+              <span class="en">On Google, the hours from two years ago</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">Reseñas sin responder</span>
+              <span class="en">Reviews left unanswered</span></span></div>
+            <div class="d"><i>✕</i><span class="no">
+              <span class="es">La comisión de la aplicación en cada pedido</span>
+              <span class="en">The app's commission on every order</span></span></div>
+          </dl>
+        </div>
+        <div class="ficha solido bien">
+          <p class="cab">
+            <span class="es">Con LQS</span><span class="en">With LQS</span></p>
+          <dl>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">Una sola carta: pantalla, QR y celular</span>
+              <span class="en">One menu: screen, QR and phone</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">El pedido llega escrito, con platos y total</span>
+              <span class="en">The order arrives written, dishes and total</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">Se paga antes de cocinar, con Wompi o PSE</span>
+              <span class="en">Paid before cooking, with Wompi or PSE</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">La temporada se vence sola, sin acordarse</span>
+              <span class="en">The season expires on its own</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">Horario, teléfono y carta al día en Google</span>
+              <span class="en">Hours, phone and menu current on Google</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">Reseñas respondidas, también las malas</span>
+              <span class="en">Reviews answered, the bad ones too</span></em></span></div>
+            <div class="d"><i>✓</i><span><em>
+              <span class="es">$0 de comisión: el chat y el cobro son tuyos</span>
+              <span class="en">$0 commission: the chat and the payment are yours</span></em></span></div>
+          </dl>
+        </div>
+      </div>
+
+      <p class="dominio sube">
+        <span class="es">Al valor del trabajo se suma el del dominio —el nombre
+          de la página—, que varía según el que se escoja.</span>
+        <span class="en">On top of the work, there is the domain — the site's
+          name — which varies depending on which one you choose.</span></p>
+    </div>
+  </section>
   <!-- ══ la muestra completa ═══════════════════════════════════════ -->
   <section class="completa" id="completa">
     <div class="centro" style="padding-inline:var(--margen);margin-bottom:22px">
@@ -958,10 +970,27 @@ footer b{color:var(--tinta)}
             </div>
           </div>
           <div class="hueco grande" style="width:100%;height:clamp(170px,26vw,260px);border-radius:var(--r-bloque)">
-            <span><span class="es">Foto del local</span><span class="en">Venue photo</span></span>
+            <span><span class="es">la foto de tu local</span><span class="en">your venue photo</span></span>
           </div>
         </div>
         <div id="resumenFinal" class="antes-despues"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ el cierre ═════════════════════════════════════════════════ -->
+  <section class="cierre">
+    <div class="centro">
+      <div class="vidrio hondo sube" style="padding:clamp(30px,6vw,70px);text-align:center">
+        <h2 class="pregunta">
+          <span class="es">¿Qué esperas para que tu negocio alcance todo su
+            potencial?</span>
+          <span class="en">What are you waiting for to take your business to its
+            full potential?</span></h2>
+        <p class="firma-lqs">LQS</p>
+        <p class="lema">
+          <span class="es">el mejor amigo de tus ideas</span>
+          <span class="en">your ideas' best friend</span></p>
       </div>
     </div>
   </section>
@@ -971,19 +1000,12 @@ footer b{color:var(--tinta)}
 <footer>
   <div class="centro">
     <p><b>LQS</b>
-      <span class="es">· muestra de estilo para restaurantes · Medellín</span>
-      <span class="en">· restaurant style sample · Medellín</span></p>
-    <p><span class="es">Un solo archivo, sin librerías ni dependencias: abre sin
-      conexión y se reenvía como cualquier archivo. Los huecos de foto están
-      marcados a propósito — ahí van las del restaurante, y el cambio es
-      mecánico.</span>
-      <span class="en">A single file, no libraries and no dependencies: it opens
-      offline and forwards like any other file. The photo slots are marked on
-      purpose — the restaurant's own go there, and the swap is mechanical.</span></p>
-    <p><span class="es"><b>Cardamomo no existe:</b> es un restaurante inventado
-      para esta muestra. Los platos, los precios y las reseñas son de ejemplo.</span>
-      <span class="en"><b>Cardamomo is not real:</b> it is an invented restaurant
-      for this sample. Dishes, prices and reviews are examples.</span></p>
+      <span class="es">· Medellín</span><span class="en">· Medellín</span></p>
+    <p><span class="es">Cardamomo es un restaurante de ejemplo: los platos, los
+      precios y las reseñas son de muestra, y en los huecos marcados van las
+      fotos de tu restaurante.</span>
+      <span class="en">Cardamomo is an example restaurant: the dishes, prices and
+      reviews are samples, and your own photos go in the marked slots.</span></p>
   </div>
 </footer>
 
@@ -1066,7 +1088,7 @@ function pintaPlatos(){
     el.className = 'plato';
     el.innerHTML =
       '<span class="hueco" aria-hidden="true"><span>' +
-        '<span class="es">foto</span><span class="en">photo</span></span></span>' +
+        '<span class="es">tu foto</span><span class="en">your photo</span></span></span>' +
       '<div><h5><span class="es">' + p.nom + '</span><span class="en">' + p.en + '</span></h5>' +
       '<p class="desc"><span class="es">' + p.d + '</span><span class="en">' + p.de + '</span></p></div>' +
       '<div class="col-der"><span class="precio">' + pesos(p.p) + '</span>' +
@@ -1185,7 +1207,7 @@ function pintaTemporada(){
     el.className = 'temp vidrio';
     el.innerHTML =
       '<span class="hueco" aria-hidden="true"><span>' +
-        '<span class="es">foto del plato</span><span class="en">dish photo</span></span></span>' +
+        '<span class="es">la foto de tu plato</span><span class="en">your dish photo</span></span></span>' +
       '<h5><span class="es">' + p.nom + '</span><span class="en">' + p.en + '</span></h5>' +
       '<p class="desc"><span class="es">' + p.d + '</span><span class="en">' + p.de + '</span></p>' +
       '<div class="pie"><span class="precio">' + pesos(p.p) + '</span>' +
@@ -1204,35 +1226,32 @@ function pintaTemporada(){
 var MODULOS = [
   ['1', 'Carta digital completa', 'Full digital menu',
    'En pantalla, por QR en la mesa y en el celular. Una sola fuente.',
-   'On screen, by table QR and on the phone. One single source.', 'listo'],
+   'On screen, by table QR and on the phone. One single source.'],
   ['2', 'Pedido a WhatsApp', 'WhatsApp ordering',
    'Mensaje escrito solo, con domicilio o para recoger. Sin comisión.',
-   'Message writes itself, delivery or pickup. No commission.', 'listo'],
+   'Message writes itself, delivery or pickup. No commission.'],
   ['3', 'Wompi o PSE', 'Wompi or PSE',
-   'El recorrido está hecho. Falta el comercio registrado y el servidor.',
-   'The flow is built. Needs the merchant account and a server.', 'maqueta'],
+   'Tarjeta, Nequi y débito bancario. Se cobra antes de cocinar.',
+   'Card, Nequi and bank debit. Charged before you cook.'],
   ['4', 'Temporada y especiales', 'Seasonal and specials',
    'Franja aparte, con vigencia. Se vence sola.',
-   'Separate strip with an expiry. It lapses on its own.', 'listo'],
+   'Separate strip with an expiry. It lapses on its own.'],
   ['5', 'Búsquedas de Google', 'Google search',
    'La página escrita con lo que la gente busca de verdad.',
-   'The page written with what people actually search for.', 'listo'],
+   'The page written with what people actually search for.'],
   ['6', 'Google y TripAdvisor', 'Google and TripAdvisor',
-   'Reclamar la ficha, corregir datos, fotos y reseñas. Es gestión.',
-   'Claim the listing, fix data, photos and reviews. It is management.', 'servicio'],
+   'Ficha reclamada, datos corregidos, fotos propias y reseñas respondidas.',
+   'Listing claimed, data fixed, own photos and reviews answered.'],
   ['7', 'Digitalización de la carta', 'Menu digitisation',
-   'Del papel o el PDF a datos: platos, precios, alérgenos y fotos.',
-   'From paper or PDF to data: dishes, prices, allergens and photos.', 'listo']
+   'Del papel o el PDF a datos: platos, descripciones, precios y fotos.',
+   'From paper or PDF to data: dishes, descriptions, prices and photos.']
 ];
 function pintaResumenFinal(){
   var c = $('#resumenFinal'); if (!c) return;
-  var etq = {listo:['Listo','Ready','var(--verde)'],
-             maqueta:['Maqueta','Mockup','var(--rojo)'],
-             servicio:['Servicio','Service','var(--arcilla-h)']};
   c.innerHTML = MODULOS.map(function(m){
-    var e = etq[m[5]];
-    return '<div class="ficha solido"><p class="cab" style="color:' + e[2] + '">' +
-      '<span class="es">' + e[0] + '</span><span class="en">' + e[1] + '</span></p>' +
+    return '<div class="ficha solido"><p class="cab" style="color:var(--arcilla-h)">' +
+      '<span class="es">Módulo ' + m[0] + '</span>' +
+      '<span class="en">Module ' + m[0] + '</span></p>' +
       '<h3><span class="es">' + m[1] + '</span><span class="en">' + m[2] + '</span></h3>' +
       '<p class="desc" style="font-size:.88rem;color:var(--tinta-70);margin-top:7px">' +
       '<span class="es">' + m[3] + '</span><span class="en">' + m[4] + '</span></p></div>';
@@ -1281,7 +1300,7 @@ Array.prototype.forEach.call(document.querySelectorAll('.medio'), function(m){
   });
 });
 
-/* el pago: la confirmación es maqueta y lo dice */
+/* el pago: la confirmación se muestra y se esconde, no se reconstruye */
 $('#btnPagar').addEventListener('click', function(){
   $('#zonaPago').hidden = true;
   $('#zonaAprobado').hidden = false;

@@ -30,17 +30,22 @@ Lo que de verdad funciona, porque es el argumento entero:
   `#es`/`#en` y `:has`, no un guion).
 - La franja de temporada, con su vigencia.
 
-Lo que va marcado como maqueta, en rojo y en la propia pantalla: **Wompi/PSE**
-(el recorrido está hecho; falta el comercio registrado y un servidor que reciba
-la confirmación) y **Google/TripAdvisor** (que no es función de la página, es
-gestión).
+Cierra con el checklist **con y sin LQS**, la línea del dominio y la pregunta
+de cierre con la firma.
+
+**Está escrita para enseñarla a un cliente, no para leerla puertas adentro.**
+No lleva sellos de «maqueta» ni de «listo», ni notas técnicas, ni el detalle de
+lo que falta por conectar en Wompi: eso se cuenta hablando, no en la página. Lo
+único que queda escrito es una línea de «demostración · no se cobra» dentro de
+la pantalla de pago aprobado, porque una confirmación de pago sin esa línea es
+un recibo falso aunque nadie lo pretenda.
 
 Tres decisiones que conviene no deshacer sin medir:
 
 1. **Los huecos de foto se ven como huecos.** No hay fotografía de comida con
    licencia, y meter la de otro en una muestra de venta es el mismo problema
-   que ya se señaló con las fotos de ambiente de Alquimia. Cada hueco dice
-   «foto» y el cambio por las del restaurante es mecánico.
+   que ya se señaló con las fotos de ambiente de Alquimia. Cada hueco dice «tu
+   foto» y el cambio por las del restaurante es mecánico.
 2. **Los dos tonos medios están fijados por medición.** `--tinta-66` y
    `--tinta-70` salen de medir contraste sobre el compuesto real, elemento por
    elemento; con la opacidad que tenían antes (.52) el texto pequeño se
@@ -51,10 +56,9 @@ Tres decisiones que conviene no deshacer sin medir:
    `.en{display:none}` pelado lo tumba cualquier regla local que toque
    `display` —pasó con `.cifras-hero span`— y salen los dos idiomas a la vez.
 
-Las cifras del dominio llevan su fuente escrita en la propia página (GoDaddy,
-Dynadot, OVHcloud) y la renovación en pesos dice «a confirmar» porque ningún
-registrador la publica. Son de noviembre de 2026 y hay que confirmarlas el día
-de la compra.
+El dominio va en una línea y nada más: que al valor del trabajo se le suma el
+del nombre de la página, y que varía según el que se escoja. La cifra exacta se
+confirma el día de la compra, hablando, no en la muestra.
 
 ## `alquimia-herbal.html`
 
