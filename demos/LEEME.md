@@ -33,7 +33,9 @@ Lo que de verdad funciona, porque es el argumento entero:
 - El recorrido de pago entero: resumen, medio de pago y confirmación.
 - El cambio español/inglés, que funciona **también sin JavaScript** (anclas
   `#es`/`#en` y `:has`, no un guion).
-- La franja de temporada, con su vigencia.
+- La franja de temporada, con su vigencia. El tercer plato de cada temporada
+  también está en la carta, al mismo precio y a propósito: así es como se usa
+  una franja así, y el carrito los junta porque se agrupan por nombre.
 
 Cierra con el checklist **con y sin LQS**, la línea del dominio y la pregunta
 de cierre con la firma.
@@ -45,18 +47,44 @@ lo que falta por conectar en Wompi: eso se cuenta hablando, no en la página. Lo
 la pantalla de pago aprobado, porque una confirmación de pago sin esa línea es
 un recibo falso aunque nadie lo pretenda.
 
-Tres decisiones que conviene no deshacer sin medir:
+### Las fotos
 
-1. **Los huecos de foto se ven como huecos.** No hay fotografía de comida con
-   licencia, y meter la de otro en una muestra de venta es el mismo problema
-   que ya se señaló con las fotos de ambiente de Alquimia. Cada hueco dice «tu
-   foto» y el cambio por las del restaurante es mecánico.
+Las 14 fotos vienen del cliente y **la carta está escrita contra ellas**: cada
+descripción dice lo que se ve en su imagen, no al revés. Por eso Cardamomo pasó
+de «cocina colombiana de mercado» a **cocina de autor**: los platos que llegaron
+son de ese registro, y dejar la descripción vieja encima de la foto nueva habría
+sido mentir en la propia muestra.
+
+**Son de referencia, y el pie de página lo dice.** No están licenciadas para uso
+comercial: sirven para enseñar la muestra, no para publicar la página de un
+restaurante. En su lugar van las del cliente, y el cambio es mecánico —se
+reemplaza el archivo en `fotos/` y se vuelve a construir—.
+
+Viven en `clientes/muestra-restaurantes/fotos/` como WebP de 640 × 640 (la del
+local, apaisada, de 1200 × 560) y entran al HTML con:
+
+    cd clientes/muestra-restaurantes
+    python3 construir-fotos.py ../../demos/restaurantes.html
+
+El script las mete en base64 como variables `--f-<nombre>` de `:root` y avisa si
+alguna sobra o si falta la de algún plato. Son variables y no `<img>` porque el
+mismo cuadrado se ve a 72 px en la carta, a 150 en el carrusel y a 300 de ancho
+en la disposición libre: con `background-size:cover` una sola copia sirve para
+las cuatro. Todo junto son 444 KB dentro de un archivo de 536 KB, que sigue
+abriendo sin red.
+
+### Cuatro decisiones que conviene no deshacer sin medir
+
+1. **La foto es un `<span>` con `display:block` explícito.** A un inline no le
+   aplican ni `width` ni `height`. En la carta no se notaba, porque el plato es
+   un grid y eso blockifica a sus hijos; en las tarjetas de temporada, que son
+   bloques normales, la foto salía de 0 × 0. Es el mismo tropiezo del sello de
+   Alquimia, y ahora hay una prueba que lo caza.
 2. **Los dos tonos medios están fijados por medición.** `--tinta-66` y
    `--tinta-70` salen de medir contraste sobre el compuesto real, elemento por
    elemento; con la opacidad que tenían antes (.52) el texto pequeño se
    quedaba en 3,2:1. Lo mismo con `--arcilla-h`, `--verde-texto` y
-   `--ambar-fuerte`, y con la etiqueta del hueco, que va en tinta porque el
-   blanco sobre el ámbar da 2,3:1.
+   `--ambar-fuerte`: el blanco sobre el ámbar se queda en 2,3:1.
 3. **El cambio de idioma cuelga de `:has(#en:target)` a propósito.** Un
    `.en{display:none}` pelado lo tumba cualquier regla local que toque
    `display` —pasó con `.cifras-hero span`— y salen los dos idiomas a la vez.
