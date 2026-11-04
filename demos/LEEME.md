@@ -37,8 +37,11 @@ Lo que de verdad funciona, porque es el argumento entero:
   también está en la carta, al mismo precio y a propósito: así es como se usa
   una franja así, y el carrito los junta porque se agrupan por nombre.
 
-Cierra con el checklist **con y sin LQS**, la línea del dominio y la pregunta
-de cierre con la firma.
+Cierra con el checklist **con y sin LQS**, la línea del dominio, **el resumen**
+—siete ganancias, una línea cada una, escritas desde lo que gana el restaurante
+y no desde el nombre del módulo— y la pregunta de cierre con la firma. Abajo del
+todo, un solo botón: volver al inicio. Desde la portada se salta ahí con «Ir al
+resumen»; son los dos únicos saltos de la página.
 
 **Está escrita para enseñarla a un cliente, no para leerla puertas adentro.**
 No lleva sellos de «maqueta» ni de «listo», ni notas técnicas, ni el detalle de

@@ -13,7 +13,8 @@
 
    El recorrido ES el armado: bajando, la página del restaurante se va
    montando pieza por pieza, y cada módulo se explica justo donde
-   aparece. Al final queda la muestra completa, funcionando.
+   aparece. Al final, el resumen: siete líneas con lo que gana el
+   restaurante, y un botón para volver arriba.
 
    La paleta no está inventada: sale de medir las cinco referencias que
    mandó el cliente. Las cinco viven entre los 22° y los 50° de tono
@@ -502,6 +503,7 @@ html.js .sube.dentro{opacity:1;transform:none;
   max-width:none}
 .lema{font-size:clamp(1rem,2.4vw,1.3rem);color:var(--tinta-70);margin-top:6px;
   max-width:none}
+.volver{margin-top:clamp(26px,4vh,40px)}
 
 footer{position:relative;z-index:2;padding:clamp(34px,6vh,64px) var(--margen);
   border-top:1px solid var(--linea);font-size:.86rem;color:var(--tinta-70)}
@@ -565,7 +567,7 @@ footer b{color:var(--tinta)}
 <main>
 
   <!-- ══ portada ═══════════════════════════════════════════════════ -->
-  <section class="portada">
+  <section class="portada" id="inicio">
     <div class="centro">
       <div class="vidrio hondo marco">
         <p class="pastilla"><em></em>
@@ -585,8 +587,8 @@ footer b{color:var(--tinta)}
           <a class="bot" href="#armado">
             <span class="es">Ver el recorrido</span><span class="en">See the walkthrough</span>
           </a>
-          <a class="bot claro" href="#completa">
-            <span class="es">Ir a la muestra completa</span><span class="en">Jump to the full sample</span>
+          <a class="bot claro" href="#resumen">
+            <span class="es">Ir al resumen</span><span class="en">Go to the summary</span>
           </a>
         </div>
         <div class="cifras-hero">
@@ -1029,17 +1031,15 @@ footer b{color:var(--tinta)}
     </div>
   </section>
   <!-- ══ la muestra completa ═══════════════════════════════════════ -->
-  <section class="completa" id="completa">
+  <section class="completa" id="resumen">
     <div class="centro" style="padding-inline:var(--margen);margin-bottom:22px">
       <p class="rotulo sube">
-        <span class="es">La muestra completa</span><span class="en">The full sample</span></p>
-      <h2 class="sube"><span class="es">Las siete piezas, juntas y funcionando</span>
-        <span class="en">The seven pieces, together and working</span></h2>
-      <p class="grande sep tenue sube" style="max-width:56ch">
-        <span class="es">Esto es lo que recibe el restaurante. Las fotos y los
-          textos son de muestra: ahí entran los suyos.</span>
-        <span class="en">This is what the restaurant receives. Photos and copy are
-          placeholders: theirs go in here.</span></p>
+        <span class="es">El resumen</span><span class="en">The summary</span></p>
+      <h2 class="sube"><span class="es">Lo que gana tu restaurante</span>
+        <span class="en">What your restaurant gains</span></h2>
+      <p class="grande sep tenue sube" style="max-width:52ch">
+        <span class="es">Esto es lo que queda armado.</span>
+        <span class="en">This is what gets built.</span></p>
     </div>
     <div class="lienzo vidrio hondo sube">
       <div class="nav-falsa"><i></i><i></i><i></i>
@@ -1088,6 +1088,9 @@ footer b{color:var(--tinta)}
         <p class="lema">
           <span class="es">el mejor amigo de tus ideas</span>
           <span class="en">your ideas' best friend</span></p>
+        <a class="bot claro volver" href="#inicio">
+          <span class="es">Volver al inicio</span><span class="en">Back to the top</span>
+        </a>
       </div>
     </div>
   </section>
@@ -1404,39 +1407,41 @@ function pintaTemporada(){
                 '<span class="en">' + t.en + ' · until ' + t.hasta + '</span>';
 }
 
-/* ══ el resumen final ════════════════════════════════════════════════ */
-var MODULOS = [
-  ['1', 'Carta digital completa', 'Full digital menu',
-   'En pantalla, por QR en la mesa y en el celular. Una sola fuente.',
-   'On screen, by table QR and on the phone. One single source.'],
-  ['2', 'Pedido a WhatsApp', 'WhatsApp ordering',
-   'Mensaje escrito solo, con domicilio o para recoger. Sin comisión.',
-   'Message writes itself, delivery or pickup. No commission.'],
-  ['3', 'Wompi o PSE', 'Wompi or PSE',
-   'Tarjeta, Nequi y débito bancario. Se cobra antes de cocinar.',
-   'Card, Nequi and bank debit. Charged before you cook.'],
-  ['4', 'Temporada y especiales', 'Seasonal and specials',
-   'Franja aparte, con vigencia. Se vence sola.',
-   'Separate strip with an expiry. It lapses on its own.'],
-  ['5', 'Búsquedas de Google', 'Google search',
-   'La página escrita con lo que la gente busca de verdad.',
-   'The page written with what people actually search for.'],
-  ['6', 'Google y TripAdvisor', 'Google and TripAdvisor',
-   'Ficha reclamada, datos corregidos, fotos propias y reseñas respondidas.',
-   'Listing claimed, data fixed, own photos and reviews answered.'],
-  ['7', 'Digitalización de la carta', 'Menu digitisation',
-   'Del papel o el PDF a datos: platos, descripciones, precios y fotos.',
-   'From paper or PDF to data: dishes, descriptions, prices and photos.']
+/* ══ el resumen ══════════════════════════════════════════════════════
+   Siete ganancias, una línea cada una. No es la lista de lo que hacemos
+   —esa ya se recorrió arriba, módulo por módulo— sino la de lo que le
+   queda al restaurante. Por eso el título de cada ficha es el beneficio
+   y no el nombre técnico del módulo. */
+var GANANCIAS = [
+  ['Tu carta, siempre al día', 'Your menu, always current',
+   'Cambiar un precio toma un minuto. No hay que reimprimir nada.',
+   'Changing a price takes a minute. Nothing to reprint.'],
+  ['Pedidos sin comisión', 'Orders with no commission',
+   'El pedido llega escrito y completo, y el cobro es tuyo.',
+   'The order arrives written and complete, and the money is yours.'],
+  ['Cobras antes de cocinar', 'Paid before you cook',
+   'Se acaban los domicilios que se cancelan ya hechos.',
+   'No more deliveries cancelled once they are already made.'],
+  ['Vendes lo de hoy', 'Sell what is on today',
+   'El especial sube en un clic y se vence solo.',
+   'The special goes up in one click and expires on its own.'],
+  ['Te encuentran en Google', 'Found on Google',
+   'Apareces cuando alguien busca dónde comer cerca.',
+   'You show up when someone searches for where to eat nearby.'],
+  ['Tu ficha dice la verdad', 'Your listing tells the truth',
+   'Horario, teléfono y fotos al día. Reseñas respondidas.',
+   'Hours, phone and photos current. Reviews answered.'],
+  ['Una sola carta para todo', 'One menu for everything',
+   'Se escribe una vez y sirve en pantalla, en el QR y en el celular.',
+   'Written once, it works on screen, on the QR and on the phone.']
 ];
 function pintaResumenFinal(){
   var c = $('#resumenFinal'); if (!c) return;
-  c.innerHTML = MODULOS.map(function(m){
-    return '<div class="ficha solido"><p class="cab" style="color:var(--arcilla-h)">' +
-      '<span class="es">Módulo ' + m[0] + '</span>' +
-      '<span class="en">Module ' + m[0] + '</span></p>' +
-      '<h3><span class="es">' + m[1] + '</span><span class="en">' + m[2] + '</span></h3>' +
-      '<p class="desc" style="font-size:.88rem;color:var(--tinta-70);margin-top:7px">' +
-      '<span class="es">' + m[3] + '</span><span class="en">' + m[4] + '</span></p></div>';
+  c.innerHTML = GANANCIAS.map(function(g){
+    return '<div class="ficha solido">' +
+      '<h3><span class="es">' + g[0] + '</span><span class="en">' + g[1] + '</span></h3>' +
+      '<p class="desc" style="font-size:.9rem;color:var(--tinta-70);margin-top:7px">' +
+      '<span class="es">' + g[2] + '</span><span class="en">' + g[3] + '</span></p></div>';
   }).join('');
 }
 
