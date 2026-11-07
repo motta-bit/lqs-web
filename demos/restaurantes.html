@@ -571,8 +571,8 @@ footer b{color:var(--tinta)}
     <div class="centro">
       <div class="vidrio hondo marco">
         <p class="pastilla"><em></em>
-          <span class="es">Muestra de estilo · noviembre de 2026</span>
-          <span class="en">Style sample · November 2026</span></p>
+          <span class="es">Muestra de estilo para restaurantes</span>
+          <span class="en">Style sample for restaurants</span></p>
         <h1>
           <span class="es">Tu restaurante, completo en internet.</span>
           <span class="en">Your restaurant, fully online.</span></h1>
@@ -746,8 +746,8 @@ footer b{color:var(--tinta)}
             <div class="tel-cuerpo">
               <div class="carta-cab">
                 <h4><span class="es">Pagar el pedido</span><span class="en">Pay the order</span></h4>
-                <p><span class="es">Cardamomo · pedido n.º 2041</span>
-                  <span class="en">Cardamomo · order no. 2041</span></p>
+                <p><span class="es">Cardamomo · pedido n.º 1182</span>
+                  <span class="en">Cardamomo · order no. 1182</span></p>
               </div>
               <div class="pago" id="zonaPago">
                 <div class="resumen" id="resumenPago"></div>
@@ -858,8 +858,8 @@ footer b{color:var(--tinta)}
             <span class="es">Cómo está hoy</span><span class="en">As it is today</span></p>
           <dl>
             <div class="d"><i>◷</i><span><s>
-              <span class="es">Horario: sin confirmar desde 2023</span>
-              <span class="en">Hours: unconfirmed since 2023</span></s></span></div>
+              <span class="es">Horario: sin confirmar desde hace dos años</span>
+              <span class="en">Hours: unconfirmed for two years</span></s></span></div>
             <div class="d"><i>☏</i><span><s>
               <span class="es">Teléfono fijo que ya nadie contesta</span>
               <span class="en">Landline nobody answers</span></s></span></div>
@@ -963,8 +963,8 @@ footer b{color:var(--tinta)}
     <div class="centro">
       <p class="rotulo sube">
         <span class="es">La diferencia</span><span class="en">The difference</span></p>
-      <h2 class="sube"><span class="es">Un martes cualquiera, con y sin LQS</span>
-        <span class="en">An ordinary Tuesday, with and without LQS</span></h2>
+      <h2 class="sube"><span class="es">Un día cualquiera, con y sin LQS</span>
+        <span class="en">An ordinary day, with and without LQS</span></h2>
 
       <div class="antes-despues sube" style="margin-top:24px">
         <div class="ficha solido mal">
@@ -1351,9 +1351,23 @@ function pintaResumenPago(){
   var m = $('#montoPagar'); if (m) m.textContent = pesos(r.total + envio);
 }
 
-/* ══ temporada ═══════════════════════════════════════════════════════ */
+/* ══ temporada ═══════════════════════════════════════════════════════
+   La vigencia se saca del reloj del aparato, no está escrita a mano. Esta
+   muestra se enseña el día que toque, y una fecha fija envejece a la vista
+   del cliente justo en la sección que presume de vencerse sola: «hasta el
+   30 de noviembre» leído en marzo dice lo contrario de lo que se vende. */
+var MESES_ES = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                'agosto','septiembre','octubre','noviembre','diciembre'];
+var MESES_EN = ['January','February','March','April','May','June','July',
+                'August','September','October','November','December'];
+function finDeMes(saltos){
+  var h = new Date();
+  // el día 0 del mes siguiente es el último del mes que interesa
+  return new Date(h.getFullYear(), h.getMonth() + saltos + 1, 0);
+}
+
 var TEMPORADAS = [
-  {es:'Noviembre · la huerta', en:'November · the garden', hasta:'30 nov',
+  {es:'La huerta', en:'The garden', mes:0,
    platos:[
      {foto:'col', nom:'Col rizada rellena', en:'Stuffed savoy cabbage',
       d:'Hoja de col rellena, crema de queso curado y mostaza en grano',
@@ -1368,7 +1382,7 @@ var TEMPORADAS = [
       d:'Con el tomate de la cosecha, ají rojo y crocante de arroz',
       de:'With this harvest’s tomato, red chilli and a rice cracker', p:36000}
    ]},
-  {es:'Diciembre · fin de año', en:'December · year end', hasta:'24 dic',
+  {es:'La brasa y el mar', en:'Fire and sea', mes:1,
    platos:[
      {foto:'vieira', nom:'Vieira con remolacha y lima', en:'Scallop, beetroot and lime',
       d:'Una vieira curada sobre chip de remolacha, con ralladura de lima',
@@ -1377,8 +1391,8 @@ var TEMPORADAS = [
       d:'Caballa marcada a la piel, aceite de hierbas y encurtidos',
       de:'Crisp-skinned mackerel, herb oil and pickles', p:56000},
      {foto:'cordero', nom:'Cordero al carbón', en:'Charcoal lamb',
-      d:'El de la carta, para la mesa de fin de año',
-      de:'The one from the menu, for the year-end table', p:92000}
+      d:'El mismo de la carta, con las verduras de la temporada',
+      de:'The same one from the menu, with this season’s vegetables', p:92000}
    ]}
 ];
 var tempAct = 0;
@@ -1402,9 +1416,12 @@ function pintaTemporada(){
     });
     c.appendChild(el);
   });
-  var v = $('#vigencia');
-  v.innerHTML = '<span class="es">' + t.es + ' · hasta el ' + t.hasta + '</span>' +
-                '<span class="en">' + t.en + ' · until ' + t.hasta + '</span>';
+  var v = $('#vigencia'), f = finDeMes(t.mes);
+  v.innerHTML =
+    '<span class="es">' + t.es + ' · hasta el ' + f.getDate() +
+      ' de ' + MESES_ES[f.getMonth()] + '</span>' +
+    '<span class="en">' + t.en + ' · until ' + f.getDate() +
+      ' ' + MESES_EN[f.getMonth()] + '</span>';
 }
 
 /* ══ el resumen ══════════════════════════════════════════════════════

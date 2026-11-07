@@ -50,6 +50,21 @@ lo que falta por conectar en Wompi: eso se cuenta hablando, no en la página. Lo
 la pantalla de pago aprobado, porque una confirmación de pago sin esa línea es
 un recibo falso aunque nadie lo pretenda.
 
+### Nada con fecha
+
+Es una muestra abierta, para llevarla a cualquier restaurante el día que sea,
+así que **no lleva nada que envejezca**: ni mes en la insignia de la portada,
+ni «un martes cualquiera» en el checklist —es un día cualquiera—, ni un año
+escrito en la ficha vieja de Google, que ahora dice «desde hace dos años».
+
+La vigencia de la temporada **sale del reloj del aparato**, no está escrita a
+mano: la primera franja vence el último día de este mes y la segunda el del
+siguiente, con los bisiestos bien. Era justo la frase que más envejecía, y en
+la sección que presume de vencerse sola: «hasta el 30 de noviembre» leído en
+marzo dice lo contrario de lo que se vende. Hay una prueba que lo comprueba
+adelantando el reloj, y otra que falla si vuelve a aparecer un año escrito a
+mano en cualquier parte de la página.
+
 ### Las fotos
 
 Las 14 fotos vienen del cliente y **la carta está escrita contra ellas**: cada
