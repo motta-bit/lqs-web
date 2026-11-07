@@ -11,6 +11,8 @@ Lo que queda es lo que se cuelga para compartir por enlace.
 |---|---|
 | `alquimia-herbal.html` | **Alquimia Herbal** · la propuesta de trabajo con el catálogo de muestra dentro |
 | `restaurantes.html` | **Restaurantes** · muestra de estilo y propuesta de digitalización, para enseñar en reunión |
+| `tiendas.html` | **Tiendas y almacenes** · la misma propuesta con catálogo, tallas y existencias en vez de carta |
+| `pruebas/` | Las comprobaciones de las dos muestras, con su propio LEEME |
 | `index.html` | Salto a Alquimia, para que la URL de la carpeta abra sin escribir el nombre |
 
 ## `restaurantes.html`
@@ -114,6 +116,49 @@ abriendo sin red.
 El dominio va en una línea y nada más: que al valor del trabajo se le suma el
 del nombre de la página, y que varía según el que se escoja. La cifra exacta se
 confirma el día de la compra, hablando, no en la muestra.
+
+## `tiendas.html`
+
+Hermana de la de restaurantes: **mismo sistema y otro rubro**. El vidrio, el
+grano, la escala tipográfica, el riel de cuatro disposiciones y el recorrido
+—siete módulos, checklist, resumen y cierre— son los mismos. Lo que allá era
+la carta aquí es el catálogo.
+
+**La paleta sí cambia, y a propósito**: hueso frío con un solo acento de
+arcilla, en vez del ámbar de restaurantes. Se reconoce el mismo estudio y no
+se confunden las dos sobre la mesa. El blanco sobre la arcilla sí pasa
+contraste —5,0:1—, al revés que sobre el ámbar, así que el botón de pagar
+vuelve a texto blanco.
+
+Lo que una tienda tiene y un restaurante no, y que por eso está hecho de
+verdad y no descrito:
+
+- **Tallas y colores.** Cada producto trae las suyas, la escogida se marca y
+  viaja hasta el mensaje de WhatsApp: «1 × Camisa de lino (Talla M)».
+- **Existencias.** La talla agotada se tacha y no se puede escoger; el
+  producto agotado del todo lo dice y se queda sin botón de añadir. No se
+  esconde: esconderlo haría creer que el catálogo es más corto, y quien ya
+  vio la foto en Instagram volvería a preguntar.
+- **Envío.** Entra calculado dentro del total, que es la pregunta donde se
+  cae la venta de otra ciudad, y el carrito se agrupa por producto **y**
+  variante: dos tallas del mismo producto son dos líneas, que es lo que le
+  hace falta a quien va a empacar la caja.
+
+**Todavía no hay fotos de la tienda.** Cada hueco se ve como lo que es —el
+sitio donde va la suya, con su tono de categoría y su etiqueta «tu foto»—. El
+tono por categoría no es decoración: hace que la cuadrícula lea como un
+catálogo y no como diez rectángulos iguales en blanco. Cuando lleguen las
+fotos se cambia `background-image` y el marcado no se toca.
+
+Dos cosas que salieron al armarlo y conviene no repetir:
+
+1. **El carrito de arranque se siembra por id, no por posición.** Meter un
+   producto en medio del arreglo corría los índices y la muestra abría con
+   «Chaqueta de lona (Talla Miel)».
+2. **En tarjetas la ficha va a dos columnas, no a tres.** Con el precio en su
+   propia columna —y los precios de una tienda son más largos que los de una
+   carta— «Camisa de lino» se partía en dos líneas y la descripción caía a
+   cuatro. El precio y el «+» bajan a su propia fila.
 
 ## `alquimia-herbal.html`
 
