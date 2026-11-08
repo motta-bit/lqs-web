@@ -12,6 +12,7 @@ Lo que queda es lo que se cuelga para compartir por enlace.
 | `alquimia-herbal.html` | **Alquimia Herbal** · la propuesta de trabajo con el catálogo de muestra dentro |
 | `restaurantes.html` | **Restaurantes** · muestra de estilo y propuesta de digitalización, para enseñar en reunión |
 | `tiendas.html` | **Tiendas y almacenes** · la misma propuesta con catálogo, tallas y existencias en vez de carta |
+| `bodegas.html` | **Bodegas y tiendas de productos** · catálogo por presentación, precio por unidad calculado y existencias reales |
 | `pruebas/` | Las comprobaciones de las dos muestras, con su propio LEEME |
 | `index.html` | Salto a Alquimia, para que la URL de la carpeta abra sin escribir el nombre |
 
@@ -159,6 +160,48 @@ Dos cosas que salieron al armarlo y conviene no repetir:
    propia columna —y los precios de una tienda son más largos que los de una
    carta— «Camisa de lino» se partía en dos líneas y la descripción caía a
    cuatro. El precio y el «+» bajan a su propia fila.
+
+## `bodegas.html`
+
+La tercera del juego, y **la que cambia de mecánica**. En restaurantes se pide
+un plato; en la tienda de ropa, una talla; en una bodega se pide una
+**presentación** —la unidad, el six-pack, la caja de 24— y lo que decide la
+compra es el precio por unidad y cuántos quedan.
+
+Tercera paleta, para que las tres se distingan sobre la mesa: papel frío con
+un acento de oliva. El oliva se escogió por medición: pasa contraste en los
+dos sentidos —blanco encima, 7,2:1; encima de la nata, 7,0:1— así que un solo
+tono hace de acento y de texto, sin fabricar una segunda versión como tocó en
+las otras dos.
+
+Lo que hace de verdad y no describe:
+
+- **El precio por unidad lo calcula la página.** Es la cuenta que decide si se
+  llevan la caja y la que nadie hace en el chat. Se toca una presentación y
+  debajo aparece: la caja de 24 del atún sale a $8.167 c/u frente a $9.800 la
+  unidad.
+- **Las existencias son un número, no un sí o un no.** Del tomate quedan 9, así
+  que la caja de 12 se bloquea sola. De ahí sale todo: una presentación se
+  puede pedir si sus unidades caben en lo que queda, y nadie tiene que
+  acordarse de desmarcar nada. La pasta está en cero: lo dice y no tiene botón.
+- **El carrito cuenta unidades, no líneas.** «3 productos» no dice nada si uno
+  de ellos es una caja de 24; la barra dice «28 unidades».
+- **El mínimo de bodega se llena mientras arman el pedido.** Hoy eso se
+  resuelve con un «es que el pedido mínimo son cuatrocientos» por chat, cuando
+  el cliente ya armó la lista, y ahí se cae la venta.
+
+Tres decisiones que conviene no deshacer sin mirar:
+
+1. **El mínimo está por encima del pedido con el que arranca la muestra.** Con
+   324.000 de 400.000 la barra abre a medias y dice «faltan $76.000»; añadir
+   una caja la completa. Puesto por debajo, abría llena y no demostraba nada.
+2. **El pie de cada ficha va en una sola línea y cruza las dos columnas.**
+   Encerrado en la segunda tenía 179 px y el «+» se caía a un renglón suyo.
+   Probé también darle al «+» una tercera columna: al quitarle 42 px al
+   contenido, las presentaciones se apilaban una por renglón.
+3. **El nombre del archivo viejo del módulo 7 no lleva mes.** `lista_precios_v4`
+   y no `lista_precios_marzo`: la prueba de fechas solo caza años escritos a
+   mano, pero un mes envejece igual.
 
 ## `alquimia-herbal.html`
 

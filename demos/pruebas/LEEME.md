@@ -2,6 +2,7 @@
 
     node demos/pruebas/probar-restaurantes.mjs
     node demos/pruebas/probar-tiendas.mjs
+    node demos/pruebas/probar-bodegas.mjs
 
 Necesitan Playwright y un Chromium. Cada una abre su archivo de `demos/`,
 lo recorre y escribe capturas en `demos/pruebas/capturas-<rubro>/` (o en la
@@ -25,8 +26,11 @@ y para que nadie deshaga sin darse cuenta una decisión que costó medirla:
   haya ningún año escrito a mano en toda la página.
 - **Que lo prometido funcione**: el filtro, el carrito, el mensaje de WhatsApp
   escribiéndose solo, el recorrido de pago entero, las cuatro disposiciones y
-  —en tiendas— que la talla agotada esté bloqueada, que el producto sin
-  existencias no se pueda añadir y que la talla escogida llegue al mensaje.
+  —en tiendas— que la talla agotada esté bloqueada y que la escogida llegue al
+  mensaje; y —en bodegas— que el precio por unidad se calcule y cambie con la
+  presentación, que la caja que ya no cabe en las existencias se bloquee sola,
+  que el producto en cero no se pueda añadir y que el mínimo de bodega abra a
+  medias y se complete al añadir una caja.
 
 Cuando una falla, **mirar primero si el error está en la prueba**. Ha pasado
 más de una vez: el ayudante leía la posición del desplazamiento antes de que
