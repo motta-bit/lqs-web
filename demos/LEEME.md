@@ -260,6 +260,12 @@ Cuatro cosas que costó medir y conviene no deshacer:
    grises de la hoja 3 y las etiquetas «tu foto» de las cuatro salieron igual,
    por medición: con el tono que tenían a ojo se quedaban entre 2,9 y 4,1:1.
 
+**Cada hoja dice su moneda.** Los importes ya eran pesos —formato colombiano,
+punto de miles—, pero un «$» a secas se lee como dólares en cuanto la hoja
+sale de Colombia. Lo dice una vez por hoja y en su propia tipografía, en el
+pie, que es donde lo pone un catálogo impreso: pegarle «COP» a cada precio
+ensucia la hoja 2, donde el precio es la pieza grande de la composición.
+
 Todavía no hay fotografía: los 49 recuadros dicen «tu foto» y se cambian sin
 tocar nada más.
 

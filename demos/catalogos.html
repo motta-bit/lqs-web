@@ -256,6 +256,22 @@ h1{font-size:clamp(2rem,5.6vw,3.4rem);letter-spacing:-.025em;line-height:1.05;
   font-variant-numeric:tabular-nums}
 .m4 .it .gr{font-size:.85cqw;opacity:.88}
 
+/* ══ el pie de moneda ════════════════════════════════════════════════
+   Los importes ya son pesos, pero un «$» a secas se lee como dólares en
+   cuanto la hoja sale de Colombia. Cada hoja lo dice una vez y en su
+   propia tipografía, en el pie —que es donde lo pone un catálogo
+   impreso— y no pegado a cada precio: en la hoja 2 el precio es la pieza
+   grande de la composición y un «COP» detrás de cada uno la ensucia. */
+.m1 .pie-hoja{position:absolute;left:7%;bottom:2.2%;font-size:1.5cqw;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(244,243,240,.72)}
+.m2 .pie-hoja{margin-top:2.6cqw;font-size:1cqw;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:rgba(242,241,238,.62)}
+.m3 .pie-hoja{margin-top:1.6cqw;font-size:.9cqw;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:#67655f}
+.m4 .pie-hoja{grid-column:1 / -1;background:#1d1d1b;color:#f4f2ee;
+  padding:1.2cqw 3cqw 1.2cqw 7cqw;font-size:.95cqw;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase}
+
 footer{padding:clamp(34px,6vh,64px) var(--margen);border-top:1px solid var(--linea);
   font-size:.9rem;color:var(--tinta-70)}
 footer .centro{display:grid;gap:11px}
@@ -330,6 +346,8 @@ footer b{color:var(--tinta)}
           <div class="pie"><span class="gr">250 g</span><span class="pr">$42.000</span></div>
         </div>
 
+        <p class="pie-hoja">Precios en pesos colombianos (COP)</p>
+
         <div class="grano" aria-hidden="true"></div>
       </div>
     </div>
@@ -391,6 +409,7 @@ footer b{color:var(--tinta)}
               <p class="pr">$24.000</p><h4>Hotate</h4>
               <p>Vieira<span class="kcal">36 kcal</span></p></div>
           </div>
+          <p class="pie-hoja">Precios en pesos colombianos (COP)</p>
         </div>
 
         <div class="pag">
@@ -470,6 +489,7 @@ footer b{color:var(--tinta)}
             por una. Cada referencia se produce en series cortas, así que el
             tono varía de una horneada a otra: eso no es un defecto, es la
             pieza.</p>
+          <p class="pie-hoja">Precios en pesos colombianos (COP)</p>
         </div>
 
         <div class="pag">
@@ -577,6 +597,8 @@ footer b{color:var(--tinta)}
               <div class="pie"><span class="pr">$22.000</span><span class="gr">150 g</span></div></div>
           </div>
         </section>
+
+        <p class="pie-hoja">Precios en pesos colombianos (COP)</p>
       </div>
     </div>
     <p class="pista">Desliza la hoja de lado para ver la página doble completa.</p>
