@@ -13,7 +13,8 @@ Lo que queda es lo que se cuelga para compartir por enlace.
 | `restaurantes.html` | **Restaurantes** · muestra de estilo y propuesta de digitalización, para enseñar en reunión |
 | `tiendas.html` | **Tiendas y almacenes** · la misma propuesta con catálogo, tallas y existencias en vez de carta |
 | `bodegas.html` | **Bodegas y tiendas de productos** · catálogo por presentación, precio por unidad calculado y existencias reales |
-| `pruebas/` | Las comprobaciones de las dos muestras, con su propio LEEME |
+| `catalogos.html` | **Maquetación de catálogo** · cuatro maneras de maquetar una carta o un catálogo, rehechas en español desde las referencias del cliente |
+| `pruebas/` | Las comprobaciones de las cuatro muestras, con su propio LEEME |
 | `index.html` | Salto a Alquimia, para que la URL de la carpeta abra sin escribir el nombre |
 
 ## `restaurantes.html`
@@ -202,6 +203,65 @@ Tres decisiones que conviene no deshacer sin mirar:
 3. **El nombre del archivo viejo del módulo 7 no lleva mes.** `lista_precios_v4`
    y no `lista_precios_marzo`: la prueba de fechas solo caza años escritos a
    mano, pero un mes envejece igual.
+
+## `catalogos.html`
+
+No es una propuesta: es un **muestrario de maquetación**. Llegaron once
+referencias de catálogo y carta, y el encargo era pasarlas al español
+manteniendo el diseño. Lo que no se puede hacer es retocar el texto dentro
+del JPG: se nota siempre. Así que están **rehechas**, no traducidas encima
+de la imagen, conservando la composición, la paleta y la jerarquía
+tipográfica de cada una.
+
+Las once se repiten entre sí, así que lo honrado era una de cada familia y
+no once casi iguales:
+
+1. **Carta oscura con título grande** — pocos platos, mucho aire, los platos
+   entrando por los bordes.
+2. **Parrilla densa** — veinte productos en una página doble, con el precio
+   primero y grande y la ficha en gris diminuto.
+3. **Catálogo claro de producto** — blanco, serif para la sección, la
+   cuadrícula con su referencia al lado de cada pieza.
+4. **Bloques de color** — cada sección un color plano, con el nombre vertical
+   en el lomo.
+
+Dos decisiones de fondo:
+
+- **Las medidas van en `cqw`, no en píxeles.** `cqw` es el porcentaje del
+  ancho de la hoja, y cada hoja es un contenedor de consulta. Así la hoja
+  entera escala como una sola pieza: la proporción entre el título y el
+  precio es la misma a cualquier tamaño, que es justo lo que la hace leerse
+  como impresa. Si alguien le quita el `container-type` a `.hoja`, todas las
+  medidas se van a cero y la hoja sale en blanco **sin dar ningún error**;
+  por eso la prueba lo comprueba aparte.
+- **En el teléfono la hoja se desliza, no se desarma.** Cada una tiene su
+  ancho mínimo y vive dentro de un visor que rueda de lado, como se desliza
+  una página doble de verdad. Partirla en una columna sería enseñar otra
+  maquetación distinta de la que se está vendiendo.
+
+Cuatro cosas que costó medir y conviene no deshacer:
+
+1. **La hoja 1 lleva las entradas puestas a mano, en absoluto.** Nada impide
+   que se monten: a `3,5cqw` la palabra «CARBONARA», con su espaciado de
+   versales, se salía de su columna y chocaba con el precio de al lado. Está
+   en `3,1cqw` y la columna en 34 %. La prueba mide el ancho real del texto,
+   no el de la caja, porque la caja no crece.
+2. **La pieza grande de la hoja 2 va en `minmax(0,1fr)`.** Con `1fr` pelado el
+   precio, que no parte por ningún lado, imponía su `min-content` y dejaba la
+   foto en 57 px de 242. Es la tercera vez que muerde el mismo `1fr` en estas
+   muestras.
+3. **El precio de la hoja 3 lleva su color declarado.** Es un
+   `<p class="pr">`, así que `.m3 .it p{color:gris}` también lo pintaba de
+   gris: la regla de la clase gana en especificidad pero no declaraba color,
+   y el precio se iba con los grises secundarios.
+4. **El rojo de la hoja 4 es más oscuro que el de la referencia.** Con el rojo
+   vivo, el texto crema encima daba 4,1:1 —y la unidad, a opacidad 0,7,
+   2,5:1—. Bajado a `#b02a18` el mismo texto da 6,1:1 y la unidad 4,9:1. Los
+   grises de la hoja 3 y las etiquetas «tu foto» de las cuatro salieron igual,
+   por medición: con el tono que tenían a ojo se quedaban entre 2,9 y 4,1:1.
+
+Todavía no hay fotografía: los 49 recuadros dicen «tu foto» y se cambian sin
+tocar nada más.
 
 ## `alquimia-herbal.html`
 

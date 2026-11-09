@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Muestras de maquetación de catálogo · LQS</title>
+<meta name="description" content="Cuatro maquetaciones de catálogo y carta, en español: carta oscura con título grande, parrilla densa de muchos productos, catálogo claro de producto y bloques de color.">
+<meta name="theme-color" content="#edecea">
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   LQS · MUESTRAS DE MAQUETACIÓN DE CATÁLOGO
+   Cuatro familias, en español, en un solo archivo.
+
+   Salen de las once referencias que mandó el cliente, que se repiten
+   entre sí: cartas oscuras con fotografía cenital, parrillas densas de
+   muchos productos, catálogos claros de producto y cartas en bloques de
+   color. Aquí está una de cada familia, rehecha —no traducida encima de
+   la imagen— conservando la composición, la paleta y la jerarquía
+   tipográfica de su referencia, con el texto en español y los precios
+   en pesos.
+
+   Cada hoja es un documento impreso, así que se comporta como tal: tiene
+   un ancho mínimo y vive dentro de un visor que rueda de lado. En un
+   celular se desliza la hoja, como se desliza una página doble de
+   verdad, en vez de desarmarla en una columna que ya no es la
+   maquetación que se está enseñando.
+
+   Las medidas van en cqw —porcentaje del ancho de la hoja— y no en
+   píxeles: así la hoja entera escala como una sola pieza y la
+   proporción entre el título y el precio es la misma a cualquier
+   tamaño, que es lo que hace que se lea como impresa.
+
+   Un solo archivo, sin librerías, sin CDN y sin red.
+   ══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --papel:#edecea;
+  --nata:#fbfbf9;
+  --tinta:#1d1d1b;
+  --tinta-70:rgba(29,29,27,.70);
+  --tinta-66:rgba(29,29,27,.66);
+  --linea:rgba(29,29,27,.14);
+  --piedra-h:#63625d;
+  --r-bloque:18px;
+  --margen:clamp(18px,5vw,64px);
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:ui-serif,Georgia,'Times New Roman',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);font-family:var(--sans);
+  font-size:clamp(1rem,.95rem + .25vw,1.08rem);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+:focus-visible{outline:2.5px solid var(--tinta);outline-offset:3px;border-radius:6px}
+
+/* ── la chapa y la entrada ────────────────────────────────────────── */
+.chapa{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;
+  padding:12px var(--margen);background:rgba(237,236,234,.78);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--linea);font-weight:700;font-size:.95rem;
+  letter-spacing:-.01em}
+.chapa i{font-style:normal;color:var(--piedra-h);font-weight:500}
+
+main{position:relative}
+.intro{padding:clamp(40px,7vh,86px) var(--margen) clamp(18px,3vh,30px)}
+.centro{max-width:1180px;margin:0 auto}
+h1{font-size:clamp(2rem,5.6vw,3.4rem);letter-spacing:-.025em;line-height:1.05;
+  font-weight:700;max-width:16em;text-wrap:balance}
+.intro p{max-width:62ch;margin-top:16px;color:var(--tinta-70);
+  font-size:clamp(1.02rem,.98rem + .3vw,1.18rem)}
+.aviso{margin-top:18px;border-left:2px solid var(--tinta);padding-left:13px;
+  max-width:60ch;font-size:.94rem;color:var(--tinta-70)}
+
+/* ── cada muestra ─────────────────────────────────────────────────── */
+.muestra{padding:clamp(26px,4.5vh,54px) var(--margen)}
+.muestra figcaption{max-width:1180px;margin:0 auto clamp(14px,2vh,20px)}
+.muestra .num{display:inline-flex;align-items:center;gap:9px;font-size:.7rem;
+  font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--piedra-h);margin-bottom:9px}
+.muestra .num b{display:grid;place-items:center;width:22px;height:22px;
+  border-radius:50%;background:var(--tinta);color:var(--papel);font-size:.68rem;
+  letter-spacing:0}
+.muestra h2{font-size:clamp(1.25rem,2.6vw,1.75rem);letter-spacing:-.02em;
+  line-height:1.15;font-weight:700;text-wrap:balance}
+.muestra .para{margin-top:7px;color:var(--tinta-70);max-width:66ch;font-size:.96rem}
+
+/* El visor: la hoja es un impreso, con su ancho mínimo. En pantalla
+   angosta se desliza de lado, como se desliza una página doble de
+   verdad, en vez de desarmarse en una columna que ya no es la
+   maquetación que se está enseñando. */
+.visor{max-width:1180px;margin:0 auto;overflow-x:auto;overscroll-behavior-x:contain;
+  padding-bottom:10px;scrollbar-width:thin}
+.hoja{container-type:inline-size;position:relative;overflow:hidden;
+  border-radius:var(--r-bloque);box-shadow:0 30px 70px -28px rgba(40,38,34,.45);
+  font-kerning:normal}
+.pista{margin:9px auto 0;max-width:1180px;font-size:.78rem;color:var(--piedra-h)}
+@media (hover:hover) and (pointer:fine){ .pista{display:none} }
+
+/* El hueco de foto, en las cuatro: todavía no hay fotografía del
+   cliente, así que se ve como lo que es y lo dice. */
+.foto{position:relative;overflow:hidden;background-size:cover;
+  background-position:center}
+.foto::after{content:attr(data-pie);position:absolute;left:0;right:0;bottom:6%;
+  text-align:center;font-size:2.2cqw;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase}
+
+/* ══ 1 · carta oscura con título grande ══════════════════════════════
+   Referencia: la carta de pasta. Fondo casi negro, un display enorme
+   en versales finas arriba a la izquierda, y las entradas colgando de
+   él con el nombre en versales espaciadas, la descripción en gris y el
+   gramaje junto al precio. Los platos entran por los bordes. */
+.m1{aspect-ratio:1 / 1.414;min-width:620px;background:#111110;color:#f4f3f0;
+  background-image:
+    radial-gradient(60% 40% at 80% 12%, rgba(255,255,255,.05), transparent 60%),
+    radial-gradient(50% 40% at 10% 70%, rgba(255,255,255,.035), transparent 60%)}
+.m1 .titular{position:absolute;left:7%;top:5.5%;width:62%;
+  font-size:7.4cqw;line-height:.96;font-weight:300;letter-spacing:.012em;
+  text-transform:uppercase}
+.m1 .plato{position:absolute;width:34%}
+/* 3,1cqw y no 3,5: a 3,5 la palabra «CARBONARA» con su espaciado se salía
+   de la columna y se montaba sobre el precio del plato de al lado. */
+.m1 .plato h3{font-size:3.1cqw;font-weight:400;letter-spacing:.14em;
+  text-transform:uppercase;line-height:1.22}
+.m1 .plato p{margin-top:1.6cqw;font-size:1.74cqw;line-height:1.45;
+  color:rgba(244,243,240,.72);max-width:24ch}
+.m1 .plato .pie{display:flex;align-items:baseline;gap:2.6cqw;margin-top:3.1cqw}
+.m1 .plato .gr{font-size:1.74cqw;color:rgba(244,243,240,.6)}
+.m1 .plato .pr{font-size:2.6cqw;font-weight:700;font-variant-numeric:tabular-nums}
+.m1 .disco{position:absolute;border-radius:50%;
+  background:
+    radial-gradient(58% 58% at 42% 34%, rgba(255,255,255,.085), transparent 70%),
+    #272623;
+  box-shadow:0 4cqw 7cqw -2cqw rgba(0,0,0,.7), 0 0 0 .22cqw rgba(255,255,255,.06) inset}
+.m1 .disco::after{color:rgba(244,243,240,.62);bottom:46%}
+/* las posiciones salen de la referencia, no de una cuadrícula regular:
+   la asimetría es la mitad de lo que hace que se vea compuesta */
+.m1 .d1{right:-4%;top:12%;width:44%;aspect-ratio:1}
+.m1 .d2{left:-13%;top:40%;width:45%;aspect-ratio:1}
+.m1 .d3{right:-3%;bottom:1.5%;width:42%;aspect-ratio:1}
+/* Cada entrada mide unos 23 cqw de alto —dos líneas de título, tres de
+   descripción y el pie—, que sobre una hoja de 1,414 son 16 % de la
+   altura. De ahí salen estas tres posiciones, y por eso no se tocan. */
+.m1 .p1{left:21%;top:22%}
+.m1 .p2{left:48%;top:50%}
+.m1 .p3{left:18%;bottom:6%}
+.m1 .grano{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E")}
+
+/* ══ 2 · parrilla densa ══════════════════════════════════════════════
+   Referencia: la carta de sushi. Página doble muy oscura, el precio
+   primero y grande, el nombre en negrita debajo y la ficha en gris
+   diminuto. Cabe mucho producto sin que se vea apretado porque la
+   jerarquía hace todo el trabajo. */
+.m2{min-width:980px;background:#0b0b0c;color:#f2f1ee;
+  display:grid;grid-template-columns:1fr 1fr;
+  background-image:linear-gradient(90deg,transparent 49.6%,rgba(255,255,255,.07) 49.8%,transparent 50.2%)}
+.m2 .pag{padding:4.2cqw 3.6cqw}
+.m2 .rotulo{font-size:1.1cqw;font-weight:800;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(242,241,238,.5);margin-bottom:3cqw}
+.m2 .pag:nth-child(2) .rotulo{text-align:right}
+.m2 .rejilla{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4cqw 1.8cqw}
+.m2 .it .foto{width:100%;aspect-ratio:1;border-radius:.9cqw;
+  background:radial-gradient(60% 55% at 45% 38%, rgba(255,255,255,.1), transparent 70%), #1a1a1b;
+  box-shadow:0 1.4cqw 2.6cqw -1cqw rgba(0,0,0,.8)}
+.m2 .it .foto::after{font-size:.95cqw;color:rgba(242,241,238,.56);bottom:8%}
+.m2 .it .pr{margin-top:1.1cqw;font-size:2.2cqw;font-weight:300;line-height:1;
+  font-variant-numeric:tabular-nums}
+.m2 .it h4{margin-top:.5cqw;font-size:1.12cqw;font-weight:700;line-height:1.25}
+.m2 .it p{margin-top:.3cqw;font-size:.92cqw;line-height:1.35;
+  color:rgba(242,241,238,.58)}
+.m2 .it .kcal{display:block;margin-top:.25cqw;font-size:.82cqw;
+  color:rgba(242,241,238,.54)}
+.m2 .marca{display:inline-block;margin-left:.5cqw;font-size:.9cqw;color:#d9a441}
+.m2 .picante{color:#e05a42}
+/* La pieza grande: una por página, con su ficha al lado, que es lo que le
+   da aire a una parrilla de veinte productos. Cruza la página entera —con
+   dos columnas de las cuatro quedaba estrecha— y las columnas van en
+   minmax(0,1fr): con «1fr» pelado, el precio grande, que no parte por
+   ningún lado, imponía su min-content y dejaba la foto en 57 px. */
+.m2 .grande{grid-column:1 / -1;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:1.8cqw;align-items:center}
+.m2 .grande .foto{aspect-ratio:1}
+.m2 .grande .pr{font-size:3.4cqw}
+.m2 .grande h4{font-size:1.5cqw}
+
+/* ══ 3 · catálogo claro de producto ══════════════════════════════════
+   Referencia: el catálogo de jarrones. Blanco, un display con serif
+   para el nombre de la sección, todo lo demás en un sans diminuto y
+   muy espaciado, y la cuadrícula de producto con su código al lado. */
+.m3{min-width:980px;background:#fdfdfc;color:#232220;
+  display:grid;grid-template-columns:1fr 1fr}
+.m3 .pag{padding:4cqw 3.4cqw}
+.m3 .pag + .pag{border-left:1px solid rgba(35,34,32,.1)}
+.m3 .alto{font-family:var(--serif);font-size:3.4cqw;line-height:1.08;
+  letter-spacing:-.012em}
+.m3 .alto em{font-style:italic}
+.m3 .rotulo{font-size:.95cqw;font-weight:700;letter-spacing:.28em;
+  text-transform:uppercase;color:#67655f}
+.m3 .sumario{margin-top:2.6cqw;display:grid;gap:1.1cqw}
+.m3 .sumario div{display:grid;grid-template-columns:2.6cqw 1fr;gap:1cqw;
+  font-size:1.05cqw;padding-bottom:1cqw;border-bottom:1px solid rgba(35,34,32,.09)}
+.m3 .sumario b{font-family:var(--serif);font-weight:400;color:#67655f}
+.m3 .bloque-foto{margin-top:2.4cqw;width:100%;aspect-ratio:16 / 9;
+  background:#e7e5e0;border-radius:.6cqw}
+.m3 .bloque-foto::after{font-size:1cqw;color:#3f3e3a;bottom:8%}
+.m3 .rejilla{margin-top:2.4cqw;display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.8cqw 1.4cqw}
+.m3 .it .foto{width:100%;aspect-ratio:1;background:#eceae5;border-radius:.5cqw}
+.m3 .it .foto::after{font-size:.85cqw;color:#3f3e3a;bottom:7%}
+.m3 .it h4{margin-top:.8cqw;font-size:.95cqw;font-weight:700;line-height:1.3}
+.m3 .it p{font-size:.85cqw;color:#67655f;line-height:1.35}
+/* El precio es un <p class="pr">, así que «.m3 .it p» también lo pintaba
+   de gris: la regla de la clase gana en especificidad pero no declaraba
+   color. Se declara. */
+.m3 .it .pr{margin-top:.35cqw;font-size:.95cqw;font-weight:700;
+  color:#232220;font-variant-numeric:tabular-nums}
+.m3 .nota{margin-top:1.6cqw;font-size:.95cqw;color:#55534e;line-height:1.55;
+  max-width:46ch}
+.m3 .franja{margin-top:2.2cqw;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.2cqw}
+.m3 .franja .foto{aspect-ratio:3 / 4;background:#e4e1db;border-radius:.5cqw}
+.m3 .franja .foto:nth-child(2){background:#d9d4cc}
+.m3 .franja .foto:nth-child(3){background:#e9e3da}
+.m3 .franja .foto::after{font-size:.85cqw;color:#3f3e3a;bottom:6%}
+
+/* ══ 4 · bloques de color ════════════════════════════════════════════
+   Referencia: la carta asiática. Cada sección es un bloque de color
+   plano, el nombre va vertical en versales gordas sobre el borde, y
+   el precio vive en un recuadro con contorno. */
+.m4{min-width:900px;display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;color:#1d1d1b}
+.m4 .bloque{position:relative;padding:3cqw 3cqw 3cqw 7cqw;min-height:21cqw}
+.m4 .amarillo{background:#f5c126}
+.m4 .naranja{background:#ef7f2a}
+.m4 .rosa{background:#f2a0b5}
+.m4 .rojo{background:#b02a18;color:#fdf6ec}
+.m4 .lomo{position:absolute;left:2.1cqw;top:3cqw;bottom:3cqw;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:2.5cqw;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  display:flex;align-items:flex-end}
+.m4 .rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw}
+.m4 .it .foto{width:100%;aspect-ratio:4 / 3;border-radius:.8cqw;
+  background:rgba(0,0,0,.12)}
+.m4 .it .foto::after{font-size:.95cqw;color:rgba(0,0,0,.8);bottom:8%}
+.m4 .rojo .it .foto{background:rgba(0,0,0,.2)}
+.m4 .rojo .it .foto::after{color:rgba(253,246,236,.7)}
+.m4 .it h4{margin-top:.9cqw;font-size:1.15cqw;font-weight:800;line-height:1.2;
+  text-transform:uppercase;letter-spacing:.03em}
+.m4 .it p{margin-top:.3cqw;font-size:.9cqw;line-height:1.35;opacity:.86}
+.m4 .it .pie{margin-top:.8cqw;display:flex;align-items:center;gap:.8cqw}
+.m4 .it .pr{border:.13cqw solid currentColor;border-radius:.4cqw;
+  padding:.25cqw .7cqw;font-size:1cqw;font-weight:800;
+  font-variant-numeric:tabular-nums}
+.m4 .it .gr{font-size:.85cqw;opacity:.88}
+
+footer{padding:clamp(34px,6vh,64px) var(--margen);border-top:1px solid var(--linea);
+  font-size:.9rem;color:var(--tinta-70)}
+footer .centro{display:grid;gap:11px}
+footer b{color:var(--tinta)}
+
+@media (prefers-reduced-transparency:reduce){
+  .chapa{background:var(--papel);-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@media (prefers-contrast:more){
+  :root{--tinta-70:#1d1d1b;--tinta-66:#36352f;--linea:rgba(29,29,27,.42)}
+  .m1 .grano{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="chapa">LQS <i>· muestras de maquetación de catálogo</i></header>
+
+<main>
+
+  <section class="intro">
+    <div class="centro">
+      <h1>Cuatro maneras de maquetar un catálogo, en español.</h1>
+      <p>Las once referencias que llegaron se repiten entre sí: cartas oscuras
+        con fotografía cenital, parrillas densas de mucho producto, catálogos
+        claros y cartas en bloques de color. Aquí está una de cada familia,
+        rehecha pieza por pieza —no traducida encima de la imagen— conservando
+        la composición, la paleta y la jerarquía tipográfica de su referencia,
+        con el texto en español y los precios en pesos.</p>
+      <p class="aviso"><b>Los recuadros marcados «tu foto» son eso: el sitio de
+        la foto.</b> La fotografía es la mitad de estas maquetaciones, y la del
+        cliente todavía no existe. Cambiarla no toca nada más de la página.</p>
+    </div>
+  </section>
+
+  <!-- ══ 1 · carta oscura con título grande ════════════════════════ -->
+  <figure class="muestra">
+    <figcaption>
+      <p class="num"><b>1</b> Carta oscura con título grande</p>
+      <h2>Pocos platos, mucho aire y la foto mandando</h2>
+      <p class="para">Para una carta corta donde cada plato se vende por la
+        fotografía. El display enorme fija la sección, las entradas cuelgan de
+        él y los platos entran por los bordes: la asimetría es la mitad de lo
+        que la hace ver compuesta y no alineada.</p>
+    </figcaption>
+    <div class="visor">
+      <div class="hoja m1">
+        <h3 class="titular">Pasta<br>italiana</h3>
+
+        <div class="foto disco d1" data-pie="tu foto"></div>
+        <div class="foto disco d2" data-pie="tu foto"></div>
+        <div class="foto disco d3" data-pie="tu foto"></div>
+
+        <div class="plato p1">
+          <h3>Pasta<br>negra</h3>
+          <p>Espagueti al negro de calamar, camarón, mejillón, huevas y
+            albahaca</p>
+          <div class="pie"><span class="gr">250 g</span><span class="pr">$68.000</span></div>
+        </div>
+
+        <div class="plato p2">
+          <h3>Pasta<br>boloñesa</h3>
+          <p>Espagueti, carne molida, sofrito, pasta de tomate, vino tinto y
+            parmesano</p>
+          <div class="pie"><span class="gr">250 g</span><span class="pr">$38.000</span></div>
+        </div>
+
+        <div class="plato p3">
+          <h3>Pasta<br>carbonara</h3>
+          <p>Espagueti, tocineta, huevo, parmesano, mantequilla y pimienta
+            negra</p>
+          <div class="pie"><span class="gr">250 g</span><span class="pr">$42.000</span></div>
+        </div>
+
+        <div class="grano" aria-hidden="true"></div>
+      </div>
+    </div>
+    <p class="pista">Desliza la hoja de lado para verla completa.</p>
+  </figure>
+
+  <!-- ══ 2 · parrilla densa ════════════════════════════════════════ -->
+  <figure class="muestra">
+    <figcaption>
+      <p class="num"><b>2</b> Parrilla densa</p>
+      <h2>Mucho producto sin que se vea apretado</h2>
+      <p class="para">Para cartas largas —sushi, tapas, repuestos, insumos—.
+        El precio va primero y grande, el nombre en negrita debajo y la ficha
+        en gris diminuto: la jerarquía hace todo el trabajo, y por eso caben
+        veinte productos en una página doble sin agobiar. Una pieza grande por
+        página rompe la cuadrícula y le da aire.</p>
+    </figcaption>
+    <div class="visor">
+      <div class="hoja m2">
+        <div class="pag">
+          <p class="rotulo">Sushi</p>
+          <div class="rejilla">
+            <div class="it grande">
+              <div class="foto" data-pie="tu foto"></div>
+              <div>
+                <p class="pr">$22.000</p>
+                <h4>Tako</h4>
+                <p>Pulpo<span class="kcal">34 kcal</span></p>
+              </div>
+            </div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$14.000</p><h4>Aguacate</h4>
+              <p>Aguacate<span class="kcal">48 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$19.000</p><h4>Sake<span class="marca">★</span></h4>
+              <p>Salmón<span class="kcal">45 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$21.000</p><h4>Okino</h4>
+              <p>Mero flameado<span class="kcal">40 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$21.000</p><h4>Sake Filadelfia</h4>
+              <p>Salmón con queso crema<span class="kcal">47 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$24.000</p><h4>Unagi</h4>
+              <p>Anguila ahumada<span class="kcal">46 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$24.000</p><h4>Maguro<span class="marca">★</span></h4>
+              <p>Atún<span class="kcal">39 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$22.000</p><h4>Sake kunsei</h4>
+              <p>Salmón ahumado<span class="kcal">49 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$15.000</p><h4>Tamago</h4>
+              <p>Tortilla japonesa<span class="kcal">55 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$23.000</p><h4>Ebi</h4>
+              <p>Camarón tigre<span class="kcal">37 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$24.000</p><h4>Hotate</h4>
+              <p>Vieira<span class="kcal">36 kcal</span></p></div>
+          </div>
+        </div>
+
+        <div class="pag">
+          <p class="rotulo">Gunkan</p>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$20.000</p><h4>Wakame</h4>
+              <p>Algas marinadas<span class="kcal">37 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$31.000</p><h4>Ikura</h4>
+              <p>Huevas de salmón<span class="kcal">60 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$26.000</p><h4>Tobiko</h4>
+              <p>Huevas de pez volador<span class="kcal">40 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$24.000</p><h4>Kai eshi<span class="marca picante">◆</span></h4>
+              <p>Mejillón en salsa picante<span class="kcal">48 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$43.000</p><h4>Kani</h4>
+              <p>Cangrejo<span class="kcal">38 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$25.000</p><h4>Spicy sushi<span class="marca picante">◆</span></h4>
+              <p>Atún, salmón y vieira en salsa picante<span class="kcal">52 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$25.000</p><h4>Tori unagi</h4>
+              <p>Anguila ahumada, pollo y masago<span class="kcal">63 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$25.000</p><h4>Inari</h4>
+              <p>Tofu frito relleno de arroz<span class="kcal">67 kcal</span></p></div>
+            <div class="it grande">
+              <div class="foto" data-pie="tu foto"></div>
+              <div>
+                <p class="pr">$24.000</p>
+                <h4>Muki ebi<span class="marca picante">◆</span></h4>
+                <p>Camarón y aguacate en salsa picante, masago<span class="kcal">52 kcal</span></p>
+              </div>
+            </div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$24.000</p><h4>Filadelfia</h4>
+              <p>Salmón ahumado, queso crema y pepino<span class="kcal">62 kcal</span></p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <p class="pr">$20.000</p><h4>California</h4>
+              <p>Cangrejo, aguacate, masago y pepino<span class="kcal">61 kcal</span></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="pista">Desliza la hoja de lado para ver la página doble completa.</p>
+  </figure>
+
+  <!-- ══ 3 · catálogo claro de producto ════════════════════════════ -->
+  <figure class="muestra">
+    <figcaption>
+      <p class="num"><b>3</b> Catálogo claro de producto</p>
+      <h2>Blanco, serif para los títulos y el producto recortado</h2>
+      <p class="para">Para objeto, cerámica, mobiliario o decoración. Todo el
+        peso lo lleva el aire: un display con serif para la sección, el resto
+        en un sans diminuto y muy espaciado, y la cuadrícula con su referencia
+        al lado de cada pieza. Es la maquetación que mejor aguanta un catálogo
+        de cuarenta páginas sin cansar.</p>
+    </figcaption>
+    <div class="visor">
+      <div class="hoja m3">
+        <div class="pag">
+          <p class="rotulo">Contenido</p>
+          <h3 class="alto" style="margin-top:1.4cqw">Catálogo <em>de cerámica</em></h3>
+          <div class="sumario">
+            <div><b>01</b><span>Presentación</span></div>
+            <div><b>02</b><span>Jarrones modernos</span></div>
+            <div><b>03</b><span>Cerámica de mesa</span></div>
+            <div><b>04</b><span>Decoración neutra</span></div>
+            <div><b>05</b><span>Accesorios</span></div>
+            <div><b>06</b><span>Condiciones y despacho</span></div>
+          </div>
+          <div class="foto bloque-foto" data-pie="tu foto"></div>
+          <p class="nota">Piezas torneadas a mano en el taller, esmaltadas una
+            por una. Cada referencia se produce en series cortas, así que el
+            tono varía de una horneada a otra: eso no es un defecto, es la
+            pieza.</p>
+        </div>
+
+        <div class="pag">
+          <p class="rotulo">02 · Jarrones</p>
+          <h3 class="alto" style="margin-top:1.1cqw">Jarrones <em>modernos</em></h3>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Ánfora alta</h4><p>Ref. JR-101 · 38 cm</p><p class="pr">$320.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Ánfora baja</h4><p>Ref. JR-102 · 24 cm</p><p class="pr">$245.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Cuello estrecho</h4><p>Ref. JR-110 · 31 cm</p><p class="pr">$290.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Esfera mate</h4><p>Ref. JR-114 · 19 cm</p><p class="pr">$210.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Canelada</h4><p>Ref. JR-120 · 27 cm</p><p class="pr">$265.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Cilindro recto</h4><p>Ref. JR-122 · 33 cm</p><p class="pr">$280.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Asa doble</h4><p>Ref. JR-130 · 29 cm</p><p class="pr">$345.000</p></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Pie torneado</h4><p>Ref. JR-134 · 41 cm</p><p class="pr">$420.000</p></div>
+          </div>
+          <p class="rotulo" style="margin-top:2.4cqw">Decoración neutra</p>
+          <div class="franja">
+            <div class="foto" data-pie="tu foto"></div>
+            <div class="foto" data-pie="tu foto"></div>
+            <div class="foto" data-pie="tu foto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="pista">Desliza la hoja de lado para ver la página doble completa.</p>
+  </figure>
+
+  <!-- ══ 4 · bloques de color ══════════════════════════════════════ -->
+  <figure class="muestra">
+    <figcaption>
+      <p class="num"><b>4</b> Bloques de color</p>
+      <h2>Cada sección, un color plano y un lomo vertical</h2>
+      <p class="para">Para cartas con muchas secciones donde la gente busca por
+        categoría y no por plato. El color hace de índice: se encuentra la
+        sección de lejos, sin leer. El nombre va vertical en el lomo del bloque
+        y el precio en un recuadro con contorno, que se lee sobre cualquiera de
+        los fondos.</p>
+    </figcaption>
+    <div class="visor">
+      <div class="hoja m4">
+        <section class="bloque amarillo">
+          <p class="lomo">Entradas</p>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Alitas glaseadas</h4><p>Con salsa de tamarindo y ajonjolí</p>
+              <div class="pie"><span class="pr">$32.000</span><span class="gr">8 unidades</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Rollitos primavera</h4><p>Verdura salteada y fideo de arroz</p>
+              <div class="pie"><span class="pr">$24.000</span><span class="gr">4 unidades</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Bao de cerdo</h4><p>Pan al vapor, cerdo desmechado y encurtido</p>
+              <div class="pie"><span class="pr">$28.000</span><span class="gr">2 unidades</span></div></div>
+          </div>
+        </section>
+
+        <section class="bloque naranja">
+          <p class="lomo">Sopas</p>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Agripicante</h4><p>Hongos, tofu y brote de bambú</p>
+              <div class="pie"><span class="pr">$26.000</span><span class="gr">400 ml</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>De pollo y maíz</h4><p>Caldo claro, maíz dulce y cebollín</p>
+              <div class="pie"><span class="pr">$24.000</span><span class="gr">400 ml</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Fideo con res</h4><p>Fideo de trigo, res y hierbas</p>
+              <div class="pie"><span class="pr">$34.000</span><span class="gr">550 ml</span></div></div>
+          </div>
+        </section>
+
+        <section class="bloque rosa">
+          <p class="lomo">Pasta</p>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Fideo con camarón</h4><p>Wok, verdura crujiente y salsa de ostras</p>
+              <div class="pie"><span class="pr">$44.000</span><span class="gr">350 g</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Fideo kan-kan</h4><p>Picante, con pollo y maní</p>
+              <div class="pie"><span class="pr">$38.000</span><span class="gr">350 g</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Fideo de arroz</h4><p>Con cerdo, huevo y brote de soya</p>
+              <div class="pie"><span class="pr">$36.000</span><span class="gr">350 g</span></div></div>
+          </div>
+        </section>
+
+        <section class="bloque rojo">
+          <p class="lomo">Postres</p>
+          <div class="rejilla">
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Banano en caramelo</h4><p>Con ajonjolí tostado</p>
+              <div class="pie"><span class="pr">$18.000</span><span class="gr">180 g</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Manzana frita</h4><p>Masa crocante y miel</p>
+              <div class="pie"><span class="pr">$18.000</span><span class="gr">180 g</span></div></div>
+            <div class="it"><div class="foto" data-pie="tu foto"></div>
+              <h4>Helado frito</h4><p>Vainilla, costra de pan y caramelo</p>
+              <div class="pie"><span class="pr">$22.000</span><span class="gr">150 g</span></div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <p class="pista">Desliza la hoja de lado para ver la página doble completa.</p>
+  </figure>
+
+</main>
+
+<footer>
+  <div class="centro">
+    <p><b>LQS</b> · Medellín</p>
+    <p>Las cuatro hojas están rehechas, no traducidas encima de una imagen:
+      cada una conserva la composición, la paleta y la jerarquía de su
+      referencia, con el texto en español y los precios en pesos. Los nombres,
+      los precios y las referencias son de muestra.</p>
+    <p>Las medidas van en porcentaje del ancho de la hoja, así que cada
+      maquetación se puede llevar a cualquier tamaño de impresión sin
+      rehacerla, y los recuadros marcados «tu foto» se cambian por la
+      fotografía del cliente sin tocar nada más.</p>
+  </div>
+</footer>
+
+</body>
+</html>

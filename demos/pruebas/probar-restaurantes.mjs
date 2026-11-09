@@ -535,29 +535,64 @@ for (const w of [320, 390]) {
   }
 
   const malos = [];
-  for (const id of objetivos) {
+  let medidos = 0;
+  const cola = objetivos.slice(), intentos = {}, sinMedir = [];
+  while (cola.length) {
+    const id = cola.shift();
     // La barra pegajosa lleva backdrop-filter: lo que pasa por debajo cambia
     // su desenfoque, así que la franja de arriba no se mide nunca.
     const BANDA = 86;
-    const caja = await p.evaluate(({i, BANDA}) => {
-      const e = document.querySelector('[data-ct-id="' + CSS.escape(i) + '"]');
+    // La caja y los píxeles tienen que quedarse quietos los dos. Medir con
+    // una caja vieja fue exactamente el fallo: el bloque todavía estaba
+    // subiendo con su animación de aparición, se le tomaba la medida antes
+    // de que acabara de subir y, para cuando se disparaba la foto, el texto
+    // ya no estaba ahí. Salía un recorte de fondo liso y una razón de 1,1:1
+    // sobre un negro sobre crema que de verdad da 14:1.
+    const mide = () => p.evaluate(({id, BANDA}) => {
+      const e = document.querySelector('[data-ct-id="' + CSS.escape(id) + '"]');
       if (!e) return null;
       e.scrollIntoView({block:'center'});
       const r = e.getBoundingClientRect();
       const x = Math.max(0, r.x), y = Math.max(BANDA, r.y);
-      return {x, y, width: Math.min(r.right, innerWidth) - x, height: Math.min(r.bottom, innerHeight) - y};
+      // Dos fotogramas iguales NO bastan: mientras corre el retardo de la
+      // animación de aparición no se mueve nada, así que la quietud se da
+      // por buena antes de que el bloque empiece siquiera a aparecer. Se
+      // toma la foto «con texto» sobre un hueco vacío, la de «sin texto»
+      // ya pilla el texto a medio aparecer, y sale una razón de 1,1:1.
+      //
+      // Lo que hay que preguntar es si queda alguna animación en marcha, y
+      // hay que preguntárselo también a los ANTEPASADOS: la aparición vive
+      // en el bloque de arriba, no en el texto, y `getAnimations` con
+      // `subtree` mira hacia abajo, nunca hacia arriba. Por ahí se colaba.
+      //
+      // Y no vale mirar la opacidad acumulada: hay texto con opacidad de
+      // diseño —0,86 en la carta de bloques de color— que nunca llega a 1
+      // y se quedaba sin medir para siempre.
+      const corre = a => a.playState === 'running' || a.playState === 'pending';
+      let moviendo = e.getAnimations({subtree:true}).some(corre);
+      for (let n = e.parentElement; n && !moviendo; n = n.parentElement)
+        moviendo = n.getAnimations().some(corre);
+      return {x, y, width: Math.min(r.right, innerWidth) - x,
+                    height: Math.min(r.bottom, innerHeight) - y,
+              listo: !moviendo};
     }, {id, BANDA});
-    if (!caja || !(caja.width > 4) || !(caja.height > 4)) continue;
-    // Esperar hasta que dos capturas seguidas salgan idénticas: si algo
-    // todavía se mueve, el diff compara fotogramas distintos y miente.
+    const vale = c => c && c.width > 4 && c.height > 4;
+    const igualCaja = (c,d) => Math.abs(c.x-d.x) < .5 && Math.abs(c.y-d.y) < .5 &&
+                               Math.abs(c.width-d.width) < .5 && Math.abs(c.height-d.height) < .5;
+    let caja = await mide();
+    if (!vale(caja)) continue;
     let a = await p.screenshot({ clip: caja }), quieta = false;
-    for (let t = 0; t < 8; t++){
+    for (let t = 0; t < 26; t++){
       await p.waitForTimeout(120);
-      const otra = await p.screenshot({ clip: caja });
-      if (otra.equals(a)) { quieta = true; break; }
-      a = otra;
+      const otra = await mide();
+      if (!vale(otra)) { caja = null; break; }
+      const foto = await p.screenshot({ clip: otra });
+      if (otra.listo && igualCaja(otra, caja) && foto.equals(a)) {
+        quieta = true; caja = otra; a = foto; break; }
+      caja = otra; a = foto;
     }
-    if (!quieta) { mal('no se quedó quieto para medir: ' + id); continue; }
+    if (!caja) continue;
+    if (!quieta) { sinMedir.push(id); continue; }
     await capta(id, false);
     await p.waitForTimeout(140);
     const b = await p.screenshot({ clip: caja });   // sin texto
@@ -570,6 +605,17 @@ for (const w of [320, 390]) {
       e.querySelectorAll('*').forEach(h=>{ h.style.removeProperty('color'); h.style.removeProperty('-webkit-text-fill-color'); });
     }, id);
     // comparar cada píxel con su propio fondo
+    // Y una última comprobación, después de revelar el texto otra vez:
+    // si la caja se movió entre las dos fotos, lo medido son dos
+    // recortes distintos y el número no significa nada. Al final de
+    // la cola, que es lo que le da tiempo a la página a asentarse.
+    const despues = await mide();
+    if (!vale(despues) || !igualCaja(despues, caja)) {
+      intentos[id] = (intentos[id] || 0) + 1;
+      if (intentos[id] < 4) { cola.push(id); continue; }
+      sinMedir.push(id); continue;
+    }
+
     const razon = await p.evaluate(async ({a,b}) => {
       async function img(d){ const i=new Image(); i.src='data:image/png;base64,'+d; await i.decode(); const c=document.createElement('canvas'); c.width=i.width;c.height=i.height; const x=c.getContext('2d'); x.drawImage(i,0,0); return x.getImageData(0,0,c.width,c.height).data; }
       const A = await img(a), B = await img(b);
@@ -595,11 +641,20 @@ for (const w of [320, 390]) {
       return mejor;
     }, { a: a.toString('base64'), b: b.toString('base64') });
     if (razon === null) { continue; }
+    medidos++;
     if (razon < 4.5) malos.push(id + ' = ' + razon.toFixed(2));
   }
-  malos.length
-    ? mal('contraste bajo 4,5:1 → ' + malos.join('  |  '))
-    : ok('los ' + objetivos.length + ' elementos medidos pasan 4,5:1');
+  // Guardia contra la prueba rota: si el apagado del texto deja de
+  // funcionar, el diff sale vacío, todo devuelve null y la prueba canta
+  // «bien» sin haber medido nada. Pasó, y nadie se enteró.
+  if (sinMedir.length)
+    console.log('       sin medir (no se quedan quietos): ' + sinMedir.join(', '));
+  medidos < objetivos.length * 0.8
+    ? mal('solo se pudieron medir ' + medidos + ' de ' + objetivos.length +
+          ' elementos: la prueba está rota, no la página')
+    : malos.length
+      ? mal('contraste bajo 4,5:1 → ' + malos.join('  |  '))
+      : ok('los ' + medidos + ' elementos medidos pasan 4,5:1');
   await ctx.close();
 }
 
