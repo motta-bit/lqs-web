@@ -10,6 +10,13 @@ y las hojas se exportan a JPG con
 
     node clientes/muestra-catalogos/exportar.mjs [carpeta]
 
+Los huecos sin fotografía **no llevan rótulo**. Un «tu foto» encima es una
+nota para nosotros, y esto se le enseña a un cliente: lo que queda es el
+sitio reservado, que es lo que de verdad hay que ver de una maquetación. En
+la carta de bloques de color el hueco es además del mismo color que su
+bloque, sin recuadro: un rectángulo teñido encerrándolo se lee como una caja
+de maqueta.
+
 El exportador saca **sólo las hojas** —ni la entrada, ni los pies de cada
 muestra, ni el cierre— y las saca **dos veces**: con fotografía y con los
 huecos marcados. Las dos versiones salen del mismo archivo, encendiendo una

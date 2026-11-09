@@ -98,20 +98,15 @@ h1{font-size:clamp(2rem,5.6vw,3.4rem);letter-spacing:-.025em;line-height:1.05;
 .pista{margin:9px auto 0;max-width:1180px;font-size:.78rem;color:var(--piedra-h)}
 @media (hover:hover) and (pointer:fine){ .pista{display:none} }
 
-/* El hueco de foto, en las cuatro: todavía no hay fotografía del
-   cliente, así que se ve como lo que es y lo dice. */
+/* El hueco de foto. Sin rótulo: un «tu foto» encima es una nota para
+   nosotros, y esto se le enseña a un cliente. Lo que queda es el sitio
+   reservado, que es lo que de verdad hay que ver de una maquetación. */
 .foto{position:relative;overflow:hidden;background-size:cover;
   background-position:center}
 /* La etiqueta sólo donde todavía no hay fotografía. Un hueco con foto no
    lleva data-pie y entonces no hay ::after que pintar: sin el selector por
    atributo, attr() devolvería la cadena vacía y quedaría una caja invisible
    ocupando sitio dentro de la pieza. */
-.foto[data-pie]::after{content:attr(data-pie);position:absolute;left:0;right:0;
-  bottom:6%;text-align:center;font-size:2.2cqw;font-weight:800;
-  letter-spacing:.09em;text-transform:uppercase}
-/* Un hueco que YA tiene su pieza no lleva etiqueta. Va después de la regla
-   de arriba a propósito: las dos pesan lo mismo y gana la última. */
-.foto.con::after{content:none}
 
 /* ══ 1 · carta oscura con título grande ══════════════════════════════
    Referencia: la carta de pasta. Fondo casi negro, un display enorme
@@ -187,7 +182,6 @@ h1{font-size:clamp(2rem,5.6vw,3.4rem);letter-spacing:-.025em;line-height:1.05;
 html.sin-fotos .m2 .it .foto{border-radius:.9cqw;
   background:radial-gradient(60% 55% at 45% 38%, rgba(255,255,255,.1), transparent 70%), #1a1a1b;
   box-shadow:0 1.4cqw 2.6cqw -1cqw rgba(0,0,0,.8)}
-.m2 .it .foto::after{font-size:.95cqw;color:rgba(242,241,238,.56);bottom:8%}
 .m2 .it .pr{margin-top:.9cqw;font-size:2cqw;font-weight:300;line-height:1;
   font-variant-numeric:tabular-nums}
 .m2 .it h4{margin-top:.5cqw;font-size:1.12cqw;font-weight:700;line-height:1.25}
@@ -228,11 +222,9 @@ html.sin-fotos .m2 .it .foto{border-radius:.9cqw;
 .m3 .sumario b{font-family:var(--serif);font-weight:400;color:#67655f}
 .m3 .bloque-foto{margin-top:2.4cqw;width:100%;aspect-ratio:16 / 9;
   background:#e7e5e0;border-radius:.6cqw}
-.m3 .bloque-foto::after{font-size:1cqw;color:#3f3e3a;bottom:8%}
 .m3 .rejilla{margin-top:2.4cqw;display:grid;grid-template-columns:repeat(4,1fr);
   gap:1.8cqw 1.4cqw}
 .m3 .it .foto{width:100%;aspect-ratio:1;background:#eceae5;border-radius:.5cqw}
-.m3 .it .foto::after{font-size:.85cqw;color:#3f3e3a;bottom:7%}
 .m3 .it h4{margin-top:.8cqw;font-size:.95cqw;font-weight:700;line-height:1.3}
 .m3 .it p{font-size:.85cqw;color:#67655f;line-height:1.35}
 /* El precio es un <p class="pr">, así que «.m3 .it p» también lo pintaba
@@ -247,7 +239,6 @@ html.sin-fotos .m2 .it .foto{border-radius:.9cqw;
 .m3 .franja .foto{aspect-ratio:3 / 4;background:#e4e1db;border-radius:.5cqw}
 .m3 .franja .foto:nth-child(2){background:#d9d4cc}
 .m3 .franja .foto:nth-child(3){background:#e9e3da}
-.m3 .franja .foto::after{font-size:.85cqw;color:#3f3e3a;bottom:6%}
 
 /* ══ 4 · bloques de color ════════════════════════════════════════════
    Referencia: la carta asiática. Cada sección es un bloque de color
@@ -308,17 +299,15 @@ footer b{color:var(--tinta)}
    piezas y devuelve los huecos marcados. Mantener dos archivos en paralelo
    es la forma segura de que uno se quede atrás. */
 html.sin-fotos .foto.con{background-image:none !important}
-html.sin-fotos .foto.con::after{content:attr(data-pie)}
 html.sin-fotos .m1 .disco{
   background:
     radial-gradient(58% 58% at 42% 34%, rgba(255,255,255,.085), transparent 70%),
     #272623;
   box-shadow:0 4cqw 7cqw -2cqw rgba(0,0,0,.7), 0 0 0 .22cqw rgba(255,255,255,.06) inset}
-html.sin-fotos .m1 .disco::after{color:rgba(244,243,240,.62);bottom:46%}
-.m4 .it .foto::after{font-size:.95cqw;color:rgba(0,0,0,.8);bottom:8%}
-html.sin-fotos .m4 .it .foto{border-radius:.8cqw;background:rgba(0,0,0,.12);filter:none}
-html.sin-fotos .m4 .rojo .it .foto{background:rgba(0,0,0,.2)}
-html.sin-fotos .m4 .rojo .it .foto::after{color:rgba(253,246,236,.7)}
+/* Sin recuadro: el sitio del plato es del mismo color que su bloque. Un
+   rectángulo teñido encerrando el hueco se lee como una caja de maqueta,
+   y lo que se está enseñando es la maquetación, no la maqueta. */
+html.sin-fotos .m4 .it .foto{background:none;filter:none}
 
 @media (prefers-reduced-transparency:reduce){
   .chapa{background:var(--papel);-webkit-backdrop-filter:none;backdrop-filter:none}

@@ -72,13 +72,12 @@ const mal = m => { fallos.push(m); console.log('  MAL  ' + m); };
       const r = e.getBoundingClientRect();
       if (r.width < 8 || r.height < 8)
         malos.push((e.className||'') + ' ' + Math.round(r.width) + '×' + Math.round(r.height));
-      if (!e.dataset.pie) malos.push((e.className||'') + ' sin etiqueta');
     });
     return {malos, n: todos.length};
   });
   huecos.malos.length
     ? mal('huecos mal puestos → ' + huecos.malos.slice(0,4).join(' ; '))
-    : ok('los ' + huecos.n + ' huecos de foto están marcados y tienen tamaño');
+    : ok('los ' + huecos.n + ' huecos de foto tienen tamaño');
 
   // ── hoja 1: las entradas están puestas a mano, en absoluto. Nada
   // impide que se monten entre ellas o que se salgan de la hoja, y ya
@@ -216,24 +215,23 @@ for (const ancho of [320, 390]){
     '.chapa', '.chapa i', 'h1', '.intro p', '.aviso', '.muestra .num',
     '.muestra h2', '.muestra .para', '.pista', 'footer p',
     // hoja 1
-    '.m1 .titular', '.m1 .plato h3', '.m1 .plato p', '.m1 .gr', '.m1 .pr', '.m1 .disco',
+    '.m1 .titular', '.m1 .plato h3', '.m1 .plato p', '.m1 .gr', '.m1 .pr',
     '.m1 .pie-hoja',
     // hoja 2
     '.m2 .rotulo', '.m2 .grande .pr', '.m2 .grande h4', '.m2 .it .pr', '.m2 .it h4',
-    '.m2 .it p', '.m2 .kcal', '.m2 .marca', '.m2 .it .foto', '.m2 .pie-hoja',
+    '.m2 .it p', '.m2 .kcal', '.m2 .marca', '.m2 .pie-hoja',
     // hoja 3
     '.m3 .alto', '.m3 .rotulo', '.m3 .sumario b', '.m3 .sumario span', '.m3 .nota',
-    '.m3 .it h4', '.m3 .it p', '.m3 .it .pr', '.m3 .it .foto', '.m3 .bloque-foto',
-    '.m3 .franja .foto', '.m3 .pie-hoja',
+    '.m3 .it h4', '.m3 .it p', '.m3 .it .pr', '.m3 .pie-hoja',
     // hoja 4, bloque por bloque: el fondo cambia en cada uno
     '.m4 .amarillo .lomo', '.m4 .amarillo .it h4', '.m4 .amarillo .it p',
-    '.m4 .amarillo .it .pr', '.m4 .amarillo .it .gr', '.m4 .amarillo .it .foto',
+    '.m4 .amarillo .it .pr', '.m4 .amarillo .it .gr',
     '.m4 .naranja .lomo', '.m4 .naranja .it h4', '.m4 .naranja .it p',
-    '.m4 .naranja .it .pr', '.m4 .naranja .it .gr', '.m4 .naranja .it .foto',
+    '.m4 .naranja .it .pr', '.m4 .naranja .it .gr',
     '.m4 .rosa .lomo', '.m4 .rosa .it h4', '.m4 .rosa .it p',
-    '.m4 .rosa .it .pr', '.m4 .rosa .it .gr', '.m4 .rosa .it .foto',
+    '.m4 .rosa .it .pr', '.m4 .rosa .it .gr',
     '.m4 .rojo .lomo', '.m4 .rojo .it h4', '.m4 .rojo .it p',
-    '.m4 .rojo .it .pr', '.m4 .rojo .it .gr', '.m4 .rojo .it .foto', '.m4 .pie-hoja'
+    '.m4 .rojo .it .pr', '.m4 .rojo .it .gr', '.m4 .pie-hoja'
   ];
 
   const objetivos = await p.evaluate((sels) => {
