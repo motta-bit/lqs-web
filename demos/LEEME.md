@@ -260,6 +260,22 @@ Cuatro cosas que costó medir y conviene no deshacer:
    grises de la hoja 3 y las etiquetas «tu foto» de las cuatro salieron igual,
    por medición: con el tono que tenían a ojo se quedaban entre 2,9 y 4,1:1.
 
+**Las fotos salen de las propias referencias.** Los productos están
+recortados de las once imágenes que mandó el cliente —los platos, no el
+texto— y colocados en las hojas 1, 2 y 4. Cómo se sacó cada uno, y los tres
+métodos que hubo que escribir porque ninguno servía para los tres casos,
+está en `clientes/muestra-catalogos/LEEME.md`. La hoja 3 se queda con los
+huecos marcados: en su referencia el jarrón más grande mide 85 px y el hueco
+pide 318.
+
+**Hay dos versiones, y salen del mismo archivo.** Una clase `sin-fotos` en
+`<html>` apaga las piezas y devuelve los huecos marcados; el exportador saca
+las dos. También saca **sólo las hojas**, sin la entrada ni los pies ni el
+cierre: lo que se le enseña a un cliente es la maquetación, no lo que
+nosotros contamos sobre ella.
+
+    node clientes/muestra-catalogos/exportar.mjs [carpeta]
+
 **Cada hoja dice su moneda.** Los importes ya eran pesos —formato colombiano,
 punto de miles—, pero un «$» a secas se lee como dólares en cuanto la hoja
 sale de Colombia. Lo dice una vez por hoja y en su propia tipografía, en el
