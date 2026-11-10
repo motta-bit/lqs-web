@@ -69,7 +69,55 @@ círculo se sale de la foto se rellena por reflejo; en el plato que la
 referencia corta por el margen, no —el reflejo lo duplicaba en espejo y se
 veía a la legua—, y en su lugar el corte se coloca fuera de la hoja.
 
+## Las hojas 5 a 8: quitarle el texto a la ilustración
+
+Las cuatro primeras hojas están rehechas pieza por pieza. Las cuatro últimas
+no: conservan **la ilustración entera** de su referencia —los cubos de la
+escalera, las sombras, los reflejos de la página brillante, la textura de
+piedra— y sólo se les ha cambiado el texto. Para esas, rehacer era peor:
+la escalera de cubos del cartel de bebida, las sombras que cada vaso proyecta
+sobre su cubo y el degradado del fondo son la mitad de lo que vende la pieza,
+y redibujarlos a mano se nota.
+
+`borrar.py` quita el texto rellenando el fondo donde estaba. En estas cuatro
+referencias el texto siempre cae sobre fondo —plano, con degradado o con
+textura—, nunca encima del producto, así que se rellena y no se ve. Tres
+cosas que costaron:
+
+- **No interpolar entre los bordes del rectángulo.** Fue el primer intento y
+  deja regueros: en cuanto un lado roza el vaso, la interpolación estira
+  píxeles de vidrio por toda la fila. Lo que se hace es ajustar un modelo
+  suave del fondo a un anillo alrededor, quedándose **sólo con los píxeles
+  del anillo que de verdad son fondo** —los que caen cerca de la mediana— y
+  descartando el resto, así que un lado sucio no contamina nada.
+- **El anillo tiene que caber dentro del panel.** En los rótulos sobre panel
+  gris, con el anillo por defecto medio anillo era negro, el modelo se iba a
+  medio camino y el parche quedaba de otro gris que el panel. Por eso el
+  ancho del anillo se pasa por rectángulo.
+- **Sobre textura, el relleno liso canta.** El hormigón de la hoja de sopas
+  necesita grano de verdad: se copia de un trozo limpio de la propia imagen,
+  repetido en espejo para que no se vea la costura y sin su propia
+  iluminación, que la pone el modelo.
+
+Y el fundido del parche va **hacia fuera** del rectángulo. Hacia dentro, el
+texto vuelve a asomar justo por donde el rectángulo lo corta.
+
+Dos cosas que sí cambian respecto al original, y a propósito:
+
+1. **La tipografía es la del sistema.** Las referencias usan familias que no
+   se pueden incrustar sin red ni sin licencia. Se ha igualado el peso, el
+   tamaño, el espaciado y las mayúsculas; el titular de las brusquetas, que
+   es una condensada muy estrecha, se estrecha con una escala.
+2. **El azul del cartel de bebida y los grises de la hoja de sopas se han
+   oscurecido.** Tal como venían daban entre 2,5 y 4,0:1 sobre su fondo. El
+   azul pasa de `#1565c8` a `#11559f` y el gris de las líneas en inglés a
+   `#605d58`; con eso pasan 4,5:1 y a ojo son el mismo color.
+
 ## Lo que no se pudo
+
+**La hoja 8 es la más blanda de las ocho.** Su referencia mide 735 px de
+ancho; la hoja se exporta a 2.360, así que se amplía algo más de tres veces.
+Se exporta el conjunto a 2× y no a 3× justo por eso.
 
 **La hoja 3 se queda con los huecos marcados.** Su referencia es una
 maqueta: veinte páginas pequeñas dentro de una sola imagen de 854 px. El

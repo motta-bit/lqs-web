@@ -13,7 +13,7 @@ Lo que queda es lo que se cuelga para compartir por enlace.
 | `restaurantes.html` | **Restaurantes** · muestra de estilo y propuesta de digitalización, para enseñar en reunión |
 | `tiendas.html` | **Tiendas y almacenes** · la misma propuesta con catálogo, tallas y existencias en vez de carta |
 | `bodegas.html` | **Bodegas y tiendas de productos** · catálogo por presentación, precio por unidad calculado y existencias reales |
-| `catalogos.html` | **Maquetación de catálogo** · cuatro maneras de maquetar una carta o un catálogo, rehechas en español desde las referencias del cliente |
+| `catalogos.html` | **Maquetación de catálogo** · ocho maneras de maquetar una carta o un catálogo, en español, desde las referencias del cliente |
 | `pruebas/` | Las comprobaciones de las cuatro muestras, con su propio LEEME |
 | `index.html` | Salto a Alquimia, para que la URL de la carpeta abra sin escribir el nombre |
 
@@ -238,6 +238,15 @@ Dos decisiones de fondo:
   ancho mínimo y vive dentro de un visor que rueda de lado, como se desliza
   una página doble de verdad. Partirla en una columna sería enseñar otra
   maquetación distinta de la que se está vendiendo.
+
+**Y otras cuatro que conservan la ilustración entera.** Las hojas 5 a 8
+—cartel de bebida, fondo negro con rótulos sobre panel, cenital sobre piedra
+en dos idiomas, y columna de texto con pila de producto— no están rehechas:
+se le quita el texto a la referencia rellenando el fondo donde estaba, y
+encima va el nuestro en español. Así se conservan los cubos, las sombras, los
+reflejos y la textura, que en esas cuatro son la mitad de la pieza. El cómo,
+con los tres intentos que no funcionaron, está en
+`clientes/muestra-catalogos/LEEME.md`.
 
 Cuatro cosas que costó medir y conviene no deshacer:
 

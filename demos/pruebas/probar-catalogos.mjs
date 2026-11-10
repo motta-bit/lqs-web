@@ -41,7 +41,7 @@ const mal = m => { fallos.push(m); console.log('  MAL  ' + m); };
   desb > 1 ? mal('desborde horizontal: ' + desb + 'px') : ok('sin desborde horizontal');
 
   const hojas = await p.locator('.hoja').count();
-  hojas === 4 ? ok('las 4 hojas están en la página') : mal('hojas: ' + hojas);
+  hojas === 8 ? ok('las 8 hojas están en la página') : mal('hojas: ' + hojas);
 
   // Cada hoja dice en qué moneda están sus precios: un «$» a secas se lee
   // como dólares en cuanto la hoja sale de Colombia.
@@ -51,7 +51,7 @@ const mal = m => { fallos.push(m); console.log('  MAL  ' + m); };
       const r = e && e.getBoundingClientRect();
       return e && /COP/.test(e.innerText) && r.width > 4 && r.height > 4;
     }));
-  moneda.every(Boolean) ? ok('las 4 hojas dicen que los precios van en COP')
+  moneda.every(Boolean) ? ok('las 8 hojas dicen que los precios van en COP')
                         : mal('hojas sin pie de moneda visible: ' + JSON.stringify(moneda));
 
   // Cada hoja es un contenedor de consulta: si se pierde el
@@ -60,7 +60,7 @@ const mal = m => { fallos.push(m); console.log('  MAL  ' + m); };
   const contenedores = await p.evaluate(() =>
     Array.from(document.querySelectorAll('.hoja'))
       .filter(e => !/inline-size/.test(getComputedStyle(e).containerType)).length);
-  contenedores === 0 ? ok('las 4 hojas siguen siendo contenedores de consulta')
+  contenedores === 0 ? ok('las 8 hojas siguen siendo contenedores de consulta')
                      : mal(contenedores + ' hoja(s) sin container-type:inline-size');
 
   // Ningún hueco de foto puede quedar en cero: un <span> en línea no toma
@@ -175,7 +175,7 @@ for (const ancho of [320, 390]){
     })));
   const presos = visores.filter(v => v.corre < 2 || v.oculto === 'hidden');
   presos.length ? mal(ancho + ': hay hojas que no se pueden deslizar → ' + JSON.stringify(visores))
-                : ok(ancho + ': las 4 hojas se deslizan de lado');
+                : ok(ancho + ': las 8 hojas se deslizan de lado');
 
   // la pista de «desliza» tiene que verse donde no hay ratón
   const pista = await p.evaluate(() => getComputedStyle(document.querySelector('.pista')).display);
@@ -223,6 +223,12 @@ for (const ancho of [320, 390]){
     // hoja 3
     '.m3 .alto', '.m3 .rotulo', '.m3 .sumario b', '.m3 .sumario span', '.m3 .nota',
     '.m3 .it h4', '.m3 .it p', '.m3 .it .pr', '.m3 .pie-hoja',
+    // hojas 5 a 8, sobre la ilustración de la referencia
+    '.m5 h3', '.m5 .nom', '.m5 .en', '.m5 .pr', '.m5 .ml', '.m5 .pie-hoja',
+    '.m6 h3', '.m6 .nom', '.m6 .des', '.m6 .gr', '.m6 .pr', '.m6 .pie-hoja',
+    '.m7 h3', '.m7 .nom', '.m7 .ing', '.m7 .en', '.m7 .pr', '.m7 .gr',
+    '.m7 .nota', '.m7 .pie-hoja',
+    '.m8 h3', '.m8 .nom', '.m8 .des', '.m8 .gr', '.m8 .pr', '.m8 .pie-hoja',
     // hoja 4, bloque por bloque: el fondo cambia en cada uno
     '.m4 .amarillo .lomo', '.m4 .amarillo .it h4', '.m4 .amarillo .it p',
     '.m4 .amarillo .it .pr', '.m4 .amarillo .it .gr',

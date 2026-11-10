@@ -20,10 +20,14 @@ const SALIDA = process.argv[2] || (AQUI + 'entrega');
 mkdirSync(SALIDA, { recursive: true });
 
 const NOMBRES = ['1-carta-oscura', '2-parrilla-densa',
-                 '3-catalogo-claro', '4-bloques-de-color'];
-// 3× sobre una hoja de 1180 px da 3540 px de ancho: a 300 ppp son 30 cm,
-// que es el ancho real de una página doble impresa.
-const ESCALA = 3;
+                 '3-catalogo-claro', '4-bloques-de-color',
+                 '5-cartel-de-bebida', '6-fondo-negro',
+                 '7-cenital-dos-idiomas', '8-columna-y-pila'];
+// 2× sobre una hoja de 1180 px da 2360 px de ancho: a 300 ppp son 20 cm.
+// No es capricho: las cuatro últimas hojas llevan de fondo la ilustración
+// de la referencia, y a 3× se estarían ampliando más de lo que dan. El
+// texto, que es vectorial, se mantiene nítido de sobra a 2×.
+const ESCALA = 2;
 
 const navegador = await pw.chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const ctx = await navegador.newContext({ viewport:{width:1500,height:1000},
@@ -40,7 +44,7 @@ for (const version of ['con-fotos', 'sin-fotos']) {
     document.documentElement.classList.toggle('sin-fotos', v === 'sin-fotos');
   }, version);
   await p.waitForTimeout(500);
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < NOMBRES.length; i++) {
     const hoja = p.locator('.hoja').nth(i);
     const archivo = SALIDA + '/catalogo-' + NOMBRES[i] + '-' + version + '.jpg';
     await hoja.screenshot({ path: archivo, type:'jpeg', quality: 92,
