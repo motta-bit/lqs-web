@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recibo · Rosarios — Campaña de apertura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'"
+  href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Rubik:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<style>
+/* Recibo sobre el Sistema de marca LQS v1.0: Syne para el display, Rubik
+   para el cuerpo, IBM Plex Mono para cifras y rótulos. Radios fijos y sombra
+   dura. Documento impreso, así que va en papel y no en lienzo oscuro. */
+:root{
+ --tinta:#1a1720; --suave:#5c5764; --tenue:#8b8593;
+ --linea:rgba(26,23,32,.14); --linea2:rgba(26,23,32,.28);
+ --papel:#f5f2ec; --caja:#fdfbf7;
+ --ambar:oklch(0.58 0.16 66); --ok:oklch(0.5 0.16 145);
+ --disp:'Syne',system-ui,sans-serif;
+ --tech:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+ --sans:'Rubik',system-ui,-apple-system,'Segoe UI',sans-serif;
+ --r-pared:28px; --r-bloque:20px; --r-interno:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--papel);color:var(--tinta);font-family:var(--sans);
+ font-weight:500;line-height:1.6;-webkit-font-smoothing:antialiased;
+ padding:clamp(16px,4vw,48px)}
+.hoja{max-width:760px;margin:0 auto;background:var(--caja);
+ border:1px solid var(--linea);border-radius:var(--r-pared);
+ padding:clamp(26px,5vw,54px);box-shadow:6px 6px 0 rgba(26,23,32,.13)}
+
+/* cabecera */
+.top{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;justify-content:space-between;
+ padding-bottom:26px;border-bottom:1px solid var(--linea)}
+.marca{font-family:var(--disp);font-size:1.9rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+.marca span:nth-child(1){color:oklch(0.62 0.24 300)}
+.marca span:nth-child(2){color:oklch(0.66 0.24 20)}
+.marca span:nth-child(3){color:oklch(0.6 0.23 250)}
+.marca em{display:block;font-family:var(--tech);font-size:.62rem;font-style:normal;font-weight:400;
+ letter-spacing:.22em;text-transform:uppercase;color:var(--tenue);margin-top:7px}
+.folio{text-align:right}
+.folio b{display:block;font-family:var(--tech);font-size:1.05rem;letter-spacing:.06em}
+.folio span{display:block;font-size:.8rem;color:var(--tenue);margin-top:3px}
+
+h1{font-family:var(--disp);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.02;
+ font-weight:800;letter-spacing:-.035em;margin:30px 0 6px}
+.sub{color:var(--suave);font-size:.98rem;margin-bottom:30px}
+
+/* datos */
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:16px;
+ padding:20px 22px;margin-bottom:30px;background:var(--papel);
+ border:1px solid var(--linea);border-radius:var(--r-bloque)}
+.datos div{min-width:0}
+.datos dt{font-family:var(--tech);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+ color:var(--tenue);margin-bottom:4px}
+.datos dd{font-weight:700;font-size:.96rem}
+
+/* fechas */
+.fechas{display:grid;gap:12px;margin-bottom:30px}
+.fecha{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;
+ padding:15px 18px;border:1px solid var(--linea);border-radius:var(--r-interno)}
+.fecha b{font-family:var(--tech);font-size:.95rem;letter-spacing:.03em;white-space:nowrap}
+.fecha span{color:var(--suave);font-size:.93rem}
+
+/* detalle */
+h2{font-family:var(--tech);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+ color:var(--tenue);margin-bottom:14px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-family:var(--tech);font-size:.62rem;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--tenue);font-weight:400;padding-bottom:10px;
+ border-bottom:1px solid var(--linea2)}
+th:last-child,td:last-child{text-align:right}
+td{padding:15px 0;border-bottom:1px solid var(--linea);vertical-align:top}
+td b{display:block;font-size:1rem;margin-bottom:3px}
+td small{display:block;color:var(--suave);font-size:.86rem;line-height:1.5}
+.n{font-family:var(--tech);font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* total */
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+ margin-top:26px;padding:22px 24px;background:var(--tinta);color:var(--caja);
+ border-radius:var(--r-bloque)}
+.total span{font-family:var(--tech);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;opacity:.72}
+.total b{font-family:var(--disp);font-size:clamp(1.6rem,4vw,2.1rem);font-weight:800;
+ letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+
+/* pago */
+.pago{margin-top:30px;padding:20px 22px;border:1px solid var(--linea);
+ border-radius:var(--r-bloque);background:var(--papel)}
+.pago h3{font-family:var(--tech);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+ color:var(--tenue);margin-bottom:12px}
+.pago ul{list-style:none;display:grid;gap:9px}
+.pago li{display:flex;gap:11px;align-items:flex-start;font-size:.93rem;color:var(--suave)}
+.pago li::before{content:'';flex:none;width:5px;height:5px;border-radius:50%;
+ background:var(--ambar);margin-top:8px}
+.pago li b{color:var(--tinta)}
+
+/* términos */
+.terminos{margin-top:34px;padding-top:28px;border-top:1px solid var(--linea2)}
+.terminos h2{font-family:var(--disp);font-size:1.35rem;font-weight:800;letter-spacing:-.03em;
+ text-transform:none;color:var(--tinta);margin-bottom:8px}
+.terminos .intro{color:var(--suave);font-size:.93rem;margin-bottom:22px;max-width:58ch}
+.terminos .t{padding:14px 0;border-bottom:1px solid var(--linea)}
+.terminos .t:last-of-type{border-bottom:0}
+.terminos .t b{display:block;font-size:.95rem;margin-bottom:5px}
+.terminos .t p{color:var(--suave);font-size:.9rem;line-height:1.62;max-width:64ch}
+.terminos .t p b{display:inline;color:var(--tinta)}
+.vig{margin-top:20px;padding:14px 18px;background:var(--papel);
+ border:1px solid var(--linea);border-radius:var(--r-interno);
+ font-size:.9rem;color:var(--suave)}
+.vig b{color:var(--tinta)}
+
+/* pie */
+.pie{margin-top:34px;padding-top:22px;border-top:1px solid var(--linea);
+ display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:flex-end}
+.firma{font-size:.88rem;color:var(--suave)}
+.firma b{display:block;color:var(--tinta);font-size:.96rem;margin-bottom:2px}
+.contacto{text-align:right;font-family:var(--tech);font-size:.82rem;color:var(--suave);line-height:1.8}
+.gracias{margin-top:26px;text-align:center;font-family:var(--disp);font-size:1.1rem;
+ font-weight:600;color:var(--suave)}
+
+/* La tabla de «qué incluye» tiene una sola columna, así que su celda es
+   también la última y se llevaba la alineación a la derecha de la columna
+   de valores. */
+.incluye td{text-align:left}
+
+/* Lo que todavía no está acordado se ve que no lo está. Un número
+   inventado en un recibo es peor que un espacio en blanco: el blanco se
+   llena en diez segundos y el número equivocado se discute después. */
+.rellenar{display:inline-block;min-width:3.2em;border-bottom:1.5px dotted var(--linea2);
+ color:var(--tenue);text-align:center}
+
+@media print{
+ body{background:#fff;padding:0}
+ .hoja{border:0;box-shadow:none;max-width:100%;border-radius:0;padding:24px}
+ .total{background:#fff;color:var(--tinta);border:2px solid var(--tinta)}
+ .total span{opacity:1}
+ .terminos{break-inside:auto}
+ .terminos .t{break-inside:avoid}
+}
+@media(max-width:520px){
+ .top{flex-direction:column}.folio{text-align:left}
+ .pie{flex-direction:column;align-items:flex-start}.contacto{text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="hoja">
+
+  <div class="top">
+    <div class="marca"><span>L</span><span>Q</span><span>S</span>
+      <em>Estudio creativo · Medellín</em></div>
+    <div class="folio">
+      <b>REC-26-0003</b>
+      <span>Medellín, 18 de noviembre de 2026</span>
+    </div>
+  </div>
+
+  <h1>Recibo de campaña de apertura</h1>
+  <p class="sub">Todo lo que necesita Rosarios para abrir con presencia: fotos,
+    video, el menú en digital y en pantalla, y las redes montadas y andando.</p>
+
+  <dl class="datos">
+    <div><dt>Cliente</dt><dd>Rosarios</dd></div>
+    <div><dt>Servicio</dt><dd>Campaña de apertura</dd></div>
+    <div><dt>Estado</dt><dd>Abonado 50 %</dd></div>
+  </dl>
+
+  <h2>Detalle</h2>
+  <table>
+    <thead>
+      <tr><th>Concepto</th><th>Valor</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <b>Campaña de apertura · paquete completo</b>
+          <small>Incluye las seis piezas que van abajo, producidas y entregadas
+            dentro del mismo acompañamiento.</small>
+        </td>
+        <td class="n">$500.000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total">
+    <span>Total</span>
+    <b>$500.000</b>
+  </div>
+
+  <h2 style="margin-top:34px">Qué incluye</h2>
+  <table class="incluye">
+    <tbody>
+      <tr><td>
+        <b>Fotografía de producto</b>
+        <small><span class="rellenar">&nbsp;</span> fotos editadas, listas para
+          carta, redes y pantallas. Se fotografía en el local o en estudio, lo
+          que convenga al producto.</small></td></tr>
+      <tr><td>
+        <b>Video</b>
+        <small>Una pieza de <span class="rellenar">&nbsp;</span> segundos para
+          redes, con sonido, música con licencia y corrección de color.
+          Formato vertical, que es donde se ve.</small></td></tr>
+      <tr><td>
+        <b>Menú digital</b>
+        <small>La carta en una página que abre desde un código QR en la mesa.
+          Se actualiza cambiando un precio, sin reimprimir nada.</small></td></tr>
+      <tr><td>
+        <b>Menú para pantallas</b>
+        <small>La misma carta maquetada para el televisor del local: tamaños de
+          letra y contrastes pensados para leerse de lejos y de pie.</small></td></tr>
+      <tr><td>
+        <b>Creación y actualización de redes</b>
+        <small>Montaje o puesta al día de los perfiles: nombre, foto, portada,
+          descripción, enlaces, horario y ubicación, para que el que busque
+          encuentre lo mismo en todas partes.</small></td></tr>
+      <tr><td>
+        <b>Posts de contenido</b>
+        <small><span class="rellenar">&nbsp;</span> publicaciones armadas con el
+          material de la campaña, con su texto listo para publicar.</small></td></tr>
+    </tbody>
+  </table>
+
+  <div class="pago">
+    <h3>Forma de pago</h3>
+    <ul>
+      <li><span><b>50 % al confirmar</b> — $250.000. Recibido. Con esto arranca
+        la producción.</span></li>
+      <li><span><b>50 % a la entrega</b> — $250.000, al entregar las piezas.</span></li>
+      <li><span>Medios: transferencia, Nequi o efectivo.</span></li>
+    </ul>
+  </div>
+
+  <p class="vig" style="margin-top:22px;border-left:3px solid var(--ambar)">
+    <b>El dominio no está incluido en los $500.000.</b> Se paga aparte y su
+    valor cambia según el que se escoja.</p>
+
+  <section class="terminos">
+    <h2>Cómo nos cuidamos los dos</h2>
+    <p class="intro">Nada de esto es para ponernos difíciles: es para que si
+      algo pasa, los dos sepamos qué sigue y nadie quede incómodo.</p>
+
+    <div class="t">
+      <b>El abono</b>
+      <p>El <b>50 %</b> inicial aparta la agenda de producción y cubre lo que se
+        trabaja antes de grabar: guion, lista de tomas y preparación. El otro
+        <b>50 %</b> se paga al entregar.</p>
+    </div>
+
+    <div class="t">
+      <b>El dominio</b>
+      <p>El menú digital necesita una dirección propia. <b>Ese valor no está
+        incluido</b> y cambia según el dominio que se escoja; se paga una vez al
+        año y queda a nombre de Rosarios. Les decimos cuánto vale el que
+        quieran antes de comprarlo.</p>
+    </div>
+
+    <div class="t">
+      <b>Lo que necesitamos de ustedes</b>
+      <p>Para arrancar hacen falta tres cosas: los <b>productos</b> que se van a
+        fotografiar, la <b>carta con precios</b> definitivos y el <b>acceso</b> a
+        las redes que ya existan. Mientras falte alguna, el reloj de entrega no
+        empieza a correr.</p>
+    </div>
+
+    <div class="t">
+      <b>La entrega</b>
+      <p>Las piezas se entregan en <b><span class="rellenar">&nbsp;</span> días
+        hábiles</b> desde que tengamos lo de arriba completo. Se incluye
+        <b>una ronda de cambios</b> sobre las fotos y el video.</p>
+    </div>
+
+    <div class="t">
+      <b>Si se cambia el alcance</b>
+      <p>Más fotos, más posts o una segunda pieza de video se cotizan aparte y
+        se acuerdan antes. En la cuenta final no les va a aparecer nada que no
+        hayan aprobado.</p>
+    </div>
+
+    <div class="t">
+      <b>Mostrar el trabajo</b>
+      <p>Nos encantaría publicar parte de esto en el portafolio y las redes de
+        LQS. Si prefieren que no, solo dígannos y no se publica nada — sin costo
+        y sin problema.</p>
+    </div>
+
+    <p class="vig">Este recibo vale por <b>15 días</b>. Con el abono confirmado,
+      quedan aceptadas estas condiciones.</p>
+  </section>
+
+  <div class="pie">
+    <div class="firma">
+      <b>LQS · Lo Que Sea</b>
+      Estudio creativo, Medellín
+    </div>
+    <div class="contacto">
+      WhatsApp +57 333 279 1710<br>
+      loqueseaproductionsp1@gmail.com
+    </div>
+  </div>
+
+  <p class="gracias">Gracias, Rosarios. A abrir.</p>
+
+</div>
+</body>
+</html>
